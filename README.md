@@ -82,6 +82,10 @@ The below plugins can be found in Intellij Plugin Marketplace
 - _**JPA Buddy by haulmont**_ : JPA Buddy is an IntelliJ IDEA plugin that helps developers work efficiently with Hibernate, EclipseLink, Spring Data JPA, Flyway, Liquibase, Lombok, MapStruct, and other related technologies in both Java and Kotlin.
 Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionality. Most of the features stay free, including all visual designers for entities, Spring Data repositories, SQL and Liquibase changelogs. However, some features are available only under commercial license, e.g. differential migration scripts generation. Find a comparison of free and commercial versions on our website.
 
+<details><summary>Merge Request Rules</summary>
+ Ensure to use the development template for your merge request description. see path to the template on the project root .gitlab/merge_request_templates/development.md
+</details>
+
 
 ## Authors and acknowledgment
 - Oluwatobi Ogunwuyi ( Team Lead )
