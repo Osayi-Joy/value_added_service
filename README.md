@@ -49,11 +49,39 @@ Use examples liberally, and show the expected output if you can. It's helpful to
 
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+In order to have a standard uniform code base, the following are required of you before you can contribute to this project.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+**Laptop Requirements Recommended**
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- OS : MacBook Pro ( Ventura 13.2 )
+- Chip : Apple M2
+- Memory : 8 GB
+
+
+**IDE** 
+
+We make use of Intellij IDEA ( Community Edition/Ultimate Edition )
+
+
+**Code Formatting Style**
+
+We make use of Google Java Format Style.
+
+Kindly install it as a plugin in your IDE, see [Google Java Format Plugin Installation and Usage](https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config)
+
+**Additional plugins to be installed in IDEA**
+
+The below plugins can be found in Intellij Plugin Marketplace
+
+- _**SonarLint by SonarSource**_ : SonarLint is a free IDE extension to find and fix coding issues in real-time, flagging issues as you code, just like a spell-checker. More than a linter, it also delivers rich contextual guidance to help developers understand why there is an issue, assess the risk and educate them on how to fix it. This helps improve their skills, enhance their productivity, and take ownership of their code, taking linting to a different level.
+
+- _**GitToolBox by LukasZielinski**_ : Extends Git Integration 
+
+- _**JavaDoc by Sergey Timofiychuk**_ : Plugin that generates javadocs on java class elements, like field, method, etc. Home page: http://setial.github.com/intellij-javadocs
+
+- _**JPA Buddy by haulmont**_ : JPA Buddy is an IntelliJ IDEA plugin that helps developers work efficiently with Hibernate, EclipseLink, Spring Data JPA, Flyway, Liquibase, Lombok, MapStruct, and other related technologies in both Java and Kotlin.
+Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionality. Most of the features stay free, including all visual designers for entities, Spring Data repositories, SQL and Liquibase changelogs. However, some features are available only under commercial license, e.g. differential migration scripts generation. Find a comparison of free and commercial versions on our website.
+
 
 ## Authors and acknowledgment
 - Oluwatobi Ogunwuyi ( Team Lead )
