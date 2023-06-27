@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.digicore.billent-backoffice-service' is invalid and this project uses 'com.digicore.billentbackofficeservice' instead.
+* The original package name 'com.digicore.billent-backoffice-service' is invalid and this project uses 'com.digicore.billent.backoffice.service' instead.
 
 # Getting Started
 
