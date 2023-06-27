@@ -7,11 +7,14 @@ import com.digicore.billentbackofficeservice.service.dto.GenericResponseDTO;
 import com.digicore.billentbackofficeservice.service.dto.TransactionLogDTO;
 import com.digicore.billentbackofficeservice.service.mapper.TransactionLogMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -28,21 +31,39 @@ public class TransactionLogServiceImpl implements TransactionLogService {
 
     @Override
     public GenericResponseDTO findByCustomerId(String customerId, Pageable pageable) {
-        List<TransactionLog> userTransactions = transactionLogRepository.findTransactionLogsByCustomerIdOrOrderByTransactionDateDesc(customerId, pageable);
-        log.info("User transactions found ==> {}", userTransactions);
-        List<TransactionLogDTO> userTransactionsDTO = transactionLogMapper.toDto(userTransactions);
+        Page<TransactionLog> userTransactions = transactionLogRepository.findTransactionLogsByCustomerIdOrOrderByTransactionDateDesc(customerId, pageable);
+        log.info("User transactions found ==> {}", userTransactions.getContent());
 
+        return getTransactionsPageResult(userTransactions);
+    }
+
+    @Override
+    public GenericResponseDTO findTransactionBySearchKey(String customerId, String key, Pageable pageable) {
+        Page<TransactionLog> userTransactions = transactionLogRepository.findTransactionLogsBySearchKey(customerId, key, pageable);
+        log.info("User transactions found by search ==> {}", userTransactions.getContent());
+
+        return getTransactionsPageResult(userTransactions);
+    }
+
+    private GenericResponseDTO getTransactionsPageResult(Page<TransactionLog> userTransactions) {
         GenericResponseDTO responseDTO = new GenericResponseDTO();
-        if (Objects.isNull(userTransactionsDTO) || userTransactionsDTO.isEmpty()) {
+        if (userTransactions.getContent().isEmpty()) {
             responseDTO.setCode("99");
             responseDTO.setMessage("No transaction found");
             responseDTO.setStatus(HttpStatus.NOT_FOUND);
             return responseDTO;
         }
 
+        List<TransactionLogDTO> userTransactionsDTO = transactionLogMapper.toDto(userTransactions.getContent());
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("size", userTransactions.getSize());
+        metadata.put("totalNumberOfRecords", userTransactions.getTotalElements());
+
         responseDTO.setCode("00");
         responseDTO.setMessage("Successful");
         responseDTO.setStatus(HttpStatus.OK);
+        responseDTO.setData(userTransactionsDTO);
+        responseDTO.setMetaData(metadata);
         return responseDTO;
     }
 

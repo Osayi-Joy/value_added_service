@@ -3,10 +3,7 @@ package com.digicore.billentbackofficeservice.controller;
 import com.digicore.billentbackofficeservice.service.TransactionLogService;
 import com.digicore.billentbackofficeservice.service.dto.GenericResponseDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
 
@@ -23,6 +20,14 @@ public class TransactionLogController {
     @GetMapping("/all-user-transactions/{customerId}")
     public ResponseEntity<GenericResponseDTO> findAllUserTransaction(@PathVariable("customerId") String customerId, Pageable pageable) {
         GenericResponseDTO responseDTO = transactionLogService.findByCustomerId(customerId, pageable);
+        return new ResponseEntity<>(responseDTO, responseDTO.getStatus());
+    }
+
+    @GetMapping("/search-user-transactions")
+    public ResponseEntity<GenericResponseDTO> findAllUserTransaction(@RequestParam("customerId") String customerId,
+                                                                     @RequestParam("key") String key,
+                                                                     Pageable pageable) {
+        GenericResponseDTO responseDTO = transactionLogService.findTransactionBySearchKey(customerId, key, pageable);
         return new ResponseEntity<>(responseDTO, responseDTO.getStatus());
     }
 
