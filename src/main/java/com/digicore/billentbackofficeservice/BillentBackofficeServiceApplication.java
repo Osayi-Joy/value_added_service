@@ -1,4 +1,4 @@
-package com.digicore.billent_backoffice_service;
+package com.digicore.billentbackofficeservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
