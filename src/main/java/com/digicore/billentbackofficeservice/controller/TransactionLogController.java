@@ -5,7 +5,7 @@ import com.digicore.billentbackofficeservice.service.dto.GenericResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/v1/transaction-log")

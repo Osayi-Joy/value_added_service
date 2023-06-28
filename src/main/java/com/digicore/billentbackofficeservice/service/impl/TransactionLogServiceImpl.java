@@ -8,10 +8,10 @@ import com.digicore.billentbackofficeservice.service.dto.TransactionLogDTO;
 import com.digicore.billentbackofficeservice.service.mapper.TransactionLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +24,15 @@ public class TransactionLogServiceImpl implements TransactionLogService {
     private final TransactionLogRepository transactionLogRepository;
     private final TransactionLogMapper transactionLogMapper;
 
-    public TransactionLogServiceImpl(TransactionLogRepository transactionLogRepository, TransactionLogMapper transactionLogMapper) {
+    public TransactionLogServiceImpl(TransactionLogRepository transactionLogRepository,
+                                     TransactionLogMapper transactionLogMapper) {
         this.transactionLogRepository = transactionLogRepository;
         this.transactionLogMapper = transactionLogMapper;
     }
 
     @Override
     public GenericResponseDTO findByCustomerId(String customerId, Pageable pageable) {
-        Page<TransactionLog> userTransactions = transactionLogRepository.findTransactionLogsByCustomerIdOrOrderByTransactionDateDesc(customerId, pageable);
+        Page<TransactionLog> userTransactions = transactionLogRepository.findTransactionLogsByCustomerIdOrderByTransactionDateDesc(customerId, pageable);
         log.info("User transactions found ==> {}", userTransactions.getContent());
 
         return getTransactionsPageResult(userTransactions);
@@ -69,7 +70,7 @@ public class TransactionLogServiceImpl implements TransactionLogService {
 
     @Override
     public GenericResponseDTO findByCustomerIdAndAndReference(String customerId, String reference) {
-        TransactionLog userTransaction = transactionLogRepository.findTransactionLogByCustomerIdAndAndReference(customerId, reference);
+        TransactionLog userTransaction = transactionLogRepository.findTransactionLogByCustomerIdAndReference(customerId, reference);
         log.info("User transaction found ==> {}", userTransaction);
         TransactionLogDTO userTransactionsDTO = transactionLogMapper.toDto(userTransaction);
 

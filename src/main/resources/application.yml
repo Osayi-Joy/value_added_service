@@ -1,1 +1,8 @@
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/billent-backoffice
+    username: postgres
+    password: ezenwa
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
