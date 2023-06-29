@@ -1,5 +1,5 @@
 {
-    "name": "SYSTEM_ADMIN",
+    "name": "SYSTEM_PERMISSION_UPDATE",
     "description": "This is the default system admin role with limited permissions, you are to create another admin which automatically deactivate this system admin role",
     "active": true,
     "permissions": [
@@ -231,6 +231,11 @@
         {
             "name": "approve-invite-backoffice-user",
             "description": "This allows you to approve invite a new backoffice user request",
+            "permissionType": "USERS"
+        },
+        {
+            "name": "edit-backoffice-user-details",
+            "description": "This allows you to edit a  backoffice user details",
             "permissionType": "USERS"
         }
 
