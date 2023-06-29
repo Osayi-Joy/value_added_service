@@ -1,8 +1,4 @@
-{
-    "name": "SYSTEM_PERMISSION_UPDATE",
-    "description": "This is the default system admin role with limited permissions, you are to create another admin which automatically deactivate this system admin role",
-    "active": true,
-    "permissions": [
+[
         {
             "name": "view-dashboard",
             "description": "This allows you to view dashboard modules and metrics",
@@ -238,9 +234,4 @@
             "description": "This allows you to edit a  backoffice user details",
             "permissionType": "USERS"
         }
-
-
-
-
-    ]
-}
+]
