@@ -34,8 +34,8 @@ public class BillentBackOfficeServiceConfig {
 
   public static final String AUTHORITIES_CLAIM_NAME = "permissions";
 
-//  @Qualifier("delegatedAuthenticationEntryPoint")
-//  private final AuthenticationEntryPoint authEntryPoint;
+  @Qualifier("delegatedAuthenticationEntryPoint")
+  private final AuthenticationEntryPoint authEntryPoint;
 
 
   @Bean
@@ -61,6 +61,8 @@ public class BillentBackOfficeServiceConfig {
                             .jwtAuthenticationConverter(authenticationConverter())
                     )
             );
+    http .exceptionHandling(exceptionHandling ->
+            exceptionHandling.authenticationEntryPoint(authEntryPoint));
     return http.build();
   }
 
