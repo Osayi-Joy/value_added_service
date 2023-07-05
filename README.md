@@ -91,6 +91,14 @@ Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionali
 
 </details>
 
+<details><summary>Test Rules</summary>
+
+-  Ensure to write both successful and failed integration test for the controllers, Your integration test should assert the followings
+    - HTTP status code
+    - Expected Data
+-  Ensure to write both successful and failed unit test for the services.
+</details>
+
 
 ## Authors and acknowledgment
 - Oluwatobi Ogunwuyi ( Team Lead )
