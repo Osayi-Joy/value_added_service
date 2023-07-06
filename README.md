@@ -93,6 +93,8 @@ Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionali
 
 <details><summary>Test Rules</summary>
 
+If you are new to writing test [here](https://www.baeldung.com/spring-boot-testing) is a good guide to help you get started.
+
 -  Ensure to write both successful and failed integration test for the controllers, Your integration test should assert the followings
     - HTTP status code
     - Expected Data
