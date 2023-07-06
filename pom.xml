@@ -61,18 +61,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.digicore</groupId>
-            <artifactId>request-processor-lib</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.json</groupId>
-                    <artifactId>json</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
