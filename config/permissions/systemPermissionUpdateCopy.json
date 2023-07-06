@@ -238,6 +238,10 @@
     "name": "view-roles",
     "description": "This allows you to view available roles",
     "permissionType": "ROLES"
+  },{
+    "name": "approve-view-roles",
+    "description": "This allows you to approve view available roles",
+    "permissionType": "ROLES"
   },
   {
     "name": "view-role-details",
