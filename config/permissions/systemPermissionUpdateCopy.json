@@ -238,30 +238,5 @@
     "name": "view-roles",
     "description": "This allows you to view available roles",
     "permissionType": "ROLES"
-  },
-  {
-    "name": "view-role-details",
-    "description": "This allows you to view available role details",
-    "permissionType": "ROLES"
-  },
-  {
-    "name": "create-role",
-    "description": "This allows you to create new role",
-    "permissionType": "ROLES"
-  },
-  {
-    "name": "edit-role",
-    "description": "This allows you to edit user roles",
-    "permissionType": "ROLES"
-  },
-  {
-    "name": "disable-role",
-    "description": "This allows you to disable user roles",
-    "permissionType": "ROLES"
-  },
-  {
-    "name": "enable-role",
-    "description": "This allows you to enable user roles",
-    "permissionType": "ROLES"
   }
 ]
