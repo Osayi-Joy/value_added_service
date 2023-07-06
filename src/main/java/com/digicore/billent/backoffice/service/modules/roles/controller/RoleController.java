@@ -19,8 +19,8 @@ public class RoleController {
     private final BackOfficeRoleService backOfficeRoleService;
 
     @GetMapping("get-all-roles")
-    public ResponseEntity<Object> getAllRoles(@RequestParam(value = PAGE_NUMBER_VALUE, defaultValue = PAGE_NUMBER_DEFAULT, required = false) int pageNumber,
-                                              @RequestParam(value = PAGE_SIZE_VALUE, defaultValue = PAGE_SIZE_DEFAULT, required = false) int pageSize) {
+    public ResponseEntity<Object> getAllRoles(@RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+                                              @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize) {
         return ControllerResponseUtil.buildSuccessResponse(backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
     }
 }
