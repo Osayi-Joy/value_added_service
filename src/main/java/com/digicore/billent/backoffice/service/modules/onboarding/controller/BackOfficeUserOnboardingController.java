@@ -1,7 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.onboarding.controller;
 
+import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
-import com.digicore.billent.data.lib.modules.common.util.ControllerResponseUtil;
 import com.digicore.registhentication.common.dto.request.ThirdBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class BackOfficeUserOnboardingController {
     @TokenValid()
     @PostMapping("invite-user")
     public ResponseEntity<Object> inviteUser(@Valid @RequestBody ThirdBaseRequestDTO backOfficeUserDTO)  {
-    return ControllerResponseUtil.buildSuccessResponse(
+    return ControllerResponse.buildSuccessResponse(
         backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
         "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat("successfully"));
     }

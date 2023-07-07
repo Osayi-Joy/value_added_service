@@ -1,7 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.authentication.controller;
 
+import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.authentication.services.BackOfficeUserAuthenticationService;
-import com.digicore.billent.data.lib.modules.common.util.ControllerResponseUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +26,6 @@ public class BackOfficeUserAuthenticationController {
     private final BackOfficeUserAuthenticationService authenticateBackOfficeUser;
     @PostMapping("login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO){
-        return ControllerResponseUtil.buildSuccessResponse(authenticateBackOfficeUser.authenticateBackOfficeUser(loginRequestDTO),"Authentication Successful");
+        return ControllerResponse.buildSuccessResponse(authenticateBackOfficeUser.authenticateBackOfficeUser(loginRequestDTO),"Authentication Successful");
     }
 }

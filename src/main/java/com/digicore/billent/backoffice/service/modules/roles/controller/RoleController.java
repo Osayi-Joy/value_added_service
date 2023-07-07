@@ -1,7 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.roles.controller;
 
+import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
-import com.digicore.billent.data.lib.modules.common.util.ControllerResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,6 @@ public class RoleController {
     @GetMapping("get-all-roles")
     public ResponseEntity<Object> getAllRoles(@RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
                                               @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize) {
-        return ControllerResponseUtil.buildSuccessResponse(backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
+        return ControllerResponse.buildSuccessResponse(backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
     }
 }

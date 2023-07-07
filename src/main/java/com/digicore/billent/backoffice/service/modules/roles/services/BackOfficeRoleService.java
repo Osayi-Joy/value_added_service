@@ -1,7 +1,8 @@
 package com.digicore.billent.backoffice.service.modules.roles.services;
 
-import com.digicore.billent.data.lib.modules.role.dto.RoleDTO;
-import com.digicore.billent.data.lib.modules.role.service.RoleService;
+
+import com.digicore.billent.data.lib.modules.common.role.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.role.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
