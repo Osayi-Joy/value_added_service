@@ -2,6 +2,8 @@ package com.digicore.billent.backoffice.service.config;
 
 
 import com.digicore.config.properties.PropertyConfig;
+import com.digicore.request.processor.enums.RequestHandlerType;
+import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.API_V1;
 
@@ -67,6 +71,11 @@ public class BackOfficeSwaggerConfig {
                 .group("backoffice")
                 .pathsToMatch(API_V1.concat("**"))
                 .build();
+    }
+
+    @Bean
+    public RequestHandlerPostProcessor requestHandlerPostProcessor() {
+        return new RequestHandlerPostProcessor(List.of(RequestHandlerType.PROCESS_MAKER_REQUESTS));
     }
 
 
