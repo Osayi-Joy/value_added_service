@@ -3,8 +3,8 @@ package com.digicore.billent.backoffice.service.modules.approvals.controller;
 
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
+import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService;
-import com.digicore.billent.data.lib.modules.common.util.ControllerResponseUtil;
 import com.digicore.request.processor.annotations.TokenValid;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
 import com.digicore.request.processor.processors.ApprovalRequestProcessor;
@@ -38,7 +38,7 @@ public class ApprovalController {
                 .id(requestId)
                 .build();
         if (approvalRequestProcessor != null)
-         return ControllerResponseUtil.buildSuccessResponse(approvalRequestProcessor.process(approvalRequestsDTO),null);
+         return ControllerResponse.buildSuccessResponse(approvalRequestProcessor.process(approvalRequestsDTO),null);
         else
             throw new ZeusRuntimeException(NO_MAKER_CHECKER);
     }
@@ -51,7 +51,7 @@ public class ApprovalController {
                 .id(requestId)
                 .build();
         if (approvalRequestProcessor != null)
-            return ControllerResponseUtil.buildSuccessResponse(approvalRequestProcessor.process(approvalRequestsDTO),null);
+            return ControllerResponse.buildSuccessResponse(approvalRequestProcessor.process(approvalRequestsDTO),null);
         else
             throw new ZeusRuntimeException(NO_MAKER_CHECKER);
     }
@@ -59,7 +59,7 @@ public class ApprovalController {
     @TokenValid()
     @GetMapping("get-{requestId}-request")
     public ResponseEntity<Object> getRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
-       return ControllerResponseUtil.buildSuccessResponse(backOfficeApprovalService.getRequest(requestId),null);
+       return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getRequest(requestId),null);
 
     }
 
@@ -67,7 +67,7 @@ public class ApprovalController {
     @TokenValid()
     @GetMapping("get-treated-request")
     public ResponseEntity<Object> getTreatedRequest(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(name = "pageSize", defaultValue = "5") int pageSize)  {
-        return ControllerResponseUtil.buildSuccessResponse(backOfficeApprovalService.getAllApprovalRequestsDTOS(pageNumber,pageSize),null);
+        return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getAllApprovalRequestsDTOS(pageNumber,pageSize),null);
 
 
     }
@@ -75,7 +75,7 @@ public class ApprovalController {
     @TokenValid()
     @GetMapping("get-pending-request")
     public ResponseEntity<Object> getPendingRequest(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(name = "pageSize", defaultValue = "5") int pageSize)  {
-        return ControllerResponseUtil.buildSuccessResponse(backOfficeApprovalService.getPendingApprovalRequestsDTOS(pageNumber,pageSize),null);
+        return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getPendingApprovalRequestsDTOS(pageNumber,pageSize),null);
 
 
     }

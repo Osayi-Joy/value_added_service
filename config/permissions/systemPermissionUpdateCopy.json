@@ -233,5 +233,10 @@
     "name": "edit-backoffice-user-details",
     "description": "This allows you to edit a  backoffice user details",
     "permissionType": "USERS"
+  },
+  {
+    "name": "view-roles",
+    "description": "This allows you to view available roles",
+    "permissionType": "ROLES"
   }
 ]
