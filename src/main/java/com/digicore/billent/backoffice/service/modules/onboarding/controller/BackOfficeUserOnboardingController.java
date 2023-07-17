@@ -30,6 +30,6 @@ public class BackOfficeUserOnboardingController {
     public ResponseEntity<Object> inviteUser(@Valid @RequestBody ThirdBaseRequestDTO backOfficeUserDTO)  {
     return ControllerResponse.buildSuccessResponse(
         backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
-        "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat("successfully"));
+        "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat(" successfully"));
     }
 }

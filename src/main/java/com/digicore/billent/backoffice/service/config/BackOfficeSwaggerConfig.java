@@ -16,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
+import org.springframework.context.annotation.Primary;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import java.util.List;
 
@@ -76,6 +79,13 @@ public class BackOfficeSwaggerConfig {
     @Bean
     public RequestHandlerPostProcessor requestHandlerPostProcessor() {
         return new RequestHandlerPostProcessor(List.of(RequestHandlerType.PROCESS_MAKER_REQUESTS));
+    }
+
+    @Bean
+    @Primary
+    @Description("Thymeleaf template engine with Spring integration")
+    public SpringTemplateEngine springTemplateEngine() {
+        return new SpringTemplateEngine();
     }
 
 

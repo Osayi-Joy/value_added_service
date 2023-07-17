@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.config;
 
 import com.auth0.jwt.JWT;
 import com.digicore.api.helper.exception.ZeusRuntimeException;
+import com.digicore.config.controller_advice.BillentControllerAdvice;
 import com.digicore.request.processor.enums.RequestHandlerType;
 import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -42,6 +44,7 @@ public class BillentBackOfficeServiceConfig {
   private final AuthenticationEntryPoint authEntryPoint;
 
 
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -61,16 +64,10 @@ public class BillentBackOfficeServiceConfig {
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt
-                            .jwtAuthenticationConverter(authenticationConverter())
-                    )
+                    .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())).authenticationEntryPoint(authEntryPoint)
             );
-    http .exceptionHandling(exceptionHandling ->
-            exceptionHandling.authenticationEntryPoint(authEntryPoint));
     return http.build();
   }
-
-
   protected JwtAuthenticationConverter authenticationConverter() {
     JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
     authoritiesConverter.setAuthorityPrefix("");
