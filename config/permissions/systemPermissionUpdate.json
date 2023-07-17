@@ -1,0 +1,247 @@
+[
+  {
+    "name": "view-dashboard",
+    "description": "This allows you to view dashboard modules and metrics",
+    "permissionType": "DASHBOARD"
+  },
+  {
+    "name": "view-transactions",
+    "description": "This allows you to view transaction modules",
+    "permissionType": "TRANSACTION"
+  },
+  {
+    "name": "view-transaction-details",
+    "description": "This allows you to view a transaction details",
+    "permissionType": "TRANSACTION"
+  },
+  {
+    "name": "export-transactions",
+    "description": "This allows you to export transactions histories",
+    "permissionType": "TRANSACTION"
+  },
+  {
+    "name": "view-biller-aggregators",
+    "description": "This allows you to view biller aggregator module",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "view-biller-aggregator-details",
+    "description": "This allows you to view a biller aggregator details",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "edit-biller-aggregator",
+    "description": "This allows you to edit a biller aggregator details",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "approve-edit-biller-aggregator",
+    "description": "This allows you to approve the edit a biller aggregator details request",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "disable-biller-aggregator",
+    "description": "This allows you to disable a biller aggregator",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "approve-disable-biller-aggregator",
+    "description": "This allows you to approve the disable a biller aggregator request",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "enable-biller-aggregator",
+    "description": "This allows you to enable a biller aggregator",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "approve-enable-biller-aggregator",
+    "description": "TThis allows you to approve the enable a biller aggregator request",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "refresh-billers-products-under-an-aggregator",
+    "description": "This allows you to trigger a refresh of billers and their products under a biller aggregator",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "approve-refresh-billers-products-under-an-aggregator",
+    "description": "This allows you to approve the refresh of billers and their products under a biller aggregator request",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
+    "name": "view-billers",
+    "description": "This allows you to view billers",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-billers-details",
+    "description": "This allows you to view a biller details",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "export-billers",
+    "description": "This allows you to export billers",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "edit-billers",
+    "description": "This allows you to edit a biller details",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-edit-billers",
+    "description": "This allows you to approve the edit a biller details request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "disable-biller",
+    "description": "This allows you to disable a biller",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-disable-biller",
+    "description": "This allows you to approve a disable biller request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "enable-biller",
+    "description": "This allows you to enable a biller",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-enable-biller",
+    "description": "This allows you to approve a disable biller request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-wallet-balance",
+    "description": "This allows you to view a biller wallet balance",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-wallet-transactions",
+    "description": "This allows you to view a biller wallet transactions",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-wallet-transaction-details",
+    "description": "This allows you to view a biller wallet transaction details",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "export-biller-wallet-transactions",
+    "description": "This allows you to export a biller wallet transactions",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-products",
+    "description": "This allows you to view a biller products",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-product-details",
+    "description": "This allows you to view a biller product details",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "export-biller-products",
+    "description": "This allows you to export biller products",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "enable-biller-product",
+    "description": "This allows you to enable a biller product",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-enable-biller-product",
+    "description": "This allows you to approve a enable biller product request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "disable-biller-product",
+    "description": "This allows you to disable a biller product",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-disable-biller-product",
+    "description": "This allows you to approve  disable a biller product request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-users",
+    "description": "This allows you to view a biller users",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-biller-user-details",
+    "description": "This allows you to view a biller user details",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "export-biller-users",
+    "description": "This allows you to export a biller users",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "enable-biller-user",
+    "description": "This allows you to enable a biller user",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-enable-biller-user",
+    "description": "This allows you to approve enable a biller user request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "disable-biller-user",
+    "description": "This allows you to disable a biller user",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "approve-disable-biller-user",
+    "description": "This allows you to approve disable a biller user request",
+    "permissionType": "BILLERS"
+  },
+  {
+    "name": "view-backoffice-users",
+    "description": "This allows you to view all backoffice users",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "view-backoffice-user-details",
+    "description": "This allows you to view a backoffice user details",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "export-backoffice-users",
+    "description": "This allows you to export backoffice users",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "invite-backoffice-user",
+    "description": "This allows you to invite a new backoffice user",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "approve-invite-backoffice-user",
+    "description": "This allows you to approve invite a new backoffice user request",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "edit-backoffice-user-details",
+    "description": "This allows you to edit a  backoffice user details",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "resend-invite-email",
+    "description": "This allows you to resend an invite email",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "view-roles",
+    "description": "This allows you to view available roles",
+    "permissionType": "ROLES"
+  }
+]
