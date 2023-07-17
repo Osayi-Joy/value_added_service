@@ -49,13 +49,12 @@ public class TestHelper {
      ApiResponseJson<?> response = ClientUtil.getGsonMapper().fromJson(result.getResponse().getContentAsString().trim(),ApiResponseJson.class);
      assertTrue(response.isSuccess());
 
-     String access = response.getData().toString().trim();
 
      String loginResponseInString = ClientUtil.getGsonMapper().toJson(response.getData());
 
      LoginResponse loginResponse = ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
 
-     return loginResponse.getAccessToken();
+     return "Bearer ".concat(loginResponse.getAccessToken());
  }
 
 }
