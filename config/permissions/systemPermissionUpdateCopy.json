@@ -235,6 +235,11 @@
     "permissionType": "USERS"
   },
   {
+    "name": "resend-invite-email",
+    "description": "This allows you to resend an invite email",
+    "permissionType": "USERS"
+  },
+  {
     "name": "view-roles",
     "description": "This allows you to view available roles",
     "permissionType": "ROLES"

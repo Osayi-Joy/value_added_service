@@ -2,12 +2,14 @@ package com.digicore.billent.backoffice.service.modules.onboarding.controller;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
+import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.registhentication.common.dto.request.ThirdBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.*;
@@ -25,6 +27,7 @@ public class BackOfficeUserOnboardingController {
 
     @TokenValid()
     @PostMapping("invite-user")
+    @PreAuthorize("hasAuthority('invite-backoffice-user')")
     public ResponseEntity<Object> inviteUser(@Valid @RequestBody ThirdBaseRequestDTO backOfficeUserDTO)  {
     return ControllerResponse.buildSuccessResponse(
         backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
@@ -32,9 +35,10 @@ public class BackOfficeUserOnboardingController {
     }
 
     @TokenValid()
+    @PreAuthorize("hasAuthority('resend-invite-email')")
     @PostMapping("resend-invitation")
-    public ResponseEntity<Object> resendInvitation(@RequestParam String firstName,@RequestParam String email)  {
-        backOfficeUserOnboardingService.resendInvitation(email,firstName);
+    public ResponseEntity<Object> resendInvitation(@Valid @RequestBody InviteBodyDTO inviteBodyDTO)  {
+        backOfficeUserOnboardingService.resendInvitation(inviteBodyDTO);
         return ControllerResponse.buildSuccessResponse();
     }
 }

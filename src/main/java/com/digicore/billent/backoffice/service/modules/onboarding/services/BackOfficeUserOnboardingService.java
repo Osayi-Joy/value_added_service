@@ -2,8 +2,10 @@ package com.digicore.billent.backoffice.service.modules.onboarding.services;
 
 import com.digicore.billent.backoffice.service.modules.authentication.services.BackOfficeUserAuthenticationService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
+import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -28,35 +30,38 @@ public class BackOfficeUserOnboardingService {
     private final RegistrationService<UserProfileDTO, UserRegistrationDTO> registrationService;
     private final PasswordResetService passwordResetService;
     private final NotificationDispatcher notificationDispatcher;
+    private final PropertyConfig propertyConfig;
     @MakerChecker(checkerPermission = "approve-invite-backoffice-user", makerPermission = "invite-backoffice-user",
             requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO")
     public Object onboardNewBackOfficeUser(Object requestDTO, Object... args){
         UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) requestDTO;
         userRegistrationDTO.setPassword(IDGeneratorUtil.generateTempId());
         UserProfileDTO result = registrationService.createProfile(userRegistrationDTO);
-        notificationDispatcher.dispatchEmail(
-                NotificationServiceRequest.builder()
-                        .notificationSubject("Invitation to the backoffice Biller Platform")
-                        .recipients(List.of(result.getEmail()))
-                        .dateTime(LocalDateTime.now())
-                        .userCode(result.getPassword())
-                        .firstName(result.getFirstName())
-                        .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
-                        .build());
+    notificationDispatcher.dispatchEmail(
+        NotificationServiceRequest.builder()
+            .notificationSubject(propertyConfig.getInviteUserSubject())
+            .recipients(List.of(result.getEmail()))
+            .dateTime(LocalDateTime.now())
+            .userCode(result.getPassword())
+            .userRole(result.getAssignedRole())
+            .firstName(result.getFirstName())
+            .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
+            .build());
 
         return result;
     }
 
-    public void resendInvitation(String email, String firstName){
+    public void resendInvitation(InviteBodyDTO inviteBodyDTO){
         String password = IDGeneratorUtil.generateTempId();
-        passwordResetService.updateAccountPasswordWithoutVerification(email,password);
+        passwordResetService.updateAccountPasswordWithoutVerification(inviteBodyDTO.getEmail(),password);
         notificationDispatcher.dispatchEmail(
                 NotificationServiceRequest.builder()
-                        .notificationSubject("Invitation to the backoffice Biller Platform")
-                        .recipients(List.of(email))
+                        .notificationSubject(propertyConfig.inviteUserSubject)
+                        .recipients(List.of(inviteBodyDTO.getEmail()))
                         .dateTime(LocalDateTime.now())
                         .userCode(password)
-                        .firstName(firstName)
+                        .userRole(inviteBodyDTO.getAssignedRole())
+                        .firstName(inviteBodyDTO.getFirstName())
                         .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
                         .build());
     }

@@ -3,6 +3,8 @@ package com.digicore.billent.backoffice.service.config;
 import com.auth0.jwt.JWT;
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.config.controller_advice.BillentControllerAdvice;
+//import com.digicore.config.security.CustomPermissionEvaluator;
+import com.digicore.config.security.DelegatedAuthenticationEntryPoint;
 import com.digicore.request.processor.enums.RequestHandlerType;
 import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -36,12 +42,13 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 @EnableWebSecurity
 @Slf4j
 @RequiredArgsConstructor
-public class BillentBackOfficeServiceConfig {
+@EnableMethodSecurity
+public class BillentBackOfficeServiceConfig  {
 
   public static final String AUTHORITIES_CLAIM_NAME = "permissions";
 
   @Qualifier("delegatedAuthenticationEntryPoint")
-  private final AuthenticationEntryPoint authEntryPoint;
+  private final DelegatedAuthenticationEntryPoint authEntryPoint;
 
 
 
@@ -64,7 +71,7 @@ public class BillentBackOfficeServiceConfig {
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())).authenticationEntryPoint(authEntryPoint)
+                    .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())).authenticationEntryPoint(authEntryPoint).accessDeniedHandler(authEntryPoint)
             );
     return http.build();
   }
@@ -90,6 +97,14 @@ public class BillentBackOfficeServiceConfig {
   public JWT jwt() {
     return new JWT();
   }
+
+//  @Bean
+//  static MethodSecurityExpressionHandler createExpressionHandler() {
+//    DefaultMethodSecurityExpressionHandler expressionHandler =
+//            new DefaultMethodSecurityExpressionHandler();
+//    expressionHandler.setPermissionEvaluator(new CustomPermissionEvaluator());
+//    return expressionHandler;
+//  }
 
 
 }
