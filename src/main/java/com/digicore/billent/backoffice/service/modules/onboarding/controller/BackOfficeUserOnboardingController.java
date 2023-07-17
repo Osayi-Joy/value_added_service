@@ -8,10 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.*;
 
@@ -25,11 +22,19 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 @RequiredArgsConstructor
 public class BackOfficeUserOnboardingController {
     private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
+
     @TokenValid()
     @PostMapping("invite-user")
     public ResponseEntity<Object> inviteUser(@Valid @RequestBody ThirdBaseRequestDTO backOfficeUserDTO)  {
     return ControllerResponse.buildSuccessResponse(
         backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
         "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat(" successfully"));
+    }
+
+    @TokenValid()
+    @PostMapping("resend-invitation")
+    public ResponseEntity<Object> resendInvitation(@RequestParam String firstName,@RequestParam String email)  {
+        backOfficeUserOnboardingService.resendInvitation(email,firstName);
+        return ControllerResponse.buildSuccessResponse();
     }
 }

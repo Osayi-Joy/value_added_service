@@ -1,10 +1,13 @@
 package com.digicore.billent.backoffice.service.modules.onboarding.services;
 
+import com.digicore.billent.backoffice.service.modules.authentication.services.BackOfficeUserAuthenticationService;
+import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.authentication.services.PasswordResetService;
 import com.digicore.registhentication.common.dto.response.ProfileDTO;
 import com.digicore.registhentication.registration.services.RegistrationService;
 import com.digicore.registhentication.util.IDGeneratorUtil;
@@ -23,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BackOfficeUserOnboardingService {
     private final RegistrationService<UserProfileDTO, UserRegistrationDTO> registrationService;
+    private final PasswordResetService passwordResetService;
     private final NotificationDispatcher notificationDispatcher;
     @MakerChecker(checkerPermission = "approve-invite-backoffice-user", makerPermission = "invite-backoffice-user",
             requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO")
@@ -41,5 +45,19 @@ public class BackOfficeUserOnboardingService {
                         .build());
 
         return result;
+    }
+
+    public void resendInvitation(String email, String firstName){
+        String password = IDGeneratorUtil.generateTempId();
+        passwordResetService.updateAccountPasswordWithoutVerification(email,password);
+        notificationDispatcher.dispatchEmail(
+                NotificationServiceRequest.builder()
+                        .notificationSubject("Invitation to the backoffice Biller Platform")
+                        .recipients(List.of(email))
+                        .dateTime(LocalDateTime.now())
+                        .userCode(password)
+                        .firstName(firstName)
+                        .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
+                        .build());
     }
 }
