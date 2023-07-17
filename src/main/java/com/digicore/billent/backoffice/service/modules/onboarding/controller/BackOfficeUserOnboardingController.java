@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.onboarding.controller;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
 import com.digicore.registhentication.common.dto.request.ThirdBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import jakarta.validation.Valid;
@@ -26,17 +27,17 @@ public class BackOfficeUserOnboardingController {
     private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
 
     @TokenValid()
-    @PostMapping("invite-user")
+    @PostMapping("user-invitation")
     @PreAuthorize("hasAuthority('invite-backoffice-user')")
-    public ResponseEntity<Object> inviteUser(@Valid @RequestBody ThirdBaseRequestDTO backOfficeUserDTO)  {
+    public ResponseEntity<Object> inviteUser(@Valid @RequestBody UserRegistrationDTO backOfficeUserDTO)  {
     return ControllerResponse.buildSuccessResponse(
         backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
         "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat(" successfully"));
     }
 
     @TokenValid()
+    @PostMapping("resending-of-user-invitation")
     @PreAuthorize("hasAuthority('resend-invite-email')")
-    @PostMapping("resend-invitation")
     public ResponseEntity<Object> resendInvitation(@Valid @RequestBody InviteBodyDTO inviteBodyDTO)  {
         backOfficeUserOnboardingService.resendInvitation(inviteBodyDTO);
         return ControllerResponse.buildSuccessResponse();
