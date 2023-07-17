@@ -45,13 +45,16 @@ public class TestHelper {
      MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
                      .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO)).contentType(MediaType.APPLICATION_JSON))
              .andExpect(status().isOk()).andReturn();
-     log.trace("the result {}", result.getResponse().getContentAsString());
 
-     ApiResponseJson<?> response = ClientUtil.getGsonMapper().fromJson(result.getResponse().getContentAsString(),ApiResponseJson.class);
+     ApiResponseJson<?> response = ClientUtil.getGsonMapper().fromJson(result.getResponse().getContentAsString().trim(),ApiResponseJson.class);
      assertTrue(response.isSuccess());
-     log.trace("the result again {}", response);
-     LoginResponse loginResponse = ClientUtil.getGsonMapper().fromJson(String.valueOf(response.getData()), LoginResponse.class);
-     log.trace("the result againnnnnn {}", loginResponse);
+
+     String access = response.getData().toString().trim();
+
+     String loginResponseInString = ClientUtil.getGsonMapper().toJson(response.getData());
+
+     LoginResponse loginResponse = ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
+
      return loginResponse.getAccessToken();
  }
 
