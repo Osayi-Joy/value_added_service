@@ -91,10 +91,13 @@ Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionali
 
 <details><summary>Merge Request Rules</summary>
 
--  Ensure to use the development template for your merge request description. see path to the template on the project root .gitlab/merge_request_templates/development.md
+- Ensure to use the development template for your merge request description. see path to the template on the project root .gitlab/merge_request_templates/development.md
 
 - For every issue/ticket, kindly check out a new branch from the main branch, this new branch name should follow this convention 
 {milestone}{issue-no} e.g **authentication-module-#1**
+
+- Ensure to include the right milestone and label in your MR.
+Labels are used to track current status of an issue/ticket so it's important you look at the project defined label [here](https://gitlab.com/teamdigicore/billent-backoffice-service/-/labels)
 
 </details>
 
