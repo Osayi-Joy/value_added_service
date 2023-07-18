@@ -1,38 +1,25 @@
 package com.digicore.billent.backoffice.service.config;
 
+import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUTHENTICATION_API_V1;
+
 import com.auth0.jwt.JWT;
-import com.digicore.api.helper.exception.ZeusRuntimeException;
-import com.digicore.config.controller_advice.BillentControllerAdvice;
-//import com.digicore.config.security.CustomPermissionEvaluator;
 import com.digicore.config.security.DelegatedAuthenticationEntryPoint;
-import com.digicore.request.processor.enums.RequestHandlerType;
-import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
-
-import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUTHENTICATION_API_V1;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -43,38 +30,42 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 @Slf4j
 @RequiredArgsConstructor
 @EnableMethodSecurity
-public class BillentBackOfficeServiceConfig  {
+public class BillentBackOfficeServiceConfig {
 
   public static final String AUTHORITIES_CLAIM_NAME = "permissions";
 
   @Qualifier("delegatedAuthenticationEntryPoint")
   private final DelegatedAuthenticationEntryPoint authEntryPoint;
 
-
-
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(AUTHENTICATION_API_V1.concat("**"),
-                            "/swagger-ui.html",
-                            "/documentation/**",
-                            "/documentation/v3/api-docs/swagger-config",
-                            "/documentation/v3/api-docs/swagger-config/**",
-                            "/swagger-ui/**",
-                            "/v3/api-docs/**",
-                            "/documentation/v3/api-docs",
-                            "/download-license",
-                            "/actuator/**").permitAll()
-                    .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter())).authenticationEntryPoint(authEntryPoint).accessDeniedHandler(authEntryPoint)
-            );
+    http.csrf(AbstractHttpConfigurer::disable)
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers(
+                        AUTHENTICATION_API_V1.concat("**"),
+                        "/swagger-ui.html",
+                        "/documentation/**",
+                        "/documentation/v3/api-docs/swagger-config",
+                        "/documentation/v3/api-docs/swagger-config/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/documentation/v3/api-docs",
+                        "/download-license",
+                        "/actuator/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .oauth2ResourceServer(
+            oauth2 ->
+                oauth2
+                    .jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter()))
+                    .authenticationEntryPoint(authEntryPoint)
+                    .accessDeniedHandler(authEntryPoint));
     return http.build();
   }
+
   protected JwtAuthenticationConverter authenticationConverter() {
     JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
     authoritiesConverter.setAuthorityPrefix("");
@@ -83,6 +74,7 @@ public class BillentBackOfficeServiceConfig  {
     converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
     return converter;
   }
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -97,14 +89,4 @@ public class BillentBackOfficeServiceConfig  {
   public JWT jwt() {
     return new JWT();
   }
-
-//  @Bean
-//  static MethodSecurityExpressionHandler createExpressionHandler() {
-//    DefaultMethodSecurityExpressionHandler expressionHandler =
-//            new DefaultMethodSecurityExpressionHandler();
-//    expressionHandler.setPermissionEvaluator(new CustomPermissionEvaluator());
-//    return expressionHandler;
-//  }
-
-
 }

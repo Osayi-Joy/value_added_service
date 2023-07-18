@@ -80,8 +80,8 @@ public class BackOfficeApprovalService {
     private static PaginatedResponseDTO<ApprovalRequestsDTO> getApprovalRequestsDTOPaginatedUserApiModel(Map<String, Object> approvalRequests, List<ApprovalRequestsDTO> approvalRequestsDTOS) {
         PaginatedResponseDTO<ApprovalRequestsDTO> approvalRequestsDTOPaginatedUserApiModel = new PaginatedResponseDTO<>();
         approvalRequestsDTOPaginatedUserApiModel.setContent(approvalRequestsDTOS);
-        approvalRequestsDTOPaginatedUserApiModel.setLastPage((Boolean) approvalRequests.get("isLastPage"));
-        approvalRequestsDTOPaginatedUserApiModel.setFirstPage((Boolean) approvalRequests.get("isFirstPage"));
+        approvalRequestsDTOPaginatedUserApiModel.setIsFirstPage((Boolean) approvalRequests.get("isLastPage"));
+        approvalRequestsDTOPaginatedUserApiModel.setIsLastPage((Boolean) approvalRequests.get("isFirstPage"));
         approvalRequestsDTOPaginatedUserApiModel.setTotalItems((Long) approvalRequests.get("totalItems"));
         approvalRequestsDTOPaginatedUserApiModel.setCurrentPage((Integer) approvalRequests.get("currentPage"));
         approvalRequestsDTOPaginatedUserApiModel.setTotalPages((Integer) approvalRequests.get("totalPages"));

@@ -3,11 +3,19 @@ package com.digicore.billent.backoffice.service.modules.approvals.controller;
 
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
+import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService;
+import com.digicore.billent.backoffice.service.util.SwaggerDocUtil;
 import com.digicore.request.processor.annotations.TokenValid;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
 import com.digicore.request.processor.processors.ApprovalRequestProcessor;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService.NO_MAKER_CHECKER;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 
 /**
  * @author Oluwatobi Ogunwuyi
@@ -24,6 +33,8 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 @RestController
 @RequestMapping(APPROVAL_API_V1)
 @RequiredArgsConstructor
+@Tag(name = APPROVAL_CONTROLLER_TITLE,
+        description = APPROVAL_CONTROLLER_DESCRIPTION)
 public class ApprovalController {
     //todo this controller was copied from another project and should be refactored properly
 
@@ -34,6 +45,7 @@ public class ApprovalController {
 
     @TokenValid()
     @PostMapping("treat-request-{requestId}")
+    @Operation(summary = APPROVAL_CONTROLLER_APPROVE_REQUEST_TITLE,description = APPROVAL_CONTROLLER_APPROVE_REQUEST_DESCRIPTION)
     public ResponseEntity<Object> approveRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
         ApprovalRequestsDTO approvalRequestsDTO = ApprovalRequestsDTO.builder()
                 .approvalRequestType("approveRequest")
@@ -47,6 +59,7 @@ public class ApprovalController {
 
     @TokenValid()
     @PostMapping("decline-request-{requestId}")
+    @Operation(summary = APPROVAL_CONTROLLER_DECLINE_REQUEST_TITLE,description = APPROVAL_CONTROLLER_DECLINE_REQUEST_DESCRIPTION)
     public ResponseEntity<Object> declineRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
         ApprovalRequestsDTO approvalRequestsDTO = ApprovalRequestsDTO.builder()
                 .approvalRequestType("declineRequest")
