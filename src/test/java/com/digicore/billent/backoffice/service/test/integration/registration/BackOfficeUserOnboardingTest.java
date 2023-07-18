@@ -13,9 +13,6 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
-import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.otp.service.NotificationDispatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +48,7 @@ class BackOfficeUserOnboardingTest {
                     .content(
                         ClientUtil.getGsonMapper().toJson(testHelper.createBackOfficeProfile()))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .header("Authorization", testHelper.retrieveMakerAccessToken()))
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
             .andExpect(status().isOk())
             .andReturn();
     ApiResponseJson<?> response =
@@ -76,7 +73,7 @@ class BackOfficeUserOnboardingTest {
                                     .content(
                                             ClientUtil.getGsonMapper().toJson(inviteBodyDTO))
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .header("Authorization", testHelper.retrieveMakerAccessToken()))
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
                     .andExpect(status().isOk())
                     .andReturn();
     ApiResponseJson<?> response =

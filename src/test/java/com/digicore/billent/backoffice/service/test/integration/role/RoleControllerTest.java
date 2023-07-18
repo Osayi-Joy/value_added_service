@@ -10,10 +10,8 @@ import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.otp.service.NotificationDispatcher;
-import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -26,9 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,7 +55,7 @@ class RoleControllerTest {
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all-roles")
                         .param("pageNumber", String.valueOf(pageNumber))
                         .param("pageSize", String.valueOf(pageSize))
-                        .header("Authorization",testHelper.retrieveMakerAccessToken()))
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
                 .andReturn();
 

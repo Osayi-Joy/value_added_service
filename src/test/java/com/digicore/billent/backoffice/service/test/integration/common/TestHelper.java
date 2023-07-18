@@ -32,13 +32,16 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @Component
 @Slf4j
 public class TestHelper {
+  /*
+    This class is contains already defined methods that would prove useful for integration test
+  */
   private final MockMvc mockMvc;
 
   private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-
-
-  public TestHelper(MockMvc mockMvc,  BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
+  public TestHelper(
+      MockMvc mockMvc,
+      BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
     this.mockMvc = mockMvc;
     this.backOfficeUserAuthService = backOfficeUserAuthService;
   }
@@ -46,18 +49,21 @@ public class TestHelper {
   @NotNull
   private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
     ApiResponseJson<?> response =
-            ClientUtil.getGsonMapper()
-                    .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
+        ClientUtil.getGsonMapper()
+            .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
     assertTrue(response.isSuccess());
 
     String loginResponseInString = ClientUtil.getGsonMapper().toJson(response.getData());
 
     LoginResponse loginResponse =
-            ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
+        ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
     return "Bearer ".concat(loginResponse.getAccessToken());
   }
 
-  public String retrieveMakerAccessToken() throws Exception {
+  /*
+    This method is useful for getting  a valid jwt for integration test
+  */
+  public String retrieveValidAccessToken() throws Exception {
     LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
     loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
     loginRequestDTO.setPassword(SYSTEM_DEFAULT_PASSWORD);
@@ -65,36 +71,20 @@ public class TestHelper {
     loginRequestDTO.setUsername(MAKER_EMAIL);
 
     MvcResult result =
-            mockMvc
-                    .perform(
-                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
-                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
-                                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andReturn();
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
+                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andReturn();
 
     return getAccessToken(result);
   }
 
-  public String retrieveCheckerAccessToken() throws Exception {
-    LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
-    loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
-    loginRequestDTO.setPassword(SYSTEM_DEFAULT_PASSWORD);
-    loginRequestDTO.setEmail(CHECKER_EMAIL);
-    loginRequestDTO.setUsername(CHECKER_EMAIL);
-
-    MvcResult result =
-            mockMvc
-                    .perform(
-                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
-                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
-                                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andReturn();
-
-    return getAccessToken(result);
-  }
-
+  /*
+    This method is useful for creating user registration object
+  */
   public UserRegistrationDTO createBackOfficeProfile() {
     UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
     userRegistrationDTO.setEmail("tobiogunwuyi@gmail.com");
@@ -106,15 +96,10 @@ public class TestHelper {
     return userRegistrationDTO;
   }
 
-//  public void updateMakerRoleAddNeededPermission(String permissionName) {
-//    PermissionDTO permissionDTO = new PermissionDTO();
-//    permissionDTO.setName(permissionName);
-//    RoleDTO roleDTO = new RoleDTO();
-//    roleDTO.setName(MAKER_ROLE_NAME);
-//    roleDTO.setPermissions(Collections.singleton(permissionDTO));
-//    RoleDTO roleDTOCreated = roleService.updateExistingRole(roleDTO);
-//  }
-
+  /*
+    This method is useful for updating the user permission to the
+    needed permission required to call an endpoint
+  */
   public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setName(permissionName);
@@ -123,11 +108,20 @@ public class TestHelper {
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
     backOfficeUserAuthService.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
+
+  /*
+    This method is useful for approving a request going through maker checker,
+    it is important to note that the requestId is incremental by 1.
+    So always check the previous test case that made call last to get the last used requestId
+    and increase it by 1
+  */
   public void approvalRequest(Long requestId) throws Exception {
-
-    mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId)).header("Authorization",retrieveCheckerAccessToken()))
-            .andExpect(status().isOk()).andReturn();
-
+    updateMakerSelfPermissionByAddingNeededPermission("approve-invite-backoffice-user");
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
+                .header("Authorization", retrieveValidAccessToken()))
+        .andExpect(status().isOk())
+        .andReturn();
   }
-
 }
