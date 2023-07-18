@@ -97,6 +97,7 @@ public class TestHelper {
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setName(permissionName);
     BackOfficeUserAuthProfileDTO backOfficeUserAuthProfileDTO = new BackOfficeUserAuthProfileDTO();
+    backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
     backOfficeUserAuthService.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
