@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService.NO_MAKER_CHECKER;
+import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
 
 /**
  * @author Oluwatobi Ogunwuyi
@@ -21,6 +22,7 @@ import static com.digicore.billent.backoffice.service.modules.approvals.service.
  */
 
 @RestController
+@RequestMapping(APPROVAL_API_V1)
 @RequiredArgsConstructor
 public class ApprovalController {
     //todo this controller was copied from another project and should be refactored properly
@@ -31,7 +33,7 @@ public class ApprovalController {
    private final BackOfficeApprovalService backOfficeApprovalService;
 
     @TokenValid()
-    @PostMapping("approve-{requestId}-request")
+    @PostMapping("treat-request-{requestId}")
     public ResponseEntity<Object> approveRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
         ApprovalRequestsDTO approvalRequestsDTO = ApprovalRequestsDTO.builder()
                 .approvalRequestType("approveRequest")
@@ -44,7 +46,7 @@ public class ApprovalController {
     }
 
     @TokenValid()
-    @PostMapping("decline-{requestId}-request")
+    @PostMapping("decline-request-{requestId}")
     public ResponseEntity<Object> declineRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
         ApprovalRequestsDTO approvalRequestsDTO = ApprovalRequestsDTO.builder()
                 .approvalRequestType("declineRequest")
@@ -57,7 +59,7 @@ public class ApprovalController {
     }
 
     @TokenValid()
-    @GetMapping("get-{requestId}-request")
+    @GetMapping("get-request-{requestId}")
     public ResponseEntity<Object> getRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
        return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getRequest(requestId),null);
 

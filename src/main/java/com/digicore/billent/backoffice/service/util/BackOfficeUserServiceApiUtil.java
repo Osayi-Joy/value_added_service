@@ -18,6 +18,9 @@ public class BackOfficeUserServiceApiUtil {
  //Onboarding API versioning
  public static final String ONBOARDING_API_V1 = API_V1 + "onboarding/process/";
 
+ //Approval API versioning
+ public static final String APPROVAL_API_V1 = API_V1 + "approval/process/";
+
  //Roles API versioning
  public static final String ROLES_API_V1 = API_V1 + "role/process/";
 }

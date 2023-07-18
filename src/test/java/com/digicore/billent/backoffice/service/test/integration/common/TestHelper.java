@@ -1,5 +1,6 @@
 package com.digicore.billent.backoffice.service.test.integration.common;
 
+import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUTHENTICATION_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,8 +18,11 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.enums.AuthenticationType;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
@@ -59,6 +63,30 @@ public class TestHelper {
             .andExpect(status().isOk())
             .andReturn();
 
+    return getAccessToken(result);
+  }
+
+  public String retrieveCheckerAccessToken() throws Exception {
+    LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+    loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
+    loginRequestDTO.setPassword(SYSTEM_DEFAULT_PASSWORD);
+    loginRequestDTO.setEmail(CHECKER_EMAIL);
+    loginRequestDTO.setUsername(CHECKER_EMAIL);
+
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
+                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    return getAccessToken(result);
+  }
+
+  @NotNull
+  private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
@@ -78,7 +106,7 @@ public class TestHelper {
     userRegistrationDTO.setPhoneNumber("07087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
-    userRegistrationDTO.setAssignedRole("test-view-role");
+    userRegistrationDTO.setAssignedRole(MAKER_ROLE_NAME);
     userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
     return userRegistrationDTO;
   }
@@ -101,9 +129,11 @@ public class TestHelper {
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
     backOfficeUserAuthService.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
-  //
-  //    public String createCheckerRole(){
-  //
-  //    }
+   public void approvalRequest(Long requestId) throws Exception {
+
+     mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-" + requestId + "-request")).header("Authorization",retrieveCheckerAccessToken()))
+            .andExpect(status().isOk()).andReturn();
+
+  }
 
 }
