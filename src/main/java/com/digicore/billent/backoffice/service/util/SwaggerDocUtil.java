@@ -15,6 +15,15 @@ public class SwaggerDocUtil {
  public static final String APPROVAL_CONTROLLER_DECLINE_REQUEST_TITLE = "Decline pending request";
  public static final String APPROVAL_CONTROLLER_DECLINE_REQUEST_DESCRIPTION = "This API is used to decline a pending request.";
 
+ public static final String APPROVAL_CONTROLLER_GET_REQUEST_TITLE = "Get a single pending request";
+ public static final String APPROVAL_CONTROLLER_GET_REQUEST_DESCRIPTION = "This API is used to get a pending request.";
+
+ public static final String APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE = "Get treated request";
+ public static final String APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION = "This API is used to get all treated request.";
+
+ public static final String APPROVAL_CONTROLLER_GET_PENDING_REQUEST_TITLE = "Get all pending request";
+ public static final String APPROVAL_CONTROLLER_GET_PENDING_REQUEST_DESCRIPTION = "This API is used to get all pending request.";
+
 }
 
 

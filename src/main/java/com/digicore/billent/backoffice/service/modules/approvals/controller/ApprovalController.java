@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService.NO_MAKER_CHECKER;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 
 /**
  * @author Oluwatobi Ogunwuyi
@@ -73,6 +74,7 @@ public class ApprovalController {
 
     @TokenValid()
     @GetMapping("get-request-{requestId}")
+    @Operation(summary = APPROVAL_CONTROLLER_GET_REQUEST_TITLE,description = APPROVAL_CONTROLLER_GET_REQUEST_DESCRIPTION)
     public ResponseEntity<Object> getRequest(@PathVariable Long requestId) throws ZeusRuntimeException{
        return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getRequest(requestId),null);
 
@@ -81,7 +83,8 @@ public class ApprovalController {
 
     @TokenValid()
     @GetMapping("get-treated-request")
-    public ResponseEntity<Object> getTreatedRequest(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(name = "pageSize", defaultValue = "5") int pageSize)  {
+    @Operation(summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
+    public ResponseEntity<Object> getTreatedRequest(@RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber, @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize)  {
         return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getAllApprovalRequestsDTOS(pageNumber,pageSize),null);
 
 
@@ -89,7 +92,8 @@ public class ApprovalController {
 
     @TokenValid()
     @GetMapping("get-pending-request")
-    public ResponseEntity<Object> getPendingRequest(@RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(name = "pageSize", defaultValue = "5") int pageSize)  {
+    @Operation(summary = APPROVAL_CONTROLLER_GET_PENDING_REQUEST_TITLE,description = APPROVAL_CONTROLLER_GET_PENDING_REQUEST_DESCRIPTION)
+    public ResponseEntity<Object> getPendingRequest(@RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber, @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize)  {
         return ControllerResponse.buildSuccessResponse(backOfficeApprovalService.getPendingApprovalRequestsDTOS(pageNumber,pageSize),null);
 
 

@@ -11,14 +11,10 @@ import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackO
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
-import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.enums.AuthenticationType;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +43,20 @@ public class TestHelper {
     this.backOfficeUserAuthService = backOfficeUserAuthService;
   }
 
+  @NotNull
+  private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
+    ApiResponseJson<?> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
+    assertTrue(response.isSuccess());
+
+    String loginResponseInString = ClientUtil.getGsonMapper().toJson(response.getData());
+
+    LoginResponse loginResponse =
+            ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
+    return "Bearer ".concat(loginResponse.getAccessToken());
+  }
+
   public String retrieveMakerAccessToken() throws Exception {
     LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
     loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
@@ -55,13 +65,13 @@ public class TestHelper {
     loginRequestDTO.setUsername(MAKER_EMAIL);
 
     MvcResult result =
-        mockMvc
-            .perform(
-                MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
-                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
-                    .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
+                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
 
     return getAccessToken(result);
   }
@@ -83,21 +93,6 @@ public class TestHelper {
                     .andReturn();
 
     return getAccessToken(result);
-  }
-
-  @NotNull
-  private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
-    ApiResponseJson<?> response =
-        ClientUtil.getGsonMapper()
-            .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
-    assertTrue(response.isSuccess());
-
-    String loginResponseInString = ClientUtil.getGsonMapper().toJson(response.getData());
-
-    LoginResponse loginResponse =
-        ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
-    log.trace("the access token -> {}",loginResponse.getAccessToken());
-    return "Bearer ".concat(loginResponse.getAccessToken());
   }
 
   public UserRegistrationDTO createBackOfficeProfile() {
@@ -128,9 +123,9 @@ public class TestHelper {
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
     backOfficeUserAuthService.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
-   public void approvalRequest(Long requestId) throws Exception {
+  public void approvalRequest(Long requestId) throws Exception {
 
-     mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId)).header("Authorization",retrieveCheckerAccessToken()))
+    mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId)).header("Authorization",retrieveCheckerAccessToken()))
             .andExpect(status().isOk()).andReturn();
 
   }
