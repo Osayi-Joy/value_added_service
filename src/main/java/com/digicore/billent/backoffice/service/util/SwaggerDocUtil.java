@@ -36,6 +36,16 @@ public class SwaggerDocUtil {
  public static final String AUTHENTICATION_CONTROLLER_LOGIN_TITLE = "Authenticate a user";
  public static final String AUTHENTICATION_CONTROLLER_LOGIN_DESCRIPTION = "This API is used to authenticate a user.";
 
+ //Onboarding Controller Doc
+ public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";
+ public static final String ONBOARDING_CONTROLLER_DESCRIPTION = "This module contains all required APIs to invite new users into the system.";
+
+ public static final String ONBOARDING_CONTROLLER_INVITE_USER_TITLE = "Invite a user to the backoffice platform, this module goes through maker checker process.";
+ public static final String ONBOARDING_CONTROLLER_INVITE_USER_DESCRIPTION = "This API is used to invite a user to the backoffice platform, it sends an invite mail to the user.";
+
+ public static final String ONBOARDING_CONTROLLER_RE_INVITE_USER_TITLE = "Resend invitation to an already invited user";
+ public static final String ONBOARDING_CONTROLLER_RE_INVITE_USER_DESCRIPTION = "This API is used to resend invitation to an already invited user.This is useful for when they didn't get the previous invite mail";
+
 }
 
 
