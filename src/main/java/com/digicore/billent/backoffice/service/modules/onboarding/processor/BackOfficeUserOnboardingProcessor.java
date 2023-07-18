@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @RequestHandler(type = RequestHandlerType.PROCESS_MAKER_REQUESTS)
 @RequiredArgsConstructor
 public class BackOfficeUserOnboardingProcessor {
-    private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
+  private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
 
-    @RequestType(name = "onboardNewBackOfficeUser")
-    public Object onboardNewBackOfficeUser(Object request){
-        return backOfficeUserOnboardingService.onboardNewBackOfficeUser(request);
-    }
+  @RequestType(name = "onboardNewBackOfficeUser")
+  public Object onboardNewBackOfficeUser(Object request) {
+    return backOfficeUserOnboardingService.onboardNewBackOfficeUser(request);
+  }
 }
