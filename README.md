@@ -1,12 +1,4 @@
 # Billent-BackOffice-Service
-
-## Test 
-To run test use this maven command
-
- `mvn test -Dspring.profiles.active=test`
-
-***
-
 ## Name
 Billent-BackOffice-Service
 
@@ -38,6 +30,26 @@ The versioning rules is based on the sequential increment of each number, based 
 
 ## Installation
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+
+## Test 
+To run all the test supplied in the project use this maven command
+
+ `mvn test -Dspring.profiles.active=test`
+
+To run specific class test supplied in the project use this maven command 
+
+`mvn test -Dspring.profiles.active=test -Dtest="BackOfficeUserOnboardingTest"`
+
+The BackOfficeUserOnboardingTest is the test class name in this example, replace with the desired test class name.
+
+
+To run specific method test supplied in the project use this maven command 
+
+`mvn test -Dspring.profiles.active=test -Dtest="BackOfficeUserOnboardingTest#onboardNewBackOfficeUser"`
+
+The BackOfficeUserOnboardingTest is the test class name in this example, replace with the desired test class name.
+The onboardNewBackOfficeUser is the test method name which is located in the BackOfficeUserOnboardingTest class, replace with the desired test class/method name.
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
@@ -102,9 +114,8 @@ If you are new to writing test [here](https://www.baeldung.com/spring-boot-testi
 - Olaoluwa Adaghe ( Project Manager )
 - Ibrahim Lawal ( Software Engineer )
 - Joy Osayi ( Software Engineer )
+- Ezenwa Opara ( Software Engineer )
 
-## License
-For open source projects, say how it is licensed.
 
 ## Project status
 DEVELOPMENT ACTIVE
