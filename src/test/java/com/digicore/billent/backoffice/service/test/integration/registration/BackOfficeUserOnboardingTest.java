@@ -36,15 +36,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class BackOfficeUserOnboardingTest {
   @Autowired private MockMvc mockMvc;
 
-  @Autowired private RoleService<RoleDTO, Role> roleService;
   @Autowired private NotificationDispatcher notificationDispatcher;
 
   @Autowired private  BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
   @Test
   void onboardNewBackOfficeUser() throws Exception {
-    log.trace("about to test onboard");
-    TestHelper testHelper = new TestHelper(mockMvc, roleService, backOfficeUserAuthService);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     MvcResult result =
         mockMvc
@@ -65,8 +63,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void resendInvitation() throws Exception {
-    log.trace("about to test resend");
-    TestHelper testHelper = new TestHelper(mockMvc, roleService, backOfficeUserAuthService);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
     InviteBodyDTO inviteBodyDTO = new InviteBodyDTO();
     inviteBodyDTO.setAssignedRole(testHelper.createBackOfficeProfile().getAssignedRole());

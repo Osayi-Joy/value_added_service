@@ -37,13 +37,13 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @Slf4j
 public class TestHelper {
   private final MockMvc mockMvc;
-  private final RoleService<RoleDTO, Role> roleService;
 
   private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-  public TestHelper(MockMvc mockMvc, RoleService<RoleDTO, Role> roleService, BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
+
+
+  public TestHelper(MockMvc mockMvc,  BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
     this.mockMvc = mockMvc;
-    this.roleService = roleService;
     this.backOfficeUserAuthService = backOfficeUserAuthService;
   }
 
@@ -111,15 +111,14 @@ public class TestHelper {
     return userRegistrationDTO;
   }
 
-  public void updateMakerRoleAddNeededPermission(String permissionName) {
-    PermissionDTO permissionDTO = new PermissionDTO();
-    permissionDTO.setName(permissionName);
-    RoleDTO roleDTO = new RoleDTO();
-    roleDTO.setName(MAKER_ROLE_NAME);
-    roleDTO.setPermissions(Collections.singleton(permissionDTO));
-    RoleDTO roleDTOCreated = roleService.updateExistingRole(roleDTO);
-    log.trace("the role updated : {}", roleDTOCreated.toString());
-  }
+//  public void updateMakerRoleAddNeededPermission(String permissionName) {
+//    PermissionDTO permissionDTO = new PermissionDTO();
+//    permissionDTO.setName(permissionName);
+//    RoleDTO roleDTO = new RoleDTO();
+//    roleDTO.setName(MAKER_ROLE_NAME);
+//    roleDTO.setPermissions(Collections.singleton(permissionDTO));
+//    RoleDTO roleDTOCreated = roleService.updateExistingRole(roleDTO);
+//  }
 
   public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
     PermissionDTO permissionDTO = new PermissionDTO();
@@ -131,7 +130,7 @@ public class TestHelper {
   }
    public void approvalRequest(Long requestId) throws Exception {
 
-     mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-" + requestId + "-request")).header("Authorization",retrieveCheckerAccessToken()))
+     mockMvc.perform(MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId)).header("Authorization",retrieveCheckerAccessToken()))
             .andExpect(status().isOk()).andReturn();
 
   }
