@@ -36,4 +36,8 @@ public class BillerBackOfficeService {
         csvDto.setPageSize(pageSize);
         csvService.prepareCSVExport(csvDto, billerService::prepareCSV);
     }
+
+    public BillerDto fetchBillerById(String billerSystemId){
+        return billerService.retrieveBillerDetailsById(billerSystemId);
+    }
 }
