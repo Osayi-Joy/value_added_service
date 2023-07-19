@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.digicore</groupId>
             <artifactId>request-processor-lib</artifactId>
-            <version>1.0.4-SNAPSHOT</version>
+            <version>1.0.4-billent-SNAPSHOT</version>
         </dependency>
         <!-- Digicore Dependencies Ends-->
 
