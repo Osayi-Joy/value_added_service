@@ -17,6 +17,9 @@ public class BackOfficeUserServiceApiUtil {
  //Roles API versioning
  public static final String ROLES_API_V1 = API_V1 + "role/process/";
 
+ //Billers API versioning
+ public static final String BILLERS_API_V1 = API_V1 + "billers/process/";
+
  private BackOfficeUserServiceApiUtil() {
  }
 }
