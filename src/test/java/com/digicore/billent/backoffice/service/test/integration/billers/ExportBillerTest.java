@@ -34,13 +34,12 @@ import org.springframework.test.web.servlet.ResultActions;
 class ExportBillerTest {
     @Autowired
     private MockMvc mockMvc;
-    @Autowired private NotificationDispatcher notificationDispatcher;
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
     @MockBean
     private BillerBackOfficeService billerBackOfficeService;
 
     @Test
-    void testFetchBillersByStatus() throws Exception {
+    void testViewAllBillers() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-billers");
         int pageNumber = 0;
@@ -54,8 +53,8 @@ class ExportBillerTest {
         doNothing().when(billerBackOfficeService).downloadAllBillersInCSV(mockResponse, mockSearchRequest, pageNumber, pageSize);
 
         ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-billers-to-csv")
-                        .param(PAGE_NUMBER, String.valueOf(pageNumber))
-                        .param(PAGE_SIZE, String.valueOf(pageSize))
+                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                         .content(new ObjectMapper().writeValueAsString(mockSearchRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
