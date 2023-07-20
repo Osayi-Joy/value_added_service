@@ -7,6 +7,7 @@ import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageab
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -53,7 +54,7 @@ public class RoleController {
     @Operation(
             summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
             description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
-    public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDTO roleDTO){
+    public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
       return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
     }
 }

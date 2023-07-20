@@ -1,6 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Permission;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
@@ -31,9 +32,9 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService{
           checkerPermission = "approve-create-roles",
           makerPermission = "create-roles",
           requestClassName =
-                  "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+                  "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO")
   public Object createNewRole(Object requestDTO, Object... args){
-    RoleDTO roleDTO = (RoleDTO) requestDTO;
+    RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
     return roleService.createNewRole(roleDTO);
   }
 }
