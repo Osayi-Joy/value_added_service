@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class BackOfficeUserOnboardingService {
+public class BackOfficeUserOnboardingService implements BackOfficeUserOnboardingValidatorService{
   private final RegistrationService<UserProfileDTO, UserRegistrationDTO> registrationService;
   private final PasswordResetService passwordResetService;
   private final NotificationDispatcher notificationDispatcher;
