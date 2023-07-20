@@ -7,12 +7,10 @@ import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageab
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
-import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class BillerController {
     private final BillerBackOfficeService billerBackOfficeService;
 
-    @GetMapping("get-all-billers")
+    @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE,
@@ -37,8 +35,8 @@ public class BillerController {
         return ControllerResponse.buildSuccessResponse(
                 billerBackOfficeService.getAllBillers(pageNumber, pageSize), "Retrieved All Billers Successfully");
     }
-    
-    @GetMapping("export-billers-to-csv")
+
+    @GetMapping("export-to-csv")
     @PreAuthorize("hasAuthority('export-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE,
@@ -46,24 +44,41 @@ public class BillerController {
     public void downloadListOfBillersInCSV(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
-            @Valid @RequestBody SearchRequest searchRequest,
+            @RequestParam(value = START_DATE, required = false) String startDate,
+            @RequestParam(value = END_DATE, required = false) String endDate,
+            @RequestParam(value = BILLER_STATUS, required = false) Status billerStatus,
+            @RequestParam(value = DOWNLOAD_FORMAT, required = false) String downloadFormat,
             HttpServletResponse response) {
-        billerBackOfficeService.downloadAllBillersInCSV(response, searchRequest, pageNumber, pageSize);
+        billerBackOfficeService.downloadAllBillersInCSV(response, billerStatus, startDate, endDate, downloadFormat, pageNumber, pageSize);
     }
 
-    @GetMapping("filter-billers-by-billerStatus")
+
+    @GetMapping("filter-by-status")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_TITLE,
             description = BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION)
-    public ResponseEntity<Object> viewAllBillers(
+    public ResponseEntity<Object> filterBillersByStatus(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
             @RequestParam(value = START_DATE, required = false) String startDate,
             @RequestParam(value = END_DATE, required = false) String endDate,
-            @RequestParam(value = "billerStatus", required = false) Status billerStatus)
+            @RequestParam(value = BILLER_STATUS, required = false) Status billerStatus)
     {
         return ControllerResponse.buildSuccessResponse(
                 billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Billers by Status Successfully");
     }
+
+    @GetMapping("get-{billerSystemId}-details")
+    @PreAuthorize("hasAuthority('view-billers')")
+    @Operation(
+            summary = BILLER_CONTROLLER_GET_A_BILLER_TITLE,
+            description = BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION)
+    public ResponseEntity<Object> fetchBillerById(@PathVariable String billerSystemId) {
+        return ControllerResponse.buildSuccessResponse(
+                billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved Biller details Successfully");
+    }
+
+
+
 }
