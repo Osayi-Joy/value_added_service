@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController {
   private final BackOfficeRoleService backOfficeRoleService;
 
-  @GetMapping("get-all-roles")
+  @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-roles')")
   @Operation(
       summary = ROLE_CONTROLLER_GET_ALL_ROLES_TITLE,
@@ -36,4 +36,14 @@ public class RoleController {
     return ControllerResponse.buildSuccessResponse(
         backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
   }
+
+    @GetMapping("get-system-permissions")
+    @PreAuthorize("hasAuthority('invite-backoffice-user')")
+    @Operation(
+            summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
+            description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
+    public ResponseEntity<Object> getAllPermissions() {
+        return ControllerResponse.buildSuccessResponse(
+                backOfficeRoleService.getAllPermissions(), "Permissions retrieved successfully");
+    }
 }

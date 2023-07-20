@@ -5,6 +5,7 @@ import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Set;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,7 +54,7 @@ class RoleControllerTest {
        int pageNumber = 0;
         int pageSize = 10;
 
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all-roles")
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all")
                         .param("pageNumber", String.valueOf(pageNumber))
                         .param("pageSize", String.valueOf(pageSize))
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -67,6 +69,28 @@ class RoleControllerTest {
         assertTrue(paginatedResponseDTO.getIsFirstPage());
         assertTrue(paginatedResponseDTO.getIsLastPage());
         assertNotNull(paginatedResponseDTO.getContent());
+    }
+
+    @Test
+    void testGetAllPermissions() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
+
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        ApiResponseJson<Set<PermissionDTO>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
+
+
+
+        assertTrue(response.isSuccess());
+        assertTrue(response.getData().size() > 0);
+        assertNotNull(response.getData());
     }
 
     private static PaginatedResponseDTO<RoleDTO> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
