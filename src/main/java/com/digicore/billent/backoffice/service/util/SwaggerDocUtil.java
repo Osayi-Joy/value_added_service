@@ -36,7 +36,9 @@ public class SwaggerDocUtil {
  public static final String ROLE_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding authorization ( role/permission management ). it goes through maker checker process";
  public static final String ROLE_CONTROLLER_GET_ALL_ROLES_TITLE = "Authenticate a user";
  public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to authenticate a user.";
- //Role Controller Doc
+
+
+ //Biller Controller Doc
  public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";
  public static final String BILLER_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding Billers. it goes through maker checker process";
  public static final String BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE = "Get all billers";
