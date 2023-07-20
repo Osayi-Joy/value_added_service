@@ -26,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -68,7 +69,7 @@ class BillerControllerTest {
         String endDate = "2023-12-31";
         Status billerStatus = Status.ACTIVE;
 
-        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-billers-by-billerStatus")
+        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-by-biller-status")
                         .param(PAGE_NUMBER, String.valueOf(pageNumber))
                         .param(PAGE_SIZE, String.valueOf(pageSize))
                         .param(START_DATE, startDate)
@@ -84,7 +85,44 @@ class BillerControllerTest {
         assertTrue(paginatedResponseDTO.getIsFirstPage());
         assertTrue(paginatedResponseDTO.getIsLastPage());
     }
-    
+
+    @Test
+    void testExportBillersAsCsv() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-billers");
+        int pageNumber = 0;
+        int pageSize = 10;
+        String startDate = "2023-01-01";
+        String endDate = "2023-12-31";
+        Status billerStatus = Status.ACTIVE;
+        String downloadFormat = "csv";
+
+        ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-billers-to-csv")
+                        .param(PAGE_NUMBER, String.valueOf(pageNumber))
+                        .param(PAGE_SIZE, String.valueOf(pageSize))
+                        .param(START_DATE, startDate)
+                        .param(END_DATE, endDate)
+                        .param(BILLER_STATUS, billerStatus.toString())
+                        .param(DOWNLOAD_FORMAT, downloadFormat)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    void testViewABiller() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
+
+        String billerSystemId = "BSID001";
+
+        mockMvc.perform(get(BILLERS_API_V1 + "get-" + billerSystemId + "-details")
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk());
+
+    }
+
+
     private static PaginatedResponseDTO<BillerDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
         ApiResponseJson<PaginatedResponseDTO<BillerDto>> response =
                 ClientUtil.getGsonMapper()

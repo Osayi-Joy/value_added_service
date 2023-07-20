@@ -41,8 +41,8 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding Billers. it goes through maker checker process";
  public static final String BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE = "Get all billers";
  public static final String BILLER_CONTROLLER_GET_ALL_BILLERS_DESCRIPTION = "This API is used to fetch all billers.";
- public static final String BILLER_CONTROLLER_GET_A_BILLER_TITLE = "Get all billers";
- public static final String BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION = "This API is used to fetch all billers.";
+ public static final String BILLER_CONTROLLER_GET_A_BILLER_TITLE = "Get a billers";
+ public static final String BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION = "This API is used to fetch a biller's details.";
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_TITLE = "Filter billers by Status";
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION = "This API is used to Filter billers by Status.";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE = "Export billers in csv";

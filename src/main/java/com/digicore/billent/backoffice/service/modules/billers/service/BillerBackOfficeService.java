@@ -28,7 +28,15 @@ public class BillerBackOfficeService {
         return billerService.filterBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize);
     }
 
-    public void downloadAllBillersInCSV(HttpServletResponse response, SearchRequest searchRequest, int pageNumber, int pageSize) {
+    public void downloadAllBillersInCSV(HttpServletResponse response,
+                                        Status billerStatus, String startDate, String endDate, String downLoadFormat,
+                                        int pageNumber, int pageSize) {
+        SearchRequest searchRequest = new SearchRequest();
+        searchRequest.setStatus(billerStatus);
+        searchRequest.setStartDate(startDate);
+        searchRequest.setEndDate(endDate);
+        searchRequest.setDownloadFormat(downLoadFormat);
+
         CsvDto<BillerDto> csvDto = new CsvDto<>();
         csvDto.setSearchRequest(searchRequest);
         csvDto.setResponse(response);
