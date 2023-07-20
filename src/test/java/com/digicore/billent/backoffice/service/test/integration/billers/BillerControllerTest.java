@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
+import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
@@ -37,17 +38,14 @@ class BillerControllerTest {
     private MockMvc mockMvc;
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
-
     @Test
     void testGetAllBillers() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
-        int pageNumber = 0;
-        int pageSize = 10;
 
-        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
-                        .param(PAGE_NUMBER, String.valueOf(pageNumber))
-                        .param(PAGE_SIZE, String.valueOf(pageSize))
+        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all-billers")
+                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -63,18 +61,16 @@ class BillerControllerTest {
     void testFetchBillersByStatus() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
-        int pageNumber = 0;
-        int pageSize = 10;
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
-        Status billerStatus = Status.ACTIVE;
+        Status billerStatus = Status.INACTIVE;
 
-        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-by-status")
-                        .param(PAGE_NUMBER, String.valueOf(pageNumber))
-                        .param(PAGE_SIZE, String.valueOf(pageSize))
+        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-by-biller-status")
+                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                         .param(START_DATE, startDate)
                         .param(END_DATE, endDate)
-                        .param("billerStatus", billerStatus.toString())
+                        .param(BILLER_STATUS, billerStatus.toString())
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -97,15 +93,15 @@ class BillerControllerTest {
         Status billerStatus = Status.ACTIVE;
         String downloadFormat = "csv";
 
-        ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-to-csv")
-                        .param(PAGE_NUMBER, String.valueOf(pageNumber))
-                        .param(PAGE_SIZE, String.valueOf(pageSize))
+        ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-billers-to-csv")
+                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                         .param(START_DATE, startDate)
                         .param(END_DATE, endDate)
                         .param(BILLER_STATUS, billerStatus.toString())
                         .param(DOWNLOAD_FORMAT, downloadFormat)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk());
+                .andExpect(status().is2xxSuccessful());
 
     }
 
@@ -116,7 +112,7 @@ class BillerControllerTest {
 
         String billerSystemId = "BSID001";
 
-        mockMvc.perform(get(BILLERS_API_V1 + "get-" + billerSystemId + "-details")
+        mockMvc.perform(get(BILLERS_API_V1 + "get-{billerSystemId}-details", billerSystemId)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk());
 

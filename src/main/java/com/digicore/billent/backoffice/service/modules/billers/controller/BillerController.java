@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class BillerController {
     private final BillerBackOfficeService billerBackOfficeService;
 
-    @GetMapping("get-all")
+    @GetMapping("get-all-billers")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE,
@@ -36,7 +36,7 @@ public class BillerController {
                 billerBackOfficeService.getAllBillers(pageNumber, pageSize), "Retrieved All Billers Successfully");
     }
 
-    @GetMapping("export-to-csv")
+    @GetMapping("export-billers-to-csv")
     @PreAuthorize("hasAuthority('export-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE,
@@ -53,17 +53,17 @@ public class BillerController {
     }
 
 
-    @GetMapping("filter-by-status")
+    @GetMapping("filter-by-biller-status")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_TITLE,
             description = BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION)
-    public ResponseEntity<Object> viewAllBillers(
+    public ResponseEntity<Object> filterBillersByStatus(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
             @RequestParam(value = START_DATE, required = false) String startDate,
             @RequestParam(value = END_DATE, required = false) String endDate,
-            @RequestParam(value = "billerStatus", required = false) Status billerStatus)
+            @RequestParam(value = BILLER_STATUS, required = false) Status billerStatus)
     {
         return ControllerResponse.buildSuccessResponse(
                 billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Billers by Status Successfully");
