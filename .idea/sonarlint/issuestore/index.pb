@@ -9,8 +9,6 @@ U
 %.mvn/wrapper/maven-wrapper.properties,3/2/32e074f71d16c1e88ac02aa83592ca6ad1fd98a8
 b
 2config/permissions/systemPermissionUpdateCopy.json,f/a/fa42ff4c77900cfe27e89f26eb001bd1488e20eb
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 â
 Ysrc/main/java/com/digicore/billent/backoffice/service/config/BackOfficeSwaggerConfig.java,2/8/2863acb48d1498c95a28dee49be9afb57bd574c8
 ê
@@ -21,11 +19,9 @@ jsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/control
 nsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/service/BackOfficeApprovalService.java,a/1/a1556a6397d4806727517603005eb05a3d6f8fd2
 ¥
 Ésrc/main/java/com/digicore/billent/backoffice/service/modules/authentication/controller/BackOfficeUserAuthenticationController.java,0/b/0be6108a03d5a1cabd1c4d3d5d55cc4377db4d4c
-Æ
-~src/main/java/com/digicore/billent/backoffice/service/modules/authentication/services/BackOfficeUserAuthenticationService.java,c/1/c121e607ae912a32c5fe4cf7b12bad4f85807f49
+©
+ysrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/processor/BackOfficeUserOnboardingProcessor.java,2/4/246cfeccdf3c56b83a20ed9bb3b0b5609a62f878
 ó
 gsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleService.java,6/4/6427e75df4d7318213cedaadb5136fab614dc52e
-å
-\src/main/java/com/digicore/billent/backoffice/service/util/BackOfficeUserServiceApiUtil.java,f/f/ff560993abd065dd54c612729fbbdc9e7769f028
 í
 bsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/controller/RoleController.java,4/a/4a931caff43019f7893fb836d8fbea3325e9b21a

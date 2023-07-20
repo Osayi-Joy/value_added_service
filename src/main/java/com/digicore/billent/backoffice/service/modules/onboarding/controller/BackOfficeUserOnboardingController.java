@@ -52,4 +52,14 @@ public class BackOfficeUserOnboardingController {
     backOfficeUserOnboardingService.resendInvitation(inviteBodyDTO);
     return ControllerResponse.buildSuccessResponse();
   }
+
+  @TokenValid()
+  @PostMapping("password-update")
+  @Operation(
+          summary = ONBOARDING_CONTROLLER_RE_INVITE_USER_TITLE,
+          description = ONBOARDING_CONTROLLER_RE_INVITE_USER_DESCRIPTION)
+  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody InviteBodyDTO inviteBodyDTO) {
+    backOfficeUserOnboardingService.resendInvitation(inviteBodyDTO);
+    return ControllerResponse.buildSuccessResponse();
+  }
 }
