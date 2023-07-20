@@ -67,15 +67,14 @@ public class BillerController {
                 billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Billers by Status Successfully");
     }
 
-    @GetMapping("/fetch-biller-by-id/{billerSystemId}")
+    @GetMapping("get-biller-{billerSystemId}-details")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_GET_A_BILLER_TITLE,
-            description = BILLER_CONTROLLER_GET_A_BILLER__DESCRIPTION)
+            description = BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> fetchBillerById(@PathVariable String billerSystemId) {
         return ControllerResponse.buildSuccessResponse(
                 billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved Biller details Successfully");
-
     }
 
 
