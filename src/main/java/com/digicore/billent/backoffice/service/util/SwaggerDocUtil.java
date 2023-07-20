@@ -31,6 +31,9 @@ public class SwaggerDocUtil {
  public static final String ONBOARDING_CONTROLLER_INVITE_USER_DESCRIPTION = "This API is used to invite a user to the backoffice platform, it sends an invite mail to the user.";
  public static final String ONBOARDING_CONTROLLER_RE_INVITE_USER_TITLE = "Resend invitation to an already invited user";
  public static final String ONBOARDING_CONTROLLER_RE_INVITE_USER_DESCRIPTION = "This API is used to resend invitation to an already invited user.This is useful for when they didn't get the previous invite mail";
+
+ public static final String ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_TITLE = "Reset default password";
+ public static final String ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_DESCRIPTION = "This API is used to reset the default password of a new user, it requires a resetKey that can be found in the access token after login";
  //Role Controller Doc
  public static final String ROLE_CONTROLLER_TITLE = "BackOffice-Role-Module";
  public static final String ROLE_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding authorization ( role/permission management ). it goes through maker checker process";

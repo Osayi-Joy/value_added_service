@@ -8,6 +8,7 @@ import com.digicore.billent.backoffice.service.modules.onboarding.services.BackO
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -56,10 +59,10 @@ public class BackOfficeUserOnboardingController {
   @TokenValid()
   @PostMapping("password-update")
   @Operation(
-          summary = ONBOARDING_CONTROLLER_RE_INVITE_USER_TITLE,
-          description = ONBOARDING_CONTROLLER_RE_INVITE_USER_DESCRIPTION)
-  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody InviteBodyDTO inviteBodyDTO) {
-    backOfficeUserOnboardingService.resendInvitation(inviteBodyDTO);
+          summary = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_TITLE,
+          description = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_DESCRIPTION)
+  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody ResetPasswordFirstBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
+    backOfficeUserOnboardingService.updateDefaultPassword(resetPasswordFirstBaseRequestDTO,principal);
     return ControllerResponse.buildSuccessResponse();
   }
 }
