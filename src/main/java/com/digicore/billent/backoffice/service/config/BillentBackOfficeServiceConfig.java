@@ -52,7 +52,6 @@ public class BillentBackOfficeServiceConfig {
                         "/v3/api-docs/**",
                         "/documentation/v3/api-docs",
                         "/download-license",
-                        "/api/v1/backoffice/billers/process/**",
                         "/actuator/**")
                     .permitAll()
                     .anyRequest()
