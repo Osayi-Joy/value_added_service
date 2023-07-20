@@ -118,6 +118,7 @@ If you are new to writing test [here](https://www.baeldung.com/spring-boot-testi
 - Ibrahim Lawal ( Software Engineer )
 - Joy Osayi ( Software Engineer )
 - Ezenwa Opara ( Software Engineer )
+- Usman Abass ( Software/Devops Engineer )
 
 
 ## Project status
