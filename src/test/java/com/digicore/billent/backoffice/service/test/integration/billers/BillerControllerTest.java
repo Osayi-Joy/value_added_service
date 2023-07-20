@@ -45,7 +45,7 @@ class BillerControllerTest {
         int pageNumber = 0;
         int pageSize = 10;
 
-        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all-billers")
+        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
                         .param(PAGE_NUMBER, String.valueOf(pageNumber))
                         .param(PAGE_SIZE, String.valueOf(pageSize))
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -69,7 +69,7 @@ class BillerControllerTest {
         String endDate = "2023-12-31";
         Status billerStatus = Status.ACTIVE;
 
-        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-by-biller-status")
+        MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "filter-by-status")
                         .param(PAGE_NUMBER, String.valueOf(pageNumber))
                         .param(PAGE_SIZE, String.valueOf(pageSize))
                         .param(START_DATE, startDate)
@@ -97,7 +97,7 @@ class BillerControllerTest {
         Status billerStatus = Status.ACTIVE;
         String downloadFormat = "csv";
 
-        ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-billers-to-csv")
+        ResultActions result = mockMvc.perform(get(BILLERS_API_V1 + "export-to-csv")
                         .param(PAGE_NUMBER, String.valueOf(pageNumber))
                         .param(PAGE_SIZE, String.valueOf(pageSize))
                         .param(START_DATE, startDate)

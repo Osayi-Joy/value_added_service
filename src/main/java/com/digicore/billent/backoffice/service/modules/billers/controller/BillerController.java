@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class BillerController {
     private final BillerBackOfficeService billerBackOfficeService;
 
-    @GetMapping("get-all-billers")
+    @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE,
@@ -36,7 +36,7 @@ public class BillerController {
                 billerBackOfficeService.getAllBillers(pageNumber, pageSize), "Retrieved All Billers Successfully");
     }
 
-    @GetMapping("export-billers-to-csv")
+    @GetMapping("export-to-csv")
     @PreAuthorize("hasAuthority('export-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE,
@@ -53,7 +53,7 @@ public class BillerController {
     }
 
 
-    @GetMapping("filter-by-biller-status")
+    @GetMapping("filter-by-status")
     @PreAuthorize("hasAuthority('view-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_TITLE,
