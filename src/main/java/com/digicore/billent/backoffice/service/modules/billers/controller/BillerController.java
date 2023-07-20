@@ -66,7 +66,4 @@ public class BillerController {
         return ControllerResponse.buildSuccessResponse(
                 billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Billers by Status Successfully");
     }
-
-
-
 }
