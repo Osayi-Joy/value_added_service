@@ -5,6 +5,7 @@ package com.digicore.billent.backoffice.service.test.integration.registration;
  */
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ONBOARDING_API_V1;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,6 +14,7 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
+import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.otp.service.NotificationDispatcher;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +58,28 @@ class BackOfficeUserOnboardingTest {
             .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
     assertTrue(response.isSuccess());
     testHelper.approvalRequest(1L);
+  }
+
+  @Test
+  void When_OnboardNewBackOfficeUser_ExpectStatus400() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+    testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
+    UserRegistrationDTO userRegistrationDTO = testHelper.createBackOfficeProfile();
+    userRegistrationDTO.setAssignedRole("INVALID_ROLE");
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("user-invitation"))
+                                    .content(
+                                            ClientUtil.getGsonMapper().toJson(userRegistrationDTO))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().is4xxClientError())
+                    .andReturn();
+    ApiResponseJson<?> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
+    assertFalse(response.isSuccess());
   }
 
   @Test

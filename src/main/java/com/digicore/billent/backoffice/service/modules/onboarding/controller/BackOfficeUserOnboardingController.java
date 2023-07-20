@@ -4,6 +4,7 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
+import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingProxyService;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BackOfficeUserOnboardingController {
   private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
+  private final BackOfficeUserOnboardingProxyService onboardingProxyService;
 
   @TokenValid()
   @PostMapping("user-invitation")
@@ -36,7 +38,7 @@ public class BackOfficeUserOnboardingController {
   public ResponseEntity<Object> inviteUser(
       @Valid @RequestBody UserRegistrationDTO backOfficeUserDTO) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeUserOnboardingService.onboardNewBackOfficeUser(backOfficeUserDTO),
+            onboardingProxyService.onboardNewBackOfficeUser(backOfficeUserDTO),
         "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat(" successfully"));
   }
 
