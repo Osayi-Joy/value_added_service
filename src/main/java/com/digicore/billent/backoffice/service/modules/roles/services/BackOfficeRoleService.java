@@ -7,6 +7,7 @@ import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class BackOfficeRoleService {
+public class BackOfficeRoleService implements BackOfficeRoleValidatorService{
 
   private final RoleService<RoleDTO, Role> roleService;
   private final PermissionService<PermissionDTO, Permission> permissionService;
@@ -25,5 +26,14 @@ public class BackOfficeRoleService {
 
   public Set<PermissionDTO> getAllPermissions() {
     return permissionService.retrieveAllSystemPermissions();
+  }
+  @MakerChecker(
+          checkerPermission = "approve-create-roles",
+          makerPermission = "create-roles",
+          requestClassName =
+                  "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+  public Object createNewRole(Object requestDTO, Object... args){
+    RoleDTO roleDTO = (RoleDTO) requestDTO;
+    return roleService.createNewRole(roleDTO);
   }
 }
