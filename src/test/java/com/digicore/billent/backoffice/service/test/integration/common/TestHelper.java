@@ -88,7 +88,7 @@ public class TestHelper {
   public UserRegistrationDTO createBackOfficeProfile() {
     UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
     userRegistrationDTO.setEmail("tobiogunwuyi@gmail.com");
-    userRegistrationDTO.setPhoneNumber("07087982874");
+    userRegistrationDTO.setPhoneNumber("2347087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
     userRegistrationDTO.setAssignedRole(MAKER_ROLE_NAME);
