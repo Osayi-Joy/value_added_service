@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.billers.service;
 
 
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
+import com.digicore.billent.data.lib.modules.billers.model.Biller;
 import com.digicore.billent.data.lib.modules.billers.service.BillerService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class BillerBackOfficeService {
-    private final BillerService billerService;
+    private final BillerService<BillerDto, Biller> billerService;
     private final CsvService csvService;
 
 
