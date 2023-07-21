@@ -40,6 +40,9 @@ public class SwaggerDocUtil {
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION = "This API is used to fetch all available permissions in the system";
 
+ public static final String ROLE_CONTROLLER_CREATE_A_ROLE_TITLE = "Add a new role";
+ public static final String ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION = "This API is used to add a new role to the system, it goes through maker checker.";
+
 
  //Biller Controller Doc
  public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";

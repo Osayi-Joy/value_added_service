@@ -52,8 +52,8 @@ public class RoleController {
     @PostMapping("creation")
     @PreAuthorize("hasAuthority('create-roles')")
     @Operation(
-            summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
-            description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
+            summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
+            description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
     public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
       return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
     }
