@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Git checkout') {
             steps {
-                git branch: 'redtech', credentialsId: 'GitLabHub_Access', url: 'https://gitlab.com/teamdigicore/billent-backoffice-service.git'
+                git branch: 'redtech', credentialsId: 'GitLab_Access', url: 'https://gitlab.com/teamdigicore/billent-backoffice-service.git'
             }
         }
 
