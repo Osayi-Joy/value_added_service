@@ -5,7 +5,7 @@ ENV VERSION=$VERSION
 
 WORKDIR /
 
-COPY ./target/billent-backoffice-service-1.0-SNAPSHOT.jar billent-backoffice-service.jar
+COPY ./target/billent-backoffice-service-0.0.1-SNAPSHOT.jar billent-backoffice-service.jar
 
 COPY . /
 

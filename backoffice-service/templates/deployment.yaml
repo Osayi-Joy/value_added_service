@@ -33,6 +33,31 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                 name: aggregator-db-secret
+                 key: DATABASE_HOST
+                 optional: false
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                 name: aggregator-db-secret
+                 key: DATABASE_USER
+                 optional: false
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: aggregator-db-secret
+                 key: DATABASE_PASSWORD
+                 optional: false
+          - name: DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                 name: aggregator-db-secret
+                 key: DATABASE_PORT
+                 optional: false
           ports:
             - name: http
               containerPort: 3700
