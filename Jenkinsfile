@@ -2,6 +2,12 @@ pipeline {
     agent {
        label "Runner"
        }
+       
+    tools {
+    jdk 'Java17'
+    maven 'Maven'
+    }
+    
     environment {
         VERSION = "${env.BUILD_ID}"
         AWS_ACCOUNT_ID="549258854334"
