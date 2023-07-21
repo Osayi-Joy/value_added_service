@@ -10,4 +10,4 @@ COPY ./target/billent-backoffice-service-0.0.1-SNAPSHOT.jar billent-backoffice-s
 COPY . /
 
 
-CMD [ "java", "-jar", "-Dspring.profiles.active=dev", "billent-backoffice-service-1.0.1-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "-Dspring.profiles.active=dev", "billent-backoffice-service-0.0.1-SNAPSHOT.jar" ]
