@@ -6,6 +6,7 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
@@ -21,16 +22,19 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Set;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -74,7 +78,7 @@ class RoleControllerTest {
     @Test
     void testGetAllPermissions() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-permissions");
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
 
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -102,6 +106,32 @@ class RoleControllerTest {
 
 
       return response.getData();
+
+    }
+    @Test
+    void testCreateRole() throws Exception {
+        RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
+        roleCreationDTO.setName("Tester");
+        roleCreationDTO.setDescription("tester tester");
+        roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
+
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("create-roles");
+        MvcResult mvcResult = mockMvc.perform(post(ROLES_API_V1 + "creation")
+                        .content(
+                                ClientUtil.getGsonMapper().toJson(roleCreationDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        ApiResponseJson<RoleDTO> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+        assertTrue(response.isSuccess());
+        testHelper.approvalRequest(2L,"approve-create-roles");
 
     }
 }
