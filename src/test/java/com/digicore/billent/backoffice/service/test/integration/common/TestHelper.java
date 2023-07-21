@@ -88,7 +88,7 @@ public class TestHelper {
   public UserRegistrationDTO createBackOfficeProfile() {
     UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
     userRegistrationDTO.setEmail("tobiogunwuyi@gmail.com");
-    userRegistrationDTO.setPhoneNumber("07087982874");
+    userRegistrationDTO.setPhoneNumber("2347087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
     userRegistrationDTO.setAssignedRole(MAKER_ROLE_NAME);
@@ -115,13 +115,14 @@ public class TestHelper {
     So always check the previous test case that made call last to get the last used requestId
     and increase it by 1
   */
-  public void approvalRequest(Long requestId) throws Exception {
-    updateMakerSelfPermissionByAddingNeededPermission("approve-invite-backoffice-user");
+
+  public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
+    updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
     mockMvc
-        .perform(
-            MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
-                .header("Authorization", retrieveValidAccessToken()))
-        .andExpect(status().isOk())
-        .andReturn();
+            .perform(
+                    MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
+                            .header("Authorization", retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
   }
 }

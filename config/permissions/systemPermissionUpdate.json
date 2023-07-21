@@ -240,6 +240,21 @@
     "permissionType": "USERS"
   },
   {
+    "name": "create-roles",
+    "description": "This allows you to create new roles",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-create-roles",
+    "description": "This allows you to approve create new roles requests",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "view-permissions",
+    "description": "This allows you to view available permissions",
+    "permissionType": "ROLES"
+  },
+  {
     "name": "view-roles",
     "description": "This allows you to view available roles",
     "permissionType": "ROLES"

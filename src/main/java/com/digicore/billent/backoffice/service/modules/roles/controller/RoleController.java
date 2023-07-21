@@ -5,16 +5,17 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
+import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(ROLES_API_V1)
@@ -22,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = ROLE_CONTROLLER_TITLE, description = ROLE_CONTROLLER_DESCRIPTION)
 public class RoleController {
   private final BackOfficeRoleService backOfficeRoleService;
+  private final BackOfficeRoleProxyService backOfficeRoleProxyService;
 
-  @GetMapping("get-all-roles")
+  @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-roles')")
   @Operation(
       summary = ROLE_CONTROLLER_GET_ALL_ROLES_TITLE,
@@ -36,4 +38,23 @@ public class RoleController {
     return ControllerResponse.buildSuccessResponse(
         backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
   }
+
+    @GetMapping("get-system-permissions")
+    @PreAuthorize("hasAuthority('view-permissions')")
+    @Operation(
+            summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
+            description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
+    public ResponseEntity<Object> getAllPermissions() {
+        return ControllerResponse.buildSuccessResponse(
+                backOfficeRoleService.getAllPermissions(), "Permissions retrieved successfully");
+    }
+
+    @PostMapping("creation")
+    @PreAuthorize("hasAuthority('create-roles')")
+    @Operation(
+            summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
+            description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
+    public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
+      return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
+    }
 }

@@ -57,7 +57,7 @@ class BackOfficeUserOnboardingTest {
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
     assertTrue(response.isSuccess());
-    testHelper.approvalRequest(1L);
+    testHelper.approvalRequest(1L,"approve-invite-backoffice-user");
   }
 
   @Test

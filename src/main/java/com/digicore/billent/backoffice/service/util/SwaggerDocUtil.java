@@ -37,8 +37,14 @@ public class SwaggerDocUtil {
  //Role Controller Doc
  public static final String ROLE_CONTROLLER_TITLE = "BackOffice-Role-Module";
  public static final String ROLE_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding authorization ( role/permission management ). it goes through maker checker process";
- public static final String ROLE_CONTROLLER_GET_ALL_ROLES_TITLE = "Authenticate a user";
- public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to authenticate a user.";
+ public static final String ROLE_CONTROLLER_GET_ALL_ROLES_TITLE = "Get all roles";
+ public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to fetch all available roles in the system";
+
+ public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
+ public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION = "This API is used to fetch all available permissions in the system";
+
+ public static final String ROLE_CONTROLLER_CREATE_A_ROLE_TITLE = "Add a new role";
+ public static final String ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION = "This API is used to add a new role to the system, it goes through maker checker.";
 
 
  //Biller Controller Doc
@@ -46,8 +52,8 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding Billers. it goes through maker checker process";
  public static final String BILLER_CONTROLLER_GET_ALL_BILLERS_TITLE = "Get all billers";
  public static final String BILLER_CONTROLLER_GET_ALL_BILLERS_DESCRIPTION = "This API is used to fetch all billers.";
- public static final String BILLER_CONTROLLER_GET_A_BILLER_TITLE = "Get details of a billers";
- public static final String BILLER_CONTROLLER_GET_A_BILLER__DESCRIPTION = "This API is used to view details of a biller.";
+ public static final String BILLER_CONTROLLER_GET_A_BILLER_TITLE = "Get a billers";
+ public static final String BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION = "This API is used to fetch a biller's details.";
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_TITLE = "Filter billers by Status";
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION = "This API is used to Filter billers by Status.";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE = "Export billers in csv";
