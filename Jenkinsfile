@@ -5,6 +5,7 @@ pipeline {
        
     tools {
     jdk 'Java17'
+    mvn 'Maven'
     }
     
     environment {
