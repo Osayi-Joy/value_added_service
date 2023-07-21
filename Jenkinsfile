@@ -17,19 +17,19 @@ pipeline {
             }
         }
 
-        // stage('Quality Code Scan') {
-        //     steps {
-        //        withSonarQubeEnv(installationName: 'redtech-sonarqube', credentialsId: 'sonar_integration') {
-        //         sh 'mvn clean package sonar:sonar'
-        //         }
-        //     }
-        // }
+        stage('Quality Code Scan') {
+            steps {
+               withSonarQubeEnv(installationName: 'redtech-sonarqube', credentialsId: 'sonar_integration') {
+                sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
         
-        // stage("Quality gate") {
-        //     steps {
-        //         waitForQualityGate abortPipeline: true
-        //     }
-        // }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
         
         stage('Build The Artifact') {
             steps {
