@@ -18,7 +18,6 @@ import com.digicore.registhentication.authentication.enums.AuthenticationType;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public class TestHelper {
     this.backOfficeUserAuthService = backOfficeUserAuthService;
   }
 
-  @NotNull
+
   private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
