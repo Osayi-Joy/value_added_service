@@ -38,7 +38,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 @Slf4j
-@Profile("test")
 class BackOfficeUserOnboardingTest {
   @Autowired private MockMvc mockMvc;
 

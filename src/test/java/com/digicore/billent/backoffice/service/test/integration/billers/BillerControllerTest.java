@@ -37,7 +37,6 @@ import org.springframework.test.web.servlet.ResultActions;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Slf4j
-@Profile("test")
 class BillerControllerTest {
     //todo rewrite this test when the controller to save billers is available
     @Autowired

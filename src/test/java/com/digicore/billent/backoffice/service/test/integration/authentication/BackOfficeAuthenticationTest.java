@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource(
         locations = "classpath:application-test.properties")
-@Profile("test")
  class BackOfficeAuthenticationTest {
     @Autowired
  private MockMvc mockMvc;
