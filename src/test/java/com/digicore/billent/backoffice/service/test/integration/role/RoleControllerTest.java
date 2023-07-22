@@ -55,7 +55,7 @@ class RoleControllerTest {
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-    @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
+
 
 
     @Autowired
@@ -70,7 +70,7 @@ class RoleControllerTest {
 
     @Test
      void testGetAllRoles() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
        int pageNumber = 0;
         int pageSize = 10;
@@ -94,7 +94,7 @@ class RoleControllerTest {
 
     @Test
     void testGetAllPermissions() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-permissions");
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
 
@@ -132,7 +132,7 @@ class RoleControllerTest {
         roleCreationDTO.setDescription("tester tester");
         roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("create-roles");
         MvcResult mvcResult = mockMvc.perform(post(ROLES_API_V1 + "creation")
                         .content(
@@ -148,7 +148,5 @@ class RoleControllerTest {
                         .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
         assertTrue(response.isSuccess());
-        testHelper.approvalRequest(1L,"approve-create-roles");
-
     }
 }

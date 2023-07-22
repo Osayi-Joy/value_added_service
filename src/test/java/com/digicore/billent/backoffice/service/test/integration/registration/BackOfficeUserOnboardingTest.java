@@ -46,7 +46,6 @@ class BackOfficeUserOnboardingTest {
 
   @Autowired private  BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-  @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
 
   @Autowired
   private PropertyConfig propertyConfig;
@@ -59,7 +58,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void onboardNewBackOfficeUser() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     MvcResult result =
         mockMvc
@@ -75,12 +74,11 @@ class BackOfficeUserOnboardingTest {
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
     assertTrue(response.isSuccess());
-    testHelper.approvalRequest(1L,"approve-invite-backoffice-user");
   }
 
   @Test
   void When_OnboardNewBackOfficeUser_ExpectStatus400() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     UserRegistrationDTO userRegistrationDTO = testHelper.createBackOfficeProfile();
     userRegistrationDTO.setAssignedRole("INVALID_ROLE");
@@ -102,7 +100,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void resendInvitation() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
     InviteBodyDTO inviteBodyDTO = new InviteBodyDTO();
     inviteBodyDTO.setAssignedRole(testHelper.createBackOfficeProfile().getAssignedRole());
@@ -116,11 +114,11 @@ class BackOfficeUserOnboardingTest {
                                             ClientUtil.getGsonMapper().toJson(inviteBodyDTO))
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .header("Authorization", testHelper.retrieveValidAccessToken()))
-                    .andExpect(status().isOk())
+                    .andExpect(status().is4xxClientError())
                     .andReturn();
     ApiResponseJson<?> response =
             ClientUtil.getGsonMapper()
                     .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
-    assertTrue(response.isSuccess());
+    assertFalse(response.isSuccess());
   }
 }

@@ -46,7 +46,7 @@ class BillerControllerTest {
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-    @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
+
 
     @Autowired
     private PropertyConfig propertyConfig;
@@ -58,7 +58,7 @@ class BillerControllerTest {
 
     @Test
     void testGetAllBillers() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
 
         MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
@@ -77,7 +77,7 @@ class BillerControllerTest {
 
     @Test
     void testFetchBillersByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
@@ -102,7 +102,7 @@ class BillerControllerTest {
 
     @Test
     void testExportBillersAsCsv() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-billers");
         int pageNumber = 0;
         int pageSize = 10;

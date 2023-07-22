@@ -42,14 +42,11 @@ public class TestHelper {
 
   private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
-  private final ApprovalRequestsRepository approvalRequestsRepository;
-
   public TestHelper(
           MockMvc mockMvc,
-          BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService, ApprovalRequestsRepository approvalRequestsRepository) {
+          BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
     this.mockMvc = mockMvc;
     this.backOfficeUserAuthService = backOfficeUserAuthService;
-    this.approvalRequestsRepository = approvalRequestsRepository;
   }
 
 
@@ -122,19 +119,15 @@ public class TestHelper {
     and increase it by 1
   */
 
-  public void clearRecentApprovalRequests(){
-    log.trace("the approval present : {}",approvalRequestsRepository.findAll());
-    approvalRequestsRepository.deleteAll();
-  }
 
-  public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
-    clearRecentApprovalRequests();
-    updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
-    mockMvc
-            .perform(
-                    MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
-                            .header("Authorization", retrieveValidAccessToken()))
-            .andExpect(status().isOk())
-            .andReturn();
-  }
+
+//  public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
+//    updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
+//    mockMvc
+//            .perform(
+//                    MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
+//                            .header("Authorization", retrieveValidAccessToken()))
+//            .andExpect(status().isOk())
+//            .andReturn();
+//  }
 }
