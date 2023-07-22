@@ -52,5 +52,3 @@ Ysrc/main/java/com/digicore/billent/backoffice/service/config/BackOfficeSwaggerC
 	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 s
 Csrc/main/java/com/digicore/BillentBackofficeServiceApplication.java,2/1/21162eb803620792bab63a18b38f0247ea85cd2d
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
