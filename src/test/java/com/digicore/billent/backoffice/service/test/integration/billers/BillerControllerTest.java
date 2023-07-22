@@ -9,17 +9,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
+import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.common.util.ClientUtil;
+import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -44,9 +47,16 @@ class BillerControllerTest {
     private MockMvc mockMvc;
 
 
-
-
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
+
+    @Autowired
+    private PropertyConfig propertyConfig;
+
+    @BeforeEach
+    void  checkup(){
+        new H2TestConfiguration(propertyConfig);
+    }
+
     @Test
     void testGetAllBillers() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
