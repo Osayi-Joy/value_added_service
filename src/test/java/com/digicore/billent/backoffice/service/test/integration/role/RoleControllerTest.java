@@ -15,6 +15,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 import java.util.Set;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
@@ -55,6 +55,9 @@ class RoleControllerTest {
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
+    @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
+
+
     @Autowired
     private PropertyConfig propertyConfig;
 
@@ -67,7 +70,7 @@ class RoleControllerTest {
 
     @Test
      void testGetAllRoles() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
        int pageNumber = 0;
         int pageSize = 10;
@@ -91,7 +94,7 @@ class RoleControllerTest {
 
     @Test
     void testGetAllPermissions() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-permissions");
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
 
@@ -129,7 +132,7 @@ class RoleControllerTest {
         roleCreationDTO.setDescription("tester tester");
         roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("create-roles");
         MvcResult mvcResult = mockMvc.perform(post(ROLES_API_V1 + "creation")
                         .content(
@@ -145,7 +148,7 @@ class RoleControllerTest {
                         .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
         assertTrue(response.isSuccess());
-        testHelper.approvalRequest(2L,"approve-create-roles");
+        testHelper.approvalRequest(1L,"approve-create-roles");
 
     }
 }

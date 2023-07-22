@@ -19,7 +19,9 @@ import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegi
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,8 @@ class BackOfficeUserOnboardingTest {
 
   @Autowired private  BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
+  @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
+
   @Autowired
   private PropertyConfig propertyConfig;
 
@@ -55,7 +59,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void onboardNewBackOfficeUser() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     MvcResult result =
         mockMvc
@@ -76,7 +80,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void When_OnboardNewBackOfficeUser_ExpectStatus400() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     UserRegistrationDTO userRegistrationDTO = testHelper.createBackOfficeProfile();
     userRegistrationDTO.setAssignedRole("INVALID_ROLE");
@@ -98,7 +102,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void resendInvitation() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
     testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
     InviteBodyDTO inviteBodyDTO = new InviteBodyDTO();
     inviteBodyDTO.setAssignedRole(testHelper.createBackOfficeProfile().getAssignedRole());

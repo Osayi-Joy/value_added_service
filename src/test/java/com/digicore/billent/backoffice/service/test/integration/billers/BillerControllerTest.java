@@ -3,12 +3,10 @@ package com.digicore.billent.backoffice.service.test.integration.billers;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLERS_API_V1;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
-import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
@@ -18,6 +16,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
@@ -25,11 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,6 +46,8 @@ class BillerControllerTest {
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
+    @Autowired private ApprovalRequestsRepository approvalRequestsRepository;
+
     @Autowired
     private PropertyConfig propertyConfig;
 
@@ -59,7 +58,7 @@ class BillerControllerTest {
 
     @Test
     void testGetAllBillers() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
 
         MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
@@ -78,7 +77,7 @@ class BillerControllerTest {
 
     @Test
     void testFetchBillersByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
@@ -103,7 +102,7 @@ class BillerControllerTest {
 
     @Test
     void testExportBillersAsCsv() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService, approvalRequestsRepository);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-billers");
         int pageNumber = 0;
         int pageSize = 10;

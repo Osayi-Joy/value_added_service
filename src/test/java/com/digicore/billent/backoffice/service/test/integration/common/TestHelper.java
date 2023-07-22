@@ -17,6 +17,8 @@ import com.digicore.registhentication.authentication.dtos.response.LoginResponse
 import com.digicore.registhentication.authentication.enums.AuthenticationType;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
+
+import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
@@ -40,11 +42,14 @@ public class TestHelper {
 
   private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
+  private final ApprovalRequestsRepository approvalRequestsRepository;
+
   public TestHelper(
-      MockMvc mockMvc,
-      BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
+          MockMvc mockMvc,
+          BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService, ApprovalRequestsRepository approvalRequestsRepository) {
     this.mockMvc = mockMvc;
     this.backOfficeUserAuthService = backOfficeUserAuthService;
+    this.approvalRequestsRepository = approvalRequestsRepository;
   }
 
 
@@ -117,7 +122,13 @@ public class TestHelper {
     and increase it by 1
   */
 
+  public void clearRecentApprovalRequests(){
+    log.trace("the approval present : {}",approvalRequestsRepository.findAll());
+    approvalRequestsRepository.deleteAll();
+  }
+
   public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
+    clearRecentApprovalRequests();
     updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
     mockMvc
             .perform(
