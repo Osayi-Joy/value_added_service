@@ -137,7 +137,7 @@ class BillerControllerTest {
         billerDto.setBillerName("Biller Name");
         billerDto.setBillerStatus(Status.ACTIVE);
 
-        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "update-billers")
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "edit-billers")
                         .content(ClientUtil.getGsonMapper().toJson(billerDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))

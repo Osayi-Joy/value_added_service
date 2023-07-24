@@ -83,7 +83,7 @@ public class BillerController {
                 billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved Biller details Successfully");
     }
 
-    @PatchMapping("update-billers")
+    @PatchMapping("edit-billers")
     @PreAuthorize("hasAuthority('edit-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
