@@ -20,6 +20,9 @@ public class BackOfficeUserServiceApiUtil {
  //Billers API versioning
  public static final String BILLERS_API_V1 = API_V1 + "billers/process/";
 
+//Dashboard API versioning
+ public static final String DASHBOARD_API_V1 = API_V1 + "dashboard/process/";
+
  private BackOfficeUserServiceApiUtil() {
  }
 }

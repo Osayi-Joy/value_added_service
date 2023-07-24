@@ -58,6 +58,15 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION = "This API is used to Filter billers by Status.";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE = "Export billers in csv";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_DESCRIPTION = "This API is used to export billers in csv.";
+
+ //Dashboard Controller Doc
+ public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
+ public static final String DASHBOARD_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding user dashboard. It goes through maker checker process";
+ public static final String DASHBOARD_CONTROLLER_GET_USER_TRANSACTIONS = "Get user transactions";
+ public static final String DASHBOARD_CONTROLLER_GET_USER_TRANSACTIONS_DESCRIPTION = "This API is used to fetch paginated user transactions.";
+ public static final String DASHBOARD_CONTROLLER_EXPORT_TRANSACTIONS_IN_CSV_TITLE = "Export transactions in csv";
+ public static final String DASHBOARD_CONTROLLER_EXPORT_TRANSACTIONS_IN_CSV_DESCRIPTION = "This API is used to export user transactions in csv.";
+
  private SwaggerDocUtil() {
  }
 
