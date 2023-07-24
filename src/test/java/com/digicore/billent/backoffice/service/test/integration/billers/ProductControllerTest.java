@@ -61,7 +61,7 @@ class ProductControllerTest {
     @Test
     void testFetchProductsByStatus() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-biller-products");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.INACTIVE;
@@ -86,7 +86,7 @@ class ProductControllerTest {
     @Test
     void testExportProductsAsCsv() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-biller-products");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.ACTIVE;
