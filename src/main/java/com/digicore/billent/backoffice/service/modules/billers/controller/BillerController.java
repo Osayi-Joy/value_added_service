@@ -7,10 +7,14 @@ import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageab
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
+import com.digicore.request.processor.enums.LogActivityType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -79,6 +83,16 @@ public class BillerController {
                 billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved Biller details Successfully");
     }
 
+    @PatchMapping("update-billers")
+    @PreAuthorize("hasAuthority('edit-billers')")
+    @Operation(
+            summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
+            description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
+    @LogActivity(activity = LogActivityType.UPDATE_ACTIVITY)
+    public ResponseEntity<Object> updateBiller(@Valid @RequestBody BillerDto billerDto) {
+        billerBackOfficeService.updateBiller(billerDto);
+        return ControllerResponse.buildSuccessResponse();
+    }
 
 
 }

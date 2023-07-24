@@ -8,6 +8,7 @@ import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import com.digicore.registhentication.registration.enums.Status;
@@ -48,5 +49,15 @@ public class BillerBackOfficeService {
 
     public BillerDto fetchBillerById(String billerSystemId){
         return billerService.retrieveBillerDetailsById(billerSystemId);
+    }
+
+
+    @MakerChecker(
+            checkerPermission = "approve-edit-billers",
+            makerPermission = "edit-billers",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
+    public Object updateBiller(Object request, Object... args){
+        billerService.editBiller((BillerDto) request);
+        return null;
     }
 }

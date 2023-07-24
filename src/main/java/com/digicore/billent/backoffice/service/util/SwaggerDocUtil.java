@@ -58,6 +58,8 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION = "This API is used to Filter billers by Status.";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE = "Export billers in csv";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_DESCRIPTION = "This API is used to export billers in csv.";
+ public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE = "Update a billers";
+ public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION = "This API is used to update a biller's details.";
  private SwaggerDocUtil() {
  }
 
