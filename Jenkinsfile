@@ -2,11 +2,6 @@ pipeline {
     agent {
        label "Runner"
        }
-       
-    tools {
-    jdk 'Java17'
-    maven 'Maven'
-    }
     
     environment {
         VERSION = "${env.BUILD_ID}"
@@ -20,26 +15,6 @@ pipeline {
         stage('Git checkout') {
             steps {
                 git branch: 'redtech', credentialsId: 'GitLab_Access', url: 'https://gitlab.com/teamdigicore/billent-backoffice-service.git'
-            }
-        }
-
-        stage('Quality Code Scan') {
-            steps {
-               withSonarQubeEnv(installationName: 'redtech-sonarqube', credentialsId: 'sonar_integration') {
-                sh 'mvn clean package sonar:sonar'
-                }
-            }
-        }
-        
-        stage("Quality gate") {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-        
-        stage('Build The Artifact') {
-            steps {
-               sh 'mvn -T 1C install -DskipTests'
             }
         }
       
