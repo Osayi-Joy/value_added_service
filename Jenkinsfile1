@@ -3,10 +3,10 @@ pipeline {
        label "Runner"
        }
        
-    // tools {
-    // jdk 'Java17'
-    // maven 'Maven'
-    // }
+    tools {
+    jdk 'Java17'
+    maven 'Maven'
+    }
     
     environment {
         VERSION = "${env.BUILD_ID}"
@@ -23,25 +23,25 @@ pipeline {
             }
         }
 
-        // stage('Quality Code Scan') {
-        //     steps {
-        //        withSonarQubeEnv(installationName: 'redtech-sonarqube', credentialsId: 'sonar_integration') {
-        //         sh 'mvn clean package sonar:sonar'
-        //         }
-        //     }
-        // }
+        stage('Quality Code Scan') {
+            steps {
+               withSonarQubeEnv(installationName: 'redtech-sonarqube', credentialsId: 'sonar_integration') {
+                sh 'mvn clean package sonar:sonar'
+                }
+            }
+        }
         
-        // stage("Quality gate") {
-        //     steps {
-        //         waitForQualityGate abortPipeline: true
-        //     }
-        // }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
         
-        // stage('Build The Artifact') {
-        //     steps {
-        //        sh 'mvn -T 1C install -DskipTests'
-        //     }
-        // }
+        stage('Build The Artifact') {
+            steps {
+               sh 'mvn -T 1C install -DskipTests'
+            }
+        }
       
         stage('Building A Docker image') {
             steps{

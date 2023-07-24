@@ -27,14 +27,14 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="digicore" />
-      <option name="name" value="Archiva Managed Internal Repository" />
-      <option name="url" value="https://archiva.digicoreltds.com/repository/internal/" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="oss-jfrog-artifactory" />
       <option name="name" value="oss-jfrog-artifactory-releases" />
       <option name="url" value="http://oss.jfrog.org/artifactory/oss-release-local" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="digicore" />
+      <option name="name" value="Archiva Managed Internal Repository" />
+      <option name="url" value="https://archiva.digicoreltds.com/repository/internal/" />
     </remote-repository>
   </component>
 </project>
