@@ -1,17 +1,4 @@
 # Billent-BackOffice-Service
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
 ## Name
 Billent-BackOffice-Service
 
@@ -43,6 +30,26 @@ The versioning rules is based on the sequential increment of each number, based 
 
 ## Installation
 Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+
+## Test 
+To run all the test supplied in the project use this maven command
+
+ `mvn test -Dspring.profiles.active=test`
+
+To run specific class test supplied in the project use this maven command 
+
+`mvn test -Dspring.profiles.active=test -Dtest="BackOfficeUserOnboardingTest"`
+
+The BackOfficeUserOnboardingTest is the test class name in this example, replace with the desired test class name.
+
+
+To run specific method test supplied in the project use this maven command 
+
+`mvn test -Dspring.profiles.active=test -Dtest="BackOfficeUserOnboardingTest#onboardNewBackOfficeUser"`
+
+The BackOfficeUserOnboardingTest is the test class name in this example, replace with the desired test class name.
+The onboardNewBackOfficeUser is the test method name which is located in the BackOfficeUserOnboardingTest class, replace with the desired test class/method name.
 
 ## Usage
 Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
@@ -83,7 +90,25 @@ The below plugins can be found in Intellij Plugin Marketplace
 Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionality. Most of the features stay free, including all visual designers for entities, Spring Data repositories, SQL and Liquibase changelogs. However, some features are available only under commercial license, e.g. differential migration scripts generation. Find a comparison of free and commercial versions on our website.
 
 <details><summary>Merge Request Rules</summary>
- Ensure to use the development template for your merge request description. see path to the template on the project root .gitlab/merge_request_templates/development.md
+
+- Ensure to use the development template for your merge request description. see path to the template on the project root .gitlab/merge_request_templates/development.md
+
+- For every issue/ticket, kindly check out a new branch from the main branch, this new branch name should follow this convention 
+{task-title}{issue-no} e.g **sign-in-#1**
+
+- Ensure to include the right milestone and label in your MR.
+Labels are used to track current status of an issue/ticket so it's important you look at the project defined label [here](https://gitlab.com/teamdigicore/billent-backoffice-service/-/labels)
+
+</details>
+
+<details><summary>Test Rules</summary>
+
+If you are new to writing test [here](https://www.baeldung.com/spring-boot-testing) is a good guide to help you get started.
+
+-  Ensure to write both successful and failed integration test for the controllers, Your integration test should assert the followings
+    - HTTP status code
+    - Expected Data
+-  Ensure to write both successful and failed unit test for the services.
 </details>
 
 
@@ -92,9 +117,9 @@ Starting with version 2022.2.*-221, JPA Buddy provides free and paid functionali
 - Olaoluwa Adaghe ( Project Manager )
 - Ibrahim Lawal ( Software Engineer )
 - Joy Osayi ( Software Engineer )
+- Ezenwa Opara ( Software Engineer )
+- Usman Abass ( Software/Devops Engineer )
 
-## License
-For open source projects, say how it is licensed.
 
 ## Project status
 DEVELOPMENT ACTIVE
