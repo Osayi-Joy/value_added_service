@@ -65,11 +65,11 @@ spec:
                  name: rabbitmq-login-secret
                  key: RABBITMQ_HOST
                  optional: false
-          - name: RABBITMQ_USER
+          - name: RABBITMQ_USERNAME
             valueFrom:
               secretKeyRef:
                  name: rabbitmq-login-secret
-                 key: RABBITMQ_USER
+                 key: RABBITMQ_USERNAME
                  optional: false
           - name: RABBITMQ_PASSWORD
             valueFrom:
