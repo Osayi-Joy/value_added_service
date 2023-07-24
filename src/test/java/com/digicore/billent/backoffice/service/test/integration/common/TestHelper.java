@@ -17,8 +17,10 @@ import com.digicore.registhentication.authentication.dtos.response.LoginResponse
 import com.digicore.registhentication.authentication.enums.AuthenticationType;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
+
+import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +33,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
  */
 @Component
 @Slf4j
+@Profile("test")
 public class TestHelper {
   /*
     This class is contains already defined methods that would prove useful for integration test
@@ -40,14 +43,19 @@ public class TestHelper {
   private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
   public TestHelper(
-      MockMvc mockMvc,
-      BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
+          MockMvc mockMvc,
+          BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
     this.mockMvc = mockMvc;
     this.backOfficeUserAuthService = backOfficeUserAuthService;
   }
 
-  @NotNull
+
   private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
+    LoginResponse loginResponse = getLoginResponse(result);
+    return "Bearer ".concat(loginResponse.getAccessToken());
+  }
+
+  private static LoginResponse getLoginResponse(MvcResult result) throws UnsupportedEncodingException {
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
@@ -57,7 +65,7 @@ public class TestHelper {
 
     LoginResponse loginResponse =
         ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
-    return "Bearer ".concat(loginResponse.getAccessToken());
+    return loginResponse;
   }
 
   /*
@@ -80,6 +88,25 @@ public class TestHelper {
             .andReturn();
 
     return getAccessToken(result);
+  }
+
+  public LoginResponse authenticateWithNewUserCredentials(String username, String password) throws Exception {
+    LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+    loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
+    loginRequestDTO.setPassword(password);
+    loginRequestDTO.setEmail(username);
+    loginRequestDTO.setUsername(username);
+
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
+                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    return getLoginResponse(result);
   }
 
   /*
@@ -116,13 +143,15 @@ public class TestHelper {
     and increase it by 1
   */
 
-  public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
-    updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
-    mockMvc
-            .perform(
-                    MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
-                            .header("Authorization", retrieveValidAccessToken()))
-            .andExpect(status().isOk())
-            .andReturn();
-  }
+
+
+//  public void approvalRequest(Long requestId,String requiredPermission) throws Exception {
+//    updateMakerSelfPermissionByAddingNeededPermission(requiredPermission);
+//    mockMvc
+//            .perform(
+//                    MockMvcRequestBuilders.post(APPROVAL_API_V1.concat("treat-request-" + requestId))
+//                            .header("Authorization", retrieveValidAccessToken()))
+//            .andExpect(status().isOk())
+//            .andReturn();
+//  }
 }
