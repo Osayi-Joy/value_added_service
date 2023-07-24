@@ -58,6 +58,31 @@ spec:
                  name: aggregator-db-secret
                  key: DATABASE_PORT
                  optional: false
+
+          - name: RABBITMQ_ADDRESSES
+            valueFrom:
+              secretKeyRef:
+                 name: rabbitmq-login-secret
+                 key: RABBITMQ_ADDRESSES
+                 optional: false
+          - name: RABBITMQ_USERNAME
+            valueFrom:
+              secretKeyRef:
+                 name: rabbitmq-login-secret
+                 key: RABBITMQ_USERNAME
+                 optional: false
+          - name: RABBITMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: rabbitmq-login-secret
+                 key: RABBITMQ_PASSWORD
+                 optional: false
+          - name: RABBITMQ_PORT
+            valueFrom:
+              secretKeyRef:
+                 name: rabbitmq-login-secret
+                 key: RABBITMQ_PORT
+                 optional: false
           ports:
             - name: http
               containerPort: 3700
