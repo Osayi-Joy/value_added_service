@@ -9,6 +9,7 @@ import com.digicore.billent.data.lib.modules.backoffice.authentication.service.B
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTOWithTeamMembers;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.common.util.ClientUtil;
@@ -82,13 +83,15 @@ class RoleControllerTest {
                 .andReturn();
 
 
-        PaginatedResponseDTO<RoleDTO> paginatedResponseDTO = getPaginatedResponseDTO(mvcResult);
+        PaginatedResponseDTO<RoleDTOWithTeamMembers> paginatedResponseDTO = getPaginatedResponseDTO(mvcResult);
 
 
         assertNotNull(paginatedResponseDTO.getContent());
         assertTrue(paginatedResponseDTO.getIsFirstPage());
         assertTrue(paginatedResponseDTO.getIsLastPage());
         assertNotNull(paginatedResponseDTO.getContent());
+        assertEquals(1, paginatedResponseDTO.getContent().get(0).getTotalTeamMemberCount());
+        assertEquals(2, paginatedResponseDTO.getContent().get(0).getPermissions().size());
     }
 
     @Test
@@ -113,10 +116,10 @@ class RoleControllerTest {
         assertNotNull(response.getData());
     }
 
-    private static PaginatedResponseDTO<RoleDTO> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
-        ApiResponseJson<PaginatedResponseDTO<RoleDTO>> response =
+    private static PaginatedResponseDTO<RoleDTOWithTeamMembers> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+        ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>> response =
                 ClientUtil.getGsonMapper()
-                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<RoleDTO>>>() {}.getType());
+                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>>>() {}.getType());
         assertTrue(response.isSuccess());
 
 

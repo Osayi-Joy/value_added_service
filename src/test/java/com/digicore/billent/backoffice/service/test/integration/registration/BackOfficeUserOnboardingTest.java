@@ -19,6 +19,7 @@ import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegi
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.A;
@@ -111,6 +112,32 @@ class BackOfficeUserOnboardingTest {
                             MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("resending-of-user-invitation"))
                                     .content(
                                             ClientUtil.getGsonMapper().toJson(inviteBodyDTO))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().is4xxClientError())
+                    .andReturn();
+    ApiResponseJson<?> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
+    assertFalse(response.isSuccess());
+  }
+  @Test
+  void updateDefaultPassword() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+    testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
+    ResetPasswordFirstBaseRequestDTO passwordFirstBaseRequestDTO =
+            new ResetPasswordFirstBaseRequestDTO();
+    passwordFirstBaseRequestDTO.setEmail("test@unittest.com");
+    passwordFirstBaseRequestDTO.setResetKey("1111");
+    passwordFirstBaseRequestDTO.setNewPassword("tester@12ece432");
+    BackOfficeUserAuthProfileDTO backOfficeUserAuthProfile = new BackOfficeUserAuthProfileDTO();
+    backOfficeUserAuthProfile.setUsername(passwordFirstBaseRequestDTO.getEmail());
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("password-update"))
+                                    .content(
+                                            ClientUtil.getGsonMapper().toJson(passwordFirstBaseRequestDTO))
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .header("Authorization", testHelper.retrieveValidAccessToken()))
                     .andExpect(status().is4xxClientError())

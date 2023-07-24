@@ -51,6 +51,11 @@ public class TestHelper {
 
 
   private static String getAccessToken(MvcResult result) throws UnsupportedEncodingException {
+    LoginResponse loginResponse = getLoginResponse(result);
+    return "Bearer ".concat(loginResponse.getAccessToken());
+  }
+
+  private static LoginResponse getLoginResponse(MvcResult result) throws UnsupportedEncodingException {
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString().trim(), ApiResponseJson.class);
@@ -60,7 +65,7 @@ public class TestHelper {
 
     LoginResponse loginResponse =
         ClientUtil.getGsonMapper().fromJson(loginResponseInString, LoginResponse.class);
-    return "Bearer ".concat(loginResponse.getAccessToken());
+    return loginResponse;
   }
 
   /*
@@ -83,6 +88,25 @@ public class TestHelper {
             .andReturn();
 
     return getAccessToken(result);
+  }
+
+  public LoginResponse authenticateWithNewUserCredentials(String username, String password) throws Exception {
+    LoginRequestDTO loginRequestDTO = new LoginRequestDTO();
+    loginRequestDTO.setAuthenticationType(AuthenticationType.PASSWORD);
+    loginRequestDTO.setPassword(password);
+    loginRequestDTO.setEmail(username);
+    loginRequestDTO.setUsername(username);
+
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("login"))
+                                    .content(ClientUtil.getGsonMapper().toJson(loginRequestDTO))
+                                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    return getLoginResponse(result);
   }
 
   /*

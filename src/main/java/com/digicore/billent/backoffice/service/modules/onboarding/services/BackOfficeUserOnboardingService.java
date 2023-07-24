@@ -7,10 +7,13 @@ import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.services.PasswordResetService;
 import com.digicore.registhentication.registration.services.RegistrationService;
 import com.digicore.registhentication.util.IDGeneratorUtil;
 import com.digicore.request.processor.annotations.MakerChecker;
+
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +68,18 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
             .firstName(inviteBodyDTO.getFirstName())
             .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
             .build());
+  }
+
+  public void updateDefaultPassword(ResetPasswordFirstBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
+    resetPasswordFirstBaseRequestDTO.setEmail(principal.getName());
+    passwordResetService.updateAccountPassword(resetPasswordFirstBaseRequestDTO);
+    notificationDispatcher.dispatchEmail(
+            NotificationServiceRequest.builder()
+                    .notificationSubject(propertyConfig.passwordResetSubject)
+                    .recipients(List.of(resetPasswordFirstBaseRequestDTO.getEmail()))
+                    .dateTime(LocalDateTime.now())
+                    .firstName(resetPasswordFirstBaseRequestDTO.getFirstName())
+                    .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
+                    .build());
   }
 }
