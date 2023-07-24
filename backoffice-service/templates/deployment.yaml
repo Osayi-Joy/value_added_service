@@ -59,11 +59,11 @@ spec:
                  key: DATABASE_PORT
                  optional: false
 
-          - name: RABBITMQ_HOST
+          - name: RABBITMQ_ADDRESSES
             valueFrom:
               secretKeyRef:
                  name: rabbitmq-login-secret
-                 key: RABBITMQ_HOST
+                 key: RABBITMQ_ADDRESSES
                  optional: false
           - name: RABBITMQ_USERNAME
             valueFrom:
