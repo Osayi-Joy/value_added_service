@@ -37,7 +37,7 @@ public class BillerController {
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize)
     {
         return ControllerResponse.buildSuccessResponse(
-                billerBackOfficeService.getAllBillers(pageNumber, pageSize), "Retrieved All Billers Successfully");
+                billerBackOfficeService.getAllBillers(pageNumber, pageSize), "Retrieved all billers successfully");
     }
 
     @GetMapping("export-to-csv")
@@ -70,7 +70,7 @@ public class BillerController {
             @RequestParam(value = BILLER_STATUS, required = false) Status billerStatus)
     {
         return ControllerResponse.buildSuccessResponse(
-                billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Billers by Status Successfully");
+                billerBackOfficeService.fetchBillersByStatus(billerStatus, startDate, endDate, pageNumber, pageSize), "Retrieved all billers by status successfully");
     }
 
     @GetMapping("get-{billerSystemId}-details")
@@ -80,18 +80,17 @@ public class BillerController {
             description = BILLER_CONTROLLER_GET_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> fetchBillerById(@PathVariable String billerSystemId) {
         return ControllerResponse.buildSuccessResponse(
-                billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved Biller details Successfully");
+                billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved biller details successfully");
     }
 
-    @PatchMapping("edit-billers")
+    @PatchMapping("edit")
     @PreAuthorize("hasAuthority('edit-billers')")
     @Operation(
             summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
-    @LogActivity(activity = LogActivityType.UPDATE_ACTIVITY)
-    public ResponseEntity<Object> updateBiller(@Valid @RequestBody BillerDto billerDto) {
-        billerBackOfficeService.updateBiller(billerDto);
-        return ControllerResponse.buildSuccessResponse();
+    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
+    public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
 
 

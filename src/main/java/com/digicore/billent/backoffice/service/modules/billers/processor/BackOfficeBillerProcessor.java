@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 public class BackOfficeBillerProcessor {
     private final BillerBackOfficeService billerBackOfficeService;
 
-    @RequestType(name = "updateBiller")
-    public Object updateBiller(Object request){
-        return billerBackOfficeService.updateBiller(request);
+    @RequestType(name = "updateBillerDetail")
+    public Object updateBillerDetail(Object request){
+        return billerBackOfficeService.updateBillerDetail(request);
     }
 
 }
