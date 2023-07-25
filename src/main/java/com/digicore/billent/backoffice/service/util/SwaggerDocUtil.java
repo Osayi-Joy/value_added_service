@@ -72,6 +72,8 @@ public class SwaggerDocUtil {
  public static final String PRODUCT_CONTROLLER_EXPORT_PRODUCTS_IN_CSV_TITLE = "Export products in csv";
  public static final String PRODUCT_CONTROLLER_EXPORT_PRODUCTS_IN_CSV_DESCRIPTION = "This API is used to export products in csv.";
 
+ public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE = "Update a billers";
+ public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION = "This API is used to update a biller's details.";
  private SwaggerDocUtil() {
  }
 
