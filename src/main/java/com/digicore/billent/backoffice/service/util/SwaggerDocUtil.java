@@ -58,6 +58,20 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_FETCH_BILLERS_BY_STATUS_DESCRIPTION = "This API is used to Filter billers by Status.";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_TITLE = "Export billers in csv";
  public static final String BILLER_CONTROLLER_EXPORT_BILLERS_IN_CSV_DESCRIPTION = "This API is used to export billers in csv.";
+
+
+ //Product Controller Doc
+ public static final String PRODUCT_CONTROLLER_TITLE = "BackOffice-Product-Module";
+ public static final String PRODUCT_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding Products. it goes through maker checker process";
+ public static final String PRODUCT_CONTROLLER_GET_ALL_PRODUCTS_TITLE = "Get all products";
+ public static final String PRODUCT_CONTROLLER_GET_ALL_PRODUCTS_DESCRIPTION = "This API is used to fetch all products.";
+ public static final String PRODUCT_CONTROLLER_GET_A_PRODUCT_TITLE = "Get a products";
+ public static final String PRODUCT_CONTROLLER_GET_A_PRODUCT_DESCRIPTION = "This API is used to fetch a product's details.";
+ public static final String PRODUCT_CONTROLLER_FETCH_PRODUCTS_BY_STATUS_TITLE = "Filter products by Status";
+ public static final String PRODUCT_CONTROLLER_FETCH_PRODUCTS_BY_STATUS_DESCRIPTION = "This API is used to Filter products by Status.";
+ public static final String PRODUCT_CONTROLLER_EXPORT_PRODUCTS_IN_CSV_TITLE = "Export products in csv";
+ public static final String PRODUCT_CONTROLLER_EXPORT_PRODUCTS_IN_CSV_DESCRIPTION = "This API is used to export products in csv.";
+
  public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE = "Update a billers";
  public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION = "This API is used to update a biller's details.";
  private SwaggerDocUtil() {
