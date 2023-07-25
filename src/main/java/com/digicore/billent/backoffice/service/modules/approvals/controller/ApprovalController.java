@@ -11,6 +11,7 @@ import com.digicore.billent.backoffice.service.modules.approvals.service.BackOff
 import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.TokenValid;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
+import com.digicore.request.processor.enums.ApprovalRequestStatus;
 import com.digicore.request.processor.enums.LogActivityType;
 import com.digicore.request.processor.processors.ApprovalRequestProcessor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -86,7 +87,19 @@ public class ApprovalController {
       @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
       @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeApprovalService.getAllApprovalRequestsDTOS(pageNumber, pageSize), null);
+        backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.EXECUTED), null);
+  }
+
+  @TokenValid()
+  @GetMapping("get-declined-request")
+  @Operation(
+          summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,
+          description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
+  public ResponseEntity<Object> getDeclinedRequest(
+          @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
+          @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.DECLINED), null);
   }
 
   @TokenValid()
@@ -98,6 +111,6 @@ public class ApprovalController {
       @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
       @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeApprovalService.getPendingApprovalRequestsDTOS(pageNumber, pageSize), null);
+        backOfficeApprovalService.getRequests(pageNumber, pageSize,ApprovalRequestStatus.NOT_TREATED), null);
   }
 }
