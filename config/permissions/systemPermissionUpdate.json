@@ -258,5 +258,10 @@
     "name": "view-roles",
     "description": "This allows you to view available roles",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "treat-requests",
+    "description": "This allows you to begin the process of approving or declining a request",
+    "permissionType": "ROLES"
   }
 ]

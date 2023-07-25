@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -39,6 +40,7 @@ public class ApprovalController {
 
   @TokenValid()
   @PostMapping("treat-request-{requestId}")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
       summary = APPROVAL_CONTROLLER_APPROVE_REQUEST_TITLE,
       description = APPROVAL_CONTROLLER_APPROVE_REQUEST_DESCRIPTION)
@@ -54,6 +56,7 @@ public class ApprovalController {
 
   @TokenValid()
   @PostMapping("decline-request-{requestId}")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
       summary = APPROVAL_CONTROLLER_DECLINE_REQUEST_TITLE,
       description = APPROVAL_CONTROLLER_DECLINE_REQUEST_DESCRIPTION)
@@ -69,6 +72,7 @@ public class ApprovalController {
 
   @TokenValid()
   @GetMapping("get-request-{requestId}")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
       summary = APPROVAL_CONTROLLER_GET_REQUEST_TITLE,
       description = APPROVAL_CONTROLLER_GET_REQUEST_DESCRIPTION)
@@ -80,6 +84,7 @@ public class ApprovalController {
 
   @TokenValid()
   @GetMapping("get-treated-request")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
       summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,
       description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
@@ -92,6 +97,7 @@ public class ApprovalController {
 
   @TokenValid()
   @GetMapping("get-declined-request")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
           summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,
           description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
@@ -104,6 +110,7 @@ public class ApprovalController {
 
   @TokenValid()
   @GetMapping("get-pending-request")
+  @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
       summary = APPROVAL_CONTROLLER_GET_PENDING_REQUEST_TITLE,
       description = APPROVAL_CONTROLLER_GET_PENDING_REQUEST_DESCRIPTION)
