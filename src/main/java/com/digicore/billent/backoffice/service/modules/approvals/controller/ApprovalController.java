@@ -8,8 +8,10 @@ import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageab
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService;
+import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.TokenValid;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
+import com.digicore.request.processor.enums.LogActivityType;
 import com.digicore.request.processor.processors.ApprovalRequestProcessor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -4,6 +4,7 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
@@ -28,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -39,6 +41,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @Slf4j
 class BillerControllerTest {
     //todo rewrite this test when the controller to save billers is available
+//    mvn test -Dspring.profiles.active=test -Dtest="BillerControllerTest"
     @Autowired
     private MockMvc mockMvc;
 
@@ -119,6 +122,31 @@ class BillerControllerTest {
                         .param(DOWNLOAD_FORMAT, downloadFormat)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().is2xxSuccessful());
+
+    }
+
+    @Test
+    void testUpdateBiller() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-billers");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID001");
+        billerDto.setCategoryId("CAT001");
+        billerDto.setCategoryName("Category Name");
+        billerDto.setBillerId("BILL001");
+        billerDto.setBillerName("Biller Name");
+        billerDto.setBillerStatus(Status.ACTIVE);
+
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "edit")
+                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+        assertTrue(response.isSuccess());
 
     }
 
