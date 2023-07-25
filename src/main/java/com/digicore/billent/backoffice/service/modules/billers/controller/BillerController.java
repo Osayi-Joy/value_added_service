@@ -91,7 +91,6 @@ public class BillerController {
     @Operation(
             summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
-    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
     public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
@@ -100,7 +99,6 @@ public class BillerController {
     @Operation(
             summary = BILLER_CONTROLLER_ENABLE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_ENABLE_A_BILLER_DESCRIPTION)
-    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
     public ResponseEntity<Object> enableBiller(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeService.enableBiller(billerDto),"Biller enabled successfully");
     }
