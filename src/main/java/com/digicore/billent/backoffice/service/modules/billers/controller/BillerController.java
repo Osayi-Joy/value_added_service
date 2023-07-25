@@ -19,7 +19,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-03(Mon)-2023
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(BILLERS_API_V1)
@@ -92,6 +95,14 @@ public class BillerController {
     public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
-
+    @PatchMapping("enable")
+    @PreAuthorize("hasAuthority('enable-biller')")
+    @Operation(
+            summary = BILLER_CONTROLLER_ENABLE_A_BILLER_TITLE,
+            description = BILLER_CONTROLLER_ENABLE_A_BILLER_DESCRIPTION)
+    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
+    public ResponseEntity<Object> enableBiller(@Valid @RequestBody BillerDto billerDto) {
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.enableBiller(billerDto),"Biller enabled successfully");
+    }
 
 }
