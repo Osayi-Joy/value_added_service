@@ -14,7 +14,10 @@ import com.digicore.request.processor.enums.LogActivityType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-03(Mon)-2023
+ */
 @Service
 @RequiredArgsConstructor
 public class BillerBackOfficeService {
@@ -64,5 +67,13 @@ public class BillerBackOfficeService {
   @LogActivity(activity = LogActivityType.UPDATE_TREATED_ACTIVITY)
   public Object updateBillerDetail(Object request, Object... args) {
     return billerService.editBiller((BillerDto) request);
+  }
+  @MakerChecker(
+          checkerPermission = "approve-enable-biller",
+          makerPermission = "enable-biller",
+          requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
+  @LogActivity(activity = LogActivityType.UPDATE_TREATED_ACTIVITY)
+  public Object enableBiller(Object request, Object... args) {
+    return billerService.enableBiller((BillerDto) request);
   }
 }

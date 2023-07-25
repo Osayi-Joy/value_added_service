@@ -34,7 +34,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-03(Mon)-2023
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -150,6 +153,30 @@ class BillerControllerTest {
 
     }
 
+    @Test
+    void testEnableBiller() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID001");
+        billerDto.setCategoryId("CAT001");
+        billerDto.setCategoryName("Category Name");
+        billerDto.setBillerId("BILL001");
+        billerDto.setBillerName("Biller Name");
+        billerDto.setBillerStatus(Status.ACTIVE);
+
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable")
+                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+        assertTrue(response.isSuccess());
+
+    }
 //    @Test
 //    void testViewABiller() throws Exception {
 //        //It requires the save biller endpoint
