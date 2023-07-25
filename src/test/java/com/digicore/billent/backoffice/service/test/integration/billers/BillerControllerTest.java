@@ -109,8 +109,6 @@ class BillerControllerTest {
     void testExportBillersAsCsv() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-billers");
-        int pageNumber = 0;
-        int pageSize = 10;
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status billerStatus = Status.ACTIVE;
@@ -166,6 +164,31 @@ class BillerControllerTest {
         billerDto.setBillerStatus(Status.ACTIVE);
 
         MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable")
+                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+        assertTrue(response.isSuccess());
+
+    }
+
+    @Test
+    void testDisableBiller() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID001");
+        billerDto.setCategoryId("CAT001");
+        billerDto.setCategoryName("Category Name");
+        billerDto.setBillerId("BILL001");
+        billerDto.setBillerName("Biller Name");
+        billerDto.setBillerStatus(Status.ACTIVE);
+
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable")
                         .content(ClientUtil.getGsonMapper().toJson(billerDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))

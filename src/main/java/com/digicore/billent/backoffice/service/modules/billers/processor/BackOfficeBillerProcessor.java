@@ -14,14 +14,17 @@ import lombok.RequiredArgsConstructor;
 public class BackOfficeBillerProcessor {
     private final BillerBackOfficeService billerBackOfficeService;
 
-    @RequestType(name = "updateBillerDetail")
-    public Object updateBillerDetail(Object request){
-        return billerBackOfficeService.updateBillerDetail(request);
-    }
-
     @RequestType(name = "enableBiller")
     public Object enableBiller(Object request){
         return billerBackOfficeService.enableBiller(request);
+    }
+    @RequestType(name = "disableBiller")
+    public Object disableBiller(Object request){
+        return billerBackOfficeService.disableBiller(request);
+    }
+    @RequestType(name = "updateBillerDetail")
+    public Object updateBillerDetail(Object request){
+        return billerBackOfficeService.updateBillerDetail(request);
     }
 
 }
