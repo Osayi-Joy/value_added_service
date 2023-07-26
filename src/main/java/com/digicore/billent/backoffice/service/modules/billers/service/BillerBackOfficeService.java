@@ -65,7 +65,6 @@ public class BillerBackOfficeService {
           checkerPermission = "approve-enable-biller",
           makerPermission = "enable-biller",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
-  @LogActivity(activity = LogActivityType.UPDATE_TREATED_ACTIVITY)
   public Object enableBiller(Object request, Object... args) {
     return billerService.enableBiller((BillerDto) request);
   }
