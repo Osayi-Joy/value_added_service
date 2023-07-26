@@ -1,6 +1,11 @@
-package com.digicore.billent.backoffice.service.modules.billers.service;
+package com.digicore.billent.backoffice.service.modules.billers.service.impl;
 
+import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeValidatorService;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
+import com.digicore.billent.data.lib.modules.billers.model.Biller;
+import com.digicore.billent.data.lib.modules.billers.model.Product;
+import com.digicore.billent.data.lib.modules.billers.service.BillerService;
 import com.digicore.billent.data.lib.modules.billers.service.ProductService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
@@ -14,8 +19,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProductBackOfficeService {
-    private final ProductService productService;
+public class ProductBackOfficeService implements ProductBackOfficeValidatorService {
+    private final ProductService<ProductDto, Product> productService;
     private final CsvService csvService;
 
 
