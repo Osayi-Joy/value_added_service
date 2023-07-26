@@ -7,6 +7,7 @@ import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,15 @@ public class ProductBackOfficeService {
         csvDto.setPage(pageNumber);
         csvDto.setPageSize(pageSize);
         csvService.prepareCSVExport(csvDto, productService::prepareProductCSV);
+    }
+
+
+    @MakerChecker(
+            checkerPermission = "approve-disable-biller-product",
+            makerPermission = "disable-biller-product",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.ProductDto")
+    public Object disableProduct(Object request, Object... args) {
+        return productService.disableProduct((ProductDto) request);
     }
 
 }
