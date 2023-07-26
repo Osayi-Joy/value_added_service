@@ -57,4 +57,13 @@ public class RoleController {
     public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
       return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
     }
+
+  @DeleteMapping("remove-{roleName}")
+  @PreAuthorize("hasAuthority('delete-role')")
+  @Operation(
+          summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
+          description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> createRole(@PathVariable String roleName){
+    return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
+  }
 }

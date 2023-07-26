@@ -38,4 +38,15 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService{
     RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
     return roleService.createNewRole(roleDTO);
   }
+
+
+  @MakerChecker(
+          checkerPermission = "approve-create-roles",
+          makerPermission = "create-roles",
+          requestClassName =
+                  "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+  public Object deleteRole(Object requestDTO, Object... args){
+    RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
+    return roleService.deleteRole(roleDTO.getName());
+  }
 }
