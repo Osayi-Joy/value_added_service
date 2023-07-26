@@ -74,4 +74,12 @@ public class BillerBackOfficeService {
   public Object enableBiller(Object request, Object... args) {
     return billerService.enableBiller((BillerDto) request);
   }
+
+  @MakerChecker(
+          checkerPermission = "approve-enable-biller",
+          makerPermission = "refresh-billers-products-under-an-aggregator",
+          requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
+  public Object refreshBillersAndProductsUnderAnAggregator(Object request, Object... args) {
+    return billerService.enableBiller((BillerDto) request);
+  }
 }
