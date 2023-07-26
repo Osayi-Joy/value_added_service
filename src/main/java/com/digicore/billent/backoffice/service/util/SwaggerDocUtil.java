@@ -75,6 +75,8 @@ public class SwaggerDocUtil {
  public static final String BILLER_CONTROLLER_ENABLE_A_BILLER_DESCRIPTION = "This API is used to enable a biller.";
  public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE = "Update a billers";
  public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION = "This API is used to update a biller's details.";
+ public static final String PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_TITLE = "Enable a product";
+ public static final String PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_DESCRIPTION = "This API is used to enable a product.";
  private SwaggerDocUtil() {
  }
 
