@@ -24,7 +24,10 @@ public class BackOfficeBillerProcessor {
     public Object enableBiller(Object request){
         return billerBackOfficeService.enableBiller(request);
     }
-
+    @RequestType(name = "enableProduct")
+    public Object enableProduct(Object request){
+        return productBackOfficeService.enableProduct(request);
+    }
     @RequestType(name = "disableProduct")
     public Object disableProduct(Object request){
         return productBackOfficeService.disableProduct(request);
