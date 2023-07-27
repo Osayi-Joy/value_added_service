@@ -1,4 +1,4 @@
-package com.digicore.billent.backoffice.service.modules.billers.processor;
+package com.digicore.billent.backoffice.service.modules.aggregators.processor;
 
 import static java.util.Objects.isNull;
 
