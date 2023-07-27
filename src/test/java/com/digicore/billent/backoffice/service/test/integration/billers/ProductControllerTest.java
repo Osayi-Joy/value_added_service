@@ -39,7 +39,7 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureMockMvc
 @Slf4j
 class ProductControllerTest {
-//    mvn test -Dspring.profiles.active=test -Dtest="ProductControllerTest"
+    //    mvn test -Dspring.profiles.active=test -Dtest="ProductControllerTest"
     @Autowired
     private MockMvc mockMvc;
 
@@ -110,10 +110,19 @@ class ProductControllerTest {
 
     }
 
+    private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+        ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<ProductDto>>>() {}.getType());
+        assertTrue(response.isSuccess());
+
+        return response.getData();
+
+    }
     @Test
-    void testEnableProduct() throws Exception {
+    void testDisableProduct() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
         productDto.setPrice("10000");
@@ -124,7 +133,7 @@ class ProductControllerTest {
         productDto.setFeeFixed(false);
         productDto.setProductStatus(Status.ACTIVE);
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable")
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable")
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -134,16 +143,6 @@ class ProductControllerTest {
                 ClientUtil.getGsonMapper()
                         .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
         assertTrue(response.isSuccess());
-
-    }
-
-    private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
-        ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<ProductDto>>>() {}.getType());
-        assertTrue(response.isSuccess());
-
-        return response.getData();
 
     }
 }
