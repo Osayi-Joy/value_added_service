@@ -70,7 +70,14 @@ public class ProductController {
         return ControllerResponse.buildSuccessResponse(
                 productBackOfficeService.fetchProductsByStatus(productStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Products by Status Successfully");
     }
-
+    @PatchMapping("enable")
+    @PreAuthorize("hasAuthority('enable-biller-product')")
+    @Operation(
+            summary = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_TITLE,
+            description = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_DESCRIPTION)
+    public ResponseEntity<Object> enableProduct(@Valid @RequestBody ProductDto productDto) {
+        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.enableProduct(productDto),"Product enabled successfully");
+    }
     @PatchMapping("disable")
     @PreAuthorize("hasAuthority('disable-biller-product')")
     @Operation(

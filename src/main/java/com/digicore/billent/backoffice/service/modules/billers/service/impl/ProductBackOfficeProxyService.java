@@ -15,6 +15,12 @@ import org.springframework.stereotype.Service;
 public class ProductBackOfficeProxyService {
     private final ProductService<ProductDto, Product> productService;
     private final ProductBackOfficeValidatorService validatorService;
+
+    public Object enableProduct(ProductDto productDto){
+        productService.isProductPresent(productDto.getProductSystemId());
+        return validatorService.enableProduct(productDto);
+    }
+
     public Object disableProduct(ProductDto productDto){
         productService.isProductPresent(productDto.getProductSystemId());
         return validatorService.disableProduct(productDto);
