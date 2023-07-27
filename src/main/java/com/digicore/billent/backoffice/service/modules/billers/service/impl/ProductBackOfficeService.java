@@ -48,7 +48,6 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
         csvService.prepareCSVExport(csvDto, productService::prepareProductCSV);
     }
 
-
     @MakerChecker(
             checkerPermission = "approve-disable-biller-product",
             makerPermission = "disable-biller-product",
