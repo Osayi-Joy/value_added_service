@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.digicore.api.helper.response.ApiResponseJson;
+import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
@@ -15,12 +15,14 @@ import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
 import com.digicore.common.util.ClientUtil;
+import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,17 @@ class ProductControllerTest {
     private MockMvc mockMvc;
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
-    @Autowired private ProductRepository productRepository;
+
+    @Autowired
+    private PropertyConfig propertyConfig;
+    
+    @Autowired
+    private ProductRepository productRepository;
+
+    @BeforeEach
+    void  checkup(){
+        new H2TestConfiguration(propertyConfig);
+    }
     @Test
     void testGetAllProducts() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
@@ -121,7 +133,7 @@ class ProductControllerTest {
 
     }
     @Test
-    void testEnableProduct_ProductExists() throws Exception {
+    void testDisableProduct_ProductExists() throws Exception {
         Product product = new Product();
         product.setProductSystemId("PSID001");
         product.setProductStatus(Status.ACTIVE);
@@ -129,11 +141,11 @@ class ProductControllerTest {
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable")
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable")
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -142,25 +154,24 @@ class ProductControllerTest {
         ApiResponseJson<?> response =
                 ClientUtil.getGsonMapper()
                         .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
-
         assertTrue(response.isSuccess());
 
     }
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
 
-        MvcResult mvcResult = mockMvc
-                .perform(
-                        patch(PRODUCTS_API_V1 + "enable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization", testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isBadRequest())
-                .andReturn();
+    MvcResult mvcResult = mockMvc
+        .perform(
+            patch(PRODUCTS_API_V1 + "disable")
+                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", testHelper.retrieveValidAccessToken()))
+        .andExpect(status().isBadRequest())
+            .andReturn();
 
         ApiResponseJson<?> response =
                 ClientUtil.getGsonMapper()
@@ -169,5 +180,7 @@ class ProductControllerTest {
         assertFalse(response.isSuccess());
 
     }
+
+
 
 }
