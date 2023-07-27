@@ -50,13 +50,14 @@ public class BillerAggregatorProcessor {
             makerPermission = "refresh-billers-products-under-an-aggregator",
             requestClassName =
                     "com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO")
-    public void process(BillerAggregatorDTO request) {
-        if (isNull(request) || StringUtils.isEmpty(request.getAggregatorAlias())) {
-            exceptionHandler.processCustomException("aggregator syncing failed because unknowm aggregator sync was requeted. see the aggregator passed ".concat(request.getAggregatorAlias()),"000", HttpStatus.INTERNAL_SERVER_ERROR, "000");
+    public void refreshAggregatorBillersAndProducts(Object request,Object... args) {
+        BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
+        if (isNull(request) || StringUtils.isEmpty(billerAggregatorDTO.getAggregatorAlias())) {
+            exceptionHandler.processCustomException("aggregator syncing failed because unknowm aggregator sync was requeted. see the aggregator passed ".concat(billerAggregatorDTO.getAggregatorAlias()),"000", HttpStatus.INTERNAL_SERVER_ERROR, "000");
         }
-        log.trace("Aggregator in sync is {}", request.getAggregatorAlias());
+        log.trace("Aggregator in sync is {}", billerAggregatorDTO.getAggregatorAlias());
         try {
-            requestHandlers.handle(request.getAggregatorAlias(), request, BillerAggregatorDTO.class);
+            requestHandlers.handle(billerAggregatorDTO.getAggregatorAlias(), billerAggregatorDTO, BillerAggregatorDTO.class);
         } catch (ZeusRuntimeException e) {
             log.error(FUNCTION_NOT_SUPPORTED_TEXT, e);
         }

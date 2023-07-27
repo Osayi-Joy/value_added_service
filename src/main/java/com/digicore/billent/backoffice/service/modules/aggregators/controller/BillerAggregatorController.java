@@ -28,7 +28,7 @@ public class BillerAggregatorController {
     @PatchMapping("refresh-{systemAggregatorId}")
     public ResponseEntity<Object> refreshAggregatorBillerAndProduct(@PathVariable String systemAggregatorId){
        BillerAggregatorDTO billerAggregatorDTO =  billerAggregatorProcessor.refreshAggregatorBillersAndProducts(systemAggregatorId);
-       billerAggregatorProcessor.process(billerAggregatorDTO);
+       billerAggregatorProcessor.refreshAggregatorBillersAndProducts(billerAggregatorDTO);
        return ControllerResponse.buildSuccessResponse();
     }
 }
