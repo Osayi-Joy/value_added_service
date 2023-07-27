@@ -8,9 +8,7 @@ import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
-import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.MakerChecker;
-import com.digicore.request.processor.enums.LogActivityType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -72,7 +70,6 @@ public class BillerBackOfficeService {
           checkerPermission = "approve-disable-biller",
           makerPermission = "disable-biller",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
-  @LogActivity(activity = LogActivityType.UPDATE_TREATED_ACTIVITY)
   public Object disableBiller(Object request, Object... args) {
     return billerService.disableBiller((BillerDto) request);
   }
@@ -81,7 +78,6 @@ public class BillerBackOfficeService {
           checkerPermission = "approve-edit-billers",
           makerPermission = "edit-billers",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
-  @LogActivity(activity = LogActivityType.UPDATE_TREATED_ACTIVITY)
   public Object updateBillerDetail(Object request, Object... args) {
     return billerService.editBiller((BillerDto) request);
   }

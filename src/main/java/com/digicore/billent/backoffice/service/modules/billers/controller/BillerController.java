@@ -9,8 +9,6 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.registhentication.registration.enums.Status;
-import com.digicore.request.processor.annotations.LogActivity;
-import com.digicore.request.processor.enums.LogActivityType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -100,7 +98,6 @@ public class BillerController {
     @Operation(
             summary = BILLER_CONTROLLER_DISABLE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_DISABLE_A_BILLER_DESCRIPTION)
-    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
     public ResponseEntity<Object> disableBiller(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeService.disableBiller(billerDto),"Biller disabled successfully");
     }
@@ -110,7 +107,6 @@ public class BillerController {
     @Operation(
             summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
-    @LogActivity(activity = LogActivityType.UPDATE_REQUIRED_ACTIVITY)
     public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
