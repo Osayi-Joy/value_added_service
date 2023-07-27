@@ -49,6 +49,14 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
     }
 
     @MakerChecker(
+            checkerPermission = "approve-enable-biller-product",
+            makerPermission = "enable-biller-product",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.ProductDto")
+    public Object enableProduct(Object request, Object... args) {
+        return productService.enableProduct((ProductDto) request);
+    }
+
+    @MakerChecker(
             checkerPermission = "approve-disable-biller-product",
             makerPermission = "disable-biller-product",
             requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.ProductDto")

@@ -158,11 +158,11 @@ class ProductControllerTest {
 
     }
     @Test
-    void testEnableProduct_ProductNotExists() throws Exception {
+    void testDisableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID001");
+        productDto.setProductSystemId("PSID004");
 
     MvcResult mvcResult = mockMvc
         .perform(
@@ -181,6 +181,55 @@ class ProductControllerTest {
 
     }
 
+    @Test
+    void testEnableProduct_ProductExists() throws Exception {
+        Product product = new Product();
+        product.setProductSystemId("PSID006");
+        product.setProductStatus(Status.ACTIVE);
+
+        productRepository.save(product);
+
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        ProductDto productDto = new ProductDto();
+        productDto.setProductSystemId("PSID006");
+
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable")
+                        .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+
+        assertTrue(response.isSuccess());
+
+    }
+    @Test
+    void testEnableProduct_ProductNotExists() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        ProductDto productDto = new ProductDto();
+        productDto.setProductSystemId("PSID008");
+
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        patch(PRODUCTS_API_V1 + "enable")
+                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+
+        assertFalse(response.isSuccess());
+
+    }
 
 
 }
