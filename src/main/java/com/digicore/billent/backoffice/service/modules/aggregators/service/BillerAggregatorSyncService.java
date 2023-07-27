@@ -13,11 +13,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @createdOn Jul-27(Thu)-2023
  */
 @RequestHandler(type = RequestHandlerType.PROCESS_MAKER_REQUESTS)
-@RequiredArgsConstructor
 public class BillerAggregatorSyncService {
 
-    @Qualifier("EtranzactServiceImpl")
+
     private final BillerAggregatorService billerAggregatorService;
+
+    public BillerAggregatorSyncService(@Qualifier("EtranzactServiceImpl")BillerAggregatorService billerAggregatorService) {
+        this.billerAggregatorService = billerAggregatorService;
+    }
 
     @RequestType(name = "ETRANZACT")
     public void process(BillerAggregatorDTO request)  {
