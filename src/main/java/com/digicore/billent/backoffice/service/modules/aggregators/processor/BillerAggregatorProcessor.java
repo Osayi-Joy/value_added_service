@@ -1,5 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.processor;
 
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE;
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE;
 import static java.util.Objects.isNull;
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
@@ -52,9 +54,6 @@ public class BillerAggregatorProcessor {
                     "com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO")
     public void refreshAggregatorBillersAndProducts(Object request,Object... args) {
         BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
-        if (isNull(request) || StringUtils.isEmpty(billerAggregatorDTO.getAggregatorAlias())) {
-            exceptionHandler.processCustomException("aggregator syncing failed because unknowm aggregator sync was requeted. see the aggregator passed ".concat(billerAggregatorDTO.getAggregatorAlias()),"000", HttpStatus.INTERNAL_SERVER_ERROR, "000");
-        }
         log.trace("Aggregator in sync is {}", billerAggregatorDTO.getAggregatorAlias());
         try {
             requestHandlers.handle(billerAggregatorDTO.getAggregatorAlias(), billerAggregatorDTO, BillerAggregatorDTO.class);
@@ -64,7 +63,10 @@ public class BillerAggregatorProcessor {
     }
 
     public BillerAggregatorDTO refreshAggregatorBillersAndProducts(String aggregatorSystemId){
-       return billerAggregatorService.getBillerAggregator(aggregatorSystemId);
+        BillerAggregatorDTO billerAggregatorDTO = billerAggregatorService.getBillerAggregator(aggregatorSystemId);
+        if (billerAggregatorDTO.isSyncRequested())
+            exceptionHandler.processCustomException(BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE,BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE,HttpStatus.CONFLICT,BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE);
+        return billerAggregatorDTO;
     }
 
 

@@ -20,6 +20,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -40,6 +43,19 @@ public class BillentBackOfficeServiceConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(request -> {
+              CorsConfiguration config = new CorsConfiguration();
+              config.setAllowedOrigins(List.of("*"));
+              config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"));
+              config.setAllowedHeaders(List.of( "Content-Type",
+                      "Access-Control-Allow-Headers",
+                      "Access-Control-Expose-Headers",
+                      "Content-Disposition",
+                      "Authorization",
+                      " X-Requested-With"));
+              config.addExposedHeader("Content-Disposition");
+              return config;
+            }))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
