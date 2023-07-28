@@ -6,7 +6,8 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.billers.service.impl.BillerBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.billers.service.impl.BillerBackOfficeService;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = BILLER_CONTROLLER_TITLE, description = BILLER_CONTROLLER_DESCRIPTION)
 public class BillerController {
     private final BillerBackOfficeService billerBackOfficeService;
+    private final BillerBackOfficeProxyService billerBackOfficeProxyService;
 
     @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-billers')")
@@ -90,7 +92,7 @@ public class BillerController {
             summary = BILLER_CONTROLLER_ENABLE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_ENABLE_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> enableBiller(@Valid @RequestBody BillerDto billerDto) {
-        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.enableBiller(billerDto),"Biller enabled successfully");
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeProxyService.enableBiller(billerDto),"Biller enabled successfully");
     }
 
     @PatchMapping("disable")
