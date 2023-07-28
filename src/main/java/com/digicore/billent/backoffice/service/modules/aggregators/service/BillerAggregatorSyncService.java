@@ -17,6 +17,7 @@ public class BillerAggregatorSyncService {
 
 
     private final BillerAggregatorService billerAggregatorService;
+
     private final BillerAggregatorProcessor billerAggregatorProcessor;
 
     public BillerAggregatorSyncService(@Qualifier("EtranzactServiceImpl")BillerAggregatorService billerAggregatorService, BillerAggregatorProcessor billerAggregatorProcessor) {
@@ -33,4 +34,5 @@ public class BillerAggregatorSyncService {
     public void processEtranzactResync(BillerAggregatorDTO request)  {
         billerAggregatorService.refreshAggregatorBillersAndProducts(request.getAggregatorAlias());
     }
+
 }
