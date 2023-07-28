@@ -162,7 +162,7 @@ class BillerControllerTest {
     void testEnableBiller_BillerExists() throws Exception {
         Biller biller = new Biller();
         biller.setBillerSystemId("BSID001");
-        biller.setBillerStatus(Status.ACTIVE);
+        biller.setBillerStatus(Status.INACTIVE);
 
         billerRepository.save(biller);
 
@@ -207,6 +207,54 @@ class BillerControllerTest {
 
     }
 
+    @Test
+    void testDisableBiller_BillerExists() throws Exception {
+        Biller biller = new Biller();
+        biller.setBillerSystemId("BSID002");
+        biller.setBillerStatus(Status.ACTIVE);
+
+        billerRepository.save(biller);
+
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID002");
+
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable")
+                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+        assertTrue(response.isSuccess());
+
+    }
+    @Test
+    void testDisableBiller_BillerNotExists() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
+        ProductDto productDto = new ProductDto();
+        productDto.setProductSystemId("BSID006");
+
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        patch(BILLERS_API_V1 + "disable")
+                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+
+        assertFalse(response.isSuccess());
+
+    }
 
 
 

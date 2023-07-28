@@ -101,7 +101,7 @@ public class BillerController {
             summary = BILLER_CONTROLLER_DISABLE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_DISABLE_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> disableBiller(@Valid @RequestBody BillerDto billerDto) {
-        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.disableBiller(billerDto),"Biller disabled successfully");
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeProxyService.disableBiller(billerDto),"Biller disabled successfully");
     }
 
     @PatchMapping("edit")
