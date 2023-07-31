@@ -2,6 +2,11 @@ pipeline {
     agent {
        label "Runner"
        }
+       
+    tools {
+    jdk 'Java17'
+    maven 'Maven'
+    }
     
     environment {
         VERSION = "${env.BUILD_ID}"
@@ -15,6 +20,18 @@ pipeline {
         stage('Git checkout') {
             steps {
                 git branch: 'redtech', credentialsId: 'GitLab_Access', url: 'https://gitlab.com/teamdigicore/billent-backoffice-service.git'
+            }
+        }
+        
+        stage('Build The Artifact') {
+            steps {
+                withMaven(
+                    maven: 'Maven',
+                //mavenLocalRepo: '.repository',
+                    mavenSettingsConfig: 'e2a28e49-cbe4-468c-9415-8a2b8340a38f'//MyMVNSettings
+                    )
+                    sh 'mvn test -Dspring.profiles.active=test'
+                    sh 'mvn clean package spring-boot:repackage -DskipTests'
             }
         }
       
