@@ -18,5 +18,9 @@ public class BillerBackOfficeProxyService {
         return validatorService.enableBiller(billerDto);
     }
 
+    public Object disableBiller(BillerDto billerDto){
+        billerService.isBillerPresent(billerDto.getBillerSystemId());
+        return validatorService.disableBiller(billerDto);
+    }
 
 }

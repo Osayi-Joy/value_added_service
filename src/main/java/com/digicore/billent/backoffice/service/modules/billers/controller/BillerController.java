@@ -86,14 +86,6 @@ public class BillerController {
                 billerBackOfficeService.fetchBillerById(billerSystemId), "Retrieved biller details successfully");
     }
 
-    @PatchMapping("edit")
-    @PreAuthorize("hasAuthority('edit-billers')")
-    @Operation(
-            summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
-            description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
-    public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
-        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
-    }
     @PatchMapping("enable")
     @PreAuthorize("hasAuthority('enable-biller')")
     @Operation(
@@ -101,6 +93,24 @@ public class BillerController {
             description = BILLER_CONTROLLER_ENABLE_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> enableBiller(@Valid @RequestBody BillerDto billerDto) {
         return ControllerResponse.buildSuccessResponse(billerBackOfficeProxyService.enableBiller(billerDto),"Biller enabled successfully");
+    }
+
+    @PatchMapping("disable")
+    @PreAuthorize("hasAuthority('disable-biller')")
+    @Operation(
+            summary = BILLER_CONTROLLER_DISABLE_A_BILLER_TITLE,
+            description = BILLER_CONTROLLER_DISABLE_A_BILLER_DESCRIPTION)
+    public ResponseEntity<Object> disableBiller(@Valid @RequestBody BillerDto billerDto) {
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeProxyService.disableBiller(billerDto),"Biller disabled successfully");
+    }
+
+    @PatchMapping("edit")
+    @PreAuthorize("hasAuthority('edit-billers')")
+    @Operation(
+            summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
+            description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
+    public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
 
 }

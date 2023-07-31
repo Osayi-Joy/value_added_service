@@ -59,18 +59,27 @@ public class BillerBackOfficeService implements BillerBackOfficeValidatorService
     return billerService.retrieveBillerDetailsById(billerSystemId);
   }
 
-  @MakerChecker(
-      checkerPermission = "approve-edit-billers",
-      makerPermission = "edit-billers",
-      requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
-  public Object updateBillerDetail(Object request, Object... args) {
-    return billerService.editBiller((BillerDto) request);
-  }
+
   @MakerChecker(
           checkerPermission = "approve-enable-biller",
           makerPermission = "enable-biller",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
   public Object enableBiller(Object request, Object... args) {
     return billerService.enableBiller((BillerDto) request);
+  }
+  @MakerChecker(
+          checkerPermission = "approve-disable-biller",
+          makerPermission = "disable-biller",
+          requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
+  public Object disableBiller(Object request, Object... args) {
+    return billerService.disableBiller((BillerDto) request);
+  }
+
+  @MakerChecker(
+          checkerPermission = "approve-edit-billers",
+          makerPermission = "edit-billers",
+          requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
+  public Object updateBillerDetail(Object request, Object... args) {
+    return billerService.editBiller((BillerDto) request);
   }
 }
