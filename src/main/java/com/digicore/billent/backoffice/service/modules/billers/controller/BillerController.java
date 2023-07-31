@@ -110,7 +110,7 @@ public class BillerController {
             summary = BILLER_CONTROLLER_UPDATE_A_BILLER_TITLE,
             description = BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION)
     public ResponseEntity<Object> updateBillerDetail(@Valid @RequestBody BillerDto billerDto) {
-        return ControllerResponse.buildSuccessResponse(billerBackOfficeService.updateBillerDetail(billerDto),"Updated biller details successfully");
+        return ControllerResponse.buildSuccessResponse(billerBackOfficeProxyService.updateBillerDetail(billerDto),"Updated biller details successfully");
     }
 
 }
