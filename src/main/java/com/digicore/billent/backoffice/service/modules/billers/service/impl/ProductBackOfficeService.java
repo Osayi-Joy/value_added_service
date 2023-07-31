@@ -1,20 +1,26 @@
-package com.digicore.billent.backoffice.service.modules.billers.service;
+package com.digicore.billent.backoffice.service.modules.billers.service.impl;
 
+import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeValidatorService;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
+import com.digicore.billent.data.lib.modules.billers.model.Biller;
+import com.digicore.billent.data.lib.modules.billers.model.Product;
+import com.digicore.billent.data.lib.modules.billers.service.BillerService;
 import com.digicore.billent.data.lib.modules.billers.service.ProductService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProductBackOfficeService {
-    private final ProductService productService;
+public class ProductBackOfficeService implements ProductBackOfficeValidatorService {
+    private final ProductService<ProductDto, Product> productService;
     private final CsvService csvService;
 
 
@@ -40,6 +46,22 @@ public class ProductBackOfficeService {
         csvDto.setPage(pageNumber);
         csvDto.setPageSize(pageSize);
         csvService.prepareCSVExport(csvDto, productService::prepareProductCSV);
+    }
+
+    @MakerChecker(
+            checkerPermission = "approve-enable-biller-product",
+            makerPermission = "enable-biller-product",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.ProductDto")
+    public Object enableProduct(Object request, Object... args) {
+        return productService.enableProduct((ProductDto) request);
+    }
+
+    @MakerChecker(
+            checkerPermission = "approve-disable-biller-product",
+            makerPermission = "disable-biller-product",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.ProductDto")
+    public Object disableProduct(Object request, Object... args) {
+        return productService.disableProduct((ProductDto) request);
     }
 
 }
