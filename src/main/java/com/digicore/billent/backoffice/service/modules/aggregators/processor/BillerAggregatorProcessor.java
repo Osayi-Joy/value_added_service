@@ -63,7 +63,7 @@ public class BillerAggregatorProcessor {
     }
 
     public BillerAggregatorDTO refreshAggregatorBillersAndProducts(String aggregatorSystemId){
-        BillerAggregatorDTO billerAggregatorDTO = billerAggregatorService.getBillerAggregator(aggregatorSystemId);
+        BillerAggregatorDTO billerAggregatorDTO = billerAggregatorService.getBillerAggregatorForRefresh(aggregatorSystemId);
         if (billerAggregatorDTO.isSyncRequested())
             exceptionHandler.processCustomException(BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE,BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE,HttpStatus.CONFLICT,BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE);
         return billerAggregatorDTO;
