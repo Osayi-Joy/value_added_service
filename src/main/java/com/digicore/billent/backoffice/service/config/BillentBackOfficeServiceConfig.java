@@ -50,6 +50,7 @@ public class BillentBackOfficeServiceConfig {
               config.setAllowedHeaders(List.of( "Content-Type",
                       "Access-Control-Allow-Headers",
                       "Access-Control-Expose-Headers",
+                      "Access-Control-Allow-Origin",
                       "Content-Disposition",
                       "Authorization",
                       " X-Requested-With"));
