@@ -17,11 +17,15 @@ public class BillerAggregatorSyncService {
 
 
     private final BillerAggregatorService billerAggregatorService;
+    private final BillerAggregatorService interswitchAggregatorService;
 
     private final BillerAggregatorProcessor billerAggregatorProcessor;
 
-    public BillerAggregatorSyncService(@Qualifier("EtranzactServiceImpl")BillerAggregatorService billerAggregatorService, BillerAggregatorProcessor billerAggregatorProcessor) {
+    public BillerAggregatorSyncService(@Qualifier("EtranzactServiceImpl")BillerAggregatorService billerAggregatorService,
+                                       @Qualifier("InterswitchServiceImpl")BillerAggregatorService interswitchAggregatorService,
+                                       BillerAggregatorProcessor billerAggregatorProcessor) {
         this.billerAggregatorService = billerAggregatorService;
+        this.interswitchAggregatorService = interswitchAggregatorService;
         this.billerAggregatorProcessor = billerAggregatorProcessor;
     }
 
@@ -33,6 +37,10 @@ public class BillerAggregatorSyncService {
     @RequestType(name = "ETRANZACT")
     public void processEtranzactResync(BillerAggregatorDTO request)  {
         billerAggregatorService.refreshAggregatorBillersAndProducts(request.getAggregatorAlias());
+    }
+    @RequestType(name = "INTERSWITCH")
+    public void processInterswitchResync(BillerAggregatorDTO request)  {
+        interswitchAggregatorService.refreshAggregatorBillersAndProducts(request.getAggregatorAlias());
     }
 
 }

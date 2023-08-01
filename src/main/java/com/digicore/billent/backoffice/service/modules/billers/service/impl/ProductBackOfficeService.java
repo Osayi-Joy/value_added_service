@@ -16,7 +16,10 @@ import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-07(Fri)-2023
+ */
 @Service
 @RequiredArgsConstructor
 public class ProductBackOfficeService implements ProductBackOfficeValidatorService {

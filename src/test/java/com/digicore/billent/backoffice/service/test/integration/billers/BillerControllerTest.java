@@ -139,8 +139,6 @@ class BillerControllerTest {
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-billers");
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID001");
-        billerDto.setCategoryId("CAT001");
-        billerDto.setCategoryName("Category Name");
         billerDto.setBillerId("BILL001");
         billerDto.setBillerName("Biller Name");
         billerDto.setBillerStatus(Status.ACTIVE);

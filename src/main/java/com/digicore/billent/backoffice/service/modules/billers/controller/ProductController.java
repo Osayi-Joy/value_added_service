@@ -17,7 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-07(Fri)-2023
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(PRODUCTS_API_V1)

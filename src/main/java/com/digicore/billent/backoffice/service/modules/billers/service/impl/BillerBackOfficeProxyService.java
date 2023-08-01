@@ -6,7 +6,10 @@ import com.digicore.billent.data.lib.modules.billers.model.Biller;
 import com.digicore.billent.data.lib.modules.billers.service.BillerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+/*
+ * @author Joy Osayi
+ * @createdOn Jul-26(Wed)-2023
+ */
 @Service
 @RequiredArgsConstructor
 public class BillerBackOfficeProxyService {
