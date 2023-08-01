@@ -37,26 +37,15 @@ public class BillentBackOfficeServiceConfig {
 
   public static final String AUTHORITIES_CLAIM_NAME = "permissions";
 
+  private final CORSFilter corsFilter;
+
   @Qualifier("delegatedAuthenticationEntryPoint")
   private final DelegatedAuthenticationEntryPoint authEntryPoint;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(request -> {
-              CorsConfiguration config = new CorsConfiguration();
-              config.setAllowedOrigins(List.of("*"));
-              config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"));
-              config.setAllowedHeaders(List.of( "Content-Type",
-                      "Access-Control-Allow-Headers",
-                      "Access-Control-Expose-Headers",
-//                      "Access-Control-Allow-Origin",
-                      "Content-Disposition",
-                      "Authorization",
-                      " X-Requested-With"));
-              config.addExposedHeader("Content-Disposition");
-              return config;
-            }))
+            .cors(cors -> cors.configurationSource(corsFilter))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
