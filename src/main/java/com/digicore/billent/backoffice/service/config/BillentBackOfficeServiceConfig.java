@@ -43,20 +43,20 @@ public class BillentBackOfficeServiceConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
-//            .cors(cors -> cors.configurationSource(request -> {
-//              CorsConfiguration config = new CorsConfiguration();
-//              config.setAllowedOrigins(List.of("*"));
-//              config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"));
-//              config.setAllowedHeaders(List.of( "Content-Type",
-//                      "Access-Control-Allow-Headers",
-//                      "Access-Control-Expose-Headers",
+            .cors(cors -> cors.configurationSource(request -> {
+              CorsConfiguration config = new CorsConfiguration();
+              config.setAllowedOrigins(List.of("*"));
+              config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "HEAD", "PATCH"));
+              config.setAllowedHeaders(List.of( "Content-Type",
+                      "Access-Control-Allow-Headers",
+                      "Access-Control-Expose-Headers",
 //                      "Access-Control-Allow-Origin",
-//                      "Content-Disposition",
-//                      "Authorization",
-//                      " X-Requested-With"));
-//              config.addExposedHeader("Content-Disposition");
-//              return config;
-//            }))
+                      "Content-Disposition",
+                      "Authorization",
+                      " X-Requested-With"));
+              config.addExposedHeader("Content-Disposition");
+              return config;
+            }))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(
