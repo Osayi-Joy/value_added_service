@@ -7,4 +7,5 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 public interface BackOfficeRoleValidatorService {
 
      Object createNewRole(Object requestDTO, Object... args);
+     Object deleteRole(Object requestDTO, Object... args);
 }

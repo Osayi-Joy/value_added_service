@@ -263,5 +263,10 @@
     "name": "delete-role",
     "description": "This allows you to delete a role",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-delete-role",
+    "description": "This allows you to delete a role",
+    "permissionType": "ROLES"
   }
 ]

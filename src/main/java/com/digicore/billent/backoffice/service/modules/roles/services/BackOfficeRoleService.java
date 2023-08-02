@@ -41,8 +41,8 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService{
 
 
   @MakerChecker(
-          checkerPermission = "approve-create-roles",
-          makerPermission = "create-roles",
+          checkerPermission = "approve-delete-role",
+          makerPermission = "delete-role",
           requestClassName =
                   "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
   public Object deleteRole(Object requestDTO, Object... args){
