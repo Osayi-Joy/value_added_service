@@ -5,18 +5,18 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeService;
+import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = PRODUCT_CONTROLLER_TITLE, description = PRODUCT_CONTROLLER_DESCRIPTION)
 public class ProductController {
     private final ProductBackOfficeService productBackOfficeService;
+    private final ProductBackOfficeProxyService productBackOfficeProxyService;
 
     @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-biller-products')")
@@ -69,7 +70,21 @@ public class ProductController {
         return ControllerResponse.buildSuccessResponse(
                 productBackOfficeService.fetchProductsByStatus(productStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Products by Status Successfully");
     }
-
-
+    @PatchMapping("enable")
+    @PreAuthorize("hasAuthority('enable-biller-product')")
+    @Operation(
+            summary = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_TITLE,
+            description = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_DESCRIPTION)
+    public ResponseEntity<Object> enableProduct(@Valid @RequestBody ProductDto productDto) {
+        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.enableProduct(productDto),"Product enabled successfully");
+    }
+    @PatchMapping("disable")
+    @PreAuthorize("hasAuthority('disable-biller-product')")
+    @Operation(
+            summary = PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_TITLE,
+            description = PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION)
+    public ResponseEntity<Object> disableProduct(@Valid @RequestBody ProductDto productDto) {
+        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.disableProduct(productDto),"Product disabled successfully");
+    }
 
 }
