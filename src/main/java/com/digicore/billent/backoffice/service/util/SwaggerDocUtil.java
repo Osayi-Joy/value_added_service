@@ -37,14 +37,19 @@ public class SwaggerDocUtil {
  //Role Controller Doc
  public static final String ROLE_CONTROLLER_TITLE = "BackOffice-Role-Module";
  public static final String ROLE_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding authorization ( role/permission management ). it goes through maker checker process";
+
+
  public static final String ROLE_CONTROLLER_GET_ALL_ROLES_TITLE = "Get all roles";
- public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to fetch all available roles in the system";
+ public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to fetch all available roles in the system, it requires a query param named paginated and value true if data is been retrieved for a paginated view.";
 
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION = "This API is used to fetch all available permissions in the system";
 
  public static final String ROLE_CONTROLLER_CREATE_A_ROLE_TITLE = "Add a new role";
  public static final String ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION = "This API is used to add a new role to the system, it goes through maker checker.";
+
+ public static final String ROLE_CONTROLLER_DELETE_A_ROLE_TITLE = "Delete a role";
+ public static final String ROLE_CONTROLLER_DELETE_A_ROLE_DESCRIPTION = "This API is used to delete a role on the system, it goes through maker checker.";
 
 
  //Biller Controller Doc

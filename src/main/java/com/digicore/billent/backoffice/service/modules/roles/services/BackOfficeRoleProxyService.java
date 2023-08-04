@@ -35,4 +35,11 @@ public class BackOfficeRoleProxyService {
   permissionService.getValidPermissions(roleDTO.getPermissions());
   return validatorService.createNewRole(roleDTO);
  }
+
+ public Object deleteRole(String roleName) {
+  roleService.roleCheck(roleName);
+  RoleDTO roleDTO = new RoleDTO();
+  roleDTO.setName(roleName);
+  return validatorService.deleteRole(roleDTO);
+ }
 }

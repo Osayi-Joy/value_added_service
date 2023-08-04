@@ -34,10 +34,14 @@ public class RoleController {
       @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
           int pageNumber,
       @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
-          int pageSize) {
+          int pageSize,
+  @RequestParam(value = "paginated", defaultValue = "false", required = false)
+  String paginated)
+  {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
+        backOfficeRoleService.getAllRoles(pageNumber, pageSize,paginated), "Roles retrieved successfully");
   }
+
 
     @GetMapping("get-system-permissions")
     @PreAuthorize("hasAuthority('view-permissions')")
@@ -57,4 +61,13 @@ public class RoleController {
     public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
       return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
     }
+
+  @DeleteMapping("remove-{roleName}")
+  @PreAuthorize("hasAuthority('delete-role')")
+  @Operation(
+          summary = ROLE_CONTROLLER_DELETE_A_ROLE_TITLE,
+          description = ROLE_CONTROLLER_DELETE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> createRole(@PathVariable String roleName){
+    return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.deleteRole(roleName));
+  }
 }
