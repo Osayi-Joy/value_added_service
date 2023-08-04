@@ -28,8 +28,8 @@ public class RoleController {
   @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-roles')")
   @Operation(
-      summary = ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_TITLE,
-      description = ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_DESCRIPTION)
+      summary = ROLE_CONTROLLER_GET_ALL_ROLES_TITLE,
+      description = ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION)
   public ResponseEntity<Object> getAllRoles(
       @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
           int pageNumber,

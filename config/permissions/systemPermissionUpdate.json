@@ -268,5 +268,10 @@
     "name": "approve-delete-role",
     "description": "This allows you to delete a role",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "treat-requests",
+    "description": "This allows you to treat a request you have been assigned to",
+    "permissionType": "ROLES"
   }
 ]

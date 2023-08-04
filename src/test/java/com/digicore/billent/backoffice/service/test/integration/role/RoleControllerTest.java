@@ -38,8 +38,7 @@ import java.util.Set;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -172,5 +171,23 @@ class RoleControllerTest {
         assertTrue(response.isSuccess());
         assertTrue(response.getData().size() > 0);
         assertNotNull(response.getData());
+    }
+
+    @Test
+    void testDeleteRole() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-role");
+        MvcResult mvcResult = mockMvc.perform(delete(ROLES_API_V1 + "remove-SYSTEM_CHECKER")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        ApiResponseJson<RoleDTO> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+        assertTrue(response.isSuccess());
     }
 }
