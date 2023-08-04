@@ -40,6 +40,9 @@ public class SwaggerDocUtil {
  public static final String ROLE_CONTROLLER_GET_ALL_ROLES_TITLE = "Get all roles";
  public static final String ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION = "This API is used to fetch all available roles in the system";
 
+ public static final String ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_TITLE = "Get all roles paginated";
+ public static final String ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_DESCRIPTION = "This API is used to fetch all available roles paginated in the system";
+
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
  public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION = "This API is used to fetch all available permissions in the system";
 

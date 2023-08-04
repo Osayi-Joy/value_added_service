@@ -69,13 +69,13 @@ class RoleControllerTest {
 
 
     @Test
-     void testGetAllRoles() throws Exception {
+     void testGetAllRolesPaginated() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
        int pageNumber = 0;
         int pageSize = 10;
 
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all")
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all".concat("?paginated=true"))
                         .param("pageNumber", String.valueOf(pageNumber))
                         .param("pageSize", String.valueOf(pageSize))
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -150,5 +150,27 @@ class RoleControllerTest {
                         .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
         assertTrue(response.isSuccess());
+    }
+
+    @Test
+    void testGetAllRoles() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all")
+
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        ApiResponseJson<Set<PermissionDTO>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
+
+
+
+        assertTrue(response.isSuccess());
+        assertTrue(response.getData().size() > 0);
+        assertNotNull(response.getData());
     }
 }

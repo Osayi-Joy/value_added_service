@@ -28,16 +28,20 @@ public class RoleController {
   @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-roles')")
   @Operation(
-      summary = ROLE_CONTROLLER_GET_ALL_ROLES_TITLE,
-      description = ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION)
+      summary = ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_TITLE,
+      description = ROLE_CONTROLLER_GET_ALL_ROLES_PAGINATED_DESCRIPTION)
   public ResponseEntity<Object> getAllRoles(
       @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
           int pageNumber,
       @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
-          int pageSize) {
+          int pageSize,
+  @RequestParam(value = "paginated", defaultValue = "false", required = false)
+  String paginated)
+  {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
+        backOfficeRoleService.getAllRoles(pageNumber, pageSize,paginated), "Roles retrieved successfully");
   }
+
 
     @GetMapping("get-system-permissions")
     @PreAuthorize("hasAuthority('view-permissions')")
