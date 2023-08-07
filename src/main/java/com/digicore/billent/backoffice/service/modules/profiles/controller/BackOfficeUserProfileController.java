@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PROFILE_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.ROLE_CONTROLLER_GET_ALL_ROLES_DESCRIPTION;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 

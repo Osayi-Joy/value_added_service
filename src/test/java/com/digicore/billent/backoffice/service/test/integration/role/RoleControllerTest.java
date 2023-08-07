@@ -49,8 +49,6 @@ class RoleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired private RoleService<RoleDTO, Role> roleService;
-    @Autowired private NotificationDispatcher notificationDispatcher;
 
     @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
 
