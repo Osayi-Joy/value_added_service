@@ -94,6 +94,16 @@ public class SwaggerDocUtil {
  public static final String PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_DESCRIPTION = "This API is used to enable a product.";
  public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_TITLE = "Disable a product";
  public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION = "This API is used to disable a product.";
+
+
+ //Profile Controller Doc
+
+ public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
+ public static final String PROFILE_CONTROLLER_DESCRIPTION = "This module contains all required APIs to complete operations surrounding all backoffice user profiles management. it goes through maker checker process";
+
+
+ public static final String PROFILE_CONTROLLER_GET_ALL_USERS_TITLE = "Get all back office user profiles";
+ public static final String PROFILE_CONTROLLER_GET_ALL_USERS_DESCRIPTION = "This API is used to fetch all back office user profiles in the system.";
  private SwaggerDocUtil() {
  }
 

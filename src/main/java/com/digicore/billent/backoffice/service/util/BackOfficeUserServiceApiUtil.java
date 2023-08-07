@@ -26,6 +26,9 @@ public class BackOfficeUserServiceApiUtil {
  //Biller Aggregators API versioning
  public static final String BILLER_AGGREGATORS_API_V1 = API_V1 + "biller-aggregators/process/";
 
+ //Profile API versioning
+ public static final String PROFILE_API_V1 = API_V1 + "profile/process/";
+
  private BackOfficeUserServiceApiUtil() {
  }
 }
