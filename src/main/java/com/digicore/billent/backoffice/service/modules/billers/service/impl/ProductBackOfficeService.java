@@ -9,7 +9,8 @@ import com.digicore.billent.data.lib.modules.billers.service.BillerService;
 import com.digicore.billent.data.lib.modules.billers.service.ProductService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
-import com.digicore.billent.data.lib.modules.common.util.SearchRequest;
+
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.MakerChecker;
@@ -34,14 +35,14 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
     public void downloadAllProductsInCSV(HttpServletResponse response,
                                         Status productStatus, String startDate, String endDate, String downLoadFormat,
                                         int pageNumber, int pageSize) {
-        SearchRequest searchRequest = new SearchRequest();
+        BillentSearchRequest searchRequest = new BillentSearchRequest();
         searchRequest.setStatus(productStatus);
         searchRequest.setStartDate(startDate);
         searchRequest.setEndDate(endDate);
         searchRequest.setDownloadFormat(downLoadFormat);
 
         CsvDto<ProductDto> csvDto = new CsvDto<>();
-        csvDto.setSearchRequest(searchRequest);
+        csvDto.setBillentSearchRequest(searchRequest);
         csvDto.setResponse(response);
         csvDto.setPage(pageNumber);
         csvDto.setPageSize(pageSize);
