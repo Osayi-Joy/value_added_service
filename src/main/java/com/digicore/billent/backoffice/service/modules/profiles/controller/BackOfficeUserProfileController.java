@@ -2,8 +2,8 @@ package com.digicore.billent.backoffice.service.modules.profiles.controller;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PROFILE_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.PAGE_SIZE_DEFAULT_VALUE;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
+
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileOperations;
