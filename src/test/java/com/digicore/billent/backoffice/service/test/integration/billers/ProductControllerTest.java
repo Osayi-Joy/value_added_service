@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.test.integration.billers;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
 
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -13,6 +14,8 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -41,11 +44,10 @@ import org.springframework.test.web.servlet.ResultActions;
 @AutoConfigureMockMvc
 @Slf4j
 class ProductControllerTest {
-    //    mvn test -Dspring.profiles.active=test -Dtest="ProductControllerTest"
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired private BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
+    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
 
     @Autowired
     private PropertyConfig propertyConfig;
@@ -59,7 +61,7 @@ class ProductControllerTest {
     }
     @Test
     void testGetAllProducts() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
 
         MvcResult mvcResult = mockMvc.perform(get(PRODUCTS_API_V1 + "get-all")
@@ -78,7 +80,7 @@ class ProductControllerTest {
 
     @Test
     void testFetchProductsByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
@@ -103,7 +105,7 @@ class ProductControllerTest {
 
     @Test
     void testExportProductsAsCsv() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-biller-products");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
@@ -139,7 +141,7 @@ class ProductControllerTest {
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
@@ -158,7 +160,7 @@ class ProductControllerTest {
     }
     @Test
     void testDisableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID004");
@@ -188,7 +190,7 @@ class ProductControllerTest {
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID006");
@@ -208,7 +210,7 @@ class ProductControllerTest {
     }
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID008");
