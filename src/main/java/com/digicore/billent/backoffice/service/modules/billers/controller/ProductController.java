@@ -2,7 +2,7 @@ package com.digicore.billent.backoffice.service.modules.billers.controller;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeProxyService;
