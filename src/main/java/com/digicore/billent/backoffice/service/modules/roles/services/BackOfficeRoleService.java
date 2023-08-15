@@ -1,10 +1,10 @@
 package com.digicore.billent.backoffice.service.modules.roles.services;
 
+import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.model.Permission;
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
 
   private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
-  private final PermissionService<PermissionDTO, Permission> permissionService;
+  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
 
   public Object getAllRoles(int pageNumber, int pageSize, String paginated) {
     if ("false".equalsIgnoreCase(paginated)) return backOfficeRoleServiceImpl.retrieveAllRoles();
@@ -26,7 +26,7 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   }
 
   public Set<PermissionDTO> getAllPermissions() {
-    return permissionService.retrieveAllSystemPermissions("");
+    return backOfficePermissionServiceImpl.retrieveAllSystemPermissions();
   }
 
   @MakerChecker(
