@@ -3,16 +3,14 @@ package com.digicore.billent.backoffice.service.modules.approvals.controller;
 import static com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService.NO_MAKER_CHECKER;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.approvals.service.BackOfficeApprovalService;
-import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.TokenValid;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
 import com.digicore.request.processor.enums.ApprovalRequestStatus;
-import com.digicore.request.processor.enums.LogActivityType;
 import com.digicore.request.processor.processors.ApprovalRequestProcessor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -92,20 +90,22 @@ public class ApprovalController {
       @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
       @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.EXECUTED), null);
+        backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.EXECUTED),
+        null);
   }
 
   @TokenValid()
   @GetMapping("get-declined-request")
   @PreAuthorize("hasAuthority('treat-requests')")
   @Operation(
-          summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,
-          description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
+      summary = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_TITLE,
+      description = APPROVAL_CONTROLLER_GET_TREATED_REQUEST_DESCRIPTION)
   public ResponseEntity<Object> getDeclinedRequest(
-          @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
-          @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
+      @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
+      @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
     return ControllerResponse.buildSuccessResponse(
-            backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.DECLINED), null);
+        backOfficeApprovalService.getRequests(pageNumber, pageSize, ApprovalRequestStatus.DECLINED),
+        null);
   }
 
   @TokenValid()
@@ -118,6 +118,8 @@ public class ApprovalController {
       @RequestParam(name = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE) int pageNumber,
       @RequestParam(name = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE) int pageSize) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeApprovalService.getRequests(pageNumber, pageSize,ApprovalRequestStatus.NOT_TREATED), null);
+        backOfficeApprovalService.getRequests(
+            pageNumber, pageSize, ApprovalRequestStatus.NOT_TREATED),
+        null);
   }
 }

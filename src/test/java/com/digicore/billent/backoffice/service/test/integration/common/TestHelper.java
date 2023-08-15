@@ -1,16 +1,16 @@
 package com.digicore.billent.backoffice.service.test.integration.common;
 
-import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.APPROVAL_API_V1;
+
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUTHENTICATION_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
-import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
-import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
-import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
+import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
@@ -18,7 +18,7 @@ import com.digicore.registhentication.authentication.enums.AuthenticationType;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 
-import com.digicore.request.processor.approval_repository.ApprovalRequestsRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
@@ -40,13 +40,13 @@ public class TestHelper {
   */
   private final MockMvc mockMvc;
 
-  private final BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService;
+  private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
 
   public TestHelper(
           MockMvc mockMvc,
-          BackOfficeUserAuthService<BackOfficeUserAuthProfileDTO> backOfficeUserAuthService) {
+          AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl) {
     this.mockMvc = mockMvc;
-    this.backOfficeUserAuthService = backOfficeUserAuthService;
+    this.backOfficeUserAuthServiceImpl = backOfficeUserAuthServiceImpl;
   }
 
 
@@ -130,10 +130,10 @@ public class TestHelper {
   public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setName(permissionName);
-    BackOfficeUserAuthProfileDTO backOfficeUserAuthProfileDTO = new BackOfficeUserAuthProfileDTO();
+    UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
     backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
-    backOfficeUserAuthService.updateAuthProfile(backOfficeUserAuthProfileDTO);
+    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
 
   /*
