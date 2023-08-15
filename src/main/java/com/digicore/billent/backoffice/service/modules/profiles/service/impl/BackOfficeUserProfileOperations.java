@@ -1,9 +1,11 @@
-package com.digicore.billent.backoffice.service.modules.profiles.service;
+package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
 
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BackOfficeUserProfileOperations {
+public class BackOfficeUserProfileOperations implements BackOfficeUserProfileValidatorService {
   private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
 
   public PaginatedResponseDTO<UserProfileDTO> fetchAllBackOfficeUserProfiles(int page, int size) {
@@ -24,5 +26,14 @@ public class BackOfficeUserProfileOperations {
   public PaginatedResponseDTO<UserProfileDTO> filterOrSearch(
       BillentSearchRequest billentSearchRequest) {
     return backOfficeUserProfileServiceImpl.filterOrSearch(billentSearchRequest);
+  }
+
+  @MakerChecker(
+          checkerPermission = "approve-delete-user-profile",
+          makerPermission = "delete-user-profile",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+  public Object deleteUserProfile(Object request, Object... args) {
+    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    return backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
   }
 }

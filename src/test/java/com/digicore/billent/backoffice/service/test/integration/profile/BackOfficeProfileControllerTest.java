@@ -5,11 +5,14 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
+import com.digicore.billent.data.lib.modules.backoffice.profile.repository.BackOfficeUserProfileRepository;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
@@ -46,6 +49,8 @@ class BackOfficeProfileControllerTest {
  @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
  @Autowired
  private PropertyConfig propertyConfig;
+ @Autowired
+ private BackOfficeUserProfileRepository backOfficeUserProfileRepository;
 
  private static PaginatedResponseDTO<UserProfileDTO> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
   ApiResponseJson<PaginatedResponseDTO<UserProfileDTO>> response =
@@ -142,5 +147,50 @@ class BackOfficeProfileControllerTest {
   assertTrue(paginatedResponseDTO.getIsLastPage());
   assertNotNull(paginatedResponseDTO.getContent());
   assertTrue(paginatedResponseDTO.getContent().size() > 0);
+ }
+
+
+
+ @Test
+ void testDeleteUserProfile_ProfileExists() throws Exception {
+  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
+  userProfile.setEmail("test@example.com");
+  userProfile.setProfileId("123");
+  userProfile.setFirstName("JOY");
+  userProfile.setLastName("OSAYI");
+  String email = "test@example.com";
+  backOfficeUserProfileRepository.save(userProfile);
+
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-user-profile");
+
+  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("delete"))
+                  .param(EMAIL, email)
+                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
+ @Test
+ void testDeleteUserProfile_ProfileDoesNotExists() throws Exception {
+  String email = "test@example.com";
+
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-user-profile");
+
+  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("delete"))
+                  .param(EMAIL, email)
+                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isBadRequest())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
  }
 }

@@ -273,5 +273,35 @@
     "name": "treat-requests",
     "description": "This allows you to treat a request you have been assigned to",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "delete-user-profile",
+    "description": "This allows you to delete a user profile",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "approve-delete-user-profile",
+    "description": "This allows you to delete a user profile",
+    "permissionType": "USERS"
+  },
+  {
+  "name": "enable-user-profile",
+  "description": "This allows you to enable a user profile",
+  "permissionType": "USERS"
+},
+  {
+    "name": "approve-enable-user-profile",
+    "description": "This allows you to enable a user profile",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "disable-user-profile",
+    "description": "This allows you to disable a user profile",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "approve-disable-user-profile",
+    "description": "This allows you to disable a user profile",
+    "permissionType": "USERS"
   }
 ]

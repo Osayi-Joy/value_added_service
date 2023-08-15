@@ -6,7 +6,8 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileOperations;
+import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
+import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,10 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -30,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BackOfficeUserProfileController {
   private static final String PROFILE_RETRIEVED_MESSAGE = "Back Office profiles  retrieved successfully";
   private final BackOfficeUserProfileOperations backOfficeUserProfileOperations;
+  private final BackOfficeUserProfileProxyService backOfficeUserProfileProxyService;
 
   @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-backoffice-users')")
@@ -93,5 +92,15 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(
             backOfficeUserProfileOperations.filterOrSearch(billentSearchRequest),
             PROFILE_RETRIEVED_MESSAGE);
+  }
+
+  @PatchMapping("delete")
+  @PreAuthorize("hasAuthority('delete-user-profile')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE,
+          description = PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION)
+  public ResponseEntity<Object> deleteUserProfile(
+          @RequestParam(value = EMAIL) String email) {
+    return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteUserProfile(email),"User Profile deleted successfully");
   }
 }

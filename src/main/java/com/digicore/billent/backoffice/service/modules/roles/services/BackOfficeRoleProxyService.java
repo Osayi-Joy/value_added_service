@@ -5,7 +5,6 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
  */
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
-
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
