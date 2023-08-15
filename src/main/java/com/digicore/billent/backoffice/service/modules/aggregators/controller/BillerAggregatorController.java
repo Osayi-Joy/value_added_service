@@ -3,15 +3,14 @@ package com.digicore.billent.backoffice.service.modules.aggregators.controller;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLER_AGGREGATORS_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
@@ -36,5 +35,14 @@ public class BillerAggregatorController {
        BillerAggregatorDTO billerAggregatorDTO =  billerAggregatorProcessor.refreshAggregatorBillersAndProducts(systemAggregatorId);
        billerAggregatorProcessor.refreshAggregatorBillersAndProducts(billerAggregatorDTO);
        return ControllerResponse.buildSuccessResponse();
+    }
+
+    @PatchMapping("edit")
+    @PreAuthorize("hasAuthority('edit-biller-aggregator')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> updateBillerAggregatorDetail(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+        return ControllerResponse.buildSuccessResponse(billerAggregatorProcessor.updateBillerAggregatorDetail(billerAggregatorDTO),"Updated aggregator details successfully");
     }
 }

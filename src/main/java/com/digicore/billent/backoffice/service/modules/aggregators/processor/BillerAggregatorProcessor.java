@@ -7,6 +7,7 @@ import static java.util.Objects.isNull;
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
 import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
@@ -70,6 +71,12 @@ public class BillerAggregatorProcessor {
         return billerAggregatorDTO;
     }
 
-
+    @MakerChecker(
+            checkerPermission = "approve-edit-biller-aggregator",
+            makerPermission = "edit-biller-aggregator",
+            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
+    public Object updateBillerAggregatorDetail(Object request, Object... args) {
+        return billerAggregatorService.editBillerAggregator((BillerAggregatorDTO) request);
+    }
 
 }
