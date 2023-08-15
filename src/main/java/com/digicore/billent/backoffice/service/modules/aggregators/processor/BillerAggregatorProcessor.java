@@ -71,5 +71,9 @@ public class BillerAggregatorProcessor {
     }
 
 
-
+    public Object getAllAggregators(int pageNumber, int pageSize, String paginated) {
+        if ("false".equalsIgnoreCase(paginated))
+            return billerAggregatorService.retrieveAllAggregators();
+        return billerAggregatorService.retrieveAllAggregators(pageNumber, pageSize);
+    }
 }

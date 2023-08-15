@@ -144,6 +144,11 @@ public class SwaggerDocUtil {
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION =
       "This API is used to disable a product.";
 
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE = "Get all aggregators";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION =
+          "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
+                  + "true if data is been retrieved for a paginated view.";
+
   // Profile Controller Doc
 
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
