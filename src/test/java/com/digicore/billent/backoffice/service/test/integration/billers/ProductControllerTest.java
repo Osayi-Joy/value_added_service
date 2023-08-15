@@ -1,7 +1,7 @@
 package com.digicore.billent.backoffice.service.test.integration.billers;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -9,8 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.BackOfficeUserAuthProfileDTO;
-import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackOfficeUserAuthService;
+
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;

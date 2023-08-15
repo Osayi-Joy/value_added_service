@@ -1,9 +1,10 @@
 package com.digicore.billent.backoffice.service.modules.onboarding.services;
 
-import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
+
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.model.Role;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
+import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

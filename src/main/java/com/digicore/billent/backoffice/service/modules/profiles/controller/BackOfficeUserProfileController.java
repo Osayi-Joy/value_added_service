@@ -47,7 +47,7 @@ public class BackOfficeUserProfileController {
   }
 
   @GetMapping("search")
-  @PreAuthorize("hasAuthority('view-backoffice-users')")
+  //@PreAuthorize("hasAuthority('view-backoffice-users')")
   @Operation(
           summary = PROFILE_CONTROLLER_SEARCH_USERS_TITLE,
           description = PROFILE_CONTROLLER_SEARCH_USERS_DESCRIPTION)
@@ -56,10 +56,10 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-          @RequestParam(value = KEY) String key,
+         // @RequestParam(value = KEY) String key,
           @RequestParam(value = VALUE) String value) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
-    billentSearchRequest.setKey(key);
+    billentSearchRequest.setKey("");
     billentSearchRequest.setValue(value);
     billentSearchRequest.setPage(pageNumber);
     billentSearchRequest.setSize(pageSize);
