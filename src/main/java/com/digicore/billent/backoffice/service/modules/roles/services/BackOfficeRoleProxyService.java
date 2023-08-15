@@ -4,11 +4,12 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
  * @createdOn Jul-20(Thu)-2023
  */
 
+import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.model.Permission;
+
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
@@ -25,7 +26,7 @@ import static com.digicore.billent.data.lib.modules.exception.messages.Authoriza
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
- private final PermissionService<PermissionDTO, Permission> permissionService;
+ private final PermissionService<PermissionDTO, BackOfficePermission> permissionService;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
  public Object createNewRole(RoleCreationDTO roleDTO) {
@@ -36,10 +37,10 @@ public class BackOfficeRoleProxyService {
   return validatorService.createNewRole(roleDTO);
  }
 
- public Object deleteRole(String roleName) {
+ public void deleteRole(String roleName) {
   backOfficeRoleServiceImpl.roleCheck(roleName);
   RoleDTO roleDTO = new RoleDTO();
   roleDTO.setName(roleName);
-  return validatorService.deleteRole(roleDTO);
+  validatorService.deleteRole(roleDTO);
  }
 }
