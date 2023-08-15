@@ -125,6 +125,7 @@ public class SwaggerDocUtil {
   public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION =
       "This API is used to update a biller's details.";
 
+
   // Biller Aggregator Controller Doc
   public static final String BILLER_AGGREGATOR_CONTROLLER_TITLE =
       "BackOffice-Biller-Aggregator-Module";
@@ -143,7 +144,9 @@ public class SwaggerDocUtil {
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_TITLE = "Disable a product";
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION =
       "This API is used to disable a product.";
-
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
+          "This API is used to enable a biller aggregator.";
   // Profile Controller Doc
 
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
