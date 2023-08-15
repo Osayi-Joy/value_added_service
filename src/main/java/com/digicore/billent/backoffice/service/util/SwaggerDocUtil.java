@@ -149,6 +149,10 @@ public class SwaggerDocUtil {
           "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
                   + "true if data is been retrieved for a paginated view.";
 
+  public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_TITLE =
+          "Export aggregators in csv";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
+          "This API is used to export aggregators in csv.";
   // Profile Controller Doc
 
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
