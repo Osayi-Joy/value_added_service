@@ -1,5 +1,6 @@
 package com.digicore.billent.backoffice.service.modules.roles.services;
 
+import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
 
-  private final RoleService<RoleDTO, BackOfficeRoleService> backOfficeRoleServiceImpl;
+  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
   private final PermissionService<PermissionDTO, Permission> permissionService;
 
   public Object getAllRoles(int pageNumber, int pageSize, String paginated) {
