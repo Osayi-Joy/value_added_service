@@ -42,7 +42,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @Slf4j
 class BackOfficeProfileControllerTest {
-
+// mvn test -Dspring.profiles.active=backOffice,test -Dtest="BackOfficeProfileControllerTest"
  @Autowired
  private MockMvc mockMvc;
 
@@ -185,7 +185,7 @@ class BackOfficeProfileControllerTest {
   MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("delete"))
                   .param(EMAIL, email)
                   .header("Authorization", testHelper.retrieveValidAccessToken()))
-          .andExpect(status().isBadRequest())
+          .andExpect(status().isOk())
           .andReturn();
 
   ApiResponseJson<?> response =
