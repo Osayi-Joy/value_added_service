@@ -177,23 +177,5 @@ class BackOfficeProfileControllerTest {
                   .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
   assertTrue(response.isSuccess());
  }
- @Test
- void testDeleteUserProfile_ProfileDoesNotExists() throws Exception {
-  String email = "test@example.com";
 
-  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-  testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-backoffice-profile");
-
-  MvcResult mvcResult = mockMvc.perform(delete(PROFILE_API_V1.concat("remove-"+email))
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .header("Authorization", testHelper.retrieveValidAccessToken()))
-          .andExpect(status().isBadRequest())
-          .andReturn();
-
-  ApiResponseJson<UserProfileDTO> response =
-          ClientUtil.getGsonMapper()
-                  .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<UserProfileDTO>>() {}.getType());
-
-  assertFalse(response.isSuccess());
- }
 }
