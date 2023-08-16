@@ -1,6 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
 
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
+import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BackOfficeUserProfileProxyService {
     private final BackOfficeUserProfileValidatorService backOfficeUserProfileValidatorService;
-    private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
+    private final UserProfileService<UserProfileDTO, BackOfficeUserProfile> backOfficeUserProfileServiceImpl;
 
 
     public Object deleteBackofficeProfile(String email){

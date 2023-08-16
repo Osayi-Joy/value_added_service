@@ -13,7 +13,6 @@ import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import com.digicore.request.processor.processors.RequestHandlers;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -23,8 +22,9 @@ import org.springframework.stereotype.Component;
  * @createdOn Sep-14(Wed)-2022
  */
 
-@Slf4j
+
 @Component
+@Slf4j
 public class BillerAggregatorProcessor {
 
     private RequestHandlers requestHandlers;
@@ -71,5 +71,7 @@ public class BillerAggregatorProcessor {
     }
 
 
-
+    public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
+        return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
+    }
 }

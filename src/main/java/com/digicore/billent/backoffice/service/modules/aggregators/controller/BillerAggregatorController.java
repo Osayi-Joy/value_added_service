@@ -38,6 +38,16 @@ public class BillerAggregatorController {
        billerAggregatorProcessor.refreshAggregatorBillersAndProducts(billerAggregatorDTO);
        return ControllerResponse.buildSuccessResponse();
     }
+
+    @GetMapping("get-{aggregatorSystemId}-details")
+    @PreAuthorize("hasAuthority('view-biller-aggregator-details')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> fetchBillerAggregatorById(@PathVariable String aggregatorSystemId) {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorProcessor.fetchBillerAggregatorById(aggregatorSystemId), "Retrieved aggregator's details successfully");
+    }
     @PatchMapping("enable")
     @PreAuthorize("hasAuthority('enable-biller-aggregator')")
     @Operation(
