@@ -4,7 +4,6 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
 import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeProxyService;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
-import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -26,7 +25,7 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 @Tag(name = BILLER_AGGREGATOR_CONTROLLER_TITLE, description = BILLER_AGGREGATOR_CONTROLLER_DESCRIPTION)
 public class BillerAggregatorController {
  private final BillerAggregatorProcessor billerAggregatorProcessor;
- private final BillerAggregatorBackOfficeProxyService BillerAggregatorBackOfficeProxyService;
+ private final BillerAggregatorBackOfficeProxyService billerAggregatorBackOfficeProxyService;
 
    @PreAuthorize("hasAuthority('refresh-billers-products-under-an-aggregator')")
     @PatchMapping("refresh-{systemAggregatorId}")
@@ -48,14 +47,26 @@ public class BillerAggregatorController {
         return ControllerResponse.buildSuccessResponse(
                 billerAggregatorProcessor.fetchBillerAggregatorById(aggregatorSystemId), "Retrieved aggregator's details successfully");
     }
-    @PatchMapping("enable")
+
+    @PatchMapping("enable-{aggregatorSystemId}")
     @PreAuthorize("hasAuthority('enable-biller-aggregator')")
     @Operation(
             summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
             description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
-    public ResponseEntity<Object> enableAggregator(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+    public ResponseEntity<Object> enableAggregator(@PathVariable String aggregatorSystemId) {
         return ControllerResponse.buildSuccessResponse(
-                BillerAggregatorBackOfficeProxyService.enableBillerAggregator(billerAggregatorDTO),
+                billerAggregatorBackOfficeProxyService.enableBillerAggregator(aggregatorSystemId),
                 "Aggregator enabled successfully");
+    }
+
+    @PatchMapping("disable-{aggregatorSystemId}")
+    @PreAuthorize("hasAuthority('disable-biller-aggregator')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> disableAggregator(@PathVariable String aggregatorSystemId) {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorBackOfficeProxyService.disableBillerAggregator(aggregatorSystemId),
+                "Aggregator disabled successfully");
     }
 }
