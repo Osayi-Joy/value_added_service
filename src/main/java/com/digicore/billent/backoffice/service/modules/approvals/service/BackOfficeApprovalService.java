@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
-public class BackOfficeApprovalService {
+public class         BackOfficeApprovalService {
     //todo this service was copied from another project and should be refactored properly
 
     public static final String NO_MAKER_CHECKER="no maker checker available";

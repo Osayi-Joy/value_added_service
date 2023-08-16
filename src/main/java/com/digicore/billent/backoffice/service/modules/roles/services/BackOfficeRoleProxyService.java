@@ -6,7 +6,6 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
-
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -27,14 +26,14 @@ import static com.digicore.billent.data.lib.modules.exception.messages.Authoriza
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
- private final PermissionService<PermissionDTO, BackOfficePermission> permissionService;
+ private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
  public Object createNewRole(RoleCreationDTO roleDTO) {
   if (null == roleDTO.getPermissions() || roleDTO.getPermissions().isEmpty())
         exceptionHandler.processBadRequestException(PERMISSIONS_REQUIRED_MESSAGE,PERMISSIONS_REQUIRED_CODE,PERMISSIONS_REQUIRED_CODE);
   backOfficeRoleServiceImpl.checkIfRoleIsNotSystemRole(roleDTO.getName());
-  permissionService.getValidPermissions(roleDTO.getPermissions());
+  backOfficePermissionServiceImpl.getValidPermissions(roleDTO.getPermissions());
   return validatorService.createNewRole(roleDTO);
  }
 
