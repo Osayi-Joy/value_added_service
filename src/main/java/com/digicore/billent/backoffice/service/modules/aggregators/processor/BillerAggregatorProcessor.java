@@ -71,5 +71,7 @@ public class BillerAggregatorProcessor {
     }
 
 
-
+    public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
+        return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
+    }
 }
