@@ -167,5 +167,10 @@ public class SwaggerDocUtil {
           + "which is the status field, you can't search based on status. If you wish to get back office users "
           + "based on status kindly use the filter endpoint.";
 
+
+  public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
+  public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION =
+          "This API is used to delete user profile.";
+
   private SwaggerDocUtil() {}
 }
