@@ -10,4 +10,6 @@ public interface BillerAggregatorBackOfficeValidatorService {
     Object enableBillerAggregator(Object request, Object... args);
 
     Object disableBillerAggregator(Object request, Object... args);
+
+    Object updateBillerAggregatorDetail(Object request, Object... args);
 }

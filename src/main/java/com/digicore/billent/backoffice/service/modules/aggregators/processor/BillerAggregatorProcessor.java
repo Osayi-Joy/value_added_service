@@ -2,7 +2,6 @@ package com.digicore.billent.backoffice.service.modules.aggregators.processor;
 
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE;
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE;
-import static java.util.Objects.isNull;
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;

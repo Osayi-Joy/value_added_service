@@ -69,4 +69,13 @@ public class BillerAggregatorController {
                 billerAggregatorBackOfficeProxyService.disableBillerAggregator(aggregatorSystemId),
                 "Aggregator disabled successfully");
     }
+
+    @PatchMapping("edit")
+    @PreAuthorize("hasAuthority('edit-biller-aggregator')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> updateBillerAggregatorDetail(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+        return ControllerResponse.buildSuccessResponse(billerAggregatorBackOfficeProxyService.updateBillerAggregatorDetail(billerAggregatorDTO),"Updated aggregator details successfully");
+    }
 }

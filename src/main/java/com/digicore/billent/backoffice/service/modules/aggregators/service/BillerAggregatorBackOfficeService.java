@@ -36,4 +36,13 @@ public class BillerAggregatorBackOfficeService
   public Object disableBillerAggregator(Object request, Object... args) {
     return billerAggregatorService.disableBillerAggregator((BillerAggregatorDTO) request);
   }
+
+  @MakerChecker(
+          checkerPermission = "approve-edit-biller-aggregator",
+          makerPermission = "edit-biller-aggregator",
+          requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
+  @Override
+  public Object updateBillerAggregatorDetail(Object request, Object... args) {
+    return billerAggregatorService.editBillerAggregator((BillerAggregatorDTO)request);
+  }
 }

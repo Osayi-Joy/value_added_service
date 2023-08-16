@@ -150,6 +150,10 @@ public class SwaggerDocUtil {
   public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
   public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
           "This API is used to enable a biller aggregator.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE = "Update a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION =
+          "This API is used to update a biller aggregator's details.";
+
   // Profile Controller Doc
 
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
