@@ -43,6 +43,6 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
   public Object enableBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
-    return backOfficeUserProfileServiceImpl.enableBackOfficeProfile(userProfileDTO.getEmail());
+    return backOfficeUserProfileServiceImpl.enableUserProfile(userProfileDTO.getEmail());
   }
 }
