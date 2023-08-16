@@ -16,9 +16,9 @@ public class BackOfficeUserProfileProcessor {
     private final BackOfficeUserProfileOperations backOfficeUserProfileOperations;
 
 
-    @RequestType(name = "deleteUserProfile")
-    public Object deleteUserProfile(Object request){
-        return backOfficeUserProfileOperations.deleteUserProfile(request);
+    @RequestType(name = "deleteBackofficeProfile")
+    public Object deleteBackofficeProfile(Object request){
+        return backOfficeUserProfileOperations.deleteBackofficeProfile(request);
     }
 
 }

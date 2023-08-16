@@ -29,10 +29,10 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   @MakerChecker(
-          checkerPermission = "approve-delete-user-profile",
-          makerPermission = "delete-user-profile",
+          checkerPermission = "approve-delete-backoffice-profile",
+          makerPermission = "delete-backoffice-profile",
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
-  public Object deleteUserProfile(Object request, Object... args) {
+  public Object deleteBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
     return backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
   }

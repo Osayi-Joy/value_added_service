@@ -17,10 +17,10 @@ public class BackOfficeUserProfileProxyService {
     private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
 
 
-    public Object deleteUserProfile(String email){
+    public Object deleteBackofficeProfile(String email){
         backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(email);
         UserProfileDTO userProfileDTO = new UserProfileDTO();
         userProfileDTO.setEmail(email);
-        return backOfficeUserProfileValidatorService.deleteUserProfile(userProfileDTO);
+        return backOfficeUserProfileValidatorService.deleteBackofficeProfile(userProfileDTO);
     }
 }

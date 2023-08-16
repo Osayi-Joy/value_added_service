@@ -46,7 +46,7 @@ public class BackOfficeUserProfileController {
   }
 
   @GetMapping("search")
-  //@PreAuthorize("hasAuthority('view-backoffice-users')")
+  @PreAuthorize("hasAuthority('view-backoffice-users')")
   @Operation(
           summary = PROFILE_CONTROLLER_SEARCH_USERS_TITLE,
           description = PROFILE_CONTROLLER_SEARCH_USERS_DESCRIPTION)
@@ -94,13 +94,13 @@ public class BackOfficeUserProfileController {
             PROFILE_RETRIEVED_MESSAGE);
   }
 
-  @PatchMapping("delete")
-  @PreAuthorize("hasAuthority('delete-user-profile')")
+  @DeleteMapping("delete-{email}")
+  @PreAuthorize("hasAuthority('delete-backoffice-profile')")
   @Operation(
           summary = PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE,
           description = PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION)
-  public ResponseEntity<Object> deleteUserProfile(
-          @RequestParam(value = EMAIL) String email) {
-    return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteUserProfile(email),"User Profile deleted successfully");
+  public ResponseEntity<Object> deleteBackofficeProfile(
+          @PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
   }
 }
