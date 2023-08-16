@@ -21,13 +21,13 @@ public class BillerAggregatorBackOfficeProxyService {
     this.validatorService = validatorService;
   }
 
-  public Object enableBillerAggregator(BillerAggregatorDTO billerAggregatorDTO) {
-    billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
-    return validatorService.enableBillerAggregator(billerAggregatorDTO);
+  public Object enableBillerAggregator(String aggregatorSystemId) {
+    billerAggregatorService.isBillerAggregatorPresent(aggregatorSystemId);
+    return validatorService.enableBillerAggregator(aggregatorSystemId);
   }
 
-    public Object disableBillerAggregator(BillerAggregatorDTO billerAggregatorDTO) {
-      billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
-      return validatorService.disableBillerAggregator(billerAggregatorDTO);
+    public Object disableBillerAggregator(String aggregatorSystemId) {
+      billerAggregatorService.isBillerAggregatorPresent(aggregatorSystemId);
+      return validatorService.disableBillerAggregator(aggregatorSystemId);
     }
 }

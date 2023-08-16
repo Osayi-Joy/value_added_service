@@ -48,25 +48,25 @@ public class BillerAggregatorController {
                 billerAggregatorProcessor.fetchBillerAggregatorById(aggregatorSystemId), "Retrieved aggregator's details successfully");
     }
 
-    @PatchMapping("enable")
+    @PatchMapping("enable-{aggregatorSystemId}")
     @PreAuthorize("hasAuthority('enable-biller-aggregator')")
     @Operation(
             summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
             description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
-    public ResponseEntity<Object> enableAggregator(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+    public ResponseEntity<Object> enableAggregator(@PathVariable String aggregatorSystemId) {
         return ControllerResponse.buildSuccessResponse(
-                billerAggregatorBackOfficeProxyService.enableBillerAggregator(billerAggregatorDTO),
+                billerAggregatorBackOfficeProxyService.enableBillerAggregator(aggregatorSystemId),
                 "Aggregator enabled successfully");
     }
 
-    @PatchMapping("disable")
+    @PatchMapping("disable-{aggregatorSystemId}")
     @PreAuthorize("hasAuthority('disable-biller-aggregator')")
     @Operation(
             summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
             description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
-    public ResponseEntity<Object> disableAggregator(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+    public ResponseEntity<Object> disableAggregator(@PathVariable String aggregatorSystemId) {
         return ControllerResponse.buildSuccessResponse(
-                billerAggregatorBackOfficeProxyService.disableBillerAggregator(billerAggregatorDTO),
+                billerAggregatorBackOfficeProxyService.disableBillerAggregator(aggregatorSystemId),
                 "Aggregator disabled successfully");
     }
 }
