@@ -144,4 +144,57 @@
 //
 //        assertFalse(response.isSuccess());
 //    }
+//
+//
+//@Test
+//    void testDisableAggregator_Success() throws Exception {
+//            BillerAggregator billerAggregator = new BillerAggregator();
+//            billerAggregator.setAggregatorName("DisableAggregator_01");
+//            billerAggregator.setAggregatorSystemId("BSID0011");
+//            billerAggregator.setAggregatorAlias("AGGREGATOR_ALIAS1");
+//            billerAggregator.setAggregatorStatus(Status.ACTIVE);
+//
+//            billerAggregatorRepository.save(billerAggregator);
+//
+//            TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+//            testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-aggregator");
+//            BillerAggregatorDTO billerAggregatorDTO = new BillerAggregatorDTO();
+//            billerAggregatorDTO.setAggregatorSystemId("BSID0011");
+//
+//            MvcResult mvcResult = mockMvc.perform(patch(BILLER_AGGREGATORS_API_V1 + "disable")
+//            .content(ClientUtil.getGsonMapper().toJson(billerAggregatorDTO))
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .header("Authorization", testHelper.retrieveValidAccessToken()))
+//            .andExpect(status().isOk())
+//            .andReturn();
+//            ApiResponseJson<?> response =
+//        ClientUtil.getGsonMapper()
+//        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+//        assertTrue(response.isSuccess());
+//        }
+//
+//@Test
+//    void testDisableAggregator_BillerAggregatorNotExist() throws Exception {
+//
+//
+//            TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+//            testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-aggregator");
+//            BillerAggregatorDTO billerAggregatorDTO = new BillerAggregatorDTO();
+//            billerAggregatorDTO.setAggregatorSystemId("BSID0012");
+//
+//            MvcResult mvcResult = mockMvc
+//            .perform(
+//            patch(BILLER_AGGREGATORS_API_V1 + "disable")
+//            .content(ClientUtil.getGsonMapper().toJson(billerAggregatorDTO))
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .header("Authorization", testHelper.retrieveValidAccessToken()))
+//            .andExpect(status().isBadRequest())
+//            .andReturn();
+//
+//            ApiResponseJson<?> response =
+//        ClientUtil.getGsonMapper()
+//        .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+//
+//        assertFalse(response.isSuccess());
+//        }
 //}
