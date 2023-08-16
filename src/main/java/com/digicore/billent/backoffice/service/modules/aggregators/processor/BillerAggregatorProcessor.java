@@ -76,7 +76,9 @@ public class BillerAggregatorProcessor {
             makerPermission = "edit-biller-aggregator",
             requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
     public Object updateBillerAggregatorDetail(Object request, Object... args) {
-        return billerAggregatorService.editBillerAggregator((BillerAggregatorDTO) request);
+        BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
+        billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
+        return billerAggregatorService.editBillerAggregator(billerAggregatorDTO);
     }
 
 }
