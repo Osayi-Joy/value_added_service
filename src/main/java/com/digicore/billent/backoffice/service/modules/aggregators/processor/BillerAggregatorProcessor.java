@@ -73,14 +73,4 @@ public class BillerAggregatorProcessor {
     public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
         return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
     }
-
-    @MakerChecker(
-            checkerPermission = "approve-edit-biller-aggregator",
-            makerPermission = "edit-biller-aggregator",
-            requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
-    public Object updateBillerAggregatorDetail(Object request, Object... args) {
-        BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
-        billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
-        return billerAggregatorService.editBillerAggregator(billerAggregatorDTO);
-    }
 }
