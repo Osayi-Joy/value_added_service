@@ -25,4 +25,9 @@ public class BillerAggregatorBackOfficeProxyService {
     billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
     return validatorService.enableBillerAggregator(billerAggregatorDTO);
   }
+
+    public Object disableBillerAggregator(BillerAggregatorDTO billerAggregatorDTO) {
+      billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
+      return validatorService.disableBillerAggregator(billerAggregatorDTO);
+    }
 }
