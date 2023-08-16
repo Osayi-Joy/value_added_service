@@ -94,7 +94,7 @@ public class BackOfficeUserProfileController {
             PROFILE_RETRIEVED_MESSAGE);
   }
 
-  @DeleteMapping("delete-{email}")
+  @DeleteMapping("remove-{email}")
   @PreAuthorize("hasAuthority('delete-backoffice-profile')")
   @Operation(
           summary = PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE,
