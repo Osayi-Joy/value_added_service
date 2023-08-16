@@ -1,9 +1,12 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.controller;
 
+import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLER_AGGREGATORS_API_V1;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
+
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
+import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeProxyService;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
-import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -11,9 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLER_AGGREGATORS_API_V1;
-import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -25,6 +25,7 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 @Tag(name = BILLER_AGGREGATOR_CONTROLLER_TITLE, description = BILLER_AGGREGATOR_CONTROLLER_DESCRIPTION)
 public class BillerAggregatorController {
  private final BillerAggregatorProcessor billerAggregatorProcessor;
+ private final BillerAggregatorBackOfficeProxyService billerAggregatorBackOfficeProxyService;
 
    @PreAuthorize("hasAuthority('refresh-billers-products-under-an-aggregator')")
     @PatchMapping("refresh-{systemAggregatorId}")
@@ -37,6 +38,16 @@ public class BillerAggregatorController {
        return ControllerResponse.buildSuccessResponse();
     }
 
+    @GetMapping("get-{aggregatorSystemId}-details")
+    @PreAuthorize("hasAuthority('view-biller-aggregator-details')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> fetchBillerAggregatorById(@PathVariable String aggregatorSystemId) {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorProcessor.fetchBillerAggregatorById(aggregatorSystemId), "Retrieved aggregator's details successfully");
+    }
+
     @PatchMapping("edit")
     @PreAuthorize("hasAuthority('edit-biller-aggregator')")
     @Operation(
@@ -45,4 +56,17 @@ public class BillerAggregatorController {
     public ResponseEntity<Object> updateBillerAggregatorDetail(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
         return ControllerResponse.buildSuccessResponse(billerAggregatorProcessor.updateBillerAggregatorDetail(billerAggregatorDTO),"Updated aggregator details successfully");
     }
+    
+    @PatchMapping("enable")
+    @PreAuthorize("hasAuthority('enable-biller-aggregator')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
+    public ResponseEntity<Object> enableAggregator(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorBackOfficeProxyService.enableBillerAggregator(billerAggregatorDTO),
+                "Aggregator enabled successfully");
+    }
+    
+    
 }

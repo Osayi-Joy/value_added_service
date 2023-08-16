@@ -2,19 +2,16 @@ package com.digicore.billent.backoffice.service.modules.aggregators.processor;
 
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE;
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE;
-import static java.util.Objects.isNull;
 
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
 import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
-import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.RequestHandlerPostProcessor;
 import com.digicore.request.processor.processors.RequestHandlers;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,8 +21,9 @@ import org.springframework.stereotype.Component;
  * @createdOn Sep-14(Wed)-2022
  */
 
-@Slf4j
+
 @Component
+@Slf4j
 public class BillerAggregatorProcessor {
 
     private RequestHandlers requestHandlers;
@@ -71,6 +69,11 @@ public class BillerAggregatorProcessor {
         return billerAggregatorDTO;
     }
 
+
+    public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
+        return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
+    }
+
     @MakerChecker(
             checkerPermission = "approve-edit-biller-aggregator",
             makerPermission = "edit-biller-aggregator",
@@ -80,5 +83,4 @@ public class BillerAggregatorProcessor {
         billerAggregatorService.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
         return billerAggregatorService.editBillerAggregator(billerAggregatorDTO);
     }
-
 }
