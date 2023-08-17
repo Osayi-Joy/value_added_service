@@ -177,6 +177,7 @@ class BackOfficeProfileControllerTest {
                   .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
   assertTrue(response.isSuccess());
  }
+
 // @Test
 // void testDeleteUserProfile_ProfileDoesNotExists() throws Exception {
 //  String email = "test@example.com";
