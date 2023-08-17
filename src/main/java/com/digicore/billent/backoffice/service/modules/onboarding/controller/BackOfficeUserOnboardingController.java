@@ -7,7 +7,7 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingProxyService;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;

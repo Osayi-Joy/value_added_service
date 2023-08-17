@@ -125,6 +125,7 @@ public class SwaggerDocUtil {
   public static final String BILLER_CONTROLLER_UPDATE_A_BILLER_DESCRIPTION =
       "This API is used to update a biller's details.";
 
+
   // Biller Aggregator Controller Doc
   public static final String BILLER_AGGREGATOR_CONTROLLER_TITLE =
       "BackOffice-Biller-Aggregator-Module";
@@ -143,6 +144,15 @@ public class SwaggerDocUtil {
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_TITLE = "Disable a product";
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION =
       "This API is used to disable a product.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE = "Get a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_DESCRIPTION =
+          "This API is used to fetch a biller aggregator's details.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
+          "This API is used to enable a biller aggregator.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE = "Update a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION =
+          "This API is used to update a biller aggregator's details.";
 
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE = "Get all aggregators";
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION =
@@ -175,6 +185,11 @@ public class SwaggerDocUtil {
           + "field returned when you invoked the get all endpoint and value is your search word. There is an exception "
           + "which is the status field, you can't search based on status. If you wish to get back office users "
           + "based on status kindly use the filter endpoint.";
+
+
+  public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
+  public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION =
+          "This API is used to delete user profile.";
 
   private SwaggerDocUtil() {}
 }

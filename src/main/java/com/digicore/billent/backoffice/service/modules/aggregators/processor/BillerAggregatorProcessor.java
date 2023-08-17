@@ -26,8 +26,9 @@ import org.springframework.stereotype.Component;
  * @createdOn Sep-14(Wed)-2022
  */
 
-@Slf4j
+
 @Component
+@Slf4j
 public class BillerAggregatorProcessor {
 
     private RequestHandlers requestHandlers;
@@ -76,6 +77,9 @@ public class BillerAggregatorProcessor {
     }
 
 
+    public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
+        return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
+    }
     public Object getAllAggregators(int pageNumber, int pageSize, String paginated) {
         if ("false".equalsIgnoreCase(paginated))
             return billerAggregatorService.retrieveAllAggregators();

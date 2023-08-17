@@ -273,5 +273,35 @@
     "name": "treat-requests",
     "description": "This allows you to treat a request you have been assigned to",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "delete-backoffice-profile",
+    "description": "This allows you to delete a backoffice profile",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "approve-delete-backoffice-profile",
+    "description": "This allows you to approve the delete of a backoffice profile request",
+    "permissionType": "USERS"
+  },
+  {
+  "name": "enable-backoffice-profile",
+  "description": "This allows you to enable a backoffice profile",
+  "permissionType": "USERS"
+},
+  {
+    "name": "approve-enable-backoffice-profile",
+    "description": "This allows you to approve enable a backoffice profile request",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "disable-backoffice-profile",
+    "description": "This allows you to disable a backoffice profile",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "approve-disable-backoffice-profile",
+    "description": "This allows you to approve disable a backoffice profile request",
+    "permissionType": "USERS"
   }
 ]
