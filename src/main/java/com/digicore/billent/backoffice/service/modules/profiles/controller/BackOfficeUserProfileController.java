@@ -8,10 +8,12 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -102,5 +104,15 @@ public class BackOfficeUserProfileController {
   public ResponseEntity<Object> deleteBackofficeProfile(
           @PathVariable String email) {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
+  }
+
+  @PatchMapping("edit}")
+  @PreAuthorize("hasAuthority('edit-backoffice-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE,
+          description = PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION)
+  public ResponseEntity<Object> updateBackofficeProfile(
+          @Valid @RequestBody UserProfileDTO userProfileDTO) {
+    return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.updateBackofficeProfile(userProfileDTO),"User Profile updated successfully");
   }
 }

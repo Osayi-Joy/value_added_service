@@ -178,4 +178,33 @@ class BackOfficeProfileControllerTest {
   assertTrue(response.isSuccess());
  }
 
+ @Test
+ void testUpdateUserProfile_ProfileExists() throws Exception {
+  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
+  userProfile.setEmail("test@example.com");
+  userProfile.setProfileId("123");
+  userProfile.setFirstName("JOY");
+  userProfile.setLastName("OSAYI");
+  String email = "test@example.com";
+  backOfficeUserProfileRepository.save(userProfile);
+  UserProfileDTO userProfileDTO = new UserProfileDTO();
+  userProfileDTO.setEmail("test@example.com");
+  userProfileDTO.setFirstName("John");
+  userProfileDTO.setLastName("Doe");
+  userProfileDTO.setAssignedRole("ROLE_USER");
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-backoffice-user-details");
+
+  MvcResult mvcResult = mockMvc.perform(delete(PROFILE_API_V1.concat("edit"))
+                  .content(userProfileDTO)
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
 }
