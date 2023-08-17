@@ -80,13 +80,11 @@ public class BillerAggregatorProcessor {
     public BillerAggregatorDTO fetchBillerAggregatorById(String aggregatorSystemId) {
         return billerAggregatorService.retrieveBillerAggregatorDetailsById(aggregatorSystemId);
     }
-    public Object getAllAggregators(int pageNumber, int pageSize, String paginated) {
-        if ("false".equalsIgnoreCase(paginated))
-            return billerAggregatorService.retrieveAllAggregators();
+    public Object getAllAggregators(int pageNumber, int pageSize) {
         return billerAggregatorService.retrieveAllAggregators(pageNumber, pageSize);
     }
 
-    public void downloadAllAggragatorsInCSV(HttpServletResponse response, Status aggregatorStatus,
+    public void downloadAllAggregatorsInCSV(HttpServletResponse response, Status aggregatorStatus,
                                             String startDate, String endDate, String downloadFormat,
                                             int pageNumber, int pageSize) {
         BillentSearchRequest searchRequest = new BillentSearchRequest();
