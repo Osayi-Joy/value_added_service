@@ -34,6 +34,21 @@ public class SwaggerDocUtil {
   public static final String AUTHENTICATION_CONTROLLER_LOGIN_TITLE = "Authenticate a user";
   public static final String AUTHENTICATION_CONTROLLER_LOGIN_DESCRIPTION =
       "This API is used to authenticate a user.";
+  public static final String AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_TITLE = "Initiate a user's password reset";
+  public static final String AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_DESCRIPTION = "This API is used to initiate password reset for a user, it sends an otp to the user's email";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_EMAIL_OTP_TITLE = "Verify a user's email";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_EMAIL_OTP_DESCRIPTION = "This API verifies a user's email, it sends an otp to the user's phoneNumber";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_TITLE = "Verify a user's phoneNumber";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_DESCRIPTION="This API verifies a user's phoneNumber";
+
+  public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_TITLE= "Reset user password";
+
+  public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION= "This API resets a user's existing password to a new password provided by the user";
+
   // Onboarding Controller Doc
   public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";
   public static final String ONBOARDING_CONTROLLER_DESCRIPTION =
