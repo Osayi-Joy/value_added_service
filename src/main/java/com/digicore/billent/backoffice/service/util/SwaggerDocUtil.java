@@ -181,6 +181,8 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION =
           "This API is used to delete user profile.";
-
+  public static final String PROFILE_CONTROLLER_DISABLE_USER_PROFILE_TITLE = "Disable user profile";
+  public static final String PROFILE_CONTROLLER_DISABLE_USER_PROFILE_DESCRIPTION =
+          "This API is used to disable user profile.";
   private SwaggerDocUtil() {}
 }

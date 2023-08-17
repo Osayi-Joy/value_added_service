@@ -37,4 +37,14 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
     return backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
   }
+
+  @MakerChecker(
+          checkerPermission = "approve-disable-backoffice-profile",
+          makerPermission = "disable-backoffice-profile",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+  public Object disableBackofficeProfile(Object request, Object... args) {
+    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    backOfficeUserProfileServiceImpl.disableUserProfile(userProfileDTO.getEmail());
+    return null;
+  }
 }

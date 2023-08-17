@@ -178,4 +178,29 @@ class BackOfficeProfileControllerTest {
   assertTrue(response.isSuccess());
  }
 
+ @Test
+ void testDisableUserProfile_ProfileExists() throws Exception {
+  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
+  userProfile.setEmail("test@example.com");
+  userProfile.setProfileId("123");
+  userProfile.setFirstName("JOY");
+  userProfile.setLastName("OSAYI");
+  String email = "test@example.com";
+  backOfficeUserProfileRepository.save(userProfile);
+
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-backoffice-profile");
+
+                  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("disable-"+email))
+                          .contentType(MediaType.APPLICATION_JSON)
+                          .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
+
 }
