@@ -106,7 +106,7 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
   }
 
-  @PatchMapping("edit}")
+  @PatchMapping("edit")
   @PreAuthorize("hasAuthority('edit-backoffice-user-details')")
   @Operation(
           summary = PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE,
