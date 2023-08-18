@@ -15,7 +15,6 @@ import com.digicore.billent.data.lib.modules.backoffice.profile.repository.BackO
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -185,7 +184,6 @@ class BackOfficeProfileControllerTest {
   userProfile.setProfileId("123");
   userProfile.setFirstName("JOY");
   userProfile.setLastName("OSAYI");
-  String email = "test@example.com";
   backOfficeUserProfileRepository.save(userProfile);
   UserProfileDTO userProfileDTO = new UserProfileDTO();
   userProfileDTO.setEmail("test@example.com");
