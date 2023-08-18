@@ -197,4 +197,44 @@
 //
 //        assertFalse(response.isSuccess());
 //        }
+//
+//
+//@Test
+//  void testGetAllAggregators() throws Exception {
+//          TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthService);
+//          testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-aggregators");
+//
+//          int pageNumber = 0;
+//          int pageSize = 10;
+//
+//          MvcResult mvcResult =
+//          mockMvc
+//          .perform(
+//          get(BILLER_AGGREGATORS_API_V1 + "get-all".concat("?paginated=true"))
+//          .param("pageNumber", String.valueOf(pageNumber))
+//          .param("pageSize", String.valueOf(pageSize))
+//          .header("Authorization", testHelper.retrieveValidAccessToken()))
+//          .andExpect(status().isOk())
+//          .andReturn();
+//
+//          PaginatedResponseDTO<BillerAggregatorDTO> paginatedResponseDTO =
+//        getPaginatedResponseDTO(mvcResult);
+//
+//        assertNotNull(paginatedResponseDTO.getContent());
+//        assertTrue(paginatedResponseDTO.getIsFirstPage());
+//        assertTrue(paginatedResponseDTO.getIsLastPage());
+//        assertNotNull(paginatedResponseDTO.getContent());
+//        }
+//
+//      private static PaginatedResponseDTO<BillerAggregatorDTO> getPaginatedResponseDTO(MvcResult result)
+//        throws UnsupportedEncodingException {
+//        ApiResponseJson<PaginatedResponseDTO<BillerAggregatorDTO>> response =
+//        ClientUtil.getGsonMapper()
+//        .fromJson(
+//        result.getResponse().getContentAsString().trim(),
+//        new TypeToken<
+//        ApiResponseJson<PaginatedResponseDTO<BillerAggregatorDTO>>>() {}.getType());
+//        assertTrue(response.isSuccess());
+//        return response.getData();
+//        }
 //}
