@@ -165,6 +165,19 @@ public class SwaggerDocUtil {
   public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
   public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
           "This API is used to enable a biller aggregator.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE = "Update a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION =
+          "This API is used to update a biller aggregator's details.";
+
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE = "Get all aggregators";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION =
+          "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
+                  + "true if data is been retrieved for a paginated view.";
+
+  public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_TITLE =
+          "Export aggregators in csv";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
+          "This API is used to export aggregators in csv.";
   // Profile Controller Doc
 
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
@@ -183,10 +196,7 @@ public class SwaggerDocUtil {
 
   public static final String PROFILE_CONTROLLER_SEARCH_USERS_TITLE = "Search back office users.";
   public static final String PROFILE_CONTROLLER_SEARCH_USERS_DESCRIPTION =
-      "This API is used to search for back office users, it expects a key and value where the key is the name of any "
-          + "field returned when you invoked the get all endpoint and value is your search word. There is an exception "
-          + "which is the status field, you can't search based on status. If you wish to get back office users "
-          + "based on status kindly use the filter endpoint.";
+      "This API is used to search for back office users, it expects a value where the value is your search word.";
 
 
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
