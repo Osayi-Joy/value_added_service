@@ -77,7 +77,6 @@ public class BackOfficeUserAuthenticationService {
 
     public ApiResponseJson<Object> resetPassword(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
       UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
-      checkPasswordCriteria(resetPasswordDto.getNewPassword());
       passwordResetService.updateAccountPasswordWithoutVerification(resetPasswordDto.getEmail(),resetPasswordDto.getNewPassword());
       notificationDispatcher.dispatchEmail(
               NotificationServiceRequest.builder()
