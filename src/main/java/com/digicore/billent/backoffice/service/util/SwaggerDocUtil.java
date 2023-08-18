@@ -181,10 +181,7 @@ public class SwaggerDocUtil {
 
   public static final String PROFILE_CONTROLLER_SEARCH_USERS_TITLE = "Search back office users.";
   public static final String PROFILE_CONTROLLER_SEARCH_USERS_DESCRIPTION =
-      "This API is used to search for back office users, it expects a key and value where the key is the name of any "
-          + "field returned when you invoked the get all endpoint and value is your search word. There is an exception "
-          + "which is the status field, you can't search based on status. If you wish to get back office users "
-          + "based on status kindly use the filter endpoint.";
+      "This API is used to search for back office users, it expects a value where the value is your search word.";
 
 
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
