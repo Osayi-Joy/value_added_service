@@ -180,7 +180,13 @@ class BackOfficeProfileControllerTest {
 
  @Test
  void testUpdateUserProfile_ProfileExists() throws Exception {
-
+  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
+  userProfile.setEmail("test@example.com");
+  userProfile.setProfileId("123");
+  userProfile.setFirstName("JOY");
+  userProfile.setLastName("OSAYI");
+  String email = "test@example.com";
+  backOfficeUserProfileRepository.save(userProfile);
   UserProfileDTO userProfileDTO = new UserProfileDTO();
   userProfileDTO.setEmail("test@example.com");
   userProfileDTO.setFirstName("John");
