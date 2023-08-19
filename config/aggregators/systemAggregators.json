@@ -2,5 +2,9 @@
   {
     "aggregatorName": "Etranzact",
     "aggregatorAlias": "ETRANZACT"
+  },
+  {
+    "aggregatorName": "Interswitch",
+    "aggregatorAlias": "ETRANZACT"
   }
 ]
