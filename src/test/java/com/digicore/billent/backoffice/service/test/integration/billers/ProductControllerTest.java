@@ -137,6 +137,9 @@ class ProductControllerTest {
     void testDisableProduct_ProductExists() throws Exception {
         Product product = new Product();
         product.setProductSystemId("PSID001");
+        product.setProductId("PSID001");
+        product.setProductName("PSID001");
+        product.setProductSystemName("PSID001");
         product.setProductStatus(Status.ACTIVE);
 
         productRepository.save(product);
@@ -186,6 +189,9 @@ class ProductControllerTest {
     void testEnableProduct_ProductExists() throws Exception {
         Product product = new Product();
         product.setProductSystemId("PSID006");
+        product.setProductId("PSID006");
+        product.setProductSystemName("PSID006");
+        product.setProductName("PSID006");
         product.setProductStatus(Status.ACTIVE);
 
         productRepository.save(product);

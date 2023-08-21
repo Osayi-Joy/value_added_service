@@ -1,6 +1,8 @@
 package com.digicore.billent.backoffice.service.test.integration.profile;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PROFILE_API_V1;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_EMAIL;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_ROLE_NAME;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +17,6 @@ import com.digicore.billent.data.lib.modules.backoffice.profile.repository.BackO
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -178,4 +179,47 @@ class BackOfficeProfileControllerTest {
   assertTrue(response.isSuccess());
  }
 
+ @Test
+ void testDisableUserProfile_ProfileExists() throws Exception {
+
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-backoffice-profile");
+
+                  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("disable-systemChecker@billent.com"))
+                          .contentType(MediaType.APPLICATION_JSON)
+                          .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
+
+ @Test
+ void testUpdateUserProfile_ProfileExists() throws Exception {
+  UserProfileDTO userProfileDTO = new UserProfileDTO();
+  userProfileDTO.setEmail(CHECKER_EMAIL);
+  userProfileDTO.setFirstName("John");
+  userProfileDTO.setLastName("Doe");
+  userProfileDTO.setAssignedRole(CHECKER_ROLE_NAME);
+  userProfileDTO.setPhoneNumber("2349061962179");
+  userProfileDTO.setUsername(CHECKER_EMAIL);
+
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-backoffice-user-details");
+
+  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("edit"))
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(ClientUtil.getGsonMapper().toJson(userProfileDTO))
+                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
 }
