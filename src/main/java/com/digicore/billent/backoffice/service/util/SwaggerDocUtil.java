@@ -144,6 +144,17 @@ public class SwaggerDocUtil {
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION =
       "This API is used to disable a product.";
 
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE = "Get a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_DESCRIPTION =
+          "This API is used to fetch a biller aggregator's details.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
+          "This API is used to enable a biller aggregator.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE = "Update a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION =
+          "This API is used to update a biller aggregator's details.";
+
+
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE = "Get all aggregators";
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION =
           "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
@@ -153,8 +164,9 @@ public class SwaggerDocUtil {
           "Export aggregators in csv";
   public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
           "This API is used to export aggregators in csv.";
-  // Profile Controller Doc
 
+
+  // Profile Controller Doc
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
   public static final String PROFILE_CONTROLLER_DESCRIPTION =
       "This module contains all required APIs to complete operations surrounding all backoffice user profiles "
