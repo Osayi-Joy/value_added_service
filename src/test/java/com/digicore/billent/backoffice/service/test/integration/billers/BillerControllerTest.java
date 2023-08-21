@@ -169,6 +169,7 @@ class BillerControllerTest {
         Biller biller = new Biller();
         biller.setBillerId("EnableBiller_01");
         biller.setBillerName("EnableBiller_01");
+        biller.setBillerSystemName("EnableBiller_01");
         biller.setBillerSystemId("BSID001");
         biller.setBillerStatus(Status.INACTIVE);
 
@@ -221,6 +222,7 @@ class BillerControllerTest {
         Biller biller = new Biller();
         biller.setBillerId("DisableBiller_01");
         biller.setBillerName("DisableBiller_01");
+        biller.setBillerSystemName("DisableBiller_01");
         biller.setBillerSystemId("BSID002");
         biller.setBillerStatus(Status.ACTIVE);
 

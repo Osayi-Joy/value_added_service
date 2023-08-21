@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.aggregators.service;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
 import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
 import com.digicore.request.processor.annotations.MakerChecker;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,12 @@ import org.springframework.stereotype.Service;
  * @createdOn 15/08/2023
  */
 @Service
+@RequiredArgsConstructor
 public class BillerAggregatorBackOfficeService
     implements BillerAggregatorBackOfficeValidatorService {
-  private final BillerAggregatorService billerAggregatorService;
+  private final BillerAggregatorService billerAggregatorServiceImpl;
 
-  public BillerAggregatorBackOfficeService(@Qualifier("BillerAggregatorServiceImpl") BillerAggregatorService billerAggregatorService) {
-    this.billerAggregatorService = billerAggregatorService;
-  }
+
 
   @MakerChecker(
       checkerPermission = "approve-enable-biller-aggregator",
@@ -25,7 +25,7 @@ public class BillerAggregatorBackOfficeService
       requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
   @Override
   public Object enableBillerAggregator(Object request, Object... args) {
-    return billerAggregatorService.enableBillerAggregator((BillerAggregatorDTO) request);
+    return billerAggregatorServiceImpl.enableBillerAggregator((BillerAggregatorDTO) request);
   }
 
   @MakerChecker(
@@ -34,7 +34,7 @@ public class BillerAggregatorBackOfficeService
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
   @Override
   public Object disableBillerAggregator(Object request, Object... args) {
-    return billerAggregatorService.disableBillerAggregator((BillerAggregatorDTO) request);
+    return billerAggregatorServiceImpl.disableBillerAggregator((BillerAggregatorDTO) request);
   }
 
   @MakerChecker(
@@ -43,6 +43,6 @@ public class BillerAggregatorBackOfficeService
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerAggregatorDTO")
   @Override
   public Object updateBillerAggregatorDetail(Object request, Object... args) {
-    return billerAggregatorService.editBillerAggregator((BillerAggregatorDTO)request);
+    return billerAggregatorServiceImpl.editBillerAggregator((BillerAggregatorDTO)request);
   }
 }
