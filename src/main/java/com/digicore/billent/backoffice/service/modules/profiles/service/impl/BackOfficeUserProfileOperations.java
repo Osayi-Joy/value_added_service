@@ -56,4 +56,14 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     backOfficeUserProfileServiceImpl.enableUserProfile(userProfileDTO.getEmail());
     return null;
   }
+
+  @MakerChecker(
+          checkerPermission = "approve-edit-backoffice-user-details",
+          makerPermission = "edit-backoffice-user-details",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+  public Object updateBackofficeProfile(Object request, Object... args) {
+    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    return backOfficeUserProfileServiceImpl.editUserProfile(userProfileDTO);
+  }
+
 }

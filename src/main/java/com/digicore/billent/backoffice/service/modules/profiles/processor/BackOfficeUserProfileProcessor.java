@@ -20,6 +20,11 @@ public class BackOfficeUserProfileProcessor {
     return backOfficeUserProfileOperations.deleteBackofficeProfile(request);
   }
 
+    @RequestType(name = "updateBackofficeProfile")
+    public Object updateBackofficeProfile(Object request){
+        return backOfficeUserProfileOperations.updateBackofficeProfile(request);
+    }
+
   @RequestType(name = "disableBackofficeProfile")
   public Object disableBackofficeProfile(Object request) {
     return backOfficeUserProfileOperations.disableBackofficeProfile(request);
