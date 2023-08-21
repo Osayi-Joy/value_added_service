@@ -30,7 +30,7 @@ pipeline {
                 //mavenLocalRepo: '.repository',
                     mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
                     ){
-                    //sh 'mvn test -Dspring.profiles.active=test'
+                    //sh 'mvn test -Dspring.profiles.active=test,backOffice'
                     sh 'mvn clean package spring-boot:repackage -DskipTests'
                     }
             }
