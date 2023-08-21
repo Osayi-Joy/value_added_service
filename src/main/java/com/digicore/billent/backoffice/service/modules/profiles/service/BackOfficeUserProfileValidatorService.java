@@ -5,4 +5,5 @@ package com.digicore.billent.backoffice.service.modules.profiles.service;
  */
 public interface BackOfficeUserProfileValidatorService {
     Object deleteBackofficeProfile(Object request, Object... args);
+    Object enableBackofficeProfile(Object request, Object... args);
 }

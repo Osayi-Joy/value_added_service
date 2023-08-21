@@ -21,4 +21,9 @@ public class BackOfficeUserProfileProcessor {
         return backOfficeUserProfileOperations.deleteBackofficeProfile(request);
     }
 
+    @RequestType(name = "enableBackofficeProfile")
+    public Object enableBackofficeProfile(Object request){
+        return backOfficeUserProfileOperations.enableBackofficeProfile(request);
+    }
+
 }

@@ -178,4 +178,43 @@ class BackOfficeProfileControllerTest {
   assertTrue(response.isSuccess());
  }
 
+// @Test
+// void testDeleteUserProfile_ProfileDoesNotExists() throws Exception {
+//  String email = "test@example.com";
+//
+//  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+//  testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-backoffice-profile");
+//
+//  MvcResult mvcResult = mockMvc.perform(delete(PROFILE_API_V1.concat("remove-"+email))
+//                  .contentType(MediaType.APPLICATION_JSON)
+//                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+//          .andExpect(status().isBadRequest())
+//          .andReturn();
+//
+//  ApiResponseJson<UserProfileDTO> response =
+//          ClientUtil.getGsonMapper()
+//                  .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<UserProfileDTO>>() {}.getType());
+//
+//  assertFalse(response.isSuccess());
+// }
+
+
+ @Test
+ void testEnableUserProfile_ProfileExists() throws Exception {
+  TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+  testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-backoffice-profile");
+
+  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("enable-systemChecker@billent.com"))
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .header("Authorization", testHelper.retrieveValidAccessToken()))
+          .andExpect(status().isOk())
+          .andReturn();
+
+  ApiResponseJson<?> response =
+          ClientUtil.getGsonMapper()
+                  .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+  assertTrue(response.isSuccess());
+ }
+
+
 }

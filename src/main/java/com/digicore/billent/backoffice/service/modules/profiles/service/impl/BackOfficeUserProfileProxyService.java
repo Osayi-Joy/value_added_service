@@ -24,4 +24,10 @@ public class BackOfficeUserProfileProxyService {
         userProfileDTO.setEmail(email);
         return backOfficeUserProfileValidatorService.deleteBackofficeProfile(userProfileDTO);
     }
+    public Object enableBackofficeProfile(String email){
+        backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(email);
+        UserProfileDTO userProfileDTO = new UserProfileDTO();
+        userProfileDTO.setEmail(email);
+        return backOfficeUserProfileValidatorService.enableBackofficeProfile(userProfileDTO);
+    }
 }
