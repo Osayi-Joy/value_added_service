@@ -13,17 +13,20 @@ import lombok.RequiredArgsConstructor;
 @RequestHandler(type = RequestHandlerType.PROCESS_MAKER_REQUESTS)
 @RequiredArgsConstructor
 public class BackOfficeUserProfileProcessor {
-    private final BackOfficeUserProfileOperations backOfficeUserProfileOperations;
+  private final BackOfficeUserProfileOperations backOfficeUserProfileOperations;
 
+  @RequestType(name = "deleteBackofficeProfile")
+  public Object deleteBackofficeProfile(Object request) {
+    return backOfficeUserProfileOperations.deleteBackofficeProfile(request);
+  }
 
-    @RequestType(name = "deleteBackofficeProfile")
-    public Object deleteBackofficeProfile(Object request){
-        return backOfficeUserProfileOperations.deleteBackofficeProfile(request);
-    }
+  @RequestType(name = "disableBackofficeProfile")
+  public Object disableBackofficeProfile(Object request) {
+    return backOfficeUserProfileOperations.disableBackofficeProfile(request);
+  }
 
-    @RequestType(name = "enableBackofficeProfile")
-    public Object enableBackofficeProfile(Object request){
-        return backOfficeUserProfileOperations.enableBackofficeProfile(request);
-    }
-
+  @RequestType(name = "enableBackofficeProfile")
+  public Object enableBackofficeProfile(Object request) {
+    return backOfficeUserProfileOperations.enableBackofficeProfile(request);
+  }
 }

@@ -104,6 +104,16 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
   }
 
+  @PatchMapping("disable-{email}")
+          @PreAuthorize("hasAuthority('disable-backoffice-profile')")
+          @Operation(
+          summary = PROFILE_CONTROLLER_DISABLE_USER_PROFILE_TITLE,
+          description = PROFILE_CONTROLLER_DISABLE_USER_PROFILE_DESCRIPTION)
+  public ResponseEntity<Object> disableBackofficeProfile(
+          @PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.disableBackofficeProfile(email),"User Profile disabled successfully");
+  }
+
   @PatchMapping("enable-{email}")
   @PreAuthorize("hasAuthority('enable-backoffice-profile')")
   @Operation(

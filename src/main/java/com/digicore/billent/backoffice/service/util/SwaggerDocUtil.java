@@ -144,27 +144,29 @@ public class SwaggerDocUtil {
   public static final String PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION =
       "This API is used to disable a product.";
 
-  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE = "Get a biller aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_TITLE =
+      "Get a biller aggregator";
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_AGGREGATOR_DESCRIPTION =
-          "This API is used to fetch a biller aggregator's details.";
-  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE = "Enable a biller AGGREGATOR";
+      "This API is used to fetch a biller aggregator's details.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE =
+      "Enable a biller AGGREGATOR";
   public static final String BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION =
-          "This API is used to enable a biller aggregator.";
-  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE = "Update a biller aggregator";
+      "This API is used to enable a biller aggregator.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_TITLE =
+      "Update a biller aggregator";
   public static final String BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION =
-          "This API is used to update a biller aggregator's details.";
+      "This API is used to update a biller aggregator's details.";
 
-
-  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE = "Get all aggregators";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE =
+      "Get all aggregators";
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION =
-          "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
-                  + "true if data is been retrieved for a paginated view.";
+      "This API is used to fetch all available biller aggregators in the system, it requires a query param named paginated and value "
+          + "true if data is been retrieved for a paginated view.";
 
   public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_TITLE =
-          "Export aggregators in csv";
+      "Export aggregators in csv";
   public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
-          "This API is used to export aggregators in csv.";
-
+      "This API is used to export aggregators in csv.";
 
   // Profile Controller Doc
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
@@ -185,13 +187,16 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_SEARCH_USERS_DESCRIPTION =
       "This API is used to search for back office users, it expects a value where the value is your search word.";
 
-
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_TITLE = "Delete user profile";
   public static final String PROFILE_CONTROLLER_DELETE_USER_PROFILE_DESCRIPTION =
-          "This API is used to delete user profile.";
+      "This API is used to delete user profile.";
   public static final String PROFILE_CONTROLLER_ENABLE_USER_PROFILE_TITLE = "Enable user profile";
   public static final String PROFILE_CONTROLLER_ENABLE_USER_PROFILE_DESCRIPTION =
-          "This API is used to enable user profile.";
+      "This API is used to enable user profile.";
+
+  public static final String PROFILE_CONTROLLER_DISABLE_USER_PROFILE_TITLE = "Disable user profile";
+  public static final String PROFILE_CONTROLLER_DISABLE_USER_PROFILE_DESCRIPTION =
+      "This API is used to disable user profile.";
 
   private SwaggerDocUtil() {}
 }
