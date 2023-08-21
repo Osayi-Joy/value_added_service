@@ -41,6 +41,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @Slf4j
 class RoleControllerTest {
+//    mvn test -Dspring.profiles.active=test -Dtest="RoleControllerTest"
 
     @Autowired
     private MockMvc mockMvc;
@@ -188,7 +189,6 @@ class RoleControllerTest {
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setName(MAKER_ROLE_NAME);
         roleDTO.setDescription("tester tester");
-//        roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-role");
         MvcResult mvcResult = mockMvc.perform(patch(ROLES_API_V1 + "edit")
