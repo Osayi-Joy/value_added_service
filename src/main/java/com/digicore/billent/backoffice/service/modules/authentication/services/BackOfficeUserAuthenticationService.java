@@ -13,6 +13,7 @@ import com.digicore.registhentication.authentication.dtos.request.LoginRequestDT
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordDto;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
+import com.digicore.registhentication.authentication.dtos.response.ResetPasswordResponse;
 import com.digicore.registhentication.authentication.services.LoginService;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class BackOfficeUserAuthenticationService {
                     .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
                     .notificationRequestType(NotificationRequestType.SEND_ACCOUNT_RECOVERY_EMAIL)
                     .build(), OtpType.PASSWORD_UPDATE);
+
   }
 
   public void validateEmailVerificationAndSendSmsOtp(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
@@ -94,10 +96,4 @@ public class BackOfficeUserAuthenticationService {
                       .build());
 
     }
-
-  private void checkPasswordCriteria(String newPassword) {
-      //not the same as 5 previous passwords
-  }
-
-
 }
