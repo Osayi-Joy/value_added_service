@@ -20,6 +20,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -34,12 +37,15 @@ public class BillentBackOfficeServiceConfig {
 
   public static final String AUTHORITIES_CLAIM_NAME = "permissions";
 
+  private final CORSFilter corsFilter;
+
   @Qualifier("delegatedAuthenticationEntryPoint")
   private final DelegatedAuthenticationEntryPoint authEntryPoint;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(corsFilter))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers(

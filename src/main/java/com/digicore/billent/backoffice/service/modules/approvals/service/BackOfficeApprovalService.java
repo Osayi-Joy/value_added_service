@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.approvals.service;
 import com.digicore.api.helper.exception.ZeusRuntimeException;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.dto.ApprovalRequestsDTO;
+import com.digicore.request.processor.enums.ApprovalRequestStatus;
 import com.digicore.request.processor.processors.ApprovalRequestService;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
-public class BackOfficeApprovalService {
+public class         BackOfficeApprovalService {
     //todo this service was copied from another project and should be refactored properly
 
     public static final String NO_MAKER_CHECKER="no maker checker available";
@@ -44,10 +45,10 @@ public class BackOfficeApprovalService {
 
     }
 
-    public PaginatedResponseDTO<ApprovalRequestsDTO> getAllApprovalRequestsDTOS(int page, int size)  {
+    public PaginatedResponseDTO<ApprovalRequestsDTO> getRequests(int page, int size, ApprovalRequestStatus status)  {
         if (approvalRequestService != null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            Map<String,Object> approvalRequests = approvalRequestService.getApprovalRequests(auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList(),page,size);
+            Map<String,Object> approvalRequests = approvalRequestService.getRequests(auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList(),page,size, status);
 
             List<ApprovalRequestsDTO> approvalRequestsDTOS = (List<ApprovalRequestsDTO>) approvalRequests.get("content");
             PaginatedResponseDTO<ApprovalRequestsDTO> approvalRequests1 = getRequestsDTOPaginatedUserApiModel(approvalRequests, approvalRequestsDTOS);
@@ -68,11 +69,11 @@ public class BackOfficeApprovalService {
     public PaginatedResponseDTO<ApprovalRequestsDTO> getPendingApprovalRequestsDTOS(int page,int size)  {
         if (approvalRequestService != null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            Map<String,Object> approvalRequests = approvalRequestService.getPendingApprovalRequests(
+            Map<String,Object> approvalRequests = approvalRequestService.getRequests(
                     auth.getAuthorities().stream()
                             .map(GrantedAuthority::getAuthority)
                             .toList()
-                    ,page,size
+                    ,page,size,ApprovalRequestStatus.NOT_TREATED
             );
 
             List<ApprovalRequestsDTO> approvalRequestsDTOS = (List<ApprovalRequestsDTO>) approvalRequests.get("content");

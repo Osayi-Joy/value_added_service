@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <archiva.url>https://archiva.digicoreltds.com/repository/internal/</archiva.url>
+        <archiva.client.release.url>https://archiva.digicoreltds.com/repository/Billent_Release/</archiva.client.release.url>
     </properties>
     <dependencies>
 
@@ -34,6 +35,8 @@
             <version>1.0.4-billent-SNAPSHOT</version>
         </dependency>
         <!-- Digicore Dependencies Ends-->
+
+
 
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
         <dependency>
@@ -124,7 +127,7 @@
         <repository>
             <id>archiva</id>
             <name>Archiva Managed Internal Repository</name>
-            <url>${archiva.url}</url>
+            <url>${archiva.client.release.url}</url>
         </repository>
         <repository>
             <id>oss-jfrog-artifactory</id>
@@ -144,8 +147,8 @@
     <distributionManagement>
         <repository>
             <id>archiva</id>
-            <name>Internal Release Repository</name>
-            <url>${archiva.url}</url>
+            <name>External Release Repository</name>
+            <url>${archiva.client.release.url}</url>
         </repository>
     </distributionManagement>
 

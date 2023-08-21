@@ -2,13 +2,12 @@ package com.digicore.billent.backoffice.service.modules.roles.controller;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.BackOfficePageableUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -34,27 +33,41 @@ public class RoleController {
       @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
           int pageNumber,
       @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
-          int pageSize) {
+          int pageSize,
+      @RequestParam(value = "paginated", defaultValue = "false", required = false)
+          String paginated) {
     return ControllerResponse.buildSuccessResponse(
-        backOfficeRoleService.getAllRoles(pageNumber, pageSize), "Roles retrieved successfully");
+        backOfficeRoleService.getAllRoles(pageNumber, pageSize, paginated),
+        "Roles retrieved successfully");
   }
 
-    @GetMapping("get-system-permissions")
-    @PreAuthorize("hasAuthority('view-permissions')")
-    @Operation(
-            summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
-            description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
-    public ResponseEntity<Object> getAllPermissions() {
-        return ControllerResponse.buildSuccessResponse(
-                backOfficeRoleService.getAllPermissions(), "Permissions retrieved successfully");
-    }
+  @GetMapping("get-system-permissions")
+  @PreAuthorize("hasAuthority('view-permissions')")
+  @Operation(
+      summary = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE,
+      description = ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION)
+  public ResponseEntity<Object> getAllPermissions() {
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeRoleService.getAllPermissions(), "Permissions retrieved successfully");
+  }
 
-    @PostMapping("creation")
-    @PreAuthorize("hasAuthority('create-roles')")
-    @Operation(
-            summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
-            description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
-    public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO){
-      return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.createNewRole(roleDTO));
-    }
+  @PostMapping("creation")
+  @PreAuthorize("hasAuthority('create-roles')")
+  @Operation(
+      summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
+      description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO) {
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeRoleProxyService.createNewRole(roleDTO));
+  }
+
+  @DeleteMapping("remove-{roleName}")
+  @PreAuthorize("hasAuthority('delete-role')")
+  @Operation(
+      summary = ROLE_CONTROLLER_DELETE_A_ROLE_TITLE,
+      description = ROLE_CONTROLLER_DELETE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> createRole(@PathVariable String roleName) {
+    backOfficeRoleProxyService.deleteRole(roleName);
+    return ControllerResponse.buildSuccessResponse();
+  }
 }
