@@ -37,7 +37,7 @@ public class BackOfficeUserAuthenticationController {
         authenticateBackOfficeUser.authenticateBackOfficeUser(loginRequestDTO),
         "Authentication Successful");
   }
-  @PostMapping("request-password-reset")
+  @PostMapping("password-forgotten")
   @Operation(
           summary = AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_TITLE,
           description = AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_DESCRIPTION)

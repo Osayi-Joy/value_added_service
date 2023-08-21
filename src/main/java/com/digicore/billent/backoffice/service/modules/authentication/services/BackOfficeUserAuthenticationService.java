@@ -10,6 +10,7 @@ import com.digicore.otp.enums.OtpType;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.otp.service.OtpService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordDto;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.services.LoginService;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import com.digicore.registhentication.authentication.services.PasswordResetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /*
@@ -36,6 +38,9 @@ public class BackOfficeUserAuthenticationService {
 
   private final OtpService otpService;
 
+  @Value("${password-reset-subject: Password Reset}")
+  private String passwordResetSubject;
+
   public LoginResponse authenticateBackOfficeUser(LoginRequestDTO loginRequestDTO) {
     LoginResponse loginResponse = userAuthService.authenticate(loginRequestDTO);
     notificationDispatcher.dispatchEmail(
@@ -48,44 +53,45 @@ public class BackOfficeUserAuthenticationService {
     return loginResponse;
   }
 
-  public ApiResponseJson<Object> requestPasswordRequest(String email){
+  public void requestPasswordReset(String email){
     UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(email);
-    notificationDispatcher.dispatchEmail(
+    otpService.send(
             NotificationServiceRequest.builder()
                     .recipients(List.of(email))
-                    .notificationSubject("PASSWORD_RESET_OTP")
+                    .notificationSubject(passwordResetSubject)
                     .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
-                    .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
-                    .build());
-    return ApiResponseJson.builder().success(true).data(null).build();
+                    .notificationRequestType(NotificationRequestType.SEND_ACCOUNT_RECOVERY_EMAIL)
+                    .build(), OtpType.PASSWORD_UPDATE);
   }
 
-  public ApiResponseJson<Object> validateEmailVerificationAndSendSmsOtp(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
+  public void validateEmailVerificationAndSendSmsOtp(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
     UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
     otpService.effect(
         resetPasswordDto.getEmail(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getResetKey());
-    otpService.send(NotificationServiceRequest.builder().firstName(userAuthProfileDTO.getUserProfile().getFirstName()).phoneNumbers(List.of(userAuthProfileDTO.getUserProfile().getPhoneNumber())).notificationRequestType(NotificationRequestType.SEND_SMS).channel("SMS").build(), OtpType.PHONE_NUMBER_VERIFICATION);
-    return ApiResponseJson.builder().success(true).build();
+    otpService.send(
+            NotificationServiceRequest.builder()
+                    .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
+                    .phoneNumbers(List.of(userAuthProfileDTO.getUserProfile().getPhoneNumber()))
+                    .notificationRequestType(NotificationRequestType.SEND_SMS)
+                    .channel("SMS").build(), OtpType.PASSWORD_UPDATE);
   }
 
-  public ApiResponseJson<Object> validateSmsVerification(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
+  public void validateSmsVerification(ResetPasswordDto resetPasswordDto){
     otpService.effect(
-        resetPasswordDto.getEmail(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getResetKey());
-    return ApiResponseJson.builder().success(true).build();
+        resetPasswordDto.getPhoneNumber(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getResetKey());
 
     }
 
-    public ApiResponseJson<Object> resetPassword(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
+    public void resetPassword(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
       UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
       passwordResetService.updateAccountPasswordWithoutVerification(resetPasswordDto.getEmail(),resetPasswordDto.getNewPassword());
       notificationDispatcher.dispatchEmail(
               NotificationServiceRequest.builder()
                       .recipients(List.of(resetPasswordDto.getEmail()))
-                      .notificationSubject("PASSWORD_RESET")
+                      .notificationSubject(passwordResetSubject)
                       .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
                       .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
                       .build());
-      return ApiResponseJson.builder().success(true).build();
 
     }
 
