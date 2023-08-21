@@ -2,6 +2,11 @@ pipeline {
     agent {
        label "Runner"
        }
+       
+    tools {
+    jdk 'Java17'
+    maven 'Maven'
+    }
     
     environment {
         VERSION = "${env.BUILD_ID}"
@@ -15,6 +20,19 @@ pipeline {
         stage('Git checkout') {
             steps {
                 git branch: 'redtech', credentialsId: 'GitLab_Access', url: 'https://gitlab.com/teamdigicore/billent-backoffice-service.git'
+            }
+        }
+        
+        stage('Build The Artifact') {
+            steps {
+                withMaven(
+                    maven: 'Maven',
+                //mavenLocalRepo: '.repository',
+                    mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
+                    ){
+                    //sh 'mvn test -Dspring.profiles.active=test'
+                    sh 'mvn clean package spring-boot:repackage -DskipTests'
+                    }
             }
         }
       
@@ -64,7 +82,30 @@ pipeline {
               sh "docker system prune -f"
                     }
           }
-        }
-        
+        }    
     }
+
+    post{
+          always{
+            script{
+               RESULT=(currentBuild.result == null ? "SUCCESSFUL" : currentBuild.result)
+
+            }
+          }
+          success{
+            script{
+                emailext to: "austin.okorowu@redtechlimited.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                attachmentsPattern: '*.jar'
+            }
+          }
+          failure{
+            script{
+                emailext to: "austin.okorowu@redtechlimited.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
+            }
+          }
+        }
 }

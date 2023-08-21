@@ -39,6 +39,25 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   @MakerChecker(
+          checkerPermission = "approve-disable-backoffice-profile",
+          makerPermission = "disable-backoffice-profile",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+  public Object disableBackofficeProfile(Object request, Object... args) {
+    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    backOfficeUserProfileServiceImpl.disableUserProfile(userProfileDTO.getEmail());
+    return null;
+  }
+  @MakerChecker(
+          checkerPermission = "approve-enable-backoffice-profile",
+          makerPermission = "enable-backoffice-profile",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+  public Object enableBackofficeProfile(Object request, Object... args) {
+    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    backOfficeUserProfileServiceImpl.enableUserProfile(userProfileDTO.getEmail());
+    return null;
+  }
+
+  @MakerChecker(
           checkerPermission = "approve-edit-backoffice-user-details",
           makerPermission = "edit-backoffice-user-details",
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")

@@ -4,8 +4,10 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
 import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeProxyService;
 import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
+import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLER_AGGREGATORS_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -37,7 +40,36 @@ public class BillerAggregatorController {
        billerAggregatorProcessor.refreshAggregatorBillersAndProducts(billerAggregatorDTO);
        return ControllerResponse.buildSuccessResponse();
     }
+    @GetMapping("get-all")
+    @PreAuthorize("hasAuthority('view-biller-aggregators')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_GET_ALL_AGGREGATORS_DESCRIPTION)
+    public ResponseEntity<Object> getAllAggregators(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize)
+    {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorProcessor.getAllAggregators(pageNumber, pageSize), "Aggregators retrieved successfully");
+    }
 
+    @GetMapping("export-to-csv")
+    @PreAuthorize("hasAuthority('export-billers')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION)
+    public void downloadListOfAggregatorsInCSV(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+            @RequestParam(value = START_DATE, required = false) String startDate,
+            @RequestParam(value = END_DATE, required = false) String endDate,
+            @RequestParam(value = BILLER_STATUS, required = false) Status aggregatorStatus,
+            @RequestParam(value = DOWNLOAD_FORMAT, required = false) String downloadFormat,
+            HttpServletResponse response) {
+        billerAggregatorProcessor.downloadAllAggregatorsInCSV(response, aggregatorStatus, startDate, endDate, downloadFormat, pageNumber, pageSize);
+    }
     @GetMapping("get-{aggregatorSystemId}-details")
     @PreAuthorize("hasAuthority('view-biller-aggregator-details')")
     @Operation(
