@@ -1,6 +1,8 @@
 package com.digicore.billent.backoffice.service.test.integration.profile;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PROFILE_API_V1;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_EMAIL;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_ROLE_NAME;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -197,19 +199,13 @@ class BackOfficeProfileControllerTest {
 
  @Test
  void testUpdateUserProfile_ProfileExists() throws Exception {
-  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
-  userProfile.setEmail("test@example.com");
-  userProfile.setProfileId("123");
-  userProfile.setFirstName("JOY");
-  userProfile.setLastName("OSAYI");
-  backOfficeUserProfileRepository.save(userProfile);
   UserProfileDTO userProfileDTO = new UserProfileDTO();
-  userProfileDTO.setEmail("test@example.com");
+  userProfileDTO.setEmail(CHECKER_EMAIL);
   userProfileDTO.setFirstName("John");
   userProfileDTO.setLastName("Doe");
-  userProfileDTO.setAssignedRole("ROLE_USER");
+  userProfileDTO.setAssignedRole(CHECKER_ROLE_NAME);
   userProfileDTO.setPhoneNumber("2349061962179");
-  userProfileDTO.setUsername("test@example.com");
+  userProfileDTO.setUsername(CHECKER_EMAIL);
 
   TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
   testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-backoffice-user-details");
