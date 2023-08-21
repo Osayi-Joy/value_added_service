@@ -20,4 +20,9 @@ public class BackOfficeRoleProcessor {
   public Object createNewRole(Object request) {
     return backOfficeRoleService.createNewRole(request);
   }
+
+  @RequestType(name = "updateRole")
+  public Object updateRole(Object request) {
+    return backOfficeRoleService.updateRole(request);
+  }
 }

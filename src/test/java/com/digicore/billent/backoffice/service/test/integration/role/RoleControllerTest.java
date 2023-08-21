@@ -2,6 +2,8 @@ package com.digicore.billent.backoffice.service.test.integration.role;
 
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_ROLE_NAME;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_ROLE_NAME;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -168,6 +170,30 @@ class RoleControllerTest {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-role");
         MvcResult mvcResult = mockMvc.perform(delete(ROLES_API_V1 + "remove-SYSTEM_CHECKER")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        ApiResponseJson<RoleDTO> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+        assertTrue(response.isSuccess());
+    }
+
+    @Test
+    void testUpdateRole() throws Exception {
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setName(MAKER_ROLE_NAME);
+        roleDTO.setDescription("tester tester");
+//        roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-role");
+        MvcResult mvcResult = mockMvc.perform(patch(ROLES_API_V1 + "edit")
+                        .content(
+                                ClientUtil.getGsonMapper().toJson(roleDTO))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())

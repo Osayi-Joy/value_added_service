@@ -270,6 +270,16 @@
     "permissionType": "ROLES"
   },
   {
+    "name": "edit-role",
+    "description": "This allows you to edit a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-edit-role",
+    "description": "This allows you to edit a role",
+    "permissionType": "ROLES"
+  },
+  {
     "name": "treat-requests",
     "description": "This allows you to treat a request you have been assigned to",
     "permissionType": "ROLES"
