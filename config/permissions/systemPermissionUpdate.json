@@ -266,7 +266,7 @@
   },
   {
     "name": "approve-delete-role",
-    "description": "This allows you to delete a role",
+    "description": "This allows you to approve a request to delete a role",
     "permissionType": "ROLES"
   },
   {
@@ -276,7 +276,7 @@
   },
   {
     "name": "approve-edit-role",
-    "description": "This allows you to edit a role",
+    "description": "This allows you to approve a request to edit a role",
     "permissionType": "ROLES"
   },
   {
