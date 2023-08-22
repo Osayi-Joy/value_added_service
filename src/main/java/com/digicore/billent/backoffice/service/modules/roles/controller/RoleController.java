@@ -8,6 +8,7 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -69,5 +70,14 @@ public class RoleController {
   public ResponseEntity<Object> createRole(@PathVariable String roleName) {
     backOfficeRoleProxyService.deleteRole(roleName);
     return ControllerResponse.buildSuccessResponse();
+  }
+
+  @PatchMapping("edit")
+  @PreAuthorize("hasAuthority('edit-role')")
+  @Operation(
+          summary = ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE,
+          description = ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> updateRole(@Valid  @RequestBody RoleDTO roleDTO) {
+    return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.updateRole(roleDTO), "Role updated successfully");
   }
 }
