@@ -155,19 +155,10 @@ class BackOfficeProfileControllerTest {
 
  @Test
  void testDeleteUserProfile_ProfileExists() throws Exception {
-  BackOfficeUserProfile userProfile = new BackOfficeUserProfile();
-  userProfile.setEmail("test@example.com");
-  userProfile.setProfileId("123");
-  userProfile.setFirstName("JOY");
-  userProfile.setLastName("OSAYI");
-  String email = "test@example.com";
-  backOfficeUserProfileRepository.save(userProfile);
-
   TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
   testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-backoffice-profile");
 
-  MvcResult mvcResult = mockMvc.perform(delete(PROFILE_API_V1.concat("remove-"+email))
-                  .param(EMAIL, email)
+  MvcResult mvcResult = mockMvc.perform(delete(PROFILE_API_V1.concat("remove-".concat(CHECKER_EMAIL)))
                   .contentType(MediaType.APPLICATION_JSON)
                   .header("Authorization", testHelper.retrieveValidAccessToken()))
           .andExpect(status().isOk())
@@ -185,7 +176,7 @@ class BackOfficeProfileControllerTest {
   TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
   testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-backoffice-profile");
 
-                  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("disable-systemChecker@billent.com"))
+                  MvcResult mvcResult = mockMvc.perform(patch(PROFILE_API_V1.concat("disable-").concat(CHECKER_EMAIL))
                           .contentType(MediaType.APPLICATION_JSON)
                           .header("Authorization", testHelper.retrieveValidAccessToken()))
           .andExpect(status().isOk())
