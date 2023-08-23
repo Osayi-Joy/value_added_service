@@ -37,10 +37,11 @@ pipeline {
         // }
 
         stage('Generate Artifact'){
-            steps {
-                withMaven(maven: 'Maven', mavenSettingsConfig: 'MySettings') {
-                  sh "mvn clean install "
+                       environment {
+                        MVN_SET = credentials('Biller-Setting')
                         }
+            steps {
+                  sh 'mvn clean package spring-boot:repackage -DskipTests -s $Biller-Setting help:effective-settings'
                   }
               }
       
