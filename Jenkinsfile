@@ -23,18 +23,26 @@ pipeline {
             }
         }
         
-        stage('Build The Artifact') {
+        // stage('Build The Artifact') {
+        //     steps {
+        //         withMaven(
+        //             maven: 'Maven',
+        //         //mavenLocalRepo: '.repository',
+        //             mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
+        //             ){
+        //             //sh 'mvn test -Dspring.profiles.active=test,backOffice'
+        //             sh 'mvn clean package spring-boot:repackage -DskipTests'
+        //             }
+        //     }
+        // }
+
+        stage('Generate Artifact'){
             steps {
-                withMaven(
-                    maven: 'Maven',
-                //mavenLocalRepo: '.repository',
-                    mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
-                    ){
-                    //sh 'mvn test -Dspring.profiles.active=test,backOffice'
-                    sh 'mvn clean package spring-boot:repackage -DskipTests'
-                    }
-            }
-        }
+                withMaven(maven: 'Maven', mavenSettingsConfig: 'MySettings') {
+                  sh "mvn clean install "
+                        }
+                  }
+              }
       
         stage('Building A Docker image') {
             steps{
