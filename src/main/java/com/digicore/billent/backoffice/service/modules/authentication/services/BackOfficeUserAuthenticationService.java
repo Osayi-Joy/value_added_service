@@ -1,7 +1,6 @@
 package com.digicore.billent.backoffice.service.modules.authentication.services;
 
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
-import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -21,12 +20,12 @@ import static com.digicore.billent.data.lib.modules.common.notification.Notifica
 @Service
 @RequiredArgsConstructor
 public class BackOfficeUserAuthenticationService {
-  private final LoginService<LoginResponse, LoginRequestDTO> userAuthService;
+  private final LoginService<LoginResponse, LoginRequestDTO> backOfficeUserAuthServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
 
   public LoginResponse authenticateBackOfficeUser(LoginRequestDTO loginRequestDTO) {
-    LoginResponse loginResponse = userAuthService.authenticate(loginRequestDTO);
+    LoginResponse loginResponse = backOfficeUserAuthServiceImpl.authenticate(loginRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
             .recipients(List.of(loginResponse.getAdditionalInformation().get("email").toString()))

@@ -127,7 +127,7 @@
         <repository>
             <id>archiva</id>
             <name>Archiva Managed Internal Repository</name>
-            <url>${archiva.client.release.url}</url>
+            <url>${archiva.url}</url>
         </repository>
         <repository>
             <id>oss-jfrog-artifactory</id>
@@ -148,7 +148,7 @@
         <repository>
             <id>archiva</id>
             <name>External Release Repository</name>
-            <url>${archiva.client.release.url}</url>
+            <url>${archiva.url}</url>
         </repository>
     </distributionManagement>
 
