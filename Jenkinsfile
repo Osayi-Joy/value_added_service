@@ -41,7 +41,7 @@ pipeline {
                         MVN_SET = credentials('Biller-Setting')
                         }
             steps {
-                  sh 'mvn clean package spring-boot:repackage -DskipTests -s $Biller-Setting help:effective-settings'
+                  sh 'mvn -U clean package spring-boot:repackage -DskipTests -s $Biller-Setting help:effective-settings'
                   }
               }
       
