@@ -8,4 +8,5 @@ public interface BackOfficeRoleValidatorService {
 
      Object createNewRole(Object requestDTO, Object... args);
      Object deleteRole(Object requestDTO, Object... args);
+     Object updateRole(Object requestDTO, Object... args);
 }
