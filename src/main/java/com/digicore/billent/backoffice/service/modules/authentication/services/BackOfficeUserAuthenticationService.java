@@ -1,5 +1,6 @@
 package com.digicore.billent.backoffice.service.modules.authentication.services;
 
+import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
@@ -11,6 +12,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.digicore.billent.data.lib.modules.common.notification.NotificationSubject.LOGIN_SUCCESSFUL_SUBJECT_KEY;
+
 /*
  * @author Oluwatobi Ogunwuyi
  * @createdOn Jun-27(Tue)-2023
@@ -20,14 +23,14 @@ import org.springframework.stereotype.Service;
 public class BackOfficeUserAuthenticationService {
   private final LoginService<LoginResponse, LoginRequestDTO> userAuthService;
   private final NotificationDispatcher notificationDispatcher;
-  private final PropertyConfig propertyConfig;
+  private final SettingService settingService;
 
   public LoginResponse authenticateBackOfficeUser(LoginRequestDTO loginRequestDTO) {
     LoginResponse loginResponse = userAuthService.authenticate(loginRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
             .recipients(List.of(loginResponse.getAdditionalInformation().get("email").toString()))
-            .notificationSubject(propertyConfig.getSuccessLoginSubject())
+            .notificationSubject(settingService.retrieveValue(LOGIN_SUCCESSFUL_SUBJECT_KEY))
             .firstName((String) loginResponse.getAdditionalInformation().get("firstName"))
             .notificationRequestType(NotificationRequestType.SEND_LOGIN_SUCCESS_EMAIL)
             .build());

@@ -75,6 +75,9 @@ public class SwaggerDocUtil {
   public static final String ROLE_CONTROLLER_DELETE_A_ROLE_TITLE = "Delete a role";
   public static final String ROLE_CONTROLLER_DELETE_A_ROLE_DESCRIPTION =
       "This API is used to delete a role on the system, it goes through maker checker.";
+  public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE = "Update a role";
+  public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION =
+          "This API is used to update a role on the system, it goes through maker checker.";
 
   // Biller Controller Doc
   public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";
