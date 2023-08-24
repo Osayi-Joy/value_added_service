@@ -38,7 +38,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
       checkerPermission = "approve-invite-backoffice-user",
       makerPermission = "invite-backoffice-user",
       requestClassName =
-          "com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO")
+          "com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO")
   public Object onboardNewBackOfficeUser(Object requestDTO, Object... args) {
     UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) requestDTO;
     userRegistrationDTO.setPassword(IDGeneratorUtil.generateTempId());
