@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.onboarding.services;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
@@ -18,6 +19,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.digicore.billent.data.lib.modules.common.notification.NotificationSubject.INVITE_BACKOFFICE_USER_SUBJECT_KEY;
+import static com.digicore.billent.data.lib.modules.common.notification.NotificationSubject.PASSWORD_RESET_SUCCESSFUL_SUBJECT_KEY;
+
 /*
  * @author Oluwatobi Ogunwuyi
  * @createdOn Jul-04(Tue)-2023
@@ -28,20 +32,20 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
   private final RegistrationService<UserProfileDTO, UserRegistrationDTO> backOfficeUserRegistrationServiceImpl;
   private final PasswordResetService passwordResetService;
   private final NotificationDispatcher notificationDispatcher;
-  private final PropertyConfig propertyConfig;
+  private final SettingService settingService;
 
   @MakerChecker(
       checkerPermission = "approve-invite-backoffice-user",
       makerPermission = "invite-backoffice-user",
       requestClassName =
-          "com.digicore.billent.data.lib.modules.common.authentication.dtos.UserRegistrationDTO")
+          "com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO")
   public Object onboardNewBackOfficeUser(Object requestDTO, Object... args) {
     UserRegistrationDTO userRegistrationDTO = (UserRegistrationDTO) requestDTO;
     userRegistrationDTO.setPassword(IDGeneratorUtil.generateTempId());
     UserProfileDTO result = backOfficeUserRegistrationServiceImpl.createProfile(userRegistrationDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
-            .notificationSubject(propertyConfig.getInviteUserSubject())
+            .notificationSubject(settingService.retrieveValue(INVITE_BACKOFFICE_USER_SUBJECT_KEY))
             .recipients(List.of(result.getEmail()))
             .dateTime(LocalDateTime.now())
             .userCode(result.getPassword())
@@ -59,7 +63,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
         inviteBodyDTO.getEmail(), password);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
-            .notificationSubject(propertyConfig.inviteUserSubject)
+            .notificationSubject(settingService.retrieveValue(INVITE_BACKOFFICE_USER_SUBJECT_KEY))
             .recipients(List.of(inviteBodyDTO.getEmail()))
             .dateTime(LocalDateTime.now())
             .userCode(password)
@@ -75,7 +79,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
     passwordResetService.updateAccountPassword(resetPasswordFirstBaseRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
-            .notificationSubject(propertyConfig.passwordResetSubject)
+            .notificationSubject(settingService.retrieveValue(PASSWORD_RESET_SUCCESSFUL_SUBJECT_KEY))
             .recipients(List.of(resetPasswordFirstBaseRequestDTO.getEmail()))
             .dateTime(LocalDateTime.now())
             .firstName(resetPasswordFirstBaseRequestDTO.getFirstName())

@@ -74,7 +74,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
    @Test
     void requestPasswordResetTest() throws Exception {
-       MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("request-password-reset"))
+       MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("password-forgotten"))
                .content(MAKER_EMAIL).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
 
        ApiResponseJson<Object> response = ClientUtil.getGsonMapper().fromJson(result.getResponse().getContentAsString(),ApiResponseJson.class);

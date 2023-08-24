@@ -43,4 +43,9 @@ public class BackOfficeRoleProxyService {
   roleDTO.setName(roleName);
   validatorService.deleteRole(roleDTO);
  }
+
+ public Object updateRole(RoleDTO roleDTO) {
+    backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
+  return validatorService.updateRole(roleDTO);
+ }
 }
