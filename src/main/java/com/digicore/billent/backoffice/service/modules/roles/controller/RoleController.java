@@ -43,6 +43,17 @@ public class RoleController {
         "Roles retrieved successfully");
   }
 
+  @GetMapping("get-{roleName}-details")
+  @PreAuthorize("hasAuthority('view-role-details')")
+  @Operation(
+          summary = ROLE_CONTROLLER_GET_ROLE_TITLE,
+          description = ROLE_CONTROLLER_GET_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> getRole(@PathVariable String roleName) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeRoleService.getRole(roleName),
+            "Roles retrieved successfully");
+  }
+
   @GetMapping("get-system-permissions")
   @PreAuthorize("hasAuthority('view-permissions')")
   @Operation(

@@ -2,8 +2,7 @@ package com.digicore.billent.backoffice.service.test.integration.role;
 
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
-import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_ROLE_NAME;
-import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_ROLE_NAME;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -12,6 +11,7 @@ import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
@@ -21,6 +21,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import java.util.Set;
@@ -95,6 +96,29 @@ class RoleControllerTest {
         assertNotNull(paginatedResponseDTO.getContent());
         assertEquals(1, paginatedResponseDTO.getContent().get(0).getTotalTeamMemberCount());
         assertTrue(paginatedResponseDTO.getContent().get(0).getPermissions().size() > 0);
+    }
+
+    @Test
+    void testGetRole() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-role-details");
+
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1.concat("get-").concat(MAKER_ROLE_NAME).concat("-details"))
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ApiResponseJson<RoleDTOWithTeamMembers> response =
+                ClientUtil.getObjectMapper()
+                        .readValue(
+                                mvcResult.getResponse().getContentAsString().trim(), new TypeReference<>() {});
+        assertTrue(response.isSuccess());
+        assertNotNull(response.getData());
+
+        RoleDTOWithTeamMembers responseData = response.getData();
+        assertEquals(1, responseData.getTotalTeamMemberCount());
+        assertEquals(MAKER_ROLE_NAME, responseData.getName());
+        assertTrue(responseData.getPermissions().size() > 0);
     }
 
     @Test

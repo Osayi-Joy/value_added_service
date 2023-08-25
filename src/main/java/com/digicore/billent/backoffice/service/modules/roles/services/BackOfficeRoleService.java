@@ -2,10 +2,7 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.*;
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
@@ -24,6 +21,10 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   public Object getAllRoles(int pageNumber, int pageSize, String paginated) {
     if ("false".equalsIgnoreCase(paginated)) return backOfficeRoleServiceImpl.retrieveAllRoles();
     return backOfficeRoleServiceImpl.retrieveAllRoles(pageNumber, pageSize);
+  }
+
+  public RoleDTOWithTeamMembers getRole(String roleName) {
+    return backOfficeRoleServiceImpl.retrieveSystemRole(roleName);
   }
 
   public Set<PermissionDTO> getAllPermissions() {
