@@ -48,6 +48,17 @@ public class BackOfficeUserProfileController {
             PROFILE_RETRIEVED_MESSAGE);
   }
 
+  @GetMapping("get-{email}-details")
+  @PreAuthorize("hasAuthority('view-backoffice-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_GET_USER_TITLE,
+          description = PROFILE_CONTROLLER_GET_USER_DESCRIPTION)
+  public ResponseEntity<Object> getBackOfficeProfile(@PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeUserProfileOperations.fetchBackOfficeUserProfile(email),
+            PROFILE_RETRIEVED_MESSAGE);
+  }
+
   @GetMapping("search")
   @PreAuthorize("hasAuthority('view-backoffice-users')")
   @Operation(

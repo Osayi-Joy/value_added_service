@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BackOfficeUserProfileProxyService {
   private final BackOfficeUserProfileValidatorService backOfficeUserProfileValidatorService;
-  private final UserProfileService<UserProfileDTO, BackOfficeUserProfile>
+  private final UserProfileService<UserProfileDTO>
       backOfficeUserProfileServiceImpl;
 
   public Object deleteBackofficeProfile(String email) {

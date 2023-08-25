@@ -19,10 +19,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class BackOfficeUserProfileOperations implements BackOfficeUserProfileValidatorService {
-  private final UserProfileService<UserProfileDTO, BackOfficeUserProfile> backOfficeUserProfileServiceImpl;
+  private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
 
   public PaginatedResponseDTO<UserProfileDTO> fetchAllBackOfficeUserProfiles(int page, int size) {
     return backOfficeUserProfileServiceImpl.retrieveAllUserProfiles(page, size);
+  }
+
+  public UserProfileDTO fetchBackOfficeUserProfile(String email) {
+    return backOfficeUserProfileServiceImpl.retrieveUserProfile(email);
   }
 
   public PaginatedResponseDTO<UserProfileDTO> filterOrSearch(
@@ -36,7 +40,8 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
   public Object deleteBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
-    return backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
+    backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
+    return null;
   }
 
   @MakerChecker(
