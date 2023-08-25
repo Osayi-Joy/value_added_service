@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -52,9 +53,10 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   @MakerChecker(
           checkerPermission = "approve-edit-role",
           makerPermission = "edit-role",
-          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO")
   public Object updateRole(Object requestDTO, Object... args) {
-    RoleDTO roleDTO = (RoleDTO) requestDTO;
-    return backOfficeRoleServiceImpl.editRole(roleDTO);
+    EditRoleDTO roleDTO = (EditRoleDTO) requestDTO;
+    backOfficeRoleServiceImpl.updateExistingRole(roleDTO);
+    return null;
   }
 }

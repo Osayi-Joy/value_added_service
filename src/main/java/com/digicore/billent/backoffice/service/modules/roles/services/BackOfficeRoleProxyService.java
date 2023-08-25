@@ -6,6 +6,7 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -44,7 +45,7 @@ public class BackOfficeRoleProxyService {
   validatorService.deleteRole(roleDTO);
  }
 
- public Object updateRole(RoleDTO roleDTO) {
+ public Object updateRole(EditRoleDTO roleDTO) {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
   return validatorService.updateRole(roleDTO);
  }

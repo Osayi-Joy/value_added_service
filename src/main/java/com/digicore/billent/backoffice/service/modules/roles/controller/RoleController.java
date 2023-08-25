@@ -7,6 +7,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -77,7 +78,7 @@ public class RoleController {
   @Operation(
           summary = ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE,
           description = ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION)
-  public ResponseEntity<Object> updateRole(@Valid  @RequestBody RoleDTO roleDTO) {
+  public ResponseEntity<Object> updateRole(@Valid  @RequestBody EditRoleDTO roleDTO) {
     return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.updateRole(roleDTO), "Role updated successfully");
   }
 }
