@@ -64,7 +64,8 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO")
   public Object updateBackofficeProfile(Object request, Object... args) {
     UserEditDTO userProfileDTO = (UserEditDTO) request;
-    return backOfficeUserProfileServiceImpl.editUserProfile(userProfileDTO);
+    backOfficeUserProfileServiceImpl.editUserProfile(userProfileDTO);
+    return null;
   }
 
 }
