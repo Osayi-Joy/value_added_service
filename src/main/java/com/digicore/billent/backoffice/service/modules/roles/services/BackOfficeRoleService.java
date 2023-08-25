@@ -46,7 +46,7 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
       makerPermission = "delete-role",
       requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
   public Object deleteRole(Object requestDTO, Object... args) {
-    RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
+     RoleDTO roleDTO = (RoleDTO) requestDTO;
      backOfficeRoleServiceImpl.deleteRole(roleDTO.getName());
      return null;
   }
