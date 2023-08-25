@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
 
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
@@ -60,9 +61,9 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   @MakerChecker(
           checkerPermission = "approve-edit-backoffice-user-details",
           makerPermission = "edit-backoffice-user-details",
-          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO")
   public Object updateBackofficeProfile(Object request, Object... args) {
-    UserProfileDTO userProfileDTO = (UserProfileDTO) request;
+    UserEditDTO userProfileDTO = (UserEditDTO) request;
     return backOfficeUserProfileServiceImpl.editUserProfile(userProfileDTO);
   }
 

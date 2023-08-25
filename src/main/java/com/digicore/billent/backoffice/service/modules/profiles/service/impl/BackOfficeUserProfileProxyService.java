@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
 
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class BackOfficeUserProfileProxyService {
     return backOfficeUserProfileValidatorService.deleteBackofficeProfile(userProfileDTO);
   }
 
-  public Object updateBackofficeProfile(UserProfileDTO userProfileDTO) {
+  public Object updateBackofficeProfile(UserEditDTO userProfileDTO) {
     backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(userProfileDTO.getEmail());
     return backOfficeUserProfileValidatorService.updateBackofficeProfile(userProfileDTO);
   }
