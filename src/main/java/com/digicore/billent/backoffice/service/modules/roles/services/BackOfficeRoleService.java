@@ -54,9 +54,9 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   @MakerChecker(
           checkerPermission = "approve-edit-role",
           makerPermission = "edit-role",
-          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.EditRoleDTO")
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO")
   public Object updateRole(Object requestDTO, Object... args) {
-    EditRoleDTO roleDTO = (EditRoleDTO) requestDTO;
+    RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
     backOfficeRoleServiceImpl.updateExistingRole(roleDTO);
     return null;
   }
