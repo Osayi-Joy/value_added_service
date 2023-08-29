@@ -159,7 +159,7 @@ class BackOfficeProfileControllerTest {
                 get(PROFILE_API_V1 + "filter")
                     .param(PAGE_NUMBER, String.valueOf(pageNumber))
                     .param(PAGE_SIZE, String.valueOf(pageSize))
-                    .param(STATUS, "INACTIVE")
+                    .param(STATUS, "ACTIVE")
                     .param(START_DATE, "2021-01-01")
                     .param(END_DATE, "9021-01-01")
                     .header("Authorization", testHelper.retrieveValidAccessToken()))

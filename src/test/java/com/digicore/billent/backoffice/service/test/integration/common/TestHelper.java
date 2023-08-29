@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 
 
+import com.digicore.registhentication.registration.enums.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
@@ -133,6 +134,7 @@ public class TestHelper {
     UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
     backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
     backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
+    backOfficeUserAuthProfileDTO.setStatus(Status.ACTIVE);
     backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
 
