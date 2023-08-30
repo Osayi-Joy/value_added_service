@@ -43,13 +43,11 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @Slf4j
 class BackOfficeProfileControllerTest {
-  // mvn test -Dspring.profiles.active=backOffice,test -Dtest="BackOfficeProfileControllerTest"
   @Autowired private MockMvc mockMvc;
 
   @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
   @Autowired private PropertyConfig propertyConfig;
   @Autowired private BackOfficeUserProfileRepository backOfficeUserProfileRepository;
- private boolean testRoleCreated = false;
 
   private static PaginatedResponseDTO<UserProfileDTO> getPaginatedResponseDTO(MvcResult result)
       throws UnsupportedEncodingException, JsonProcessingException {
@@ -67,17 +65,13 @@ class BackOfficeProfileControllerTest {
   @BeforeEach
   void checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
-    if (!testRoleCreated){
       TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
       testHelper.createTestRole();
-      testRoleCreated = true;
-    }
   }
 
   @Test
   void testGetAllBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -103,7 +97,6 @@ class BackOfficeProfileControllerTest {
   @Test
   void testGetBackOfficeUserProfile() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("view-backoffice-user-details");
 
     MvcResult mvcResult =
         mockMvc
@@ -127,7 +120,6 @@ class BackOfficeProfileControllerTest {
   @Test
   void testSearchBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -155,7 +147,6 @@ class BackOfficeProfileControllerTest {
   @Test
   void testFilterBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -184,7 +175,6 @@ class BackOfficeProfileControllerTest {
   @Test
   void testDeleteUserProfile_ProfileExists() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("delete-backoffice-profile");
 
     MvcResult mvcResult =
         mockMvc
@@ -205,7 +195,6 @@ class BackOfficeProfileControllerTest {
   void testDisableUserProfile_ProfileExists() throws Exception {
 
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("disable-backoffice-profile");
 
     MvcResult mvcResult =
         mockMvc
@@ -233,7 +222,6 @@ class BackOfficeProfileControllerTest {
     userProfileDTO.setUsername(MAKER_EMAIL);
 
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-//    testHelper.updateTestRole("edit-backoffice-user-details");
 
     MvcResult mvcResult =
         mockMvc

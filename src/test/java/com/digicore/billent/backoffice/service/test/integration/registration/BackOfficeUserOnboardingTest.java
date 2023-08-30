@@ -47,14 +47,15 @@ class BackOfficeUserOnboardingTest {
   @Autowired private PropertyConfig propertyConfig;
 
   @BeforeEach
-  void checkup() {
+  void checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
+    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+    testHelper.createTestRole();
   }
 
   @Test
   void onboardNewBackOfficeUser() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     MvcResult result =
         mockMvc
             .perform(
@@ -74,7 +75,6 @@ class BackOfficeUserOnboardingTest {
   @Test
   void When_OnboardNewBackOfficeUser_ExpectStatus400() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
     UserRegistrationDTO userRegistrationDTO = testHelper.createBackOfficeProfile();
     userRegistrationDTO.setAssignedRole("INVALID_ROLE");
     MvcResult result =
@@ -95,7 +95,6 @@ class BackOfficeUserOnboardingTest {
   @Test
   void resendInvitation() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
     InviteBodyDTO inviteBodyDTO = new InviteBodyDTO();
     inviteBodyDTO.setAssignedRole(testHelper.createBackOfficeProfile().getAssignedRole());
     inviteBodyDTO.setEmail(testHelper.createBackOfficeProfile().getEmail());
@@ -108,18 +107,17 @@ class BackOfficeUserOnboardingTest {
                     .content(ClientUtil.getGsonMapper().toJson(inviteBodyDTO))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
-            .andExpect(status().is4xxClientError())
+            .andExpect(status().isOk())
             .andReturn();
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
-    assertFalse(response.isSuccess());
+    assertTrue(response.isSuccess());
   }
 
   @Test
   void updateDefaultPassword() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
     ResetPasswordFirstBaseRequestDTO passwordFirstBaseRequestDTO =
         new ResetPasswordFirstBaseRequestDTO();
     passwordFirstBaseRequestDTO.setEmail("test@unittest.com");

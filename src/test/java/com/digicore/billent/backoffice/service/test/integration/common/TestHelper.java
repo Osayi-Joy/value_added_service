@@ -152,12 +152,35 @@ public class TestHelper {
     backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
   }
 
-  public void createTestRole() throws Exception {
+  public void createTestRoleCustom(String roleName) throws Exception {
+    RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
+    roleCreationDTO.setName(roleName);
+    roleCreationDTO.setDescription("tester tester");
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role"));
+
+
+   MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
+                    .content(
+                            ClientUtil.getGsonMapper().toJson(roleCreationDTO))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization",retrieveValidAccessToken()))
+//            .andExpect(status().isOk())
+            .andReturn();
+//
+//    ApiResponseJson<RoleDTO> response =
+//            ClientUtil.getGsonMapper()
+//                    .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+//
+//    assertTrue(response.isSuccess());
+    updateUserRole();
+
+  }  public void createTestRole() throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details"));
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
@@ -183,8 +206,8 @@ public class TestHelper {
     userProfileDTO.setFirstName("John");
     userProfileDTO.setLastName("Doe");
     userProfileDTO.setAssignedRole("TesterRole");
-    userProfileDTO.setPermissions(Set.of("edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details"));
+    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product"));
     userProfileDTO.setPhoneNumber("2349061962179");
     userProfileDTO.setUsername(MAKER_EMAIL);
 

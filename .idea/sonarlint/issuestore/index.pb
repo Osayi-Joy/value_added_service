@@ -16,10 +16,6 @@ b
 Ysrc/main/java/com/digicore/billent/backoffice/service/config/BackOfficeSwaggerConfig.java,2/8/2863acb48d1498c95a28dee49be9afb57bd574c8
 s
 Csrc/main/java/com/digicore/BillentBackofficeServiceApplication.java,2/1/21162eb803620792bab63a18b38f0247ea85cd2d
-˜
-hsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BillerControllerTest.java,a/1/a1cbf4ea1528970ee0b6ce0b478bdd74bf55e548
-™
-isrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/ProductControllerTest.java,0/e/0e8ec4fad80bfb7d7a360290ff630666097e226c
 ¤
 tsrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/processor/BackOfficeUserProfileProcessor.java,3/0/30a7edc8f7ad721ca8172cfa434ac87105b4c988
 ²
@@ -38,8 +34,6 @@ xsrc/main/java/com/digicore/billent/backoffice/service/modules/aggregators/servi
 }src/main/java/com/digicore/billent/backoffice/service/modules/aggregators/service/BillerAggregatorBackOfficeProxyService.java,e/8/e805d64f2644bfa130e4c939c3f42f3f1b99017c
 ¢
 rsrc/main/java/com/digicore/billent/backoffice/service/modules/aggregators/processor/BillerAggregatorProcessor.java,6/3/636482bdc53b46586b257590b856858f066a0446
-«
-{src/main/java/com/digicore/billent/backoffice/service/modules/onboarding/controller/BackOfficeUserOnboardingController.java,2/b/2bc4dca8f1b87b182e098f848e4f5010f4fc2415
 ®
 ~src/main/java/com/digicore/billent/backoffice/service/modules/authentication/services/BackOfficeUserAuthenticationService.java,c/1/c121e607ae912a32c5fe4cf7b12bad4f85807f49
 ¦
@@ -60,3 +54,15 @@ rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/
 Nsrc/main/java/com/digicore/billent/backoffice/service/util/SwaggerDocUtil.java,8/0/803d5361604a7388075f477fd90cc9bc7e2d128d
 ^
 .config/permissions/systemPermissionUpdate.json,a/c/aca2f35e5093401717eb9150ec2313d7dc4021bd
+’
+bsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/controller/RoleController.java,4/a/4a931caff43019f7893fb836d8fbea3325e9b21a
+œ
+lsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleProxyService.java,0/c/0c99c160f3fefb1f3846e631d13d7ddb366afb24
+ 
+psrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleValidatorService.java,8/0/80598aa81908e213af5b6e233f8d9ca0ef214e6e
+—
+gsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleService.java,6/4/6427e75df4d7318213cedaadb5136fab614dc52e
+š
+jsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/controller/ApprovalController.java,1/5/152d93980743d9750c32ed068e820b418d9e7492
+©
+ysrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/BackOfficeUserProfileValidatorService.java,5/7/57a8ef793ad4b73ef091d6fa1a39fdd6d436bb74
