@@ -49,6 +49,7 @@ class BackOfficeProfileControllerTest {
   @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
   @Autowired private PropertyConfig propertyConfig;
   @Autowired private BackOfficeUserProfileRepository backOfficeUserProfileRepository;
+ private boolean testRoleCreated = false;
 
   private static PaginatedResponseDTO<UserProfileDTO> getPaginatedResponseDTO(MvcResult result)
       throws UnsupportedEncodingException, JsonProcessingException {
@@ -64,14 +65,19 @@ class BackOfficeProfileControllerTest {
   }
 
   @BeforeEach
-  void checkup() {
+  void checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
+    if (!testRoleCreated){
+      TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+      testHelper.createTestRole();
+      testRoleCreated = true;
+    }
   }
 
   @Test
   void testGetAllBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-backoffice-users");
+//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -97,7 +103,7 @@ class BackOfficeProfileControllerTest {
   @Test
   void testGetBackOfficeUserProfile() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-backoffice-user-details");
+//    testHelper.updateTestRole("view-backoffice-user-details");
 
     MvcResult mvcResult =
         mockMvc
@@ -121,7 +127,7 @@ class BackOfficeProfileControllerTest {
   @Test
   void testSearchBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-backoffice-users");
+//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -149,7 +155,7 @@ class BackOfficeProfileControllerTest {
   @Test
   void testFilterBackOfficeUserProfiles() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-backoffice-users");
+//    testHelper.updateTestRole("view-backoffice-users");
     int pageNumber = 0;
     int pageSize = 10;
 
@@ -159,7 +165,7 @@ class BackOfficeProfileControllerTest {
                 get(PROFILE_API_V1 + "filter")
                     .param(PAGE_NUMBER, String.valueOf(pageNumber))
                     .param(PAGE_SIZE, String.valueOf(pageSize))
-                    .param(STATUS, "ACTIVE")
+                    .param(STATUS, "PENDING_INVITE_ACCEPTANCE")
                     .param(START_DATE, "2021-01-01")
                     .param(END_DATE, "9021-01-01")
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -178,7 +184,7 @@ class BackOfficeProfileControllerTest {
   @Test
   void testDeleteUserProfile_ProfileExists() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-backoffice-profile");
+//    testHelper.updateTestRole("delete-backoffice-profile");
 
     MvcResult mvcResult =
         mockMvc
@@ -199,7 +205,7 @@ class BackOfficeProfileControllerTest {
   void testDisableUserProfile_ProfileExists() throws Exception {
 
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-backoffice-profile");
+//    testHelper.updateTestRole("disable-backoffice-profile");
 
     MvcResult mvcResult =
         mockMvc
@@ -219,15 +225,15 @@ class BackOfficeProfileControllerTest {
   @Test
   void testUpdateUserProfile_ProfileExists() throws Exception {
     UserProfileDTO userProfileDTO = new UserProfileDTO();
-    userProfileDTO.setEmail(CHECKER_EMAIL);
+    userProfileDTO.setEmail(MAKER_EMAIL);
     userProfileDTO.setFirstName("John");
     userProfileDTO.setLastName("Doe");
-    userProfileDTO.setAssignedRole(CHECKER_ROLE_NAME);
+    userProfileDTO.setAssignedRole("TesterRole");
     userProfileDTO.setPhoneNumber("2349061962179");
-    userProfileDTO.setUsername(CHECKER_EMAIL);
+    userProfileDTO.setUsername(MAKER_EMAIL);
 
     TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-backoffice-user-details");
+//    testHelper.updateTestRole("edit-backoffice-user-details");
 
     MvcResult mvcResult =
         mockMvc
