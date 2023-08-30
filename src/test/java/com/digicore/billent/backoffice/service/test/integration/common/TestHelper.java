@@ -132,7 +132,7 @@ public class TestHelper {
     userRegistrationDTO.setPhoneNumber("2347087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
-    userRegistrationDTO.setAssignedRole(MAKER_ROLE_NAME);
+    userRegistrationDTO.setAssignedRole("TesterRole");
     userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
     return userRegistrationDTO;
   }

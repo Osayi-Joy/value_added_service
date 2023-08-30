@@ -95,7 +95,7 @@ class RoleControllerTest {
         assertTrue(paginatedResponseDTO.getIsFirstPage());
         assertTrue(paginatedResponseDTO.getIsLastPage());
         assertNotNull(paginatedResponseDTO.getContent());
-        assertEquals(1, paginatedResponseDTO.getContent().get(1).getTotalTeamMemberCount());
+        assertEquals(2, paginatedResponseDTO.getContent().get(1).getTotalTeamMemberCount());
         assertTrue(paginatedResponseDTO.getContent().get(1).getPermissions().size() > 0);
     }
 
