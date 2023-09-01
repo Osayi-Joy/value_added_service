@@ -65,14 +65,16 @@ public class BillerBackOfficeService implements BillerBackOfficeValidatorService
           makerPermission = "enable-biller",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
   public Object enableBiller(Object request, Object... args) {
-    return billerService.enableBiller((BillerDto) request);
+    BillerDto billerDto = (BillerDto) request;
+    return billerService.enableBiller(billerDto.getBillerSystemId());
   }
   @MakerChecker(
           checkerPermission = "approve-disable-biller",
           makerPermission = "disable-biller",
           requestClassName = "com.digicore.billent.data.lib.modules.billers.dto.BillerDto")
   public Object disableBiller(Object request, Object... args) {
-    return billerService.disableBiller((BillerDto) request);
+    BillerDto billerDto = (BillerDto) request;
+    return billerService.disableBiller(billerDto.getBillerSystemId());
   }
 
   @MakerChecker(
