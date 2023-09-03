@@ -18,10 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +29,7 @@ public class BackOfficeResellerController {
   private final BackOfficeResellerOperation backOfficeResellerOperation;
 
   @GetMapping("get-all")
-  @PreAuthorize("hasAuthority('view-resellers')")
+ // @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE,
       description = RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION)
@@ -44,6 +41,28 @@ public class BackOfficeResellerController {
     return ControllerResponse.buildSuccessResponse(
         backOfficeResellerOperation.getAllResellers(pageNumber, pageSize),
         "Retrieved all resellers successfully");
+  }
+
+  @GetMapping("get-{resellerId}-details")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+  @Operation(
+          summary = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_TITLE,
+          description = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_DESCRIPTION)
+  public ResponseEntity<Object> getResellerProfile(@PathVariable String resellerId) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.fetchResellerProfile(resellerId),
+            "Retrieved reseller profile successfully");
+  }
+
+  @GetMapping("get-{resellerId}-wallet-balance")
+  @PreAuthorize("hasAuthority('view-reseller-wallet-balance')")
+  @Operation(
+          summary = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_TITLE,
+          description = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION)
+  public ResponseEntity<Object> getResellerWalletBalance(@PathVariable String resellerId) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.fetchResellerWalletBalance(resellerId),
+            "Retrieved reseller wallet balance successfully");
   }
 
   @GetMapping("filter")

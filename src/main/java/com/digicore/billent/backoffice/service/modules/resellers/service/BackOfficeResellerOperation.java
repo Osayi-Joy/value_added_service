@@ -2,6 +2,8 @@ package com.digicore.billent.backoffice.service.modules.resellers.service;
 
 import com.digicore.billent.data.lib.modules.backoffice.reseller.BackOfficeResellerService;
 import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
@@ -24,6 +26,14 @@ public class BackOfficeResellerOperation {
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> getAllResellers(
       int pageNumber, int pageSize) {
     return backOfficeResellerService.retrieveAllResellers(pageNumber, pageSize);
+  }
+
+  public BackOfficeResellerProfileDetailDTO fetchResellerProfile(String resellerId) {
+    return backOfficeResellerService.retrieveResellerDetailsById(resellerId);
+  }
+
+  public BackOfficeResellerProfileDetailDTO fetchResellerWalletBalance(String resellerId) {
+    return backOfficeResellerService.retrieveResellerWalletBalance(resellerId);
   }
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> searchReseller(
