@@ -29,7 +29,7 @@ public class BackOfficeResellerController {
   private final BackOfficeResellerOperation backOfficeResellerOperation;
 
   @GetMapping("get-all")
-  @PreAuthorize("hasAuthority('view-resellers')")
+ // @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE,
       description = RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION)
@@ -44,14 +44,25 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("get-{resellerId}-details")
-  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+ // @PreAuthorize("hasAuthority('view-reseller-user-details')")
   @Operation(
           summary = PROFILE_CONTROLLER_GET_USER_TITLE,
           description = PROFILE_CONTROLLER_GET_USER_DESCRIPTION)
-  public ResponseEntity<Object> getBackOfficeProfile(@PathVariable String resellerId) {
+  public ResponseEntity<Object> getResellerProfile(@PathVariable String resellerId) {
     return ControllerResponse.buildSuccessResponse(
             backOfficeResellerOperation.fetchResellerProfile(resellerId),
             "Retrieved reseller profile successfully");
+  }
+
+  @GetMapping("get-{resellerId}-wallet-balance")
+  // @PreAuthorize("hasAuthority('view-reseller-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_GET_USER_TITLE,
+          description = PROFILE_CONTROLLER_GET_USER_DESCRIPTION)
+  public ResponseEntity<Object> getResellerWalletBalance(@PathVariable String resellerId) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.fetchResellerWalletBalance(resellerId),
+            "Retrieved reseller wallet balance successfully");
   }
 
   @GetMapping("filter")

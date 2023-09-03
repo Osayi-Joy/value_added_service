@@ -32,6 +32,10 @@ public class BackOfficeResellerOperation {
     return backOfficeResellerService.retrieveResellerDetailsById(resellerId);
   }
 
+  public BackOfficeResellerProfileDetailDTO fetchResellerWalletBalance(String resellerId) {
+    return backOfficeResellerService.retrieveResellerWalletBalance(resellerId);
+  }
+
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> searchReseller(
           BillentSearchRequest billentSearchRequest) {
     return backOfficeResellerService.search(billentSearchRequest);
