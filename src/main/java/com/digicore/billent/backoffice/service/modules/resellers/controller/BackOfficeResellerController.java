@@ -44,7 +44,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("get-{resellerId}-details")
-  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+//  @PreAuthorize("hasAuthority('view-reseller-user-details')")
   @Operation(
       summary = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_TITLE,
       description = RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_DESCRIPTION)
@@ -135,7 +135,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("filter-users")
-  @PreAuthorize("hasAuthority('view-resellers')")
+ // @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_TITLE,
       description = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_DESCRIPTION)
@@ -157,12 +157,12 @@ public class BackOfficeResellerController {
     billentSearchRequest.setKey(resellerId);
     billentSearchRequest.setDownloadFormat("CSV");
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.fetchResellersByStatusOrDateCreated(billentSearchRequest),
+        backOfficeResellerOperation.fetchResellersDetailByStatusOrDateCreated(billentSearchRequest),
         "Retrieved all billers by status successfully");
   }
 
   @GetMapping("search-users")
-  @PreAuthorize("hasAuthority('view-resellers')")
+ // @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_TITLE,
       description = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_DESCRIPTION)
@@ -179,12 +179,12 @@ public class BackOfficeResellerController {
     billentSearchRequest.setPage(pageNumber);
     billentSearchRequest.setSize(pageSize);
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.searchReseller(billentSearchRequest),
+        backOfficeResellerOperation.searchResellerDetail(billentSearchRequest),
         "Retrieved all resellers by status successfully");
   }
 
   @GetMapping("export-to-csv-users")
-  @PreAuthorize("hasAuthority('export-resellers')")
+//  @PreAuthorize("hasAuthority('export-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_EXPORT_RESELLER_USER_IN_CSV_TITLE,
       description = RESELLER_CONTROLLER_EXPORT_RESELLER_USER_IN_CSV_DESCRIPTION)
@@ -206,6 +206,6 @@ public class BackOfficeResellerController {
     billentSearchRequest.setSize(pageSize);
     billentSearchRequest.setStatus(resellerStatus);
     billentSearchRequest.setDownloadFormat("CSV");
-    backOfficeResellerOperation.downloadAllResellersInCSV(response, billentSearchRequest);
+    backOfficeResellerOperation.downloadAllResellerUserInCSV(response, billentSearchRequest);
   }
 }
