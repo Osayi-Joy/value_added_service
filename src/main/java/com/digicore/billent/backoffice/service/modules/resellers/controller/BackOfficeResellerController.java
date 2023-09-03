@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,7 @@ public class BackOfficeResellerController {
   private final BackOfficeResellerOperation backOfficeResellerOperation;
 
   @GetMapping("get-all")
-  // @PreAuthorize("hasAuthority('view-resellers')")
+  @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE,
       description = RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION)
@@ -46,7 +47,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("filter")
-  // @PreAuthorize("hasAuthority('view-resellers')")
+  @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_TITLE,
       description = RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_DESCRIPTION)
@@ -71,7 +72,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("export-to-csv")
-  // @PreAuthorize("hasAuthority('export-resellers')")
+  @PreAuthorize("hasAuthority('export-resellers')")
   @Operation(
       summary = RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_TITLE,
       description = RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_DESCRIPTION)
