@@ -228,5 +228,24 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION =
       "This API is used to update user profile.";
 
+
+  // Reseller Controller Doc
+  public static final String RESELLER_CONTROLLER_TITLE = "BackOffice-Reseller-Module";
+  public static final String RESELLER_CONTROLLER_DESCRIPTION =
+          "This module contains all required APIs to complete operations surrounding resellers. it goes through maker checker "
+                  + "process";
+  public static final String RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE = "Get all resellers";
+  public static final String RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION =
+          "This API is used to fetch all resellers.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_TITLE =
+          "Filter resellers by Status or Date Created";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_DESCRIPTION =
+          "This API is used to Filter resellers by Status or Date Created.";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_TITLE =
+          "Export resellers in csv";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_DESCRIPTION =
+          "This API is used to export resellers in csv.";
+
   private SwaggerDocUtil() {}
 }
