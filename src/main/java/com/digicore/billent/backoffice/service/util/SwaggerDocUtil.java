@@ -252,5 +252,16 @@ public class SwaggerDocUtil {
   public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_DESCRIPTION =
           "This API is used to export resellers in csv.";
 
+
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_TITLE =
+          "Get a reseller profile detail";
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_DESCRIPTION =
+          "This API is used to fetch a reseller profile detail in the system.";
+
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_TITLE =
+          "Get a reseller wallet balance";
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
+          "This API is used to fetch a reseller wallet balance in the system.";
+
   private SwaggerDocUtil() {}
 }
