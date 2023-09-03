@@ -69,7 +69,6 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-         // @RequestParam(value = KEY) String key,
           @RequestParam(value = VALUE) String value) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setKey("");
