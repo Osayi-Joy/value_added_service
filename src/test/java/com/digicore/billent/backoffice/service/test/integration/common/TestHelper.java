@@ -49,13 +49,10 @@ public class TestHelper {
   */
   private final MockMvc mockMvc;
 
-  private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
 
   public TestHelper(
-          MockMvc mockMvc,
-          AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl) {
+          MockMvc mockMvc) {
     this.mockMvc = mockMvc;
-    this.backOfficeUserAuthServiceImpl = backOfficeUserAuthServiceImpl;
   }
 
 
@@ -141,16 +138,16 @@ public class TestHelper {
     This method is useful for updating the user permission to the
     needed permission required to call an endpoint
   */
-  public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
-    PermissionDTO permissionDTO = new PermissionDTO();
-    permissionDTO.setName(permissionName);
-    UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
-    backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
-    backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
-    backOfficeUserAuthProfileDTO.setStatus(Status.ACTIVE);
-    backOfficeUserAuthProfileDTO.setAssignedRole(MAKER_ROLE_NAME);
-    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
-  }
+//  public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
+//    PermissionDTO permissionDTO = new PermissionDTO();
+//    permissionDTO.setName(permissionName);
+//    UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
+//    backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
+//    backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
+//    backOfficeUserAuthProfileDTO.setStatus(Status.ACTIVE);
+//    backOfficeUserAuthProfileDTO.setAssignedRole(MAKER_ROLE_NAME);
+//    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
+//  }
 
   public void createTestRoleCustom(String roleName) throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();

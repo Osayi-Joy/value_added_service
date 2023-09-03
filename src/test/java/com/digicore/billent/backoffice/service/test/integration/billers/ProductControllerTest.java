@@ -47,8 +47,6 @@ class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
-
     @Autowired
     private PropertyConfig propertyConfig;
     
@@ -58,12 +56,12 @@ class ProductControllerTest {
     @BeforeEach
     void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         testHelper.createTestRole();
     }
     @Test
     void testGetAllProducts() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
 
 
         MvcResult mvcResult = mockMvc.perform(get(PRODUCTS_API_V1 + "get-all")
@@ -82,7 +80,7 @@ class ProductControllerTest {
 
     @Test
     void testFetchProductsByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.INACTIVE;
@@ -106,7 +104,7 @@ class ProductControllerTest {
 
     @Test
     void testExportProductsAsCsv() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.ACTIVE;
@@ -144,7 +142,7 @@ class ProductControllerTest {
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
 
@@ -162,7 +160,7 @@ class ProductControllerTest {
     }
     @Test
     void testDisableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID004");
 
@@ -194,7 +192,7 @@ class ProductControllerTest {
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID006");
 
@@ -213,7 +211,7 @@ class ProductControllerTest {
     }
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID008");
 
