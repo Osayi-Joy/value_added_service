@@ -2,8 +2,7 @@ package com.digicore.billent.backoffice.service.test.integration.role;
 
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
-import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_ROLE_NAME;
-import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_ROLE_NAME;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -12,6 +11,7 @@ import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
@@ -21,6 +21,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import java.util.Set;
@@ -67,14 +68,15 @@ class RoleControllerTest {
     }
 
     @BeforeEach
-    void  checkup(){
+    void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        testHelper.createTestRole();
     }
 
     @Test
      void testGetAllRolesPaginated() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
        int pageNumber = 0;
         int pageSize = 10;
 
@@ -93,14 +95,35 @@ class RoleControllerTest {
         assertTrue(paginatedResponseDTO.getIsFirstPage());
         assertTrue(paginatedResponseDTO.getIsLastPage());
         assertNotNull(paginatedResponseDTO.getContent());
-        assertEquals(1, paginatedResponseDTO.getContent().get(0).getTotalTeamMemberCount());
-        assertTrue(paginatedResponseDTO.getContent().get(0).getPermissions().size() > 0);
+        assertEquals(1, paginatedResponseDTO.getContent().get(2).getTotalTeamMemberCount());
+        assertTrue(paginatedResponseDTO.getContent().get(1).getPermissions().size() > 0);
+    }
+
+    @Test
+    void testGetRole() throws Exception {
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+
+        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1.concat("get-").concat(CHECKER_ROLE_NAME).concat("-details"))
+                        .header("Authorization",testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        ApiResponseJson<RoleDTOWithTeamMembers> response =
+                ClientUtil.getObjectMapper()
+                        .readValue(
+                                mvcResult.getResponse().getContentAsString().trim(), new TypeReference<>() {});
+        assertTrue(response.isSuccess());
+        assertNotNull(response.getData());
+
+        RoleDTOWithTeamMembers responseData = response.getData();
+        assertEquals(1, responseData.getTotalTeamMemberCount());
+        assertEquals(CHECKER_ROLE_NAME, responseData.getName());
+        assertTrue(responseData.getPermissions().size() > 0);
     }
 
     @Test
     void testGetAllPermissions() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-permissions");
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
 
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -127,7 +150,6 @@ class RoleControllerTest {
         roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
 
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("create-roles");
         MvcResult mvcResult = mockMvc.perform(post(ROLES_API_V1 + "creation")
                         .content(
                                 ClientUtil.getGsonMapper().toJson(roleCreationDTO))
@@ -147,7 +169,6 @@ class RoleControllerTest {
     @Test
     void testGetAllRoles() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-roles");
         MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all")
 
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -169,7 +190,6 @@ class RoleControllerTest {
     @Test
     void testDeleteRole() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("delete-role");
         MvcResult mvcResult = mockMvc.perform(delete(ROLES_API_V1 + "remove-SYSTEM_CHECKER")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization",testHelper.retrieveValidAccessToken()))
@@ -186,11 +206,12 @@ class RoleControllerTest {
 
     @Test
     void testUpdateRole() throws Exception {
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setName(MAKER_ROLE_NAME);
-        roleDTO.setDescription("tester tester");
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-role");
+        testHelper.createTestRoleCustom("TesterUpdateRole");
+        RoleDTO roleDTO = new RoleDTO();
+        roleDTO.setName("TesterUpdateRole");
+        roleDTO.setDescription("tester tester");
+
         MvcResult mvcResult = mockMvc.perform(patch(ROLES_API_V1 + "edit")
                         .content(
                                 ClientUtil.getGsonMapper().toJson(roleDTO))

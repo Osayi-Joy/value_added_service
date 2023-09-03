@@ -8,6 +8,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
@@ -44,6 +45,17 @@ public class BackOfficeUserProfileController {
           int pageSize) {
     return ControllerResponse.buildSuccessResponse(
             backOfficeUserProfileOperations.fetchAllBackOfficeUserProfiles(pageNumber, pageSize),
+            PROFILE_RETRIEVED_MESSAGE);
+  }
+
+  @GetMapping("get-{email}-details")
+  @PreAuthorize("hasAuthority('view-backoffice-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_GET_USER_TITLE,
+          description = PROFILE_CONTROLLER_GET_USER_DESCRIPTION)
+  public ResponseEntity<Object> getBackOfficeProfile(@PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeUserProfileOperations.fetchBackOfficeUserProfile(email),
             PROFILE_RETRIEVED_MESSAGE);
   }
 
@@ -132,7 +144,7 @@ public class BackOfficeUserProfileController {
           summary = PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE,
           description = PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION)
   public ResponseEntity<Object> updateBackofficeProfile(
-          @Valid @RequestBody UserProfileDTO userProfileDTO) {
+          @Valid @RequestBody UserEditDTO userProfileDTO) {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.updateBackofficeProfile(userProfileDTO),"User Profile updated successfully");
   }
 }

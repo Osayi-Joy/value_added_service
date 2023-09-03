@@ -70,14 +70,16 @@ class BillerControllerTest {
     }
 
     @BeforeEach
-    void  checkup(){
+    void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+        testHelper.createTestRole();
+
     }
 
     @Test
     void testGetAllBillers() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
 
         MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
                         .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
@@ -119,7 +121,6 @@ class BillerControllerTest {
     @Test
     void testFetchBillersByStatus() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status billerStatus = Status.INACTIVE;
@@ -144,7 +145,6 @@ class BillerControllerTest {
     @Test
     void testUpdateBiller() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-billers");
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID001");
         billerDto.setBillerId("BILL001");
@@ -176,7 +176,6 @@ class BillerControllerTest {
         billerRepository.save(biller);
 
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller");
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID001");
 
@@ -196,7 +195,6 @@ class BillerControllerTest {
     @Test
     void testEnableBiller_BillerNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("BSID004");
 
@@ -229,7 +227,6 @@ class BillerControllerTest {
         billerRepository.save(biller);
 
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID002");
 
@@ -274,7 +271,6 @@ class BillerControllerTest {
     @Test
     void testDisableBiller_BillerNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("BSID006");
 

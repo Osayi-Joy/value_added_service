@@ -79,6 +79,10 @@ public class SwaggerDocUtil {
       "This API is used to fetch all available roles in the system, it requires a query param named paginated and value "
           + "true if data is been retrieved for a paginated view.";
 
+  public static final String ROLE_CONTROLLER_GET_ROLE_TITLE = "Get a role";
+  public static final String ROLE_CONTROLLER_GET_ROLE_DESCRIPTION =
+          "This API is used to fetch a  role in the system.";
+
   public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
   public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION =
       "This API is used to fetch all available permissions in the system";
@@ -196,6 +200,11 @@ public class SwaggerDocUtil {
       "Get all back office user profiles";
   public static final String PROFILE_CONTROLLER_GET_ALL_USERS_DESCRIPTION =
       "This API is used to fetch all back office user profiles in the system.";
+
+  public static final String PROFILE_CONTROLLER_GET_USER_TITLE =
+          "Get a back office user profile";
+  public static final String PROFILE_CONTROLLER_GET_USER_DESCRIPTION =
+          "This API is used to fetch a back office user profile in the system.";
 
   public static final String PROFILE_CONTROLLER_FILTER_USERS_TITLE = "Filter back office users";
   public static final String PROFILE_CONTROLLER_FILTER_USERS_DESCRIPTION =

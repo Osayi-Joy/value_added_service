@@ -313,5 +313,10 @@
     "name": "approve-disable-backoffice-profile",
     "description": "This allows you to approve disable a backoffice profile request",
     "permissionType": "USERS"
+  },
+  {
+    "name": "view-role-details",
+    "description": "This allows you to view a role detail",
+    "permissionType": "ROLES"
   }
 ]

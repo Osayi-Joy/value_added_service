@@ -11,8 +11,6 @@ import com.digicore.request.processor.annotations.MakerChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 /*
  * @author Oluwatobi Ogunwuyi
  * @createdOn Aug-07(Mon)-2023
@@ -27,6 +25,10 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     return backOfficeUserProfileServiceImpl.retrieveAllUserProfiles(page, size);
   }
 
+  public UserProfileDTO fetchBackOfficeUserProfile(String email) {
+    return backOfficeUserProfileServiceImpl.retrieveUserProfile(email);
+  }
+
   public PaginatedResponseDTO<UserProfileDTO> filterOrSearch(
       BillentSearchRequest billentSearchRequest) {
     return backOfficeUserProfileServiceImpl.filterOrSearch(billentSearchRequest);
@@ -38,8 +40,8 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
   public Object deleteBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
-     backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
-    return Optional.empty();
+    backOfficeUserProfileServiceImpl.deleteUserProfile(userProfileDTO.getEmail());
+    return null;
   }
 
   @MakerChecker(
@@ -49,7 +51,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   public Object disableBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
     backOfficeUserProfileServiceImpl.disableUserProfile(userProfileDTO.getEmail());
-    return Optional.empty();
+    return null;
   }
   @MakerChecker(
           checkerPermission = "approve-enable-backoffice-profile",
@@ -58,7 +60,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   public Object enableBackofficeProfile(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
     backOfficeUserProfileServiceImpl.enableUserProfile(userProfileDTO.getEmail());
-    return Optional.empty();
+    return null;
   }
 
   @MakerChecker(
@@ -68,7 +70,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   public Object updateBackofficeProfile(Object request, Object... args) {
     UserEditDTO userProfileDTO = (UserEditDTO) request;
     backOfficeUserProfileServiceImpl.editUserProfile(userProfileDTO);
-    return Optional.empty();
+    return null;
   }
 
 }
