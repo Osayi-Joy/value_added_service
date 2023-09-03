@@ -47,8 +47,6 @@ class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
-
     @Autowired
     private PropertyConfig propertyConfig;
     

@@ -40,8 +40,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class BackOfficeUserOnboardingTest {
   @Autowired private MockMvc mockMvc;
 
-  @Autowired private NotificationDispatcher notificationDispatcher;
-
   @Autowired private PropertyConfig propertyConfig;
 
   @BeforeEach
