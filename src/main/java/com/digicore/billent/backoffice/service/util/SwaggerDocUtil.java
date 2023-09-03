@@ -242,6 +242,11 @@ public class SwaggerDocUtil {
           "Filter resellers by Status or Date Created";
   public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_DESCRIPTION =
           "This API is used to Filter resellers by Status or Date Created.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_TITLE =
+          "Search resellers";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_DESCRIPTION =
+          "This API is used to Search resellers by all table header except date created and status, use the filter endpoint if you wish to fetch data by status or date.";
   public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_TITLE =
           "Export resellers in csv";
   public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_DESCRIPTION =

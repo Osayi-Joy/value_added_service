@@ -71,6 +71,27 @@ public class BackOfficeResellerController {
         "Retrieved all billers by status successfully");
   }
 
+
+  @GetMapping("search")
+  @PreAuthorize("hasAuthority('view-resellers')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_TITLE,
+          description = RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_DESCRIPTION)
+  public ResponseEntity<Object> searchReseller(
+          @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+          int pageNumber,
+          @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+          int pageSize,
+          @RequestParam(value = VALUE) String value) {
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setValue(value);
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.searchReseller(billentSearchRequest),
+            "Retrieved all resellers by status successfully");
+  }
+
   @GetMapping("export-to-csv")
   @PreAuthorize("hasAuthority('export-resellers')")
   @Operation(

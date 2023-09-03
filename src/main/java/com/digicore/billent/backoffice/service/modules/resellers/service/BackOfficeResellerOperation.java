@@ -26,6 +26,11 @@ public class BackOfficeResellerOperation {
     return backOfficeResellerService.retrieveAllResellers(pageNumber, pageSize);
   }
 
+  public PaginatedResponseDTO<BackOfficeResellerProfileDTO> searchReseller(
+          BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerService.search(billentSearchRequest);
+  }
+
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> fetchResellersByStatusOrDateCreated(
       BillentSearchRequest billentSearchRequest) {
     return backOfficeResellerService.filterResellersByStatusOrDateCreated(billentSearchRequest);
