@@ -6,13 +6,12 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.authentication.services.BackOfficeUserAuthenticationService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
-import com.digicore.registhentication.authentication.dtos.request.ResetPasswordDto;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,15 +59,14 @@ public class BackOfficeUserAuthenticationController {
   @Operation(
           summary = AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_TITLE,
           description = AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_DESCRIPTION)
-  public ResponseEntity<Object> validateSmsVerification(@Valid @RequestBody ResetPasswordDto resetPasswordDto) {
-            authenticateBackOfficeUser.validateSmsVerification(resetPasswordDto);
-    return ControllerResponse.buildSuccessResponse("Phone Verification Successful");
+  public ResponseEntity<Object> validateSmsVerification(@Valid @RequestBody ResetPasswordFirstBaseRequestDTO resetPasswordDto) {
+    return ControllerResponse.buildSuccessResponse(authenticateBackOfficeUser.validateSmsVerification(resetPasswordDto),"Phone Verification Successful");
   }
   @PostMapping("reset-password")
   @Operation(
           summary = AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_TITLE,
           description = AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION)
-  public ResponseEntity<Object> resetPassword(@Valid @RequestBody ResetPasswordFirstBaseRequestDTO resetPasswordDto) {
+  public ResponseEntity<Object> resetPassword(@Valid @RequestBody ResetPasswordSecondBaseRequestDTO resetPasswordDto) {
     authenticateBackOfficeUser.resetPassword(resetPasswordDto);
     return ControllerResponse.buildSuccessResponse("Password Reset Successful");
   }

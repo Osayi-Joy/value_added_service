@@ -9,11 +9,14 @@ import com.digicore.otp.enums.OtpType;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.otp.service.OtpService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
-import com.digicore.registhentication.authentication.dtos.request.ResetPasswordDto;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.services.LoginService;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.digicore.registhentication.authentication.services.PasswordResetService;
 import lombok.RequiredArgsConstructor;
@@ -69,23 +72,29 @@ public class BackOfficeUserAuthenticationService {
   public void validateEmailVerificationAndSendSmsOtp(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
     UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
     otpService.effect(
-        resetPasswordDto.getEmail(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getResetKey());
+        resetPasswordDto.getEmail(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
     otpService.send(
             NotificationServiceRequest.builder()
+                    .recipients(List.of(resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber())))
                     .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
                     .phoneNumbers(List.of(userAuthProfileDTO.getUserProfile().getPhoneNumber()))
                     .notificationRequestType(NotificationRequestType.SEND_SMS)
                     .channel("SMS").build(), OtpType.PASSWORD_UPDATE);
   }
 
-  public void validateSmsVerification(ResetPasswordDto resetPasswordDto){
+  public Map<String, Object> validateSmsVerification(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
+    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
     otpService.effect(
-        resetPasswordDto.getPhoneNumber(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getResetKey());
+        resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
+    Map<String, Object> response = new HashMap<>();
+    response.put("resetKey", otpService.store(resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE_RECOVERY_KEY));
+    return response;
 
     }
 
-    public void resetPassword(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
+    public void resetPassword(ResetPasswordSecondBaseRequestDTO resetPasswordDto){
       UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
+      otpService.effect(resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()),OtpType.PASSWORD_UPDATE_RECOVERY_KEY,resetPasswordDto.getOtp());
       passwordResetService.updateAccountPasswordWithoutVerification(resetPasswordDto.getEmail(),resetPasswordDto.getNewPassword());
       notificationDispatcher.dispatchEmail(
               NotificationServiceRequest.builder()
