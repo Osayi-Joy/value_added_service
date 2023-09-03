@@ -2,9 +2,13 @@ package com.digicore.billent.backoffice.service.test.integration.authentication;
 
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
+import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
+import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.otp.service.OtpService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
@@ -17,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
@@ -48,9 +53,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Autowired
     private PropertyConfig propertyConfig;
 
+    @MockBean
+    private OtpService otpService;
+    @MockBean
+    private NotificationDispatcher notificationDispatcher;
+
     @BeforeEach
-      void  checkup(){
+      void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc);
+        testHelper.createTestRole();
     }
 
    @Test
@@ -85,7 +97,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
   void validateEmailOtpWhenResettingPasswordTest() throws Exception {
         ResetPasswordFirstBaseRequestDTO resetPasswordDto = new ResetPasswordFirstBaseRequestDTO();
        resetPasswordDto.setEmail("test@unittest.com");
-       resetPasswordDto.setResetKey("1111");
+       resetPasswordDto.setOtp("1111");
 
        MvcResult result =
                mockMvc
@@ -105,7 +117,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     void validateSmsOtpWhenResettingPasswordTest() throws Exception {
         ResetPasswordFirstBaseRequestDTO resetPasswordDto = new ResetPasswordFirstBaseRequestDTO();
         resetPasswordDto.setEmail("test@unittest.com");
-        resetPasswordDto.setResetKey("1111");
+        resetPasswordDto.setOtp("1111");
 
         MvcResult result =
                 mockMvc
