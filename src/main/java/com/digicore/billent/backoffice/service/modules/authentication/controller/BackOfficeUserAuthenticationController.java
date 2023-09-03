@@ -13,10 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -42,7 +39,7 @@ public class BackOfficeUserAuthenticationController {
   @Operation(
           summary = AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_TITLE,
           description = AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_DESCRIPTION)
-  public ResponseEntity<Object> requestPasswordRequest(@Valid @RequestBody String email) {
+  public ResponseEntity<Object> requestPasswordRequest(@RequestParam String email) {
     authenticateBackOfficeUser.requestPasswordReset(email);
     return ControllerResponse.buildSuccessResponse("Password ResetRequest Successful");
   }

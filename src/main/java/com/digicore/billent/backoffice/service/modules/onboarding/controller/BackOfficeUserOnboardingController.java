@@ -9,6 +9,7 @@ import com.digicore.billent.backoffice.service.modules.onboarding.services.BackO
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
 import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +43,7 @@ public class BackOfficeUserOnboardingController {
       @Valid @RequestBody UserRegistrationDTO backOfficeUserDTO) {
     return ControllerResponse.buildSuccessResponse(
             onboardingProxyService.onboardNewBackOfficeUser(backOfficeUserDTO),
-        "invitation sent to ".concat(backOfficeUserDTO.getEmail()).concat(" successfully"));
+        "invitation would be sent to ".concat(backOfficeUserDTO.getEmail()));
   }
 
   @TokenValid()
@@ -61,7 +62,7 @@ public class BackOfficeUserOnboardingController {
   @Operation(
           summary = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_TITLE,
           description = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_DESCRIPTION)
-  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody ResetPasswordFirstBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
+  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody ResetPasswordSecondBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
     backOfficeUserOnboardingService.updateDefaultPassword(resetPasswordFirstBaseRequestDTO,principal);
     return ControllerResponse.buildSuccessResponse();
   }

@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.authentication.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.implementation.BackOfficeUserAuthServiceImpl;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
@@ -22,6 +23,7 @@ import com.digicore.registhentication.authentication.services.PasswordResetServi
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.digicore.billent.data.lib.modules.common.notification.NotificationSubject.LOGIN_SUCCESSFUL_SUBJECT_KEY;
 
@@ -33,12 +35,11 @@ import static com.digicore.billent.data.lib.modules.common.notification.Notifica
 @RequiredArgsConstructor
 public class BackOfficeUserAuthenticationService {
   private final LoginService<LoginResponse, LoginRequestDTO> backOfficeUserAuthServiceImpl;
+  private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthProfileServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
 
   private final PasswordResetService passwordResetService;
-
-  private final BackOfficeUserAuthServiceImpl backOfficeUserAuthService;
 
   private final OtpService otpService;
 
@@ -58,7 +59,7 @@ public class BackOfficeUserAuthenticationService {
   }
 
   public void requestPasswordReset(String email){
-    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(email);
+    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(email);
     otpService.send(
             NotificationServiceRequest.builder()
                     .recipients(List.of(email))
@@ -69,8 +70,9 @@ public class BackOfficeUserAuthenticationService {
 
   }
 
+  @Transactional
   public void validateEmailVerificationAndSendSmsOtp(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
-    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
+    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(resetPasswordDto.getEmail());
     otpService.effect(
         resetPasswordDto.getEmail(), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
     otpService.send(
@@ -83,7 +85,7 @@ public class BackOfficeUserAuthenticationService {
   }
 
   public Map<String, Object> validateSmsVerification(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
-    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
+    UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(resetPasswordDto.getEmail());
     otpService.effect(
         resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
     Map<String, Object> response = new HashMap<>();
@@ -91,9 +93,9 @@ public class BackOfficeUserAuthenticationService {
     return response;
 
     }
-
+    @Transactional
     public void resetPassword(ResetPasswordSecondBaseRequestDTO resetPasswordDto){
-      UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthService.retrieveAuthProfile(resetPasswordDto.getEmail());
+      UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(resetPasswordDto.getEmail());
       otpService.effect(resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()),OtpType.PASSWORD_UPDATE_RECOVERY_KEY,resetPasswordDto.getOtp());
       passwordResetService.updateAccountPasswordWithoutVerification(resetPasswordDto.getEmail(),resetPasswordDto.getNewPassword());
       notificationDispatcher.dispatchEmail(
