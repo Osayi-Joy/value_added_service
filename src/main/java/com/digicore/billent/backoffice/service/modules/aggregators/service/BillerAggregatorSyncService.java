@@ -1,6 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.service;
 
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
+import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
 import com.digicore.request.processor.annotations.RequestHandler;
 import com.digicore.request.processor.annotations.RequestType;
 import com.digicore.request.processor.enums.RequestHandlerType;
@@ -14,31 +15,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BillerAggregatorSyncService {
 
-  //    private final BillerAggregatorService billerAggregatorService;
+  private final BillerAggregatorBackOfficeService billerAggregatorBackOfficeService;
 
   private final BillerAggregatorProcessor billerAggregatorProcessor;
 
-  //    public BillerAggregatorSyncService(@Qualifier("EtranzactServiceImpl")BillerAggregatorService
-  // billerAggregatorService, BillerAggregatorProcessor billerAggregatorProcessor) {
-  //        this.billerAggregatorService = billerAggregatorService;
-  //        this.billerAggregatorProcessor = billerAggregatorProcessor;
-  //    }
 
   @RequestType(name = "refreshAggregatorBillersAndProducts")
   public void refreshAggregatorBillersAndProducts(Object request) {
     billerAggregatorProcessor.refreshAggregatorBillersAndProducts(request);
   }
 
-  //    @RequestType(name = "ETRANZACT")
-  //    public void processEtranzactResync(BillerAggregatorDTO request)  {
-  //
-  // billerAggregatorService.refreshAggregatorBillersAndProducts(request.getAggregatorAlias());
-  //    }
-  //
-  //    @RequestType(name = "INTERSWITCH")
-  //    public void processInterswitchResync(BillerAggregatorDTO request)  {
-  //
-  // billerAggregatorService.refreshAggregatorBillersAndProducts(request.getAggregatorAlias());
-  //    }
+  @RequestType(name = "disableBillerAggregator")
+  public Object disableBillerAggregator(Object request) {
+    return billerAggregatorBackOfficeService.disableBillerAggregator(request);
+  }
+
+  @RequestType(name = "enableBillerAggregator")
+  public Object enableBillerAggregator(Object request) {
+    return billerAggregatorBackOfficeService.enableBillerAggregator(request);
+  }
+
+  @RequestType(name = "updateBillerAggregatorDetail")
+  public Object updateBillerAggregatorDetail(Object request) {
+    return billerAggregatorBackOfficeService.updateBillerAggregatorDetail(request);
+  }
+
 
 }
