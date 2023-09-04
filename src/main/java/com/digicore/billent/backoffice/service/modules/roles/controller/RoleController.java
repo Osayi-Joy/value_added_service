@@ -8,7 +8,8 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleProxyService;
 import com.digicore.billent.backoffice.service.modules.roles.services.BackOfficeRoleService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -45,12 +46,11 @@ public class RoleController {
   @GetMapping("get-{roleName}-details")
   @PreAuthorize("hasAuthority('view-role-details')")
   @Operation(
-          summary = ROLE_CONTROLLER_GET_ROLE_TITLE,
-          description = ROLE_CONTROLLER_GET_ROLE_DESCRIPTION)
+      summary = ROLE_CONTROLLER_GET_ROLE_TITLE,
+      description = ROLE_CONTROLLER_GET_ROLE_DESCRIPTION)
   public ResponseEntity<Object> getRole(@PathVariable String roleName) {
     return ControllerResponse.buildSuccessResponse(
-            backOfficeRoleService.getRole(roleName),
-            "Roles retrieved successfully");
+        backOfficeRoleService.getRole(roleName), "Roles retrieved successfully");
   }
 
   @GetMapping("get-system-permissions")
@@ -63,16 +63,25 @@ public class RoleController {
         backOfficeRoleService.getAllPermissions(), "Permissions retrieved successfully");
   }
 
+  @LogActivity(
+      activity = AuditLogActivity.CREATE_NEW_ROLE,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.CREATE_NEW_ROLE_DESCRIPTION)
   @PostMapping("creation")
-  @PreAuthorize("hasAuthority('create-roles')")
+ @PreAuthorize("hasAuthority('create-roles')")
   @Operation(
       summary = ROLE_CONTROLLER_CREATE_A_ROLE_TITLE,
       description = ROLE_CONTROLLER_CREATE_A_ROLE_DESCRIPTION)
   public ResponseEntity<Object> createRole(@Valid @RequestBody RoleCreationDTO roleDTO) {
+
     return ControllerResponse.buildSuccessResponse(
         backOfficeRoleProxyService.createNewRole(roleDTO));
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.DELETE_ROLE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DELETE_ROLE_DESCRIPTION)
   @DeleteMapping("remove-{roleName}")
   @PreAuthorize("hasAuthority('delete-role')")
   @Operation(
@@ -86,9 +95,10 @@ public class RoleController {
   @PatchMapping("edit")
   @PreAuthorize("hasAuthority('edit-role')")
   @Operation(
-          summary = ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE,
-          description = ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION)
-  public ResponseEntity<Object> updateRole(@Valid  @RequestBody RoleCreationDTO roleDTO) {
-    return ControllerResponse.buildSuccessResponse(backOfficeRoleProxyService.updateRole(roleDTO), "Role updated successfully");
+      summary = ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE,
+      description = ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION)
+  public ResponseEntity<Object> updateRole(@Valid @RequestBody RoleCreationDTO roleDTO) {
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeRoleProxyService.updateRole(roleDTO), "Role updated successfully");
   }
 }
