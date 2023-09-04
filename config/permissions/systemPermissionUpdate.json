@@ -30,6 +30,11 @@
     "permissionType": "BILLER_AGGREGATORS"
   },
   {
+    "name": "view-billers-under-aggregator",
+    "description": "This allows you to view all billers under an aggregator",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
     "name": "edit-biller-aggregator",
     "description": "This allows you to edit a biller aggregator details",
     "permissionType": "BILLER_AGGREGATORS"

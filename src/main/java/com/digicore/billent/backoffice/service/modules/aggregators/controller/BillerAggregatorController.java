@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.aggregators.controller;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
 import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeService;
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.registhentication.registration.enums.Status;
@@ -31,6 +32,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 public class BillerAggregatorController {
  private final BillerAggregatorProcessor billerAggregatorProcessor;
  private final BillerAggregatorBackOfficeProxyService billerAggregatorBackOfficeProxyService;
+ private final BillerAggregatorBackOfficeService billerAggregatorBackOfficeService;
 
     @LogActivity(
             activity = AuditLogActivity.REFRESH_BILLERS_AND_PRODUCTS_UNDER_AN_AGGREGATOR,
@@ -127,5 +129,19 @@ public class BillerAggregatorController {
             description = BILLER_AGGREGATOR_CONTROLLER_UPDATE_AGGREGATOR_DESCRIPTION)
     public ResponseEntity<Object> updateBillerAggregatorDetail(@Valid @RequestBody BillerAggregatorDTO billerAggregatorDTO) {
         return ControllerResponse.buildSuccessResponse(billerAggregatorBackOfficeProxyService.updateBillerAggregatorDetail(billerAggregatorDTO),"Updated aggregator details successfully");
+    }
+
+    @GetMapping("get-all-billers")
+    @PreAuthorize("hasAuthority('view-billers-under-aggregator')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_DESCRIPTION)
+    public ResponseEntity<Object> viewAllBillersUnderAggregator(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+            @RequestParam(value = "aggregatorSystemId", required = false) String aggregatorSystemId)
+    {
+        return ControllerResponse.buildSuccessResponse(
+                billerAggregatorBackOfficeService.viewBillersUnderAnAggregator(pageNumber, pageSize, aggregatorSystemId), "Retrieved all billers under aggregator successfully");
     }
 }
