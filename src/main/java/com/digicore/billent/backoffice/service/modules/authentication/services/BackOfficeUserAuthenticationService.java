@@ -4,6 +4,7 @@ import com.digicore.billent.data.lib.modules.backoffice.authentication.service.i
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
+import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.enums.OtpType;
@@ -42,6 +43,7 @@ public class BackOfficeUserAuthenticationService {
   private final PasswordResetService passwordResetService;
 
   private final OtpService otpService;
+  private final PropertyConfig propertyConfig;
 
   @Value("${password-reset-subject: Password Reset}")
   private String passwordResetSubject;
@@ -86,8 +88,10 @@ public class BackOfficeUserAuthenticationService {
 
   public Map<String, Object> validateSmsVerification(ResetPasswordFirstBaseRequestDTO resetPasswordDto){
     UserAuthProfileDTO userAuthProfileDTO = backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(resetPasswordDto.getEmail());
-    otpService.effect(
-        resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
+    if (propertyConfig.isSmsVerificationRequired())
+      otpService.effect(
+              resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE, resetPasswordDto.getOtp());
+
     Map<String, Object> response = new HashMap<>();
     response.put("resetKey", otpService.store(resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()), OtpType.PASSWORD_UPDATE_RECOVERY_KEY));
     return response;
