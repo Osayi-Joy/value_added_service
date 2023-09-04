@@ -146,7 +146,7 @@ class ProductControllerTest {
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable")
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable-{productSystemId}", product.getProductSystemId())
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -166,7 +166,7 @@ class ProductControllerTest {
 
     MvcResult mvcResult = mockMvc
         .perform(
-            patch(PRODUCTS_API_V1 + "disable")
+            patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
                 .content(ClientUtil.getGsonMapper().toJson(productDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -196,8 +196,7 @@ class ProductControllerTest {
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID006");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable")
-                        .content(ClientUtil.getGsonMapper().toJson(productDto))
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -217,8 +216,7 @@ class ProductControllerTest {
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "enable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())

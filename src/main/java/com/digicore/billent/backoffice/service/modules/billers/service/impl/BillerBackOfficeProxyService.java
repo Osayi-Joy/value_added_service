@@ -13,14 +13,22 @@ public class BillerBackOfficeProxyService {
     private final BillerService<BillerDto, Biller> billerService;
     private final BillerBackOfficeValidatorService validatorService;
 
-    public Object enableBiller(BillerDto billerDto){
+    public Object enableBiller(String billerSystemId){
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId(billerSystemId);
         billerService.isBillerPresent(billerDto.getBillerSystemId());
         return validatorService.enableBiller(billerDto);
     }
 
-    public Object disableBiller(BillerDto billerDto){
+    public Object disableBiller(String billerSystemId){
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId(billerSystemId);
         billerService.isBillerPresent(billerDto.getBillerSystemId());
         return validatorService.disableBiller(billerDto);
+    }
+    public Object updateBillerDetail(BillerDto billerDto){
+        billerService.isBillerPresent(billerDto.getBillerSystemId());
+        return validatorService.updateBillerDetail(billerDto);
     }
 
 }
