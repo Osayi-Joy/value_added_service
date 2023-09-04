@@ -10,8 +10,10 @@ import com.digicore.billent.backoffice.service.modules.profiles.service.impl.Bac
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -107,6 +109,10 @@ public class BackOfficeUserProfileController {
             PROFILE_RETRIEVED_MESSAGE);
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.DELETE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DELETE_PROFILE_DESCRIPTION)
   @DeleteMapping("remove-{email}")
   @PreAuthorize("hasAuthority('delete-backoffice-profile')")
   @Operation(

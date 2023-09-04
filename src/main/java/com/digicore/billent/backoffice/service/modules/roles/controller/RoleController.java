@@ -92,6 +92,10 @@ public class RoleController {
     return ControllerResponse.buildSuccessResponse();
   }
 
+    @LogActivity(
+            activity = AuditLogActivity.EDIT_ROLE,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.EDIT_ROLE_DESCRIPTION)
   @PatchMapping("edit")
   @PreAuthorize("hasAuthority('edit-role')")
   @Operation(
