@@ -42,11 +42,14 @@ import org.springframework.test.web.servlet.MvcResult;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Slf4j
 class BackOfficeBillerControllerTest {
     //todo rewrite this test when the controller to save billers is available
 //    mvn test -Dspring.profiles.active=test -Dtest="BillerControllerTest"
     @Autowired
     private MockMvc mockMvc;
+
+
 
     @Autowired private BillerRepository billerRepository;
 
@@ -140,10 +143,19 @@ class BackOfficeBillerControllerTest {
 
     @Test
     void testUpdateBiller() throws Exception {
+        Biller biller = new Biller();
+        biller.setBillerId("EnableBiller_01");
+        biller.setBillerName("EnableBiller_01");
+        biller.setBillerSystemName("EnableBiller_01");
+        biller.setBillerSystemId("BSID009");
+        biller.setBillerStatus(Status.ACTIVE);
+
+        billerRepository.save(biller);
+
         TestHelper testHelper = new TestHelper(mockMvc);
         BillerDto billerDto = new BillerDto();
-        billerDto.setBillerSystemId("BSID001");
-        billerDto.setBillerId("BILL001");
+        billerDto.setBillerSystemId("BSID009");
+        billerDto.setBillerId("BILL009");
         billerDto.setBillerName("Biller Name");
         billerDto.setBillerStatus(Status.ACTIVE);
 
@@ -175,8 +187,7 @@ class BackOfficeBillerControllerTest {
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID001");
 
-        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable")
-                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable-{billerSystemId}", billerDto.getBillerSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -191,13 +202,12 @@ class BackOfficeBillerControllerTest {
     @Test
     void testEnableBiller_BillerNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("BSID004");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID004");
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(BILLERS_API_V1 + "enable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(BILLERS_API_V1 + "enable-{billerSystemId}", billerDto.getBillerSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())
@@ -226,8 +236,7 @@ class BackOfficeBillerControllerTest {
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID002");
 
-        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable")
-                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable-{billerSystemId}", billerDto.getBillerSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -267,13 +276,12 @@ class BackOfficeBillerControllerTest {
     @Test
     void testDisableBiller_BillerNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("BSID006");
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID006");
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(BILLERS_API_V1 + "disable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(BILLERS_API_V1 + "disable-{billerSystemId}", billerDto.getBillerSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())

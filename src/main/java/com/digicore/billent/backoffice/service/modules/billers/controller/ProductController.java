@@ -70,21 +70,21 @@ public class ProductController {
         return ControllerResponse.buildSuccessResponse(
                 productBackOfficeService.fetchProductsByStatus(productStatus, startDate, endDate, pageNumber, pageSize), "Retrieved All Products by Status Successfully");
     }
-    @PatchMapping("enable")
+    @PatchMapping("enable-{productSystemId}")
     @PreAuthorize("hasAuthority('enable-biller-product')")
     @Operation(
             summary = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_TITLE,
             description = PRODUCT_CONTROLLER_ENABLE_A_PRODUCT_DESCRIPTION)
-    public ResponseEntity<Object> enableProduct(@Valid @RequestBody ProductDto productDto) {
-        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.enableProduct(productDto),"Product enabled successfully");
+    public ResponseEntity<Object> enableProduct(@PathVariable String productSystemId) {
+        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.enableProduct(productSystemId),"Product enabled successfully");
     }
-    @PatchMapping("disable")
+    @PatchMapping("disable-{productSystemId}")
     @PreAuthorize("hasAuthority('disable-biller-product')")
     @Operation(
             summary = PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_TITLE,
             description = PRODUCT_CONTROLLER_DISABLE_A_PRODUCT_DESCRIPTION)
-    public ResponseEntity<Object> disableProduct(@Valid @RequestBody ProductDto productDto) {
-        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.disableProduct(productDto),"Product disabled successfully");
+    public ResponseEntity<Object> disableProduct(@PathVariable String productSystemId) {
+        return ControllerResponse.buildSuccessResponse(productBackOfficeProxyService.disableProduct(productSystemId),"Product disabled successfully");
     }
 
 }
