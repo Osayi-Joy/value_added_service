@@ -123,6 +123,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.DISABLE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DISABLE_PROFILE_DESCRIPTION)
   @PatchMapping("disable-{email}")
           @PreAuthorize("hasAuthority('disable-backoffice-profile')")
           @Operation(
@@ -133,6 +137,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.disableBackofficeProfile(email),"User Profile disabled successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.ENABLE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.ENABLE_PROFILE_DESCRIPTION)
   @PatchMapping("enable-{email}")
   @PreAuthorize("hasAuthority('enable-backoffice-profile')")
   @Operation(
@@ -143,6 +151,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.enableBackofficeProfile(email),"User Profile enabled successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.EDIT_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.EDIT_PROFILE_DESCRIPTION)
   @PatchMapping("edit")
   @PreAuthorize("hasAuthority('edit-backoffice-user-details')")
   @Operation(
