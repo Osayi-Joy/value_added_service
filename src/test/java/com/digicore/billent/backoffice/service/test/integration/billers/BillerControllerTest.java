@@ -144,10 +144,19 @@ class BillerControllerTest {
 
     @Test
     void testUpdateBiller() throws Exception {
+        Biller biller = new Biller();
+        biller.setBillerId("EnableBiller_01");
+        biller.setBillerName("EnableBiller_01");
+        biller.setBillerSystemName("EnableBiller_01");
+        biller.setBillerSystemId("BSID009");
+        biller.setBillerStatus(Status.ACTIVE);
+
+        billerRepository.save(biller);
+
         TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
         BillerDto billerDto = new BillerDto();
-        billerDto.setBillerSystemId("BSID001");
-        billerDto.setBillerId("BILL001");
+        billerDto.setBillerSystemId("BSID009");
+        billerDto.setBillerId("BILL009");
         billerDto.setBillerName("Biller Name");
         billerDto.setBillerStatus(Status.ACTIVE);
 
