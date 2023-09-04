@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerCategory;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerCategoryRepository;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Biller;
@@ -52,6 +54,7 @@ class BackOfficeBillerControllerTest {
 
 
     @Autowired private BillerRepository billerRepository;
+    @Autowired private BillerCategoryRepository billerCategoryRepository;
 
     @Autowired
     private PropertyConfig propertyConfig;
@@ -149,6 +152,14 @@ class BackOfficeBillerControllerTest {
         biller.setBillerSystemName("EnableBiller_01");
         biller.setBillerSystemId("BSID009");
         biller.setBillerStatus(Status.ACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("1113");
+        billerCategory.setCategoryId("1113");
+        billerCategory.setCategoryName("1113");
+        billerCategory.setCategorySystemName("1113");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
+
 
         billerRepository.save(biller);
 
@@ -180,6 +191,13 @@ class BackOfficeBillerControllerTest {
         biller.setBillerSystemName("EnableBiller_01");
         biller.setBillerSystemId("BSID001");
         biller.setBillerStatus(Status.INACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("111");
+        billerCategory.setCategoryId("111");
+        billerCategory.setCategoryName("111");
+        billerCategory.setCategorySystemName("111");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
 
         billerRepository.save(biller);
 
@@ -229,6 +247,13 @@ class BackOfficeBillerControllerTest {
         biller.setBillerSystemName("DisableBiller_01");
         biller.setBillerSystemId("BSID002");
         biller.setBillerStatus(Status.ACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("1112");
+        billerCategory.setCategoryId("1112");
+        billerCategory.setCategoryName("1112");
+        billerCategory.setCategorySystemName("1112");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
 
         billerRepository.save(biller);
 
