@@ -5,6 +5,7 @@ import static com.digicore.billent.data.lib.modules.common.notification.Notifica
 
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.notification.lib.request.NotificationRequestType;
@@ -18,6 +19,8 @@ import com.digicore.request.processor.annotations.MakerChecker;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.digicore.request.processor.processors.AuditLogProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +36,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
   private final PasswordResetService passwordResetService;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
+  private final AuditLogProcessor auditLogProcessor;
 
   @MakerChecker(
       checkerPermission = "approve-invite-backoffice-user",
@@ -54,6 +58,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
             .firstName(result.getFirstName())
             .notificationRequestType(NotificationRequestType.SEND_INVITE_FOR_BACKOFFICE_EMAIL)
             .build());
+    auditLogProcessor.saveAuditWithDescription(AuditLogActivity.APPROVE_INVITE_USER,AuditLogActivity.BACKOFFICE,AuditLogActivity.APPROVE_INVITE_USER_DESCRIPTION.replace("{}",userRegistrationDTO.getEmail()));
 
     return result;
   }
