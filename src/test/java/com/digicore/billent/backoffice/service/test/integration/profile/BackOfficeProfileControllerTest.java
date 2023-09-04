@@ -11,10 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-import com.digicore.billent.data.lib.modules.backoffice.profile.repository.BackOfficeUserProfileRepository;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -46,7 +43,6 @@ class BackOfficeProfileControllerTest {
   @Autowired private MockMvc mockMvc;
   @Autowired private PropertyConfig propertyConfig;
 
-
   private static PaginatedResponseDTO<UserProfileDTO> getPaginatedResponseDTO(MvcResult result)
       throws UnsupportedEncodingException, JsonProcessingException {
     ApiResponseJson<PaginatedResponseDTO<UserProfileDTO>> response =
@@ -63,8 +59,8 @@ class BackOfficeProfileControllerTest {
   @BeforeEach
   void checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
-      TestHelper testHelper = new TestHelper(mockMvc);
-      testHelper.createTestRole();
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRole();
   }
 
   @Test
