@@ -7,6 +7,8 @@ import com.digicore.billent.data.lib.modules.common.authorization.service.Permis
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.request.processor.annotations.MakerChecker;
+
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,7 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   public Object deleteRole(Object requestDTO, Object... args) {
      RoleDTO roleDTO = (RoleDTO) requestDTO;
      backOfficeRoleServiceImpl.deleteRole(roleDTO.getName());
-     return null;
+    return Optional.empty();
   }
 
   @MakerChecker(
@@ -58,6 +60,6 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
   public Object updateRole(Object requestDTO, Object... args) {
     RoleCreationDTO roleDTO = (RoleCreationDTO) requestDTO;
     backOfficeRoleServiceImpl.updateExistingRole(roleDTO);
-    return null;
+    return Optional.empty();
   }
 }

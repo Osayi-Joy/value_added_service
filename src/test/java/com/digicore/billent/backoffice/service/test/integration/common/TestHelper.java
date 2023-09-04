@@ -49,13 +49,10 @@ public class TestHelper {
   */
   private final MockMvc mockMvc;
 
-  private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
 
   public TestHelper(
-          MockMvc mockMvc,
-          AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl) {
+          MockMvc mockMvc) {
     this.mockMvc = mockMvc;
-    this.backOfficeUserAuthServiceImpl = backOfficeUserAuthServiceImpl;
   }
 
 
@@ -141,16 +138,16 @@ public class TestHelper {
     This method is useful for updating the user permission to the
     needed permission required to call an endpoint
   */
-  public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
-    PermissionDTO permissionDTO = new PermissionDTO();
-    permissionDTO.setName(permissionName);
-    UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
-    backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
-    backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
-    backOfficeUserAuthProfileDTO.setStatus(Status.ACTIVE);
-    backOfficeUserAuthProfileDTO.setAssignedRole(MAKER_ROLE_NAME);
-    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
-  }
+//  public void updateMakerSelfPermissionByAddingNeededPermission(String permissionName) {
+//    PermissionDTO permissionDTO = new PermissionDTO();
+//    permissionDTO.setName(permissionName);
+//    UserAuthProfileDTO backOfficeUserAuthProfileDTO = new UserAuthProfileDTO();
+//    backOfficeUserAuthProfileDTO.setUsername(MAKER_EMAIL);
+//    backOfficeUserAuthProfileDTO.setPermissions(Collections.singleton(permissionDTO));
+//    backOfficeUserAuthProfileDTO.setStatus(Status.ACTIVE);
+//    backOfficeUserAuthProfileDTO.setAssignedRole(MAKER_ROLE_NAME);
+//    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
+//  }
 
   public void createTestRoleCustom(String roleName) throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
@@ -179,8 +176,8 @@ public class TestHelper {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product"));
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
@@ -206,8 +203,8 @@ public class TestHelper {
     userProfileDTO.setFirstName("John");
     userProfileDTO.setLastName("Doe");
     userProfileDTO.setAssignedRole("TesterRole");
-    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product"));
+    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products","export-resellers",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product","view-resellers"));
     userProfileDTO.setPhoneNumber("2349061962179");
     userProfileDTO.setUsername(MAKER_EMAIL);
 

@@ -318,5 +318,25 @@
     "name": "view-role-details",
     "description": "This allows you to view a role detail",
     "permissionType": "ROLES"
+  },
+  {
+    "name": "export-resellers",
+    "description": "This allows you to export resellers",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-resellers",
+    "description": "This allows you to view all resellers",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-reseller-wallet-balance",
+    "description": "This allows you to view a reseller wallet balance",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-reseller-user-details",
+    "description": "This allows you to view a reseller details",
+    "permissionType": "RESELLERS"
   }
 ]

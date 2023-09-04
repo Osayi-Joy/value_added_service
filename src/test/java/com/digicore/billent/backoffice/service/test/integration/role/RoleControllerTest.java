@@ -1,6 +1,5 @@
 package com.digicore.billent.backoffice.service.test.integration.role;
 
-
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,9 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -42,189 +38,200 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @Slf4j
 class RoleControllerTest {
-//    mvn test -Dspring.profiles.active=test -Dtest="RoleControllerTest"
+  //    mvn test -Dspring.profiles.active=test -Dtest="RoleControllerTest"
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
+  @Autowired private PropertyConfig propertyConfig;
 
+  private static PaginatedResponseDTO<RoleDTOWithTeamMembers> getPaginatedResponseDTO(
+      MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+    ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                result.getResponse().getContentAsString().trim(),
+                new TypeToken<
+                    ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>>>() {}.getType());
+    assertTrue(response.isSuccess());
 
+    return response.getData();
+  }
 
+  @BeforeEach
+  void checkup() throws Exception {
+    new H2TestConfiguration(propertyConfig);
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRole();
+  }
 
-    @Autowired
-    private PropertyConfig propertyConfig;
+  @Test
+  void testGetAllRolesPaginated() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    int pageNumber = 0;
+    int pageSize = 10;
 
-    private static PaginatedResponseDTO<RoleDTOWithTeamMembers> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
-        ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>>>() {}.getType());
-        assertTrue(response.isSuccess());
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                get(ROLES_API_V1 + "get-all".concat("?paginated=true"))
+                    .param("pageNumber", String.valueOf(pageNumber))
+                    .param("pageSize", String.valueOf(pageSize))
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
+    PaginatedResponseDTO<RoleDTOWithTeamMembers> paginatedResponseDTO =
+        getPaginatedResponseDTO(mvcResult);
 
+    assertNotNull(paginatedResponseDTO.getContent());
+    assertTrue(paginatedResponseDTO.getIsFirstPage());
+    assertTrue(paginatedResponseDTO.getIsLastPage());
+    assertNotNull(paginatedResponseDTO.getContent());
+    assertEquals(1, paginatedResponseDTO.getContent().get(2).getTotalTeamMemberCount());
+    assertTrue(paginatedResponseDTO.getContent().get(1).getPermissions().size() > 0);
+  }
 
-      return response.getData();
+  @Test
+  void testGetRole() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
 
-    }
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                get(ROLES_API_V1.concat("get-").concat(CHECKER_ROLE_NAME).concat("-details"))
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
-    @BeforeEach
-    void  checkup() throws Exception {
-        new H2TestConfiguration(propertyConfig);
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.createTestRole();
-    }
+    ApiResponseJson<RoleDTOWithTeamMembers> response =
+        ClientUtil.getObjectMapper()
+            .readValue(
+                mvcResult.getResponse().getContentAsString().trim(), new TypeReference<>() {});
+    assertTrue(response.isSuccess());
+    assertNotNull(response.getData());
 
-    @Test
-     void testGetAllRolesPaginated() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-       int pageNumber = 0;
-        int pageSize = 10;
+    RoleDTOWithTeamMembers responseData = response.getData();
+    assertEquals(1, responseData.getTotalTeamMemberCount());
+    assertEquals(CHECKER_ROLE_NAME, responseData.getName());
+    assertTrue(responseData.getPermissions().size() > 0);
+  }
 
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all".concat("?paginated=true"))
-                        .param("pageNumber", String.valueOf(pageNumber))
-                        .param("pageSize", String.valueOf(pageSize))
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
+  @Test
+  void testGetAllPermissions() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                get(ROLES_API_V1 + "get-system-permissions")
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
+    ApiResponseJson<Set<PermissionDTO>> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
 
-        PaginatedResponseDTO<RoleDTOWithTeamMembers> paginatedResponseDTO = getPaginatedResponseDTO(mvcResult);
+    assertTrue(response.isSuccess());
+    assertTrue(response.getData().size() > 0);
+    assertNotNull(response.getData());
+  }
 
+  @Test
+  void testCreateRole() throws Exception {
+    RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
+    roleCreationDTO.setName("Tester");
+    roleCreationDTO.setDescription("tester tester");
+    roleCreationDTO.setPermissions(Set.of("create-roles", "view-roles"));
 
-        assertNotNull(paginatedResponseDTO.getContent());
-        assertTrue(paginatedResponseDTO.getIsFirstPage());
-        assertTrue(paginatedResponseDTO.getIsLastPage());
-        assertNotNull(paginatedResponseDTO.getContent());
-        assertEquals(1, paginatedResponseDTO.getContent().get(2).getTotalTeamMemberCount());
-        assertTrue(paginatedResponseDTO.getContent().get(1).getPermissions().size() > 0);
-    }
+    TestHelper testHelper = new TestHelper(mockMvc);
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                post(ROLES_API_V1 + "creation")
+                    .content(ClientUtil.getGsonMapper().toJson(roleCreationDTO))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
-    @Test
-    void testGetRole() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
+    ApiResponseJson<RoleDTO> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1.concat("get-").concat(CHECKER_ROLE_NAME).concat("-details"))
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
+    assertTrue(response.isSuccess());
+  }
 
-        ApiResponseJson<RoleDTOWithTeamMembers> response =
-                ClientUtil.getObjectMapper()
-                        .readValue(
-                                mvcResult.getResponse().getContentAsString().trim(), new TypeReference<>() {});
-        assertTrue(response.isSuccess());
-        assertNotNull(response.getData());
+  @Test
+  void testGetAllRoles() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                get(ROLES_API_V1 + "get-all")
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
-        RoleDTOWithTeamMembers responseData = response.getData();
-        assertEquals(1, responseData.getTotalTeamMemberCount());
-        assertEquals(CHECKER_ROLE_NAME, responseData.getName());
-        assertTrue(responseData.getPermissions().size() > 0);
-    }
+    ApiResponseJson<Set<PermissionDTO>> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
 
-    @Test
-    void testGetAllPermissions() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-system-permissions")
+    assertTrue(response.isSuccess());
+    assertTrue(response.getData().size() > 0);
+    assertNotNull(response.getData());
+  }
 
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
+  @Test
+  void testDeleteRole() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                delete(ROLES_API_V1 + "remove-SYSTEM_CHECKER")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
+    ApiResponseJson<RoleDTO> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
-        ApiResponseJson<Set<PermissionDTO>> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
+    assertTrue(response.isSuccess());
+  }
 
+  @Test
+  void testUpdateRole() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRoleCustom("TesterUpdateRole");
+    RoleDTO roleDTO = new RoleDTO();
+    roleDTO.setName("TesterUpdateRole");
+    roleDTO.setDescription("tester tester");
 
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                patch(ROLES_API_V1 + "edit")
+                    .content(ClientUtil.getGsonMapper().toJson(roleDTO))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
 
-        assertTrue(response.isSuccess());
-        assertTrue(response.getData().size() > 0);
-        assertNotNull(response.getData());
-    }
+    ApiResponseJson<RoleDTO> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
 
-    @Test
-    void testCreateRole() throws Exception {
-        RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
-        roleCreationDTO.setName("Tester");
-        roleCreationDTO.setDescription("tester tester");
-        roleCreationDTO.setPermissions(Set.of("create-roles","view-roles"));
-
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        MvcResult mvcResult = mockMvc.perform(post(ROLES_API_V1 + "creation")
-                        .content(
-                                ClientUtil.getGsonMapper().toJson(roleCreationDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
-
-
-        ApiResponseJson<RoleDTO> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
-
-        assertTrue(response.isSuccess());
-    }
-
-    @Test
-    void testGetAllRoles() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        MvcResult mvcResult = mockMvc.perform(get(ROLES_API_V1 + "get-all")
-
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
-
-
-        ApiResponseJson<Set<PermissionDTO>> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<Set<PermissionDTO>>>() {}.getType());
-
-
-
-        assertTrue(response.isSuccess());
-        assertTrue(response.getData().size() > 0);
-        assertNotNull(response.getData());
-    }
-
-    @Test
-    void testDeleteRole() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        MvcResult mvcResult = mockMvc.perform(delete(ROLES_API_V1 + "remove-SYSTEM_CHECKER")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
-
-
-        ApiResponseJson<RoleDTO> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
-
-        assertTrue(response.isSuccess());
-    }
-
-    @Test
-    void testUpdateRole() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.createTestRoleCustom("TesterUpdateRole");
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setName("TesterUpdateRole");
-        roleDTO.setDescription("tester tester");
-
-        MvcResult mvcResult = mockMvc.perform(patch(ROLES_API_V1 + "edit")
-                        .content(
-                                ClientUtil.getGsonMapper().toJson(roleDTO))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization",testHelper.retrieveValidAccessToken()))
-                .andExpect(status().isOk())
-                .andReturn();
-
-
-        ApiResponseJson<RoleDTO> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
-
-        assertTrue(response.isSuccess());
-    }
+    assertTrue(response.isSuccess());
+  }
 }

@@ -10,8 +10,10 @@ import com.digicore.billent.backoffice.service.modules.profiles.service.impl.Bac
 import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -69,7 +71,6 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-         // @RequestParam(value = KEY) String key,
           @RequestParam(value = VALUE) String value) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setKey("");
@@ -108,6 +109,10 @@ public class BackOfficeUserProfileController {
             PROFILE_RETRIEVED_MESSAGE);
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.DELETE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DELETE_PROFILE_DESCRIPTION)
   @DeleteMapping("remove-{email}")
   @PreAuthorize("hasAuthority('delete-backoffice-profile')")
   @Operation(
@@ -118,6 +123,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.deleteBackofficeProfile(email),"User Profile deleted successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.DISABLE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DISABLE_PROFILE_DESCRIPTION)
   @PatchMapping("disable-{email}")
           @PreAuthorize("hasAuthority('disable-backoffice-profile')")
           @Operation(
@@ -128,6 +137,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.disableBackofficeProfile(email),"User Profile disabled successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.ENABLE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.ENABLE_PROFILE_DESCRIPTION)
   @PatchMapping("enable-{email}")
   @PreAuthorize("hasAuthority('enable-backoffice-profile')")
   @Operation(
@@ -138,6 +151,10 @@ public class BackOfficeUserProfileController {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.enableBackofficeProfile(email),"User Profile enabled successfully");
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.EDIT_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.EDIT_PROFILE_DESCRIPTION)
   @PatchMapping("edit")
   @PreAuthorize("hasAuthority('edit-backoffice-user-details')")
   @Operation(

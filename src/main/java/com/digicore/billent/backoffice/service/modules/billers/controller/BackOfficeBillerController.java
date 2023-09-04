@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(BILLERS_API_V1)
 @Tag(name = BILLER_CONTROLLER_TITLE, description = BILLER_CONTROLLER_DESCRIPTION)
-public class BillerController {
+public class BackOfficeBillerController {
     private final BillerBackOfficeService billerBackOfficeService;
     private final BillerBackOfficeProxyService billerBackOfficeProxyService;
 

@@ -1,7 +1,8 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.service;
 
-import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
-import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
+
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.service.BillerAggregatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
