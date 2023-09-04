@@ -1,9 +1,10 @@
 package com.digicore.billent.backoffice.service.modules.resellers.service;
 
-import com.digicore.billent.data.lib.modules.backoffice.reseller.BackOfficeResellerService;
-import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDTO;
-import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO;
+
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDetailDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.service.BackOfficeContributorService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
@@ -20,30 +21,30 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BackOfficeResellerOperation {
 
-  private final BackOfficeResellerService backOfficeResellerService;
+  private final BackOfficeContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
   private final CsvService csvService;
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> getAllResellers(
       int pageNumber, int pageSize) {
-    return backOfficeResellerService.retrieveAllResellers(pageNumber, pageSize);
+    return backOfficeResellerServiceImpl.retrieveAllContributors(pageNumber, pageSize);
   }
 
   public BackOfficeResellerProfileDetailDTO fetchResellerProfile(String resellerId) {
-    return backOfficeResellerService.retrieveResellerDetailsById(resellerId);
+    return backOfficeResellerServiceImpl.retrieveContributorDetailsById(resellerId);
   }
 
   public BackOfficeResellerProfileDetailDTO fetchResellerWalletBalance(String resellerId) {
-    return backOfficeResellerService.retrieveResellerWalletBalance(resellerId);
+    return backOfficeResellerServiceImpl.retrieveContributorWalletBalance(resellerId);
   }
 
   public PaginatedResponseDTO<UserProfileDTO> searchResellerDetail(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerService.searchResellerProfileDetail(billentSearchRequest);
+    return backOfficeResellerServiceImpl.searchContributorDetail(billentSearchRequest);
   }
 
   public PaginatedResponseDTO<UserProfileDTO> fetchResellersDetailByStatusOrDateCreated(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerService.filterResellerDetailByStatusOrDateCreated(
+    return backOfficeResellerServiceImpl.filterContributorDetailByStatusOrDateCreated(
         billentSearchRequest);
   }
 
@@ -52,17 +53,17 @@ public class BackOfficeResellerOperation {
     CsvDto<UserProfileDTO> csvDto = new CsvDto<>();
     csvDto.setBillentSearchRequest(billentSearchRequest);
     csvDto.setResponse(response);
-    csvService.prepareCSVExport(csvDto, backOfficeResellerService::prepareResellerUserCSV);
+    csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorUserCSV);
   }
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> searchReseller(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerService.search(billentSearchRequest);
+    return backOfficeResellerServiceImpl.searchContributor(billentSearchRequest);
   }
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> fetchResellersByStatusOrDateCreated(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerService.filterResellersByStatusOrDateCreated(billentSearchRequest);
+    return backOfficeResellerServiceImpl.filterContributorsByStatusOrDateCreated(billentSearchRequest);
   }
 
   public void downloadAllResellersInCSV(
@@ -70,6 +71,6 @@ public class BackOfficeResellerOperation {
     CsvDto<BackOfficeResellerProfileDTO> csvDto = new CsvDto<>();
     csvDto.setBillentSearchRequest(billentSearchRequest);
     csvDto.setResponse(response);
-    csvService.prepareCSVExport(csvDto, backOfficeResellerService::prepareCSV);
+    csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
   }
 }

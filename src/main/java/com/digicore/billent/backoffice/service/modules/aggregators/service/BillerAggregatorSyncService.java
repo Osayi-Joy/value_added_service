@@ -1,7 +1,6 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.service;
 
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
-import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
 import com.digicore.request.processor.annotations.RequestHandler;
 import com.digicore.request.processor.annotations.RequestType;
 import com.digicore.request.processor.enums.RequestHandlerType;
