@@ -4,7 +4,6 @@ import com.digicore.billent.data.lib.modules.backoffice.authentication.service.i
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
-import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.enums.OtpType;
