@@ -7,9 +7,11 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingProxyService;
 import com.digicore.billent.backoffice.service.modules.onboarding.services.BackOfficeUserOnboardingService;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
+import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,6 +35,11 @@ public class BackOfficeUserOnboardingController {
   private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
   private final BackOfficeUserOnboardingProxyService onboardingProxyService;
 
+
+  @LogActivity(
+          activity = AuditLogActivity.INVITE_USER,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.INVITE_USER_DESCRIPTION)
   @TokenValid()
   @PostMapping("user-invitation")
   @PreAuthorize("hasAuthority('invite-backoffice-user')")
@@ -46,6 +53,10 @@ public class BackOfficeUserOnboardingController {
         "invitation would be sent to ".concat(backOfficeUserDTO.getEmail()));
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.RESEND_INVITATION_TO_USER,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.RESEND_INVITATION_TO_USER_DESCRIPTION)
   @TokenValid()
   @PostMapping("resending-of-user-invitation")
   @PreAuthorize("hasAuthority('resend-invite-email')")
@@ -57,6 +68,10 @@ public class BackOfficeUserOnboardingController {
     return ControllerResponse.buildSuccessResponse();
   }
 
+  @LogActivity(
+          activity = AuditLogActivity.PASSWORD_UPDATE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION)
   @TokenValid()
   @PostMapping("password-update")
   @Operation(
