@@ -4,7 +4,9 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.aggregators.processor.BillerAggregatorProcessor;
 import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeProxyService;
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +32,10 @@ public class BillerAggregatorController {
  private final BillerAggregatorProcessor billerAggregatorProcessor;
  private final BillerAggregatorBackOfficeProxyService billerAggregatorBackOfficeProxyService;
 
+    @LogActivity(
+            activity = AuditLogActivity.REFRESH_BILLERS_AND_PRODUCTS_UNDER_AN_AGGREGATOR,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.REFRESH_BILLERS_AND_PRODUCTS_UNDER_AN_AGGREGATOR_DESCRIPTION)
    @PreAuthorize("hasAuthority('refresh-billers-products-under-an-aggregator')")
     @PatchMapping("refresh-{systemAggregatorId}")
    @Operation(
@@ -80,6 +86,10 @@ public class BillerAggregatorController {
                 billerAggregatorProcessor.fetchBillerAggregatorById(aggregatorSystemId), "Retrieved aggregator's details successfully");
     }
 
+    @LogActivity(
+            activity = AuditLogActivity.ENABLE_BILLER_AGGREGATOR,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.ENABLE_BILLER_AGGREGATOR_DESCRIPTION)
     @PatchMapping("enable-{aggregatorSystemId}")
     @PreAuthorize("hasAuthority('enable-biller-aggregator')")
     @Operation(
@@ -91,6 +101,10 @@ public class BillerAggregatorController {
                 "Aggregator enabled successfully");
     }
 
+    @LogActivity(
+            activity = AuditLogActivity.DISABLE_BILLER_AGGREGATOR,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.DISABLE_BILLER_AGGREGATOR_DESCRIPTION)
     @PatchMapping("disable-{aggregatorSystemId}")
     @PreAuthorize("hasAuthority('disable-biller-aggregator')")
     @Operation(
@@ -102,6 +116,10 @@ public class BillerAggregatorController {
                 "Aggregator disabled successfully");
     }
 
+    @LogActivity(
+            activity = AuditLogActivity.EDIT_BILLER_AGGREGATOR,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.EDIT_BILLER_AGGREGATOR_DESCRIPTION)
     @PatchMapping("edit")
     @PreAuthorize("hasAuthority('edit-biller-aggregator')")
     @Operation(

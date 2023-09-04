@@ -9,19 +9,17 @@ import com.digicore.billent.backoffice.service.modules.onboarding.services.BackO
 import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.InviteBodyDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
-import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
 import com.digicore.request.processor.annotations.LogActivity;
 import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -35,11 +33,10 @@ public class BackOfficeUserOnboardingController {
   private final BackOfficeUserOnboardingService backOfficeUserOnboardingService;
   private final BackOfficeUserOnboardingProxyService onboardingProxyService;
 
-
   @LogActivity(
-          activity = AuditLogActivity.INVITE_USER,
-          auditType = AuditLogActivity.BACKOFFICE,
-          auditDescription = AuditLogActivity.INVITE_USER_DESCRIPTION)
+      activity = AuditLogActivity.INVITE_USER,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.INVITE_USER_DESCRIPTION)
   @TokenValid()
   @PostMapping("user-invitation")
   @PreAuthorize("hasAuthority('invite-backoffice-user')")
@@ -49,14 +46,14 @@ public class BackOfficeUserOnboardingController {
   public ResponseEntity<Object> inviteUser(
       @Valid @RequestBody UserRegistrationDTO backOfficeUserDTO) {
     return ControllerResponse.buildSuccessResponse(
-            onboardingProxyService.onboardNewBackOfficeUser(backOfficeUserDTO),
+        onboardingProxyService.onboardNewBackOfficeUser(backOfficeUserDTO),
         "invitation would be sent to ".concat(backOfficeUserDTO.getEmail()));
   }
 
   @LogActivity(
-          activity = AuditLogActivity.RESEND_INVITATION_TO_USER,
-          auditType = AuditLogActivity.BACKOFFICE,
-          auditDescription = AuditLogActivity.RESEND_INVITATION_TO_USER_DESCRIPTION)
+      activity = AuditLogActivity.RESEND_INVITATION_TO_USER,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.RESEND_INVITATION_TO_USER_DESCRIPTION)
   @TokenValid()
   @PostMapping("resending-of-user-invitation")
   @PreAuthorize("hasAuthority('resend-invite-email')")
@@ -69,16 +66,19 @@ public class BackOfficeUserOnboardingController {
   }
 
   @LogActivity(
-          activity = AuditLogActivity.PASSWORD_UPDATE,
-          auditType = AuditLogActivity.BACKOFFICE,
-          auditDescription = AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION)
+      activity = AuditLogActivity.PASSWORD_UPDATE,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION)
   @TokenValid()
   @PostMapping("password-update")
   @Operation(
-          summary = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_TITLE,
-          description = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_DESCRIPTION)
-  public ResponseEntity<Object> updateDefaultPassword(@Valid @RequestBody ResetPasswordSecondBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
-    backOfficeUserOnboardingService.updateDefaultPassword(resetPasswordFirstBaseRequestDTO,principal);
+      summary = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_TITLE,
+      description = ONBOARDING_CONTROLLER_RESET_DEFAULT_PASSWORD_DESCRIPTION)
+  public ResponseEntity<Object> updateDefaultPassword(
+      @Valid @RequestBody ResetPasswordSecondBaseRequestDTO resetPasswordFirstBaseRequestDTO,
+      Principal principal) {
+    backOfficeUserOnboardingService.updateDefaultPassword(
+        resetPasswordFirstBaseRequestDTO, principal);
     return ControllerResponse.buildSuccessResponse();
   }
 }
