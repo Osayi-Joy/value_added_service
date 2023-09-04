@@ -36,8 +36,27 @@ public class BackOfficeResellerOperation {
     return backOfficeResellerService.retrieveResellerWalletBalance(resellerId);
   }
 
+  public PaginatedResponseDTO<UserProfileDTO> searchResellerDetail(
+      BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerService.searchResellerProfileDetail(billentSearchRequest);
+  }
+
+  public PaginatedResponseDTO<UserProfileDTO> fetchResellersDetailByStatusOrDateCreated(
+      BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerService.filterResellerDetailByStatusOrDateCreated(
+        billentSearchRequest);
+  }
+
+  public void downloadAllResellerUserInCSV(
+      HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
+    CsvDto<UserProfileDTO> csvDto = new CsvDto<>();
+    csvDto.setBillentSearchRequest(billentSearchRequest);
+    csvDto.setResponse(response);
+    csvService.prepareCSVExport(csvDto, backOfficeResellerService::prepareResellerUserCSV);
+  }
+
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> searchReseller(
-          BillentSearchRequest billentSearchRequest) {
+      BillentSearchRequest billentSearchRequest) {
     return backOfficeResellerService.search(billentSearchRequest);
   }
 
