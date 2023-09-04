@@ -31,10 +31,19 @@ pipeline {
                     mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
                     ){
                     //sh 'mvn test -Dspring.profiles.active=test,backOffice'
-                    sh 'mvn clean package spring-boot:repackage -DskipTests'
+                    sh 'mvn  -U clean package spring-boot:repackage -DskipTests'
                     }
             }
         }
+
+        // stage('Generate Artifact'){
+        //                environment {
+        //                 MVN_SET = credentials('Biller-Setting')
+        //                 }
+        //     steps {
+        //           sh 'mvn -U clean package spring-boot:repackage -DskipTests -s $Biller-Setting'
+        //           }
+        //       }
       
         stage('Building A Docker image') {
             steps{
