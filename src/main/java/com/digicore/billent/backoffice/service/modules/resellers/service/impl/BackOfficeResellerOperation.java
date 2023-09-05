@@ -1,6 +1,7 @@
-package com.digicore.billent.backoffice.service.modules.resellers.service;
+package com.digicore.billent.backoffice.service.modules.resellers.service.impl;
 
 
+import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeUserResellerValidatorService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDetailDTO;
@@ -9,9 +10,12 @@ import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -19,7 +23,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class BackOfficeResellerOperation {
+public class BackOfficeResellerOperation implements BackOfficeUserResellerValidatorService {
 
   private final BackOfficeContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
   private final CsvService csvService;
@@ -72,5 +76,15 @@ public class BackOfficeResellerOperation {
     csvDto.setBillentSearchRequest(billentSearchRequest);
     csvDto.setResponse(response);
     csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
+  }
+
+  @MakerChecker(
+          checkerPermission = "approve-enable-reseller-user",
+          makerPermission = "enable-reseller-user")
+  public Object enableContributorUser(Object request, Object... args) {
+    String resellerId = (String) request;
+    String email = (String) args[0];
+    backOfficeResellerServiceImpl.enableContributorUser(resellerId, email);
+    return Optional.empty();
   }
 }

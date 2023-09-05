@@ -1,10 +1,12 @@
 package com.digicore.billent.backoffice.service.test.integration.resellers;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.*;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_EMAIL;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
@@ -25,6 +27,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -88,5 +91,30 @@ class BackOfficeResellerControllerTest {
     assertNotNull(paginatedResponseDTO.getContent());
     assertTrue(paginatedResponseDTO.getIsFirstPage());
     assertTrue(paginatedResponseDTO.getIsLastPage());
+  }
+
+  @Test
+  void testEnableBackOfficeResellerUser_ProfileExists() throws Exception {
+
+    TestHelper testHelper = new TestHelper(mockMvc);
+
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                patch(
+                        PROFILE_API_V1
+                            .concat("enable-")
+                            .concat(CHECKER_EMAIL)
+                            .concat("-")
+                            .concat("resellerMail@email.com"))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    ApiResponseJson<?> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+    assertTrue(response.isSuccess());
   }
 }

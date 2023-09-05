@@ -9,9 +9,12 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeResellerOperation;
+import com.digicore.billent.backoffice.service.modules.resellers.service.impl.BackOfficeResellerOperation;
+import com.digicore.billent.backoffice.service.modules.resellers.service.impl.BackOfficeResellerProxyService;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class BackOfficeResellerController {
 
   private final BackOfficeResellerOperation backOfficeResellerOperation;
+  private final BackOfficeResellerProxyService backOfficeResellerProxyService;
 
   @GetMapping("get-all")
   // @PreAuthorize("hasAuthority('view-resellers')")
@@ -207,5 +211,19 @@ public class BackOfficeResellerController {
     billentSearchRequest.setStatus(resellerStatus);
     billentSearchRequest.setDownloadFormat("CSV");
     backOfficeResellerOperation.downloadAllResellerUserInCSV(response, billentSearchRequest);
+  }
+
+  @LogActivity(
+          activity = AuditLogActivity.ENABLE_PROFILE,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.ENABLE_PROFILE_DESCRIPTION)
+  @PatchMapping("enable-{email}-{resellerId}")
+  @PreAuthorize("hasAuthority('enable-reseller-user')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_TITLE,
+          description = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_DESCRIPTION)
+  public ResponseEntity<Object> enableBackOfficeResellerUser(@PathVariable String email, @PathVariable String resellerId) {
+    backOfficeResellerProxyService.enableBackofficeResellerUser(email, resellerId);
+    return ControllerResponse.buildSuccessResponse("User Profile enabled successfully");
   }
 }
