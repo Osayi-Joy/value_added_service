@@ -25,4 +25,9 @@ public class BackOfficeRoleProcessor {
   public Object updateRole(Object request) {
     return backOfficeRoleService.updateRole(request);
   }
+
+  @RequestType(name = "deleteRole")
+  public Object deleteRole(Object request) {
+    return backOfficeRoleService.deleteRole(request);
+  }
 }

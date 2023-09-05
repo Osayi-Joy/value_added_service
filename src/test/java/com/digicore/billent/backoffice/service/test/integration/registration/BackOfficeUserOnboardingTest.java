@@ -20,6 +20,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,22 +40,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class BackOfficeUserOnboardingTest {
   @Autowired private MockMvc mockMvc;
 
-  @Autowired private NotificationDispatcher notificationDispatcher;
-
-  @Autowired
-  private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
-
   @Autowired private PropertyConfig propertyConfig;
 
   @BeforeEach
-  void checkup() {
+  void checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRole();
   }
 
   @Test
   void onboardNewBackOfficeUser() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
+    TestHelper testHelper = new TestHelper(mockMvc);
     MvcResult result =
         mockMvc
             .perform(
@@ -73,8 +70,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void When_OnboardNewBackOfficeUser_ExpectStatus400() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("invite-backoffice-user");
+    TestHelper testHelper = new TestHelper(mockMvc);
     UserRegistrationDTO userRegistrationDTO = testHelper.createBackOfficeProfile();
     userRegistrationDTO.setAssignedRole("INVALID_ROLE");
     MvcResult result =
@@ -94,8 +90,7 @@ class BackOfficeUserOnboardingTest {
 
   @Test
   void resendInvitation() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
+    TestHelper testHelper = new TestHelper(mockMvc);
     InviteBodyDTO inviteBodyDTO = new InviteBodyDTO();
     inviteBodyDTO.setAssignedRole(testHelper.createBackOfficeProfile().getAssignedRole());
     inviteBodyDTO.setEmail(testHelper.createBackOfficeProfile().getEmail());
@@ -108,22 +103,21 @@ class BackOfficeUserOnboardingTest {
                     .content(ClientUtil.getGsonMapper().toJson(inviteBodyDTO))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
-            .andExpect(status().is4xxClientError())
+            .andExpect(status().isOk())
             .andReturn();
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
-    assertFalse(response.isSuccess());
+    assertTrue(response.isSuccess());
   }
 
   @Test
   void updateDefaultPassword() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-    testHelper.updateMakerSelfPermissionByAddingNeededPermission("resend-invite-email");
-    ResetPasswordFirstBaseRequestDTO passwordFirstBaseRequestDTO =
-        new ResetPasswordFirstBaseRequestDTO();
+    TestHelper testHelper = new TestHelper(mockMvc);
+    ResetPasswordSecondBaseRequestDTO passwordFirstBaseRequestDTO =
+        new ResetPasswordSecondBaseRequestDTO();
     passwordFirstBaseRequestDTO.setEmail("test@unittest.com");
-    passwordFirstBaseRequestDTO.setResetKey("1111");
+    passwordFirstBaseRequestDTO.setOtp("1111");
     passwordFirstBaseRequestDTO.setNewPassword("tester@12ece432");
     UserAuthProfileDTO backOfficeUserAuthProfile = new UserAuthProfileDTO();
     backOfficeUserAuthProfile.setUsername(passwordFirstBaseRequestDTO.getEmail());

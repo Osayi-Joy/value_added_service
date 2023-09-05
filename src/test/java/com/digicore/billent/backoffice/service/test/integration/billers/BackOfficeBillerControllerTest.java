@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerCategory;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerCategoryRepository;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Biller;
@@ -43,16 +45,16 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Slf4j
-class BillerControllerTest {
+class BackOfficeBillerControllerTest {
     //todo rewrite this test when the controller to save billers is available
 //    mvn test -Dspring.profiles.active=test -Dtest="BillerControllerTest"
     @Autowired
     private MockMvc mockMvc;
 
 
-    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
 
     @Autowired private BillerRepository billerRepository;
+    @Autowired private BillerCategoryRepository billerCategoryRepository;
 
     @Autowired
     private PropertyConfig propertyConfig;
@@ -70,14 +72,16 @@ class BillerControllerTest {
     }
 
     @BeforeEach
-    void  checkup(){
+    void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc);
+        testHelper.createTestRole();
+
     }
 
     @Test
     void testGetAllBillers() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
+        TestHelper testHelper = new TestHelper(mockMvc);
 
         MvcResult mvcResult = mockMvc.perform(get(BILLERS_API_V1 + "get-all")
                         .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
@@ -118,8 +122,7 @@ class BillerControllerTest {
 
     @Test
     void testFetchBillersByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-billers");
+        TestHelper testHelper = new TestHelper(mockMvc);
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status billerStatus = Status.INACTIVE;
@@ -143,11 +146,27 @@ class BillerControllerTest {
 
     @Test
     void testUpdateBiller() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("edit-billers");
+        Biller biller = new Biller();
+        biller.setBillerId("EnableBiller_01");
+        biller.setBillerName("EnableBiller_01");
+        biller.setBillerSystemName("EnableBiller_01");
+        biller.setBillerSystemId("BSID009");
+        biller.setBillerStatus(Status.ACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("1113");
+        billerCategory.setCategoryId("1113");
+        billerCategory.setCategoryName("1113");
+        billerCategory.setCategorySystemName("1113");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
+
+
+        billerRepository.save(biller);
+
+        TestHelper testHelper = new TestHelper(mockMvc);
         BillerDto billerDto = new BillerDto();
-        billerDto.setBillerSystemId("BSID001");
-        billerDto.setBillerId("BILL001");
+        billerDto.setBillerSystemId("BSID009");
+        billerDto.setBillerId("BILL009");
         billerDto.setBillerName("Biller Name");
         billerDto.setBillerStatus(Status.ACTIVE);
 
@@ -172,16 +191,21 @@ class BillerControllerTest {
         biller.setBillerSystemName("EnableBiller_01");
         biller.setBillerSystemId("BSID001");
         biller.setBillerStatus(Status.INACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("111");
+        billerCategory.setCategoryId("111");
+        billerCategory.setCategoryName("111");
+        billerCategory.setCategorySystemName("111");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
 
         billerRepository.save(biller);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller");
+        TestHelper testHelper = new TestHelper(mockMvc);
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID001");
 
-        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable")
-                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "enable-{billerSystemId}", billerDto.getBillerSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -195,15 +219,13 @@ class BillerControllerTest {
 
     @Test
     void testEnableBiller_BillerNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller");
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("BSID004");
+        TestHelper testHelper = new TestHelper(mockMvc);
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID004");
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(BILLERS_API_V1 + "enable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(BILLERS_API_V1 + "enable-{billerSystemId}", billerDto.getBillerSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())
@@ -225,16 +247,21 @@ class BillerControllerTest {
         biller.setBillerSystemName("DisableBiller_01");
         biller.setBillerSystemId("BSID002");
         biller.setBillerStatus(Status.ACTIVE);
+        BillerCategory billerCategory = new BillerCategory();
+        billerCategory.setCategorySystemId("1112");
+        billerCategory.setCategoryId("1112");
+        billerCategory.setCategoryName("1112");
+        billerCategory.setCategorySystemName("1112");
+        billerCategoryRepository.save(billerCategory);
+        biller.setCategory(billerCategory);
 
         billerRepository.save(biller);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
+        TestHelper testHelper = new TestHelper(mockMvc);
         BillerDto billerDto = new BillerDto();
         billerDto.setBillerSystemId("BSID002");
 
-        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable")
-                        .content(ClientUtil.getGsonMapper().toJson(billerDto))
+        MvcResult mvcResult = mockMvc.perform(patch(BILLERS_API_V1 + "disable-{billerSystemId}", billerDto.getBillerSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -273,15 +300,13 @@ class BillerControllerTest {
 
     @Test
     void testDisableBiller_BillerNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller");
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("BSID006");
+        TestHelper testHelper = new TestHelper(mockMvc);
+        BillerDto billerDto = new BillerDto();
+        billerDto.setBillerSystemId("BSID006");
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(BILLERS_API_V1 + "disable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(BILLERS_API_V1 + "disable-{billerSystemId}", billerDto.getBillerSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())

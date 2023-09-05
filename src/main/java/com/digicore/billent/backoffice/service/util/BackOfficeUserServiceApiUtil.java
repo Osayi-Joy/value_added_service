@@ -29,6 +29,9 @@ public class BackOfficeUserServiceApiUtil {
  //Profile API versioning
  public static final String PROFILE_API_V1 = API_V1 + "profile/process/";
 
+ //Resellers API versioning
+ public static final String RESELLERS_API_V1 = API_V1 + "resellers/process/";
+
  private BackOfficeUserServiceApiUtil() {
  }
 }

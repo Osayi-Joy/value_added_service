@@ -47,8 +47,6 @@ class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired private AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthServiceImpl;
-
     @Autowired
     private PropertyConfig propertyConfig;
     
@@ -56,13 +54,15 @@ class ProductControllerTest {
     private ProductRepository productRepository;
 
     @BeforeEach
-    void  checkup(){
+    void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc);
+        testHelper.createTestRole();
     }
     @Test
     void testGetAllProducts() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
+        TestHelper testHelper = new TestHelper(mockMvc);
+
 
         MvcResult mvcResult = mockMvc.perform(get(PRODUCTS_API_V1 + "get-all")
                         .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
@@ -80,8 +80,7 @@ class ProductControllerTest {
 
     @Test
     void testFetchProductsByStatus() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("view-biller-products");
+        TestHelper testHelper = new TestHelper(mockMvc);
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.INACTIVE;
@@ -105,8 +104,7 @@ class ProductControllerTest {
 
     @Test
     void testExportProductsAsCsv() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("export-biller-products");
+        TestHelper testHelper = new TestHelper(mockMvc);
         String startDate = "2023-01-01";
         String endDate = "2023-12-31";
         Status productStatus = Status.ACTIVE;
@@ -144,12 +142,11 @@ class ProductControllerTest {
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID001");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable")
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable-{productSystemId}", product.getProductSystemId())
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -163,14 +160,13 @@ class ProductControllerTest {
     }
     @Test
     void testDisableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("disable-biller-product");
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID004");
 
     MvcResult mvcResult = mockMvc
         .perform(
-            patch(PRODUCTS_API_V1 + "disable")
+            patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
                 .content(ClientUtil.getGsonMapper().toJson(productDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -192,17 +188,15 @@ class ProductControllerTest {
         product.setProductId("PSID006");
         product.setProductSystemName("PSID006");
         product.setProductName("PSID006");
-        product.setProductStatus(Status.ACTIVE);
+        product.setProductStatus(Status.INACTIVE);
 
         productRepository.save(product);
 
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID006");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable")
-                        .content(ClientUtil.getGsonMapper().toJson(productDto))
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -216,15 +210,13 @@ class ProductControllerTest {
     }
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
-        TestHelper testHelper = new TestHelper(mockMvc, backOfficeUserAuthServiceImpl);
-        testHelper.updateMakerSelfPermissionByAddingNeededPermission("enable-biller-product");
+        TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID008");
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "enable")
-                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())

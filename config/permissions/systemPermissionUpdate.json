@@ -30,6 +30,11 @@
     "permissionType": "BILLER_AGGREGATORS"
   },
   {
+    "name": "view-billers-under-aggregator",
+    "description": "This allows you to view all billers under an aggregator",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
     "name": "edit-biller-aggregator",
     "description": "This allows you to edit a biller aggregator details",
     "permissionType": "BILLER_AGGREGATORS"
@@ -313,5 +318,30 @@
     "name": "approve-disable-backoffice-profile",
     "description": "This allows you to approve disable a backoffice profile request",
     "permissionType": "USERS"
+  },
+  {
+    "name": "view-role-details",
+    "description": "This allows you to view a role detail",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "export-resellers",
+    "description": "This allows you to export resellers",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-resellers",
+    "description": "This allows you to view all resellers",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-reseller-wallet-balance",
+    "description": "This allows you to view a reseller wallet balance",
+    "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-reseller-user-details",
+    "description": "This allows you to view a reseller details",
+    "permissionType": "RESELLERS"
   }
 ]

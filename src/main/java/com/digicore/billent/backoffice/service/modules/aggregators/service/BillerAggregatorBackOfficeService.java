@@ -1,7 +1,10 @@
 package com.digicore.billent.backoffice.service.modules.aggregators.service;
 
-import com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO;
-import com.digicore.billent.data.lib.modules.billers.aggregator.service.BillerAggregatorService;
+
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.service.BillerAggregatorService;
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
+import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.annotations.MakerChecker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,5 +47,9 @@ public class BillerAggregatorBackOfficeService
   @Override
   public Object updateBillerAggregatorDetail(Object request, Object... args) {
     return billerAggregatorServiceImpl.editBillerAggregator((BillerAggregatorDTO)request);
+  }
+
+  public PaginatedResponseDTO<BillerDto> viewBillersUnderAnAggregator(int pageNumbe, int pageSize, String aggregatorSystemId){
+    return billerAggregatorServiceImpl.retrieveAllBillersUnderAnAggregator(pageNumbe, pageSize, aggregatorSystemId);
   }
 }

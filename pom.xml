@@ -27,13 +27,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-
-
-        <dependency>
-            <groupId>com.digicore</groupId>
-            <artifactId>request-processor-lib</artifactId>
-            <version>1.0.4-billent-SNAPSHOT</version>
-        </dependency>
         <!-- Digicore Dependencies Ends-->
 
 

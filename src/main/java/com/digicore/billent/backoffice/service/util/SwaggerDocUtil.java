@@ -34,6 +34,29 @@ public class SwaggerDocUtil {
   public static final String AUTHENTICATION_CONTROLLER_LOGIN_TITLE = "Authenticate a user";
   public static final String AUTHENTICATION_CONTROLLER_LOGIN_DESCRIPTION =
       "This API is used to authenticate a user.";
+  public static final String AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_TITLE =
+      "Initiate a user's password reset";
+  public static final String AUTHENTICATION_CONTROLLER_REQUEST_PASSWORD_RESET_DESCRIPTION =
+      "This API is used to initiate password reset for a user, it sends an otp to the user's email";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_EMAIL_OTP_TITLE =
+      "Verify a user's email";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_EMAIL_OTP_DESCRIPTION =
+      "This API verifies a user's email, it sends an otp to the user's phoneNumber after successfully validating the email";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_TITLE =
+      "Verify a user's phoneNumber";
+
+  public static final String AUTHENTICATION_CONTROLLER_VERIFY_SMS_OTP_DESCRIPTION =
+      "This API verifies a user's phoneNumber for password reset";
+
+  public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_TITLE =
+      "Reset user password";
+
+  public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION =
+      "This API resets a user's existing password to a new password provided by the user, the otp required is the resetKey that came from the response after validating the phone number";
+
   // Onboarding Controller Doc
   public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";
   public static final String ONBOARDING_CONTROLLER_DESCRIPTION =
@@ -64,6 +87,10 @@ public class SwaggerDocUtil {
       "This API is used to fetch all available roles in the system, it requires a query param named paginated and value "
           + "true if data is been retrieved for a paginated view.";
 
+  public static final String ROLE_CONTROLLER_GET_ROLE_TITLE = "Get a role";
+  public static final String ROLE_CONTROLLER_GET_ROLE_DESCRIPTION =
+      "This API is used to fetch a  role in the system.";
+
   public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_TITLE = "Get all permissions";
   public static final String ROLE_CONTROLLER_GET_ALL_PERMISSIONS_DESCRIPTION =
       "This API is used to fetch all available permissions in the system";
@@ -77,7 +104,7 @@ public class SwaggerDocUtil {
       "This API is used to delete a role on the system, it goes through maker checker.";
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE = "Update a role";
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION =
-          "This API is used to update a role on the system, it goes through maker checker.";
+      "This API is used to update a role on the system, it goes through maker checker.";
 
   // Biller Controller Doc
   public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";
@@ -170,6 +197,10 @@ public class SwaggerDocUtil {
       "Export aggregators in csv";
   public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
       "This API is used to export aggregators in csv.";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_TITLE =
+          "Get all Billers under aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_DESCRIPTION =
+          "This API is used to fetch all available billers under aggregator in the system, it requires a query param named aggregator system id to fetch the data";
 
   // Profile Controller Doc
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
@@ -181,6 +212,10 @@ public class SwaggerDocUtil {
       "Get all back office user profiles";
   public static final String PROFILE_CONTROLLER_GET_ALL_USERS_DESCRIPTION =
       "This API is used to fetch all back office user profiles in the system.";
+
+  public static final String PROFILE_CONTROLLER_GET_USER_TITLE = "Get a back office user profile";
+  public static final String PROFILE_CONTROLLER_GET_USER_DESCRIPTION =
+      "This API is used to fetch a back office user profile in the system.";
 
   public static final String PROFILE_CONTROLLER_FILTER_USERS_TITLE = "Filter back office users";
   public static final String PROFILE_CONTROLLER_FILTER_USERS_DESCRIPTION =
@@ -203,6 +238,53 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE = "Update user profile";
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION =
       "This API is used to update user profile.";
+
+  // Reseller Controller Doc
+  public static final String RESELLER_CONTROLLER_TITLE = "BackOffice-Reseller-Module";
+  public static final String RESELLER_CONTROLLER_DESCRIPTION =
+      "This module contains all required APIs to complete operations surrounding resellers. it goes through maker checker "
+          + "process";
+  public static final String RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE = "Get all resellers";
+  public static final String RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION =
+      "This API is used to fetch all resellers.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_TITLE =
+      "Filter resellers by Status or Date Created";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_STATUS_DESCRIPTION =
+      "This API is used to Filter resellers by Status or Date Created.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_TITLE =
+      "Search resellers";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_BY_SEARCH_DESCRIPTION =
+      "This API is used to Search resellers by all table header except date created and status, use the filter endpoint if you wish to fetch data by status or date.";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_TITLE =
+      "Export resellers in csv";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_IN_CSV_DESCRIPTION =
+      "This API is used to export resellers in csv.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_TITLE =
+      "Filter reseller users by Status or Date Created";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_DESCRIPTION =
+      "This API is used to Filter reseller users by Status or Date Created.";
+
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_TITLE =
+      "Search reseller users";
+  public static final String RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_DESCRIPTION =
+      "This API is used to Search reseller users by all table header except date created and status, use the filter endpoint if you wish to fetch data by status or date.";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_USER_IN_CSV_TITLE =
+      "Export reseller users in csv";
+  public static final String RESELLER_CONTROLLER_EXPORT_RESELLER_USER_IN_CSV_DESCRIPTION =
+      "This API is used to export reseller users in csv.";
+
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_TITLE =
+      "Get a reseller profile detail";
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_PROFILE_DETAIL_DESCRIPTION =
+      "This API is used to fetch a reseller profile detail in the system.";
+
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_TITLE =
+      "Get a reseller wallet balance";
+  public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
+      "This API is used to fetch a reseller wallet balance in the system.";
 
   private SwaggerDocUtil() {}
 }

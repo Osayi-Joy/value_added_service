@@ -21,6 +21,7 @@ public class BackOfficeUserOnboardingProxyService {
 
 
     public Object onboardNewBackOfficeUser(UserRegistrationDTO userRegistrationDTO) {
+        backOfficeRoleServiceImpl.checkIfRoleIsNotSystemRole(userRegistrationDTO.getAssignedRole());
         backOfficeRoleServiceImpl.roleCheck(userRegistrationDTO.getAssignedRole());
         return validatorService.onboardNewBackOfficeUser(userRegistrationDTO);
     }
