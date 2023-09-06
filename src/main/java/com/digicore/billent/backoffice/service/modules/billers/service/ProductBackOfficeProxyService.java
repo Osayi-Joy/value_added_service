@@ -1,4 +1,4 @@
-package com.digicore.billent.backoffice.service.modules.billers.service.impl;
+package com.digicore.billent.backoffice.service.modules.billers.service;
 
 import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeValidatorService;
 import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;

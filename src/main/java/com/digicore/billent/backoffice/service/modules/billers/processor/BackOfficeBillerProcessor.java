@@ -1,7 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.billers.processor;
 
-import com.digicore.billent.backoffice.service.modules.billers.service.impl.BillerBackOfficeService;
-import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.billers.service.BillerBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
 import com.digicore.request.processor.annotations.RequestHandler;
 import com.digicore.request.processor.annotations.RequestType;
 import com.digicore.request.processor.enums.RequestHandlerType;
