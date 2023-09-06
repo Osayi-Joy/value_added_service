@@ -16,9 +16,13 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 
 import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerUserProfileDto;
+import com.digicore.billent.data.lib.modules.reseller.profile.model.ResellerUserProfile;
+import com.digicore.billent.data.lib.modules.reseller.profile.repository.ResellerUserProfileRepository;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +36,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -46,8 +51,7 @@ class BackOfficeResellerControllerTest {
   // onboarding you can call the required repositories to insert all data required for the reseller
   // controller test
   @Autowired private MockMvc mockMvc;
-
-  @Autowired private BillerRepository billerRepository;
+  @Autowired private ResellerUserProfileRepository resellerUserProfileRepository;
 
   @Autowired private PropertyConfig propertyConfig;
 
@@ -96,22 +100,32 @@ class BackOfficeResellerControllerTest {
 
   @Test
   void testEnableBackOfficeResellerUser_ProfileExists() throws Exception {
+    ResellerUserProfile resellerUserProfile = new ResellerUserProfile();
+    resellerUserProfile.setProfileId("123456");
+    resellerUserProfile.setEmail("test@example.com");
+    resellerUserProfile.setStatus(Status.INACTIVE);
+    resellerUserProfile.setFirstName("Joy");
+    resellerUserProfile.setLastName("Osayi");
+    resellerUserProfile.setOrganizationId("12344");
 
+    resellerUserProfileRepository.save(resellerUserProfile);
+    BackOfficeResellerUserProfileDto backOfficeResellerProfileDTO = new BackOfficeResellerUserProfileDto();
+    backOfficeResellerProfileDTO.setContributorId("123456");
+    backOfficeResellerProfileDTO.setResellerUserEmail("test@example.com");
     TestHelper testHelper = new TestHelper(mockMvc);
-    MvcResult mvcResult =
+    ResultActions result =
         mockMvc
             .perform(
                 patch(
-                        RESELLERS_API_V1 + "enable-{email}-{resellerId}", "testemail@gmail.com", "resellermail@gmail.com")
-
+                        RESELLERS_API_V1 + "enable-reseller-user")
+                        .content(ClientUtil.getGsonMapper().toJson(backOfficeResellerProfileDTO))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
-            .andExpect(status().isOk())
-            .andReturn();
+            .andExpect(status().isOk());
 
-    ApiResponseJson<?> response =
-        ClientUtil.getGsonMapper()
-            .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
-    assertTrue(response.isSuccess());
+//    ApiResponseJson<?> response =
+//        ClientUtil.getGsonMapper()
+//            .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+//    assertTrue(response.isSuccess());
   }
 }

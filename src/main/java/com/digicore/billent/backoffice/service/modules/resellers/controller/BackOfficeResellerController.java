@@ -12,12 +12,14 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.resellers.service.impl.BackOfficeResellerOperation;
 import com.digicore.billent.backoffice.service.modules.resellers.service.impl.BackOfficeResellerProxyService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerUserProfileDto;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -217,13 +219,13 @@ public class BackOfficeResellerController {
           activity = AuditLogActivity.ENABLE_PROFILE,
           auditType = AuditLogActivity.BACKOFFICE,
           auditDescription = AuditLogActivity.ENABLE_PROFILE_DESCRIPTION)
-  @PatchMapping("enable-{email}-{resellerId}")
+  @PatchMapping("enable-reseller-user")
   @PreAuthorize("hasAuthority('enable-reseller-user')")
   @Operation(
           summary = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_TITLE,
           description = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_DESCRIPTION)
-  public ResponseEntity<Object> enableBackOfficeResellerUser(@PathVariable String email, @PathVariable String resellerId) {
-    backOfficeResellerProxyService.enableBackofficeResellerUser(email, resellerId);
+  public ResponseEntity<Object> enableBackOfficeResellerUser(@RequestBody BackOfficeResellerUserProfileDto backOfficeResellerUserProfileDto) {
+    backOfficeResellerProxyService.enableBackofficeResellerUser(backOfficeResellerUserProfileDto);
     return ControllerResponse.buildSuccessResponse("User Profile enabled successfully");
   }
 }

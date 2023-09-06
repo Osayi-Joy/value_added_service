@@ -5,6 +5,7 @@ import com.digicore.billent.backoffice.service.modules.resellers.service.BackOff
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDetailDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerUserProfileDto;
 import com.digicore.billent.data.lib.modules.common.contributor.service.BackOfficeContributorService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
@@ -80,11 +81,11 @@ public class BackOfficeResellerOperation implements BackOfficeUserResellerValida
 
   @MakerChecker(
           checkerPermission = "approve-enable-reseller-user",
-          makerPermission = "enable-reseller-user")
+          makerPermission = "enable-reseller-user",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerUserProfileDto")
   public Object enableContributorUser(Object request, Object... args) {
-    String resellerId = (String) request;
-    String email = (String) args[0];
-    backOfficeResellerServiceImpl.enableContributorUser(resellerId, email);
+    BackOfficeResellerUserProfileDto backOfficeResellerProfileDTO = (BackOfficeResellerUserProfileDto) request;
+    backOfficeResellerServiceImpl.enableContributorUser(backOfficeResellerProfileDTO);
     return Optional.empty();
   }
 }
