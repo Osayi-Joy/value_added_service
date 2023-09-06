@@ -17,7 +17,10 @@ public class BackOfficeResellerProxyService {
   private final BackOfficeResellerServiceImpl backOfficeResellerService;
   private final BackOfficeUserResellerValidatorService backOfficeUserResellerValidatorService;
 
-  public void enableBackofficeResellerUser(BackOfficeResellerUserProfileDto backOfficeResellerUserProfileDto) {
+  public void enableBackofficeResellerUser(String resellerId, String resellerUserEmail) {
+    BackOfficeResellerUserProfileDto backOfficeResellerUserProfileDto = new BackOfficeResellerUserProfileDto();
+    backOfficeResellerUserProfileDto.setContributorId(resellerId);
+    backOfficeResellerUserProfileDto.setResellerUserEmail(resellerUserEmail);
     backOfficeResellerService.profileExistenceCheckByEmail(backOfficeResellerUserProfileDto.getResellerUserEmail());
     backOfficeUserResellerValidatorService.enableContributorUser(backOfficeResellerUserProfileDto);
   }

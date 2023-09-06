@@ -224,8 +224,11 @@ public class BackOfficeResellerController {
   @Operation(
           summary = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_TITLE,
           description = PROFILE_CONTROLLER_ENABLE_USER_PROFILE_DESCRIPTION)
-  public ResponseEntity<Object> enableBackOfficeResellerUser(@RequestBody BackOfficeResellerUserProfileDto backOfficeResellerUserProfileDto) {
-    backOfficeResellerProxyService.enableBackofficeResellerUser(backOfficeResellerUserProfileDto);
-    return ControllerResponse.buildSuccessResponse("User Profile enabled successfully");
+  public ResponseEntity<Object> enableBackOfficeResellerUser(
+          @RequestParam(value = "resellerId", required = false) String resellerId,
+          @RequestParam(value = "resellerUserEmail", required = false) String resellerUserEmail
+  ) {
+    backOfficeResellerProxyService.enableBackofficeResellerUser(resellerId, resellerUserEmail);
+    return ControllerResponse.buildSuccessResponse("User Profile enabled request logged successfully");
   }
 }
