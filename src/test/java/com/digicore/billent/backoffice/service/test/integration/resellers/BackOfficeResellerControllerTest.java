@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.test.integration.resellers;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.*;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.CHECKER_EMAIL;
+import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_EMAIL;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,16 +98,12 @@ class BackOfficeResellerControllerTest {
   void testEnableBackOfficeResellerUser_ProfileExists() throws Exception {
 
     TestHelper testHelper = new TestHelper(mockMvc);
-
     MvcResult mvcResult =
         mockMvc
             .perform(
                 patch(
-                        PROFILE_API_V1
-                            .concat("enable-")
-                            .concat(CHECKER_EMAIL)
-                            .concat("-")
-                            .concat("resellerMail@email.com"))
+                        RESELLERS_API_V1 + "enable-{email}-{resellerId}", "testemail@gmail.com", "resellermail@gmail.com")
+
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
             .andExpect(status().isOk())
