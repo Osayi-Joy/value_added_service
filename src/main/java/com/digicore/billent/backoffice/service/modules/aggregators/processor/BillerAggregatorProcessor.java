@@ -54,7 +54,7 @@ public class BillerAggregatorProcessor {
             checkerPermission = "approve-refresh-billers-products-under-an-aggregator",
             makerPermission = "refresh-billers-products-under-an-aggregator",
             requestClassName =
-                    "com.digicore.billent.data.lib.modules.billers.aggregator.dto.BillerAggregatorDTO")
+                    "com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO")
     public void refreshAggregatorBillersAndProducts(Object request,Object... args) {
         BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
         log.trace("Aggregator in sync is {}", billerAggregatorDTO.getAggregatorAlias());
