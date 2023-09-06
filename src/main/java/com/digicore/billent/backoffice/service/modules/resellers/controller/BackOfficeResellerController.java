@@ -86,7 +86,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setStatus(resellerStatus);
     billentSearchRequest.setDownloadFormat("CSV");
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.fetchResellersByStatusOrDateCreated(billentSearchRequest),
+        backOfficeResellerOperation.fetchResellersByStatusAndDateCreated(billentSearchRequest),
         "Retrieved all billers by status successfully");
   }
 

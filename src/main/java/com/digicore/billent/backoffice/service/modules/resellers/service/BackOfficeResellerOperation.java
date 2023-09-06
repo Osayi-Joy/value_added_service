@@ -61,9 +61,9 @@ public class BackOfficeResellerOperation {
     return backOfficeResellerServiceImpl.searchContributor(billentSearchRequest);
   }
 
-  public PaginatedResponseDTO<BackOfficeResellerProfileDTO> fetchResellersByStatusOrDateCreated(
+  public PaginatedResponseDTO<BackOfficeResellerProfileDTO> fetchResellersByStatusAndDateCreated(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.filterContributorsByStatusOrDateCreated(billentSearchRequest);
+    return backOfficeResellerServiceImpl.filterContributorsByStatusAndDateCreated(billentSearchRequest);
   }
 
   public void downloadAllResellersInCSV(
