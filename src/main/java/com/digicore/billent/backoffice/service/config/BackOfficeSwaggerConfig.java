@@ -40,10 +40,9 @@ public class BackOfficeSwaggerConfig {
     return new OpenAPI()
         .info(
             new Info()
-                .title("Biller Platform/BackOffice APIs")
-                .description(
-                    "This documentation contains all the APIs exposed for the backoffice console. Aside the authentication and reset password APIs, all other APIs requires a valid authenticated user jwt access token before they can be invoked")
-                .version("v1.0.0")
+                .title(propertyConfig.getProjectTitle())
+                .description(propertyConfig.getProjectDescription())
+                .version(propertyConfig.projectVersion)
                 .license(
                     new License()
                         .name("Proprietary License")
@@ -51,12 +50,11 @@ public class BackOfficeSwaggerConfig {
         .externalDocs(
             new ExternalDocumentation()
                 .description("Issue tracker")
-                .url(
-                    "https://gitlab.com/teamdigicore/billent-backoffice-service/-/issues"))
-        .addServersItem(new Server().description("Local Server").url("http://localhost:3700"))
+                .url(propertyConfig.getIssueTrackerUrl()))
+        .addServersItem(new Server().description("Local Dev Server").url("http://localhost:3700"))
         .addServersItem(
             new Server()
-                .description("Digicore Development Server")
+                .description(propertyConfig.getServerDescription())
                 .url(propertyConfig.getSwaggerUrl()))
         .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
         .components(
