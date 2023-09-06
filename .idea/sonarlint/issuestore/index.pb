@@ -30,16 +30,12 @@ nsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/service
 wsrc/test/java/com/digicore/billent/backoffice/service/test/integration/authentication/BackOfficeAuthenticationTest.java,4/f/4f4c567a1090782414193eb2523e4fd7941dd418
 ê
 `src/main/java/com/digicore/billent/backoffice/service/config/BillentBackOfficeServiceConfig.java,5/6/56ea8ddaf03a62e5c6afe82eb2ada6e2f476f807
-ó
-gsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleService.java,6/4/6427e75df4d7318213cedaadb5136fab614dc52e
 ì
 csrc/test/java/com/digicore/billent/backoffice/service/test/integration/role/RoleControllerTest.java,b/9/b90f1b6f7685068e5b0167cc8c2853e977545711
 •
 usrc/test/java/com/digicore/billent/backoffice/service/test/integration/registration/BackOfficeUserOnboardingTest.java,a/1/a1f0b0cb9547cf5fddf79579947f33e0692fd51f
 ü
 osrc/main/java/com/digicore/billent/backoffice/service/modules/billers/service/impl/BillerBackOfficeService.java,2/3/239028337b363a0844cd344c6eb238326c001515
-†
-psrc/main/java/com/digicore/billent/backoffice/service/modules/billers/controller/BackOfficeBillerController.java,e/0/e0277a5569b113cba350de37faf101d12d9c51d8
 å
 \src/main/java/com/digicore/billent/backoffice/service/util/BackOfficeUserServiceApiUtil.java,f/f/ff560993abd065dd54c612729fbbdc9e7769f028
 ç

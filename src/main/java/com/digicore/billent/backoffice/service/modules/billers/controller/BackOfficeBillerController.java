@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(BILLERS_API_V1)
+@Profile("phase2")
 @Tag(name = BILLER_CONTROLLER_TITLE, description = BILLER_CONTROLLER_DESCRIPTION)
 public class BackOfficeBillerController {
     private final BillerBackOfficeService billerBackOfficeService;
