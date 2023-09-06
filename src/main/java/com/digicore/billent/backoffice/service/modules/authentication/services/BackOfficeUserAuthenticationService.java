@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.authentication.services;
 import com.digicore.billent.data.lib.modules.backoffice.authentication.service.implementation.BackOfficeUserAuthServiceImpl;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.notification.lib.request.NotificationRequestType;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.digicore.registhentication.authentication.services.PasswordResetService;
+import com.digicore.request.processor.processors.AuditLogProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,7 @@ public class BackOfficeUserAuthenticationService {
 
   private final OtpService otpService;
   private final PropertyConfig propertyConfig;
+  private final AuditLogProcessor auditLogProcessor;
 
   @Value("${password-reset-subject: Password Reset}")
   private String passwordResetSubject;
@@ -57,6 +60,7 @@ public class BackOfficeUserAuthenticationService {
             .firstName((String) loginResponse.getAdditionalInformation().get("firstName"))
             .notificationRequestType(NotificationRequestType.SEND_LOGIN_SUCCESS_EMAIL)
             .build());
+    auditLogProcessor.saveAuditWithDescription(AuditLogActivity.LOGIN_SUCCESS,AuditLogActivity.BACKOFFICE,AuditLogActivity.LOGIN_SUCCESS_DESCRIPTION.replace("{}",(String)loginResponse.getAdditionalInformation().get("firstName")));
     return loginResponse;
   }
 
@@ -109,6 +113,6 @@ public class BackOfficeUserAuthenticationService {
                       .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
                       .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
                       .build());
-
+      auditLogProcessor.saveAuditWithDescription(AuditLogActivity.PASSWORD_UPDATE,AuditLogActivity.BACKOFFICE,AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
     }
 }
