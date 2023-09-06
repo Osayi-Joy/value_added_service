@@ -1,4 +1,4 @@
-package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
+package com.digicore.billent.backoffice.service.modules.profiles.service;
 
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
