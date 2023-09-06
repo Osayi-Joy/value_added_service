@@ -240,6 +240,11 @@
     "permissionType": "USERS"
   },
   {
+    "name": "approve-edit-backoffice-user-details",
+    "description": "This allows you to approve edit a  backoffice user details request",
+    "permissionType": "USERS"
+  },
+  {
     "name": "resend-invite-email",
     "description": "This allows you to resend an invite email",
     "permissionType": "USERS"
