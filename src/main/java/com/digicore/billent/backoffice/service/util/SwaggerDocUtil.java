@@ -56,6 +56,11 @@ public class SwaggerDocUtil {
 
   public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION =
       "This API resets a user's existing password to a new password provided by the user, the otp required is the resetKey that came from the response after validating the phone number";
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE =
+          "Change my password";
+
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION =
+          "This API is used to a user to change an existing password to a new password";
 
   // Onboarding Controller Doc
   public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";

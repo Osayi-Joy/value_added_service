@@ -8,6 +8,7 @@ import com.digicore.billent.backoffice.service.modules.authentication.services.B
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -66,6 +67,15 @@ public class BackOfficeUserAuthenticationController {
   public ResponseEntity<Object> resetPassword(@Valid @RequestBody ResetPasswordSecondBaseRequestDTO resetPasswordDto) {
     authenticateBackOfficeUser.resetPassword(resetPasswordDto);
     return ControllerResponse.buildSuccessResponse("Password Reset Successful");
+  }
+
+  @PostMapping("update-password")
+  @Operation(
+          summary = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE,
+          description = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION)
+  public ResponseEntity<Object> updateMyPassword(@Valid @RequestBody UpdatePasswordRequestDTO updatePasswordRequestDTO) {
+    authenticateBackOfficeUser.updateMyPassword(updatePasswordRequestDTO);
+    return ControllerResponse.buildSuccessResponse("Password updated Successful");
   }
 
 }

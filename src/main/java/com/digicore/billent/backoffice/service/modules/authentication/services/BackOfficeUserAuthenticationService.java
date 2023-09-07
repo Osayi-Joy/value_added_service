@@ -15,6 +15,7 @@ import com.digicore.otp.service.OtpService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordSecondBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.services.LoginService;
 import com.digicore.registhentication.authentication.services.PasswordResetService;
@@ -152,5 +153,31 @@ public class BackOfficeUserAuthenticationService {
         AuditLogActivity.PASSWORD_UPDATE,
         AuditLogActivity.BACKOFFICE,
         AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
+  }
+
+  @Transactional
+  public void updateMyPassword(UpdatePasswordRequestDTO updatePasswordRequestDTO) {
+    UserAuthProfileDTO userAuthProfileDTO =
+            backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(updatePasswordRequestDTO.getEmail());
+
+    passwordResetService.updateMyPassword(updatePasswordRequestDTO);
+    notificationDispatcher.dispatchEmail(
+            NotificationServiceRequest.builder()
+                    .recipients(List.of(updatePasswordRequestDTO.getEmail()))
+                    .notificationSubject(passwordResetSubject)
+                    .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
+                    .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
+                    .build());
+    auditLogProcessor.saveAuditWithDescription(
+            userAuthProfileDTO.getAssignedRole(),
+            userAuthProfileDTO
+                    .getUserProfile()
+                    .getFirstName()
+                    .concat(" ")
+                    .concat(userAuthProfileDTO.getUserProfile().getLastName()),
+            userAuthProfileDTO.getUsername(),
+            AuditLogActivity.PASSWORD_UPDATE,
+            AuditLogActivity.BACKOFFICE,
+            AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
   }
 }
