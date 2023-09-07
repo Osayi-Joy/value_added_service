@@ -5,6 +5,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
@@ -13,9 +14,13 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 
 import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.reseller.dto.ResellerDTO;
+import com.digicore.billent.data.lib.modules.reseller.profile.model.ResellerProfile;
+import com.digicore.billent.data.lib.modules.reseller.profile.repository.ResellerProfileRepository;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -44,6 +50,7 @@ class BackOfficeResellerControllerTest {
   @Autowired private MockMvc mockMvc;
 
   @Autowired private BillerRepository billerRepository;
+  @Autowired private ResellerProfileRepository resellerProfileRepository;
 
   @Autowired private PropertyConfig propertyConfig;
 
@@ -88,5 +95,54 @@ class BackOfficeResellerControllerTest {
     assertNotNull(paginatedResponseDTO.getContent());
     assertTrue(paginatedResponseDTO.getIsFirstPage());
     assertTrue(paginatedResponseDTO.getIsLastPage());
+  }
+
+  @Test
+  void testEnableReseller_ResellerNotExists() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    ResellerDTO resellerDTO = new ResellerDTO();
+    resellerDTO.setResellerId("DisableReseller_02");
+
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                patch(RESELLERS_API_V1 + "disable-{resellerId}", resellerDTO.getResellerId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isBadRequest())
+            .andReturn();
+
+    ApiResponseJson<?> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+
+    assertFalse(response.isSuccess());
+  }
+
+  @Test
+  void testEnableReseller_ResellerExists() throws Exception {
+    ResellerProfile resellerProfile = new ResellerProfile();
+    resellerProfile.setResellerId("DisableReseller_01");
+    resellerProfile.setCompanyName("ResellerCompany");
+    resellerProfile.setWalletHolderId("ResellerHolderWalletId_01");
+    resellerProfile.setWalletId("ResellerWalletId_01");
+    resellerProfile.setStatus(Status.ACTIVE);
+    resellerProfile.setDeleted(false);
+    resellerProfileRepository.save(resellerProfile);
+
+    TestHelper testHelper = new TestHelper(mockMvc);
+
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                patch(RESELLERS_API_V1 + "disable-{resellerId}", resellerProfile.getResellerId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+            .andExpect(status().isOk())
+            .andReturn();
+    ApiResponseJson<?> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+    assertTrue(response.isSuccess());
   }
 }

@@ -8,7 +8,9 @@ import com.digicore.billent.data.lib.modules.common.contributor.service.BackOffi
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.billent.data.lib.modules.reseller.dto.ResellerDTO;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class BackOfficeResellerOperation {
+public class BackOfficeResellerOperation implements BackOfficeResellerValidatorService {
 
   private final BackOfficeContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
   private final CsvService csvService;
@@ -76,5 +78,15 @@ public class BackOfficeResellerOperation {
     csvDto.setBillentSearchRequest(billentSearchRequest);
     csvDto.setResponse(response);
     csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
+  }
+
+  @MakerChecker(
+          checkerPermission = "approve_disable-reseller",
+          makerPermission = "disable-reseller",
+          requestClassName = "com.digicore.billent.data.lib.modules.reseller.dto.ResellerDTO")
+  @Override
+  public void disableReseller(Object request, Object... args) {
+    ResellerDTO resellerDTO = (ResellerDTO) request;
+    backOfficeResellerServiceImpl.disableContributor(resellerDTO.getResellerId());
   }
 }

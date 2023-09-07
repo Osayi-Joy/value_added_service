@@ -285,7 +285,9 @@ public class SwaggerDocUtil {
       "Get a reseller wallet balance";
   public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
       "This API is used to fetch a reseller wallet balance in the system.";
-
+  public static final String RESELLER_CONTROLLER_DISABLE_RESELLER_TITLE = "Disable a reseller";
+  public static final String RESELLER_CONTROLLER_DISABLE_RESELLER_DESCRIPTION =
+          "This API is used to disable a reseller.";
   // Audit Trail Controller Doc
   public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "BackOffice-Audit-Trail-Module";
   public static final String AUDIT_TRAIL_CONTROLLER_DESCRIPTION =
