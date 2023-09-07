@@ -6,10 +6,9 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
-import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileOperations;
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileProxyService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;

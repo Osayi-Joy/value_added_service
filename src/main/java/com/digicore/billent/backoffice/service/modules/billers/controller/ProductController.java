@@ -5,14 +5,12 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeProxyService;
-import com.digicore.billent.backoffice.service.modules.billers.service.impl.ProductBackOfficeService;
-import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
+import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

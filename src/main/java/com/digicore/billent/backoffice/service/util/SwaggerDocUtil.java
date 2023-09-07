@@ -286,5 +286,19 @@ public class SwaggerDocUtil {
   public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
       "This API is used to fetch a reseller wallet balance in the system.";
 
+  // Audit Trail Controller Doc
+  public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "Audit-Trail-Onboarding-Module";
+  public static final String AUDIT_TRAIL_CONTROLLER_DESCRIPTION =
+          "This module contains all required APIs to view audit trails.";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE =
+          "Fetch self audit trails";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_SELF_DESCRIPTION =
+          "This API is used to retrieve logged in user audit trails only.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_TITLE =
+          "Fetch all audit trails";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION =
+          "This API is used to retrieve all audit trails.";
+
   private SwaggerDocUtil() {}
 }

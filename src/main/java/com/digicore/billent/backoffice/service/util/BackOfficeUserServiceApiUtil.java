@@ -32,6 +32,9 @@ public class BackOfficeUserServiceApiUtil {
  //Resellers API versioning
  public static final String RESELLERS_API_V1 = API_V1 + "resellers/process/";
 
+ //AuditTrail API versioning
+ public static final String AUDIT_TRAIL_API_V1 = API_V1 + "audit-trail/process/";
+
  private BackOfficeUserServiceApiUtil() {
  }
 }
