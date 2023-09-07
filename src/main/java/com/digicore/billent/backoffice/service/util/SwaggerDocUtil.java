@@ -197,9 +197,11 @@ public class SwaggerDocUtil {
       "Export aggregators in csv";
   public static final String BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION =
       "This API is used to export aggregators in csv.";
-  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_TITLE =
+  public static final String
+      BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_TITLE =
           "Get all Billers under aggregator";
-  public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_DESCRIPTION =
+  public static final String
+      BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_DESCRIPTION =
           "This API is used to fetch all available billers under aggregator in the system, it requires a query param named aggregator system id to fetch the data";
 
   // Profile Controller Doc
@@ -285,6 +287,9 @@ public class SwaggerDocUtil {
       "Get a reseller wallet balance";
   public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
       "This API is used to fetch a reseller wallet balance in the system.";
+  public static final String RESELLER_CONTROLLER_ENABLE_RESELLER_TITLE = "Enable a reseller";
+  public static final String RESELLER_CONTROLLER_ENABLE_RESELLER_DESCRIPTION =
+      "This API is used to enable a reseller.";
 
   private SwaggerDocUtil() {}
 }

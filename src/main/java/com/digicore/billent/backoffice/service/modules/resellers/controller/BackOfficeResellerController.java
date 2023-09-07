@@ -10,8 +10,11 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeResellerOperation;
+import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeResellerProxyService;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class BackOfficeResellerController {
 
   private final BackOfficeResellerOperation backOfficeResellerOperation;
+  private final BackOfficeResellerProxyService backOfficeResellerProxyService;
 
   @GetMapping("get-all")
   // @PreAuthorize("hasAuthority('view-resellers')")
@@ -207,5 +211,19 @@ public class BackOfficeResellerController {
     billentSearchRequest.setStatus(resellerStatus);
     billentSearchRequest.setDownloadFormat("CSV");
     backOfficeResellerOperation.downloadAllResellerUserInCSV(response, billentSearchRequest);
+  }
+
+  @LogActivity(
+          activity = AuditLogActivity.RESELLER,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.ENABLE_BILLER_AGGREGATOR_DESCRIPTION)
+  @PatchMapping("enable-{resellerId}")
+  @PreAuthorize("hasAuthority('enable-reseller')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_ENABLE_RESELLER_TITLE,
+          description = RESELLER_CONTROLLER_ENABLE_RESELLER_DESCRIPTION)
+  public ResponseEntity<Object> enableReseller(@PathVariable String resellerId) {
+    backOfficeResellerProxyService.enableReseller(resellerId);
+    return ControllerResponse.buildSuccessResponse(null,"Reseller enabled successfully");
   }
 }

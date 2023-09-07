@@ -1,6 +1,5 @@
 package com.digicore.billent.backoffice.service.modules.resellers.service;
 
-
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDetailDTO;
@@ -8,7 +7,9 @@ import com.digicore.billent.data.lib.modules.common.contributor.service.BackOffi
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.billent.data.lib.modules.reseller.dto.ResellerDTO;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class BackOfficeResellerOperation {
+public class BackOfficeResellerOperation implements BackOfficeResellerValidatorService {
 
-  private final BackOfficeContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
+  private final BackOfficeContributorService<
+          BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO>
+      backOfficeResellerServiceImpl;
   private final CsvService csvService;
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> getAllResellers(
@@ -63,7 +66,8 @@ public class BackOfficeResellerOperation {
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> fetchResellersByStatusOrDateCreated(
       BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.filterContributorsByStatusOrDateCreated(billentSearchRequest);
+    return backOfficeResellerServiceImpl.filterContributorsByStatusOrDateCreated(
+        billentSearchRequest);
   }
 
   public void downloadAllResellersInCSV(
@@ -72,5 +76,15 @@ public class BackOfficeResellerOperation {
     csvDto.setBillentSearchRequest(billentSearchRequest);
     csvDto.setResponse(response);
     csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
+  }
+
+  @MakerChecker(
+      checkerPermission = "approve-enable-reseller",
+      makerPermission = "enable-reseller",
+      requestClassName = "com.digicore.billent.data.lib.modules.reseller.dto.ResellerDTO")
+  @Override
+  public void enableReseller(Object request, Object... args) {
+    ResellerDTO resellerDTO = (ResellerDTO) request;
+    backOfficeResellerServiceImpl.enableContributor(resellerDTO.getResellerId());
   }
 }
