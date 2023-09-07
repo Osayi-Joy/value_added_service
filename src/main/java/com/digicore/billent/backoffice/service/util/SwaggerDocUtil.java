@@ -287,7 +287,7 @@ public class SwaggerDocUtil {
       "This API is used to fetch a reseller wallet balance in the system.";
 
   // Audit Trail Controller Doc
-  public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "Audit-Trail-Onboarding-Module";
+  public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "BackOffice-Audit-Trail-Module";
   public static final String AUDIT_TRAIL_CONTROLLER_DESCRIPTION =
           "This module contains all required APIs to view audit trails.";
   public static final String AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE =
