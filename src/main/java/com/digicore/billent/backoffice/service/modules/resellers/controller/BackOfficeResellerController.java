@@ -43,6 +43,26 @@ public class BackOfficeResellerController {
         "Retrieved all resellers successfully");
   }
 
+  @GetMapping("get-all-users")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_GET_ALL_RESELLER_TITLE,
+          description = RESELLER_CONTROLLER_GET_ALL_RESELLER_DESCRIPTION)
+  public ResponseEntity<Object> viewAllResellerUsers(
+          @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+          int pageNumber,
+          @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+          int pageSize,
+          @RequestParam(value = "resellerId") String resellerId) {
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setKey(resellerId);
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.getAllResellerUsers(billentSearchRequest),
+            "Retrieved all reseller users successfully");
+  }
+
   @GetMapping("get-{resellerId}-details")
   @PreAuthorize("hasAuthority('view-reseller-user-details')")
   @Operation(
@@ -135,7 +155,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("filter-users")
-  @PreAuthorize("hasAuthority('view-resellers')")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
   @Operation(
       summary = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_TITLE,
       description = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_STATUS_DESCRIPTION)
@@ -146,7 +166,7 @@ public class BackOfficeResellerController {
           int pageSize,
       @RequestParam(value = START_DATE, required = false) String startDate,
       @RequestParam(value = END_DATE, required = false) String endDate,
-      @RequestParam(value = "resellerId", required = false) String resellerId,
+      @RequestParam(value = "resellerId") String resellerId,
       @RequestParam(value = RESELLER_STATUS, required = false) Status resellerStatus) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setStartDate(startDate);
@@ -162,7 +182,7 @@ public class BackOfficeResellerController {
   }
 
   @GetMapping("search-users")
-  @PreAuthorize("hasAuthority('view-resellers')")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
   @Operation(
       summary = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_TITLE,
       description = RESELLER_CONTROLLER_FETCH_RESELLER_USER_BY_SEARCH_DESCRIPTION)

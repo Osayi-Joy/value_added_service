@@ -29,6 +29,10 @@ public class BackOfficeResellerOperation {
     return backOfficeResellerServiceImpl.retrieveAllContributors(pageNumber, pageSize);
   }
 
+  public PaginatedResponseDTO<UserProfileDTO> getAllResellerUsers(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.retrieveContributorUsers(billentSearchRequest);
+  }
+
   public BackOfficeResellerProfileDetailDTO fetchResellerProfile(String resellerId) {
     return backOfficeResellerServiceImpl.retrieveContributorDetailsById(resellerId);
   }
