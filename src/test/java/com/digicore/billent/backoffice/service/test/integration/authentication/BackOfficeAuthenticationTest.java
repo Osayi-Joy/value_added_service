@@ -11,6 +11,7 @@ import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.otp.service.OtpService;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.request.ResetPasswordFirstBaseRequestDTO;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
 import com.digicore.registhentication.authentication.enums.AuthenticationType;
 import org.checkerframework.checker.units.qual.A;
@@ -123,6 +124,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                         .perform(
                                 MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("verify-email-otp"))
                                         .content(ClientUtil.getGsonMapper().toJson(resetPasswordDto))
+                                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().is4xxClientError())
+                        .andReturn();
+        ApiResponseJson<?> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
+        assertFalse(response.isSuccess());
+    }
+
+    @Test
+    void updateMyPasswordTest() throws Exception {
+    UpdatePasswordRequestDTO updatePasswordRequestDTO = new UpdatePasswordRequestDTO();
+        updatePasswordRequestDTO.setEmail("test@unittest.com");
+        updatePasswordRequestDTO.setOldPassword("ASD@123456678.COM");
+        updatePasswordRequestDTO.setNewPassword("joyosayi@1234567");
+
+        MvcResult result =
+                mockMvc
+                        .perform(
+                                MockMvcRequestBuilders.post(AUTHENTICATION_API_V1.concat("update-password"))
+                                        .content(ClientUtil.getGsonMapper().toJson(updatePasswordRequestDTO))
                                         .contentType(MediaType.APPLICATION_JSON))
                         .andExpect(status().is4xxClientError())
                         .andReturn();
