@@ -1,18 +1,26 @@
 package com.digicore.billent.backoffice.service.modules.profiles.service;
 
-import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
-import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
+import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
+import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.notification.lib.request.NotificationRequestType;
+import com.digicore.notification.lib.request.NotificationServiceRequest;
+import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.authentication.services.PasswordResetService;
+import com.digicore.registhentication.common.dto.request.SixthBaseRequestDTO;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.AuditLogProcessor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -25,6 +33,12 @@ import java.util.Optional;
 public class BackOfficeUserProfileOperations implements BackOfficeUserProfileValidatorService {
   private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
   private final AuditLogProcessor auditLogProcessor;
+  private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthProfileServiceImpl;
+  private final NotificationDispatcher notificationDispatcher;
+
+  private final PasswordResetService passwordResetService;
+  @Value("${password-update-subject: Password Update}")
+  private String passwordUpdateSubject;
 
   public PaginatedResponseDTO<UserProfileDTO> fetchAllBackOfficeUserProfiles(int page, int size) {
     return backOfficeUserProfileServiceImpl.retrieveAllUserProfiles(page, size);
@@ -82,4 +96,29 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     return Optional.empty();
   }
 
+  @Transactional
+  public void changePassword(SixthBaseRequestDTO requestDTO) {
+    UserAuthProfileDTO userAuthProfileDTO =
+            backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(requestDTO.getEmail());
+
+    passwordResetService.updateAccountPassword(requestDTO);
+    notificationDispatcher.dispatchEmail(
+            NotificationServiceRequest.builder()
+                    .recipients(List.of(requestDTO.getEmail()))
+                    .notificationSubject(passwordUpdateSubject)
+                    .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
+                    .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
+                    .build());
+    auditLogProcessor.saveAuditWithDescription(
+            userAuthProfileDTO.getAssignedRole(),
+            userAuthProfileDTO
+                    .getUserProfile()
+                    .getFirstName()
+                    .concat(" ")
+                    .concat(userAuthProfileDTO.getUserProfile().getLastName()),
+            userAuthProfileDTO.getUsername(),
+            AuditLogActivity.PASSWORD_UPDATE,
+            AuditLogActivity.BACKOFFICE,
+            AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
+  }
 }
