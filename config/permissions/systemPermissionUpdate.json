@@ -353,5 +353,10 @@
     "name": "view-all-audit-trails",
     "description": "This allows you to view all audit trails",
     "permissionType": "AUDIT_TRAILS"
+  },
+  {
+    "name": "approve-edit-backoffice-user-details",
+    "description": "This allows you to approve edit request of a backoffice user",
+    "permissionType": "AUDIT_TRAILS"
   }
 ]
