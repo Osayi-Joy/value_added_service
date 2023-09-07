@@ -37,7 +37,7 @@ public class BackOfficeAuditTrailController {
 
     @TokenValid()
     @PreAuthorize("hasAuthority('view-self-audit-trails')")
-    @PostMapping("get-self")
+    @GetMapping("get-self")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE,
             description = AUDIT_TRAIL_CONTROLLER_FETCH_SELF_DESCRIPTION)
@@ -54,7 +54,7 @@ public class BackOfficeAuditTrailController {
 
 
     @TokenValid()
-    @PostMapping("get-all")
+    @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-all-audit-trails')")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_ALL_TITLE,
