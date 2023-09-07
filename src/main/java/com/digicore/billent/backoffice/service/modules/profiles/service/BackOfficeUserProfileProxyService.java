@@ -36,7 +36,7 @@ public class BackOfficeUserProfileProxyService {
 
   public Object updateBackofficeProfile(UserEditDTO userProfileDTO) {
     backOfficeRoleServiceImpl.roleCheck(userProfileDTO.getAssignedRole());
-    backOfficePermissionServiceImpl.getValidPermissions(userProfileDTO.getPermissions());
+   // backOfficePermissionServiceImpl.getValidPermissions(userProfileDTO.getPermissions());
     backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(userProfileDTO.getEmail());
     return backOfficeUserProfileValidatorService.updateBackofficeProfile(userProfileDTO);
   }

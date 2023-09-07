@@ -126,11 +126,23 @@ public class TestHelper {
   public UserRegistrationDTO createBackOfficeProfile() {
     UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
     userRegistrationDTO.setEmail("tobiogunwuyi@gmail.com");
+    setCommonFieldsInUserRegistrationBody(userRegistrationDTO);
+    userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
+    return userRegistrationDTO;
+  }
+
+  private static void setCommonFieldsInUserRegistrationBody(UserRegistrationDTO userRegistrationDTO) {
     userRegistrationDTO.setPhoneNumber("2347087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
     userRegistrationDTO.setAssignedRole("TesterRole");
-    userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
+  }
+
+  public UserRegistrationDTO createBackOfficeProfile(String username) {
+    UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
+    userRegistrationDTO.setEmail(username);
+    setCommonFieldsInUserRegistrationBody(userRegistrationDTO);
+    userRegistrationDTO.setUsername(username);
     return userRegistrationDTO;
   }
 
@@ -149,6 +161,19 @@ public class TestHelper {
 //    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
 //  }
 
+  public void createTestUser(String username) throws Exception {
+    UserRegistrationDTO userRegistrationDTO = createBackOfficeProfile(username);
+    userRegistrationDTO.setAssignedRole("TesterRole");
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("user-invitation"))
+                                    .content(ClientUtil.getGsonMapper().toJson(userRegistrationDTO))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+  }
   public void createTestRoleCustom(String roleName) throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName(roleName);
@@ -203,8 +228,8 @@ public class TestHelper {
     userProfileDTO.setFirstName("John");
     userProfileDTO.setLastName("Doe");
     userProfileDTO.setAssignedRole("TesterRole");
-    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products","export-resellers",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product","view-resellers"));
+//    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products","export-resellers",
+//            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product","view-resellers"));
     userProfileDTO.setPhoneNumber("2349061962179");
     userProfileDTO.setUsername(MAKER_EMAIL);
 

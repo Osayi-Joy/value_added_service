@@ -189,11 +189,12 @@ class BackOfficeProfileControllerTest {
   void testDisableUserProfile_ProfileExists() throws Exception {
 
     TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestUser("disableuser@test.com");
 
     MvcResult mvcResult =
         mockMvc
             .perform(
-                patch(PROFILE_API_V1.concat("disable-").concat(CHECKER_EMAIL))
+                patch(PROFILE_API_V1.concat("disable-").concat("disableuser@test.com"))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
             .andExpect(status().isOk())
