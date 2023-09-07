@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -35,6 +36,7 @@ public class BackOfficeAuditTrailController {
 
 
     @TokenValid()
+    @PreAuthorize("hasAuthority('view-self-audit-trails')")
     @PostMapping("get-self")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE,
@@ -53,6 +55,7 @@ public class BackOfficeAuditTrailController {
 
     @TokenValid()
     @PostMapping("get-all")
+    @PreAuthorize("hasAuthority('view-all-audit-trails')")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_ALL_TITLE,
             description = AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION)
