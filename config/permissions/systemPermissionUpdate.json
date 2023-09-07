@@ -357,6 +357,6 @@
   {
     "name": "approve-edit-backoffice-user-details",
     "description": "This allows you to approve edit request of a backoffice user",
-    "permissionType": "AUDIT_TRAILS"
+    "permissionType": "USERS"
   }
 ]
