@@ -35,7 +35,7 @@ public class BackOfficeAuditTrailController {
 
 
     @TokenValid()
-    @PostMapping("password-update")
+    @PostMapping("get-self")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE,
             description = AUDIT_TRAIL_CONTROLLER_FETCH_SELF_DESCRIPTION)
@@ -52,7 +52,7 @@ public class BackOfficeAuditTrailController {
 
 
     @TokenValid()
-    @PostMapping("password-update")
+    @PostMapping("get-all")
     @Operation(
             summary = AUDIT_TRAIL_CONTROLLER_FETCH_ALL_TITLE,
             description = AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION)
