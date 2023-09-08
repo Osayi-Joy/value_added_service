@@ -10,8 +10,8 @@ import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.authentication.services.PasswordResetService;
-import com.digicore.registhentication.common.dto.request.SixthBaseRequestDTO;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.AuditLogProcessor;
@@ -97,7 +97,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   @Transactional
-  public void changePassword(SixthBaseRequestDTO requestDTO) {
+  public void changePassword(UpdatePasswordRequestDTO requestDTO) {
     UserAuthProfileDTO userAuthProfileDTO =
             backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(requestDTO.getEmail());
 
@@ -110,13 +110,6 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
                     .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
                     .build());
     auditLogProcessor.saveAuditWithDescription(
-            userAuthProfileDTO.getAssignedRole(),
-            userAuthProfileDTO
-                    .getUserProfile()
-                    .getFirstName()
-                    .concat(" ")
-                    .concat(userAuthProfileDTO.getUserProfile().getLastName()),
-            userAuthProfileDTO.getUsername(),
             AuditLogActivity.PASSWORD_UPDATE,
             AuditLogActivity.BACKOFFICE,
             AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);

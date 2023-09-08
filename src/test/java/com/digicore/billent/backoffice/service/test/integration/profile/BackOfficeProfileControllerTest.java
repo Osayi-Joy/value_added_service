@@ -14,6 +14,7 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.common.dto.request.SixthBaseRequestDTO;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -240,7 +241,7 @@ class BackOfficeProfileControllerTest {
   void changePasswordTest() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc);
     testHelper.createTestUser("test@unittest.com");
-    SixthBaseRequestDTO requestDTO = new SixthBaseRequestDTO();
+    UpdatePasswordRequestDTO requestDTO = new UpdatePasswordRequestDTO();
     requestDTO.setEmail("test@unittest.com");
     requestDTO.setOldPassword("ASD@123456678.COM");
     requestDTO.setNewPassword("joyosayi@1234567");
