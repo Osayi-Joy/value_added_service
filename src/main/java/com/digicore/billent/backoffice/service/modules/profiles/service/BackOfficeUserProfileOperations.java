@@ -98,18 +98,14 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   @Transactional
-  public void changePassword(String oldPassword, String newPassword) {
-    UpdatePasswordRequestDTO requestDTO = new UpdatePasswordRequestDTO();
-    requestDTO.setEmail(ClientUtil.getLoggedInUsername());
-    requestDTO.setOldPassword(oldPassword);
-    requestDTO.setNewPassword(newPassword);
+  public void changePassword(UpdatePasswordRequestDTO requestDTO) {
     UserAuthProfileDTO userAuthProfileDTO =
-            backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(requestDTO.getEmail());
+            backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(ClientUtil.getLoggedInUsername());
 
     passwordResetService.updateAccountPassword(requestDTO);
     notificationDispatcher.dispatchEmail(
             NotificationServiceRequest.builder()
-                    .recipients(List.of(requestDTO.getEmail()))
+                    .recipients(List.of(userAuthProfileDTO.getUsername()))
                     .notificationSubject(passwordUpdateSubject)
                     .firstName(userAuthProfileDTO.getUserProfile().getFirstName())
                     .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)

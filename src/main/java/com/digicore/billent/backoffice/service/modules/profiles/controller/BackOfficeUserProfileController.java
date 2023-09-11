@@ -11,6 +11,7 @@ import com.digicore.billent.backoffice.service.modules.profiles.service.BackOffi
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.common.dto.request.SixthBaseRequestDTO;
 import com.digicore.registhentication.registration.enums.Status;
@@ -171,10 +172,8 @@ public class BackOfficeUserProfileController {
           summary = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE,
           description = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION)
   public ResponseEntity<Object> changePassword(
-          @RequestParam(value = OLD_PASSWORD) String oldPassword,
-          @RequestParam(value = NEW_PASSWORD) String newPassword
-  ) {
-    backOfficeUserProfileOperations.changePassword(oldPassword, newPassword);
+          @Valid @RequestBody UpdatePasswordRequestDTO requestDTO) {
+    backOfficeUserProfileOperations.changePassword(requestDTO);
     return ControllerResponse.buildSuccessResponse("Password updated Successful");
   }
 }

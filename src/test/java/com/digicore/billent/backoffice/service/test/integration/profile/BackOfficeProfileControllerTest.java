@@ -242,7 +242,6 @@ class BackOfficeProfileControllerTest {
     TestHelper testHelper = new TestHelper(mockMvc);
     testHelper.createTestUser("test@unittest.com");
     UpdatePasswordRequestDTO requestDTO = new UpdatePasswordRequestDTO();
-    requestDTO.setEmail("test@unittest.com");
     requestDTO.setOldPassword("ASD@123456678.COM");
     requestDTO.setNewPassword("joyosayi@1234567");
 
