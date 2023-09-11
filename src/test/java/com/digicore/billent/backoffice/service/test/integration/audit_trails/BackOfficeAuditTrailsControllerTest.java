@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -39,12 +38,8 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 class BackOfficeAuditTrailsControllerTest {
 
-
   @Autowired
   private MockMvc mockMvc;
-
-  @Autowired
-  private BillerRepository billerRepository;
 
   @Autowired
   private PropertyConfig propertyConfig;
@@ -61,7 +56,7 @@ class BackOfficeAuditTrailsControllerTest {
     TestHelper testHelper = new TestHelper(mockMvc);
 
     MvcResult mvcResult = mockMvc.perform(
-            get(AUDIT_TRAIL_API_V1 + "get-all-filtered").param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+            get(AUDIT_TRAIL_API_V1 + "filter").param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
                 .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
         .andExpect(status().isOk())

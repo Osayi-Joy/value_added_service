@@ -78,7 +78,7 @@ public class BackOfficeAuditTrailController {
     }
 
     @TokenValid()
-    @GetMapping("get-all-filtered")
+    @GetMapping("filter")
     @PreAuthorize("hasAuthority('view-all-audit-trails')")
     @Operation(
         summary = AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS,
