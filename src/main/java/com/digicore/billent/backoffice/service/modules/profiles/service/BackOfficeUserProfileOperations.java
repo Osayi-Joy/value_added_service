@@ -7,6 +7,7 @@ import com.digicore.billent.data.lib.modules.common.authentication.service.AuthP
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.profile.UserProfileService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.common.util.ClientUtil;
 import com.digicore.notification.lib.request.NotificationRequestType;
 import com.digicore.notification.lib.request.NotificationServiceRequest;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -97,7 +98,11 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   @Transactional
-  public void changePassword(UpdatePasswordRequestDTO requestDTO) {
+  public void changePassword(String oldPassword, String newPassword) {
+    UpdatePasswordRequestDTO requestDTO = new UpdatePasswordRequestDTO();
+    requestDTO.setEmail(ClientUtil.getLoggedInUsername());
+    requestDTO.setOldPassword(oldPassword);
+    requestDTO.setNewPassword(newPassword);
     UserAuthProfileDTO userAuthProfileDTO =
             backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(requestDTO.getEmail());
 

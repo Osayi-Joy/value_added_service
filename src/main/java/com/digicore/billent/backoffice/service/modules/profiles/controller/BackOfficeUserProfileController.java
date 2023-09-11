@@ -170,8 +170,11 @@ public class BackOfficeUserProfileController {
   @Operation(
           summary = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE,
           description = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION)
-  public ResponseEntity<Object> changePassword(@Valid @RequestBody UpdatePasswordRequestDTO updatePasswordRequestDTO) {
-    backOfficeUserProfileOperations.changePassword(updatePasswordRequestDTO);
+  public ResponseEntity<Object> changePassword(
+          @RequestParam(value = OLD_PASSWORD) String oldPassword,
+          @RequestParam(value = NEW_PASSWORD) String newPassword
+  ) {
+    backOfficeUserProfileOperations.changePassword(oldPassword, newPassword);
     return ControllerResponse.buildSuccessResponse("Password updated Successful");
   }
 }
