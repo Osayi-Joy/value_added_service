@@ -24,7 +24,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAG
 
 public class BackOfficeWalletController {
 
-    BackOfficeWalletService backOfficeWalletService;
+    private final BackOfficeWalletService backOfficeWalletService;
 
     @GetMapping("retrieve-{systemWalletId}-balance")
     @PreAuthorize("hasAuthority('view-all-wallet-balances')")

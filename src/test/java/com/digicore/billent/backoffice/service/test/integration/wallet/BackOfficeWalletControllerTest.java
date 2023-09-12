@@ -72,7 +72,6 @@ class BackOfficeWalletControllerTest {
     @Test
     void viewWalletBalanceTest() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        testHelper.updateTestRole("view-all-wallet-balances");
 
         MvcResult mvcResult = mockMvc.perform(get(WALLET_API_V1 + "retrieve-WA_TESTID-balance")
                         .contentType(MediaType.APPLICATION_JSON)
