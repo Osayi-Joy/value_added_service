@@ -305,5 +305,11 @@ public class SwaggerDocUtil {
   public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION =
           "This API is used to retrieve all audit trails.";
 
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS =
+      "Fetch filtered audit trails by activity or date range.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION =
+      "This API is used to retrieve all audit trails filtered by activity or date range.";
+
   private SwaggerDocUtil() {}
 }

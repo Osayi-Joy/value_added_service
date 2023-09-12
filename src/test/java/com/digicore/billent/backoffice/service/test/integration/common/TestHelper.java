@@ -202,7 +202,7 @@ public class TestHelper {
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
     roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers"));
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
