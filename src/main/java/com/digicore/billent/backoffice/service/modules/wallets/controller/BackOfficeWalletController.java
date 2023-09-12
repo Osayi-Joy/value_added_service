@@ -31,7 +31,7 @@ import static com.digicore.registhentication.util.PageableUtil.START_DATE;
 
 public class BackOfficeWalletController {
 
-    BackOfficeWalletService backOfficeWalletService;
+    private final BackOfficeWalletService backOfficeWalletService;
 
     @GetMapping("retrieve-{systemWalletId}-balance")
     @PreAuthorize("hasAuthority('view-all-wallet-balances')")
