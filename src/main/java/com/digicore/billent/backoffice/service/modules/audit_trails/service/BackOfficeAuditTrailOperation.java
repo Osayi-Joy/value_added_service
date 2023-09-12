@@ -28,4 +28,8 @@ public class BackOfficeAuditTrailOperation {
     public PaginatedResponseDTO<AuditLogDTO> fetchFilteredAuditTrails(BillentSearchRequest billentSearchRequest) {
         return backOfficeAuditTrailServiceImpl.filterAuditTrailsByActivityOrDateRange(billentSearchRequest);
     }
+
+    public PaginatedResponseDTO<AuditLogDTO> searchAuditTrails(BillentSearchRequest billentSearchRequest) {
+        return backOfficeAuditTrailServiceImpl.searchAuditTrails(billentSearchRequest);
+    }
 }
