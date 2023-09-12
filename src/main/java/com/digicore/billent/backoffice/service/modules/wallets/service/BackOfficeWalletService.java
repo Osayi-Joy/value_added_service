@@ -17,4 +17,8 @@ public class BackOfficeWalletService {
     public WalletBalanceResponseData fetchWalletBalance(String systemWalletId) {
         return walletServiceImpl.retrieveWalletBalance(systemWalletId);
     }
+
+    public WalletBalanceResponseData fetchAllWallet() {
+        return walletServiceImpl.retrieveWallet();
+    }
 }
