@@ -306,9 +306,9 @@ public class SwaggerDocUtil {
           "This module contains all required APIs to complete operations surrounding wallets. it goes through maker checker "
                   + "process";
 
-  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_TITLE = "Get all wallets";
-  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
-          "This API is used to fetch all wallets.";
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_TITLE = "Get a wallet balance";
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_DESCRIPTION =
+          "This API is used to fetch a wallet's balance.";
 
   private SwaggerDocUtil() {}
 }

@@ -17,6 +17,7 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.Permission
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
@@ -259,6 +260,16 @@ public class TestHelper {
             .andExpect(status().isOk())
             .andReturn();
 
+  }
+
+  public CreateWalletResponseData initializeWalletResponse(String username) {
+      CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+      createWalletResponseData.setCurrency("NGN");
+      createWalletResponseData.setWalletName("Wallet Name");
+      createWalletResponseData.setSystemWalletId("WA_TESTID");
+      createWalletResponseData.setCustomerId(username);
+      createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+      return createWalletResponseData;
   }
 
   /*

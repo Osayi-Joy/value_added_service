@@ -1,13 +1,20 @@
 package com.digicore.billent.backoffice.service.modules.wallets.service;
 
-import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
-import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.implementation.WalletServiceImpl;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BackOfficeWalletService {
 
-    private final BackOfficeWalletServiceImpl
+    private final WalletServiceImpl walletServiceImpl;
 
-    public PaginatedResponseDTO<BackOfficeWalletResponseDTO>  getAllWallets(int pageNumber, int pageSize) {
-        return null;
+    public BackOfficeWalletService(WalletServiceImpl walletServiceImpl) {
+        this.walletServiceImpl = walletServiceImpl;
+    }
+
+
+    public WalletBalanceResponseData fetchWalletBalance(String systemWalletId) {
+        return walletServiceImpl.retrieveWalletBalance(systemWalletId);
     }
 }
