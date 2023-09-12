@@ -56,6 +56,11 @@ public class SwaggerDocUtil {
 
   public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION =
       "This API resets a user's existing password to a new password provided by the user, the otp required is the resetKey that came from the response after validating the phone number";
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE =
+          "Change password";
+
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION =
+          "This API is used to update an authenticated user password";
 
   // Onboarding Controller Doc
   public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";
@@ -300,6 +305,12 @@ public class SwaggerDocUtil {
   public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION =
           "This API is used to retrieve all audit trails.";
 
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS =
+      "Fetch filtered audit trails by activity or date range.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION =
+      "This API is used to retrieve all audit trails filtered by activity or date range.";
+
   // Wallets Controller Doc
   public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
   public static final String WALLET_CONTROLLER_DESCRIPTION =
@@ -309,6 +320,5 @@ public class SwaggerDocUtil {
   public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_TITLE = "Get a wallet balance";
   public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_DESCRIPTION =
           "This API is used to fetch a wallet's balance.";
-
   private SwaggerDocUtil() {}
 }
