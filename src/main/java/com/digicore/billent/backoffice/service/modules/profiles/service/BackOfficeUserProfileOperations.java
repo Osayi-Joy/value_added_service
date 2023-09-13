@@ -115,4 +115,8 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
             AuditLogActivity.BACKOFFICE,
             AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
   }
+
+  public UserProfileDTO retrieveProfileDetails(){
+    return backOfficeUserProfileServiceImpl.retrieveMyProfile(ClientUtil.getLoggedInUsername());
+  }
 }

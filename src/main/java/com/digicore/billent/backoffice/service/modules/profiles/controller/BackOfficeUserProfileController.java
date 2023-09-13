@@ -174,4 +174,15 @@ public class BackOfficeUserProfileController {
     backOfficeUserProfileOperations.changePassword(requestDTO);
     return ControllerResponse.buildSuccessResponse("Password updated Successful");
   }
+
+  @GetMapping("view-details")
+  @PreAuthorize("hasAuthority('view-backoffice-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_GET_USER_TITLE,
+          description = PROFILE_CONTROLLER_GET_USER_DESCRIPTION)
+  public ResponseEntity<Object> viewProfileDetails() {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeUserProfileOperations.retrieveProfileDetails(),
+            PROFILE_RETRIEVED_MESSAGE);
+  }
 }
