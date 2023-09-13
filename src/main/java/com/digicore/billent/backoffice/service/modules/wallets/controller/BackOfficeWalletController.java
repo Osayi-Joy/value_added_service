@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.wallets.controller;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletService;
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.util.PageableUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,8 +58,13 @@ public class BackOfficeWalletController {
             @RequestParam(value = START_DATE, required = false) String startDate,
             @RequestParam(value = END_DATE, required = false) String endDate
     ){
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setStartDate(startDate);
+        billentSearchRequest.setEndDate(endDate);
 
-        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchAllWallet(int),"Retrieved all wallets Successfully");
+        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchAllWallet(billentSearchRequest),"Retrieved all wallets Successfully");
     }
 
 

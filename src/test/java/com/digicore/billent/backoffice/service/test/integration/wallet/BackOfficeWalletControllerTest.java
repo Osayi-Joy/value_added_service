@@ -6,10 +6,13 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
-import com.digicore.billent.data.lib.modules.common.wallet.service.implementation.WalletServiceImpl;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
+import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +26,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
+
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_EMAIL;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -47,7 +55,7 @@ class BackOfficeWalletControllerTest {
     @MockBean
     private NotificationDispatcher notificationDispatcher;
     @MockBean
-    private WalletServiceImpl walletServiceImpl;
+    private WalletService walletServiceImpl;
 
     @Autowired
     private MockMvc mockMvc;
@@ -69,6 +77,19 @@ class BackOfficeWalletControllerTest {
 
     }
 
+  private static PaginatedResponseDTO<WalletResponseData> getPaginatedResponseDTO(MvcResult result)
+      throws UnsupportedEncodingException, JsonProcessingException {
+    ApiResponseJson<PaginatedResponseDTO<WalletResponseData>> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                result.getResponse().getContentAsString().trim(),
+                new TypeToken<
+                    ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
+    assertTrue(response.isSuccess());
+
+    return response.getData();
+    }
+
     @Test
     void viewWalletBalanceTest() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
@@ -85,5 +106,27 @@ class BackOfficeWalletControllerTest {
 
         assertTrue(response.isSuccess());
 
+    }
+    @Test
+    void testGetAllWallets() throws Exception {
+
+        MvcResult mvcResult =
+                mockMvc
+                        .perform(
+                                get(WALLET_API_V1 + "retrieve-all-wallets")
+                                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                                        .param(START_DATE,"2023-07-09")
+                                        .param(END_DATE,"2023-09-09")
+                                        .header("Authorization", ACCESS_TOKEN))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        PaginatedResponseDTO<WalletResponseData> paginatedResponseDTO =
+                getPaginatedResponseDTO(mvcResult);
+
+        assertNotNull(paginatedResponseDTO.getContent());
+        assertTrue(paginatedResponseDTO.getIsFirstPage());
+        assertTrue(paginatedResponseDTO.getIsLastPage());
     }
 }
