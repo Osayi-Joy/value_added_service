@@ -11,9 +11,7 @@ import com.digicore.billent.backoffice.service.modules.profiles.service.BackOffi
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
-import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
-import com.digicore.registhentication.common.dto.request.SixthBaseRequestDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
