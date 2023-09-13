@@ -6,7 +6,7 @@ import com.digicore.billent.backoffice.service.test.integration.common.TestHelpe
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
-import com.digicore.billent.data.lib.modules.common.wallet.service.implementation.WalletServiceImpl;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -47,7 +47,7 @@ class BackOfficeWalletControllerTest {
     @MockBean
     private NotificationDispatcher notificationDispatcher;
     @MockBean
-    private WalletServiceImpl walletServiceImpl;
+    private WalletService walletServiceImpl;
 
     @Autowired
     private MockMvc mockMvc;
