@@ -1,10 +1,13 @@
 package com.digicore.billent.backoffice.service.test.integration.audit_trails;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUDIT_TRAIL_API_V1;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.DOWNLOAD_FORMAT;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.END_DATE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_NUMBER;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_NUMBER_DEFAULT_VALUE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.START_DATE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.VALUE;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,12 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.dto.AuditLogDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,6 +90,21 @@ class BackOfficeAuditTrailsControllerTest {
             .fromJson(mvcResult.getResponse().getContentAsString().trim(), ApiResponseJson.class);
 
     assertTrue(response.isSuccess());
+  }
+
+  @Test
+  void testExportProductsAsCsv() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+
+    mockMvc.perform(get(AUDIT_TRAIL_API_V1 + "export-to-csv")
+            .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+            .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+            .param(START_DATE, "2023-05-20")
+            .param(END_DATE, "2023-11-19")
+            .param("activity", "LOGIN_SUCCESS")
+            .param(DOWNLOAD_FORMAT, "csv")
+            .header("Authorization", testHelper.retrieveValidAccessToken()))
+        .andExpect(status().is2xxSuccessful());
   }
 
   private static PaginatedResponseDTO<AuditLogDTO> getPaginatedResponseDTO(
