@@ -322,5 +322,15 @@ public class SwaggerDocUtil {
   public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION =
       "This API is used to export audit trails.";
 
+  // Dashboard Controller Doc
+  public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
+  public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
+      "This module contains the required API to view dashboard.";
+
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW =
+      "View dashboard.";
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
+      "This API is used to view dashboard.";
+
   private SwaggerDocUtil() {}
 }
