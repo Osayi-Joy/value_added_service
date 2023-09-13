@@ -8,6 +8,8 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_FETCH_SELF_DESCRIPTION;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_TRAILS;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_TITLE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.END_DATE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_NUMBER;
@@ -15,6 +17,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAG
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.START_DATE;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.VALUE;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.audit_trails.service.BackOfficeAuditTrailOperation;
@@ -99,6 +102,26 @@ public class BackOfficeAuditTrailController {
         billentSearchRequest.setStartDate(startDate);
         billentSearchRequest.setEndDate(endDate);
         return ControllerResponse.buildSuccessResponse(auditTrailOperation.fetchFilteredAuditTrails(billentSearchRequest),"Filtered audit trails fetched successfully");
+    }
+
+    @TokenValid()
+    @GetMapping("search")
+    @PreAuthorize("hasAuthority('view-all-audit-trails')")
+    @Operation(
+        summary = AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_TRAILS,
+        description = AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION)
+    public ResponseEntity<Object> SearchAuditTrails(
+        @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+        int pageNumber,
+        @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+        int pageSize,
+        @RequestParam(value = VALUE) String value
+    ) {
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setValue(value);
+        return ControllerResponse.buildSuccessResponse(auditTrailOperation.searchAuditTrails(billentSearchRequest),"Searched audit trails successfully");
     }
 
 }

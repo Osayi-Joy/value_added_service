@@ -5,6 +5,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAG
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_NUMBER_DEFAULT_VALUE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.VALUE;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,10 +14,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.dto.AuditLogDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,6 +70,25 @@ class BackOfficeAuditTrailsControllerTest {
     assertNotNull(paginatedResponseDTO.getContent());
     assertTrue(paginatedResponseDTO.getIsFirstPage());
     assertTrue(paginatedResponseDTO.getIsLastPage());
+  }
+
+  @Test
+  void testSearchAuditTrails() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+
+    MvcResult mvcResult = mockMvc.perform(
+            get(AUDIT_TRAIL_API_V1 + "search").param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                .param(VALUE, "")
+                .header("Authorization", testHelper.retrieveValidAccessToken()))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    ApiResponseJson<?> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(mvcResult.getResponse().getContentAsString().trim(), ApiResponseJson.class);
+
+    assertTrue(response.isSuccess());
   }
 
   private static PaginatedResponseDTO<AuditLogDTO> getPaginatedResponseDTO(

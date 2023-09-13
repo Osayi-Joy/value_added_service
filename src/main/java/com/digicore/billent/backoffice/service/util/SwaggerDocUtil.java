@@ -311,6 +311,12 @@ public class SwaggerDocUtil {
   public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION =
       "This API is used to retrieve all audit trails filtered by activity or date range.";
 
+  public static final String AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_TRAILS =
+      "Search audit trails.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION =
+      "This API is used to search all audit trails.";
+
   // Wallets Controller Doc
   public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
   public static final String WALLET_CONTROLLER_DESCRIPTION =
