@@ -265,7 +265,7 @@ class BackOfficeProfileControllerTest {
     MvcResult result =
             mockMvc
                     .perform(
-                            MockMvcRequestBuilders.patch(PROFILE_API_V1.concat("get-self"))
+                            MockMvcRequestBuilders.get(PROFILE_API_V1.concat("get-self"))
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .header("Authorization", testHelper.retrieveValidAccessToken()))
                     .andExpect(status().isOk())
