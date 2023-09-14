@@ -331,5 +331,15 @@ public class SwaggerDocUtil {
   public static final String WALLET_CONTROLLER_GET_ALL_WALLET_TITLE = "Get all wallets";
   public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
           "This API is used to fetch all wallets.";
+  // Dashboard Controller Doc
+  public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
+  public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
+      "This module contains the required API to view dashboard.";
+
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW =
+      "View dashboard.";
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
+      "This API is used to view dashboard.";
+
   private SwaggerDocUtil() {}
 }
