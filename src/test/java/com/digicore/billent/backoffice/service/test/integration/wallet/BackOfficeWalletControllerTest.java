@@ -113,7 +113,7 @@ class BackOfficeWalletControllerTest {
         MvcResult mvcResult =
                 mockMvc
                         .perform(
-                                get(WALLET_API_V1 + "retrieve-all-wallets")
+                                get(WALLET_API_V1 + "get-all")
                                         .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
                                         .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
                                         .param(START_DATE,"2023-07-09")

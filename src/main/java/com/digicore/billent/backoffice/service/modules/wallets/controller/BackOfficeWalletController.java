@@ -42,7 +42,7 @@ public class BackOfficeWalletController {
             backOfficeWalletService.fetchWalletBalance(systemWalletId), "Retrieved wallet balance successfully");
 
     }
-    @GetMapping("retrieve-all-wallets")
+    @GetMapping("get-all")
     @PreAuthorize("hasAuthority('view-all-wallets')")
     @Operation(
             summary = WALLET_CONTROLLER_GET_ALL_WALLET_TITLE,
