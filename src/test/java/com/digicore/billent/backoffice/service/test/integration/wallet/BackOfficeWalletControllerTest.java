@@ -108,7 +108,7 @@ class BackOfficeWalletControllerTest {
 
     }
     @Test
-    void testGetAllWallets() throws Exception {
+    void getAllWalletsTests() throws Exception {
 
         MvcResult mvcResult =
                 mockMvc
