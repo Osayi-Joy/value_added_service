@@ -363,5 +363,10 @@
     "name": "view-all-wallet-balances",
     "description": "This allows you to view all wallet balances",
     "permissionType": "WALLETS"
+  },
+  {
+  "name": "view-self-user-details",
+  "description": "This allows you to view your user details",
+  "permissionType": "USERS"
   }
 ]
