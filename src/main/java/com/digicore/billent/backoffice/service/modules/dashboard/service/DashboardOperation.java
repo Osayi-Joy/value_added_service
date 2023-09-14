@@ -4,8 +4,9 @@ package com.digicore.billent.backoffice.service.modules.dashboard.service;
  * @createdOn Sep-13(Wed)-2023
  */
 
-import com.digicore.billent.data.lib.modules.common.dashboard.DashboardService;
-import com.digicore.request.processor.dto.DashboardDTO;
+
+import com.digicore.billent.data.lib.modules.common.dashboard.dto.DashboardDTO;
+import com.digicore.billent.data.lib.modules.common.dashboard.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,6 @@ public class DashboardOperation {
   private final DashboardService backOfficeDashboardServiceImpl;
 
   public DashboardDTO viewDashboard() {
-    return backOfficeDashboardServiceImpl.populateDashboard();
+    return backOfficeDashboardServiceImpl.retrieveDashboardMetricsData();
   }
 }

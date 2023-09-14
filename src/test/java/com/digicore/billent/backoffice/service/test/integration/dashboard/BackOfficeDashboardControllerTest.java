@@ -10,9 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.common.dashboard.dto.DashboardDTO;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
-import com.digicore.request.processor.dto.DashboardDTO;
 import com.google.gson.reflect.TypeToken;
 import java.io.UnsupportedEncodingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +52,7 @@ class BackOfficeDashboardControllerTest {
     TestHelper testHelper = new TestHelper(mockMvc);
 
     MvcResult mvcResult = mockMvc.perform(
-            get(DASHBOARD_API_V1 + "view")
+            get(DASHBOARD_API_V1 + "get-metric-data")
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
         .andExpect(status().isOk())
         .andReturn();

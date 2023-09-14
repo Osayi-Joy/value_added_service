@@ -32,7 +32,7 @@ public class DashboardController {
 
   @TokenValid()
   @PreAuthorize("hasAuthority('view-dashboard')")
-  @GetMapping("view")
+  @GetMapping("get-metric-data")
   @Operation(
       summary = DASHBOARD_CONTROLLER_CONTROLLER_VIEW,
       description = DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION)
