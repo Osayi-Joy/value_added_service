@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
-import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
 import static com.digicore.registhentication.util.PageableUtil.END_DATE;
 import static com.digicore.registhentication.util.PageableUtil.PAGE_NUMBER;
 import static com.digicore.registhentication.util.PageableUtil.PAGE_NUMBER_DEFAULT_VALUE;
@@ -55,8 +53,8 @@ public class BackOfficeWalletController {
             int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
-            @RequestParam(value = START_DATE, required = false) String startDate,
-            @RequestParam(value = END_DATE, required = false) String endDate
+            @RequestParam(value = START_DATE) String startDate,
+            @RequestParam(value = END_DATE) String endDate
     ){
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
