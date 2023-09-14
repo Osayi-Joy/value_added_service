@@ -316,12 +316,19 @@ public class SwaggerDocUtil {
 
   public static final String AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION =
       "This API is used to search all audit trails.";
-
   public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV =
       "Export audit trails.";
   public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION =
       "This API is used to export audit trails.";
+  // Wallets Controller Doc
+  public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
+  public static final String WALLET_CONTROLLER_DESCRIPTION =
+          "This module contains all required APIs to complete operations surrounding wallets. it goes through maker checker "
+                  + "process";
 
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_TITLE = "Get a wallet balance";
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_DESCRIPTION =
+          "This API is used to fetch a wallet's balance.";
   // Dashboard Controller Doc
   public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
   public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
