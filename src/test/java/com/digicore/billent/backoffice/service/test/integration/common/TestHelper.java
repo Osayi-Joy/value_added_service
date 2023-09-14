@@ -179,7 +179,7 @@ public class TestHelper {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName(roleName);
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers",
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers", "view-self-user-details",
             "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role"));
 
 
@@ -202,8 +202,9 @@ public class TestHelper {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers","view-dashboard",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails", "view-all-wallet-balances","view-all-wallets"));
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers", "view-dashboard", "view-self-user-details",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails","view-all-wallet-balances","view-all-wallets"));
+
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
                     .content(

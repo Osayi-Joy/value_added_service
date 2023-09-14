@@ -221,6 +221,9 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_GET_USER_TITLE = "Get a back office user profile";
   public static final String PROFILE_CONTROLLER_GET_USER_DESCRIPTION =
       "This API is used to fetch a back office user profile in the system.";
+  public static final String PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_TITLE = "Fetch self user profile details";
+  public static final String PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_DESCRIPTION =
+          "This API is used to fetch self user profile details in the system.";
 
   public static final String PROFILE_CONTROLLER_FILTER_USERS_TITLE = "Filter back office users";
   public static final String PROFILE_CONTROLLER_FILTER_USERS_DESCRIPTION =
