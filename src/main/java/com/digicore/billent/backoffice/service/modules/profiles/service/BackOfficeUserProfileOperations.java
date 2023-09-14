@@ -117,6 +117,6 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   }
 
   public UserProfileDTO retrieveProfileDetails(){
-    return backOfficeUserProfileServiceImpl.retrieveMyProfile(ClientUtil.getLoggedInUsername());
+    return backOfficeUserProfileServiceImpl.retrieveLoggedInUserProfile();
   }
 }
