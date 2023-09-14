@@ -373,5 +373,10 @@
     "name": "view-all-wallets",
     "description": "This allows you to view all wallets",
     "permissionType": "WALLETS"
+  },
+  {
+    "name": "credit-wallet",
+    "description": "This allows you to credit a wallet",
+    "permissionType": "WALLETS"
   }
 ]

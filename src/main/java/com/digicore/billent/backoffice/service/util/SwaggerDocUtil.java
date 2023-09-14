@@ -334,6 +334,8 @@ public class SwaggerDocUtil {
   public static final String WALLET_CONTROLLER_GET_ALL_WALLET_TITLE = "Get all wallets";
   public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
           "This API is used to fetch all wallets.";
+  public static final String WALLET_CONTROLLER_CREDIT_TITLE = "Credit a wallet position";
+  public static final String WALLET_CONTROLLER_CREDIT_DESCRIPTION = "This API is used to credit a customer wallet position";
   // Dashboard Controller Doc
   public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
   public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
