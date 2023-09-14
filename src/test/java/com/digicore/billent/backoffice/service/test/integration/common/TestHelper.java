@@ -17,6 +17,7 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.Permission
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
@@ -202,7 +203,7 @@ public class TestHelper {
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
     roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails"));
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails","view-all-wallet-balances"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
@@ -259,6 +260,16 @@ public class TestHelper {
             .andExpect(status().isOk())
             .andReturn();
 
+  }
+
+  public CreateWalletResponseData initializeWalletResponse(String username) {
+      CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+      createWalletResponseData.setCurrency("NGN");
+      createWalletResponseData.setWalletName("Wallet Name");
+      createWalletResponseData.setSystemWalletId("WA_TESTID");
+      createWalletResponseData.setCustomerId(username);
+      createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+      return createWalletResponseData;
   }
 
   /*
