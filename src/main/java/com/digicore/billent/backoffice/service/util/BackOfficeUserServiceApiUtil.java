@@ -35,6 +35,10 @@ public class BackOfficeUserServiceApiUtil {
  //AuditTrail API versioning
  public static final String AUDIT_TRAIL_API_V1 = API_V1 + "audit-trail/process/";
 
+ //Wallets API versioning
+ public static final String WALLET_API_V1 = API_V1 + "wallets/process/";
+
+
  private BackOfficeUserServiceApiUtil() {
  }
 }
