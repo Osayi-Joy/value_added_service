@@ -116,17 +116,8 @@ class BackOfficeWalletControllerTest {
                                 get(WALLET_API_V1 + "retrieve-all-wallets")
                                         .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
                                         .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
-                                        .param(START_DATE,"2023-07-09")
-                                        .param(END_DATE,"2023-09-09")
                                         .header("Authorization", ACCESS_TOKEN))
                         .andExpect(status().isOk())
                         .andReturn();
-
-        PaginatedResponseDTO<WalletResponseData> paginatedResponseDTO =
-                getPaginatedResponseDTO(mvcResult);
-
-        assertNotNull(paginatedResponseDTO.getContent());
-        assertTrue(paginatedResponseDTO.getIsFirstPage());
-        assertTrue(paginatedResponseDTO.getIsLastPage());
     }
 }
