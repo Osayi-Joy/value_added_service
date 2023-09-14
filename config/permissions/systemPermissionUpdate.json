@@ -358,5 +358,10 @@
     "name": "approve-edit-backoffice-user-details",
     "description": "This allows you to approve edit request of a backoffice user",
     "permissionType": "USERS"
+  },
+  {
+    "name": "view-self-user-details",
+    "description": "This allows you to view your user details",
+    "permissionType": "USERS"
   }
 ]
