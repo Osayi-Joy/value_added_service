@@ -84,7 +84,7 @@ public class BackOfficeWalletController {
     public ResponseEntity<Object> searchWallets(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
             int pageNumber,
-            @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
             @RequestParam(value = VALUE) String value
     ){
