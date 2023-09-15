@@ -25,4 +25,8 @@ public class BackOfficeWalletService {
     public void creditCustomerWalletPosition(TopUpWalletDTO topUpWalletDTO){
         walletServiceImpl.topUpWallet(topUpWalletDTO);
     }
+
+    public PaginatedResponseDTO<WalletResponseData> searchWallets(BillentSearchRequest billentSearchRequest) {
+        return walletServiceImpl.searchWallets(billentSearchRequest);
+    }
 }
