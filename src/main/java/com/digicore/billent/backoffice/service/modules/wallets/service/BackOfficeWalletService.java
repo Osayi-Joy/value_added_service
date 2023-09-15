@@ -29,4 +29,8 @@ public class BackOfficeWalletService {
     public PaginatedResponseDTO<WalletResponseData> searchWallets(BillentSearchRequest billentSearchRequest) {
         return walletServiceImpl.searchWallets(billentSearchRequest);
     }
+
+    public PaginatedResponseDTO<WalletResponseData> filterWallets(BillentSearchRequest billentSearchRequest){
+        return walletServiceImpl.filterWallets(billentSearchRequest);
+    }
 }

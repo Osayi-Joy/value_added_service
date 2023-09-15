@@ -4,6 +4,7 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
+import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.registhentication.util.PageableUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
+import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.WALLET_STATUS;
 import static com.digicore.registhentication.util.PageableUtil.*;
 
 /*
@@ -95,6 +97,31 @@ public class BackOfficeWalletController {
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.searchWallets(billentSearchRequest),"Retrieved all wallets by search keyword successfully");
     }
 
+
+    @GetMapping("filter-wallets")
+    @PreAuthorize("hasAuthority('view-all-wallets')")
+    @Operation(
+            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE,
+            description = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION)
+
+    public ResponseEntity<Object> filterWallets(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = START_DATE) String startDate,
+            @RequestParam(value = END_DATE) String endDate,
+            @RequestParam(value = WALLET_STATUS, required = false) Status walletStatus
+
+    ){
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setStartDate(startDate);
+        billentSearchRequest.setEndDate(endDate);
+        billentSearchRequest.setStatus(walletStatus);
+        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.searchWallets(billentSearchRequest),"Retrieved all wallets by status successfully");
+    }
 
 
 }
