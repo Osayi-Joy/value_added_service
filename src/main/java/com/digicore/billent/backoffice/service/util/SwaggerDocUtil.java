@@ -340,6 +340,10 @@ public class SwaggerDocUtil {
           "Search wallets";
   public static final String WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION =
           "This API is used to Search wallets by all table header except date created and status, use the filter endpoint if you wish to fetch data by status";
+  public static final String WALLET_CONTROLLER_FETCH_WALLET_BY_STATUS_TITLE =
+          "Filter wallets by Status And Date Created";
+  public static final String WALLET_CONTROLLER_FETCH_WALLET_BY_STATUS_DESCRIPTION =
+          "This API is used to Filter wallets by Status And Date Created.";
   // Dashboard Controller Doc
   public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
   public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
