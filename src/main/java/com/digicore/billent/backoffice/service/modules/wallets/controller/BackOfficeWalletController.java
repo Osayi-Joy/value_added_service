@@ -123,5 +123,29 @@ public class BackOfficeWalletController {
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.searchWallets(billentSearchRequest),"Retrieved all wallets by status successfully");
     }
 
+    @GetMapping("retrieve-transactions-{systemWalletId}")
+    @PreAuthorize("hasAuthority('view-all-wallet-transactions')")
+    @Operation(
+            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE,
+            description = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION)
+
+    public ResponseEntity<Object> fetchWalletTransactions(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = START_DATE) String startDate,
+            @RequestParam(value = END_DATE) String endDate,
+            @PathVariable String systemWalletId
+    ){
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setStartDate(startDate);
+        billentSearchRequest.setEndDate(endDate);
+        billentSearchRequest.setSystemWalletId(systemWalletId);
+        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest),"Retrieved all wallets by status successfully");
+    }
+
 
 }
