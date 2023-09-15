@@ -86,7 +86,7 @@ public class BackOfficeWalletController {
     public ResponseEntity<Object> searchWallets(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
             int pageNumber,
-            @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
             @RequestParam(value = VALUE) String value
     ){
@@ -101,8 +101,8 @@ public class BackOfficeWalletController {
     @GetMapping("filter-wallets")
     @PreAuthorize("hasAuthority('view-all-wallets')")
     @Operation(
-            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE,
-            description = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION)
+            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_STATUS_TITLE,
+            description = WALLET_CONTROLLER_FETCH_WALLET_BY_STATUS_DESCRIPTION)
 
     public ResponseEntity<Object> filterWallets(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
