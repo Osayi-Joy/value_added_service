@@ -126,8 +126,8 @@ public class BackOfficeWalletController {
     @GetMapping("retrieve-transactions-{systemWalletId}")
     @PreAuthorize("hasAuthority('view-all-wallet-transactions')")
     @Operation(
-            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE,
-            description = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION)
+            summary = WALLET_CONTROLLER_FETCH_TRANSACTION_TITLE,
+            description = WALLET_CONTROLLER_FETCH_TRANSACTION_DESCRIPTION)
 
     public ResponseEntity<Object> fetchWalletTransactions(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
