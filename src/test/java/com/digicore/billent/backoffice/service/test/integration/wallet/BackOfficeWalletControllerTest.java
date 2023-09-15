@@ -5,6 +5,7 @@ import com.digicore.billent.backoffice.service.test.integration.common.H2TestCon
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /*
@@ -121,5 +123,28 @@ class BackOfficeWalletControllerTest {
                                         .header("Authorization", ACCESS_TOKEN))
                         .andExpect(status().isOk())
                         .andReturn();
+        ApiResponseJson<PaginatedResponseDTO<WalletResponseData>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(mvcResult.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {
+                        }.getType());
+
+        assertTrue(response.isSuccess());
+    }
+
+    @Test
+    void creditCustomerWalletTest() throws Exception {
+        TopUpWalletDTO topUpWalletDTO = new TopUpWalletDTO();
+        topUpWalletDTO.setAmount("1000");
+        topUpWalletDTO.setSystemWalletID("TEST_ID");
+        topUpWalletDTO.setNarration("test");
+        topUpWalletDTO.setOrganizationId("WA_01_TEST");
+        mockMvc
+                .perform(
+                        post(WALLET_API_V1 + "credit-position")
+                                .content(ClientUtil.getGsonMapper().toJson(topUpWalletDTO))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", ACCESS_TOKEN))
+                .andExpect(status().isOk())
+                .andReturn();
     }
 }

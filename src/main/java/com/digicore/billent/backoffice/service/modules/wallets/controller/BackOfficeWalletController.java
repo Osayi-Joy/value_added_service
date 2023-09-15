@@ -3,6 +3,7 @@ package com.digicore.billent.backoffice.service.modules.wallets.controller;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.registhentication.util.PageableUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,6 +64,19 @@ public class BackOfficeWalletController {
         billentSearchRequest.setEndDate(endDate);
 
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchAllWallet(billentSearchRequest),"Retrieved all wallets Successfully");
+    }
+
+    @PostMapping("credit-position")
+    @PreAuthorize("hasAuthority('credit-wallet')")
+    @Operation(
+            summary = WALLET_CONTROLLER_CREDIT_TITLE,
+            description = WALLET_CONTROLLER_CREDIT_DESCRIPTION)
+
+    public ResponseEntity<Object> creditCustomerWalletPosition(
+            @RequestBody TopUpWalletDTO topUpWalletDTO
+    ){
+        backOfficeWalletService.creditCustomerWalletPosition(topUpWalletDTO);
+        return ControllerResponse.buildSuccessResponse();
     }
 
 
