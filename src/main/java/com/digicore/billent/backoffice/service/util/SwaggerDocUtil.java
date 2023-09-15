@@ -326,12 +326,14 @@ public class SwaggerDocUtil {
   // Wallets Controller Doc
   public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
   public static final String WALLET_CONTROLLER_DESCRIPTION =
-          "This module contains all required APIs to complete operations surrounding wallets. it goes through maker checker "
-                  + "process";
+          "This module contains all required APIs to complete operations surrounding wallets.";
 
   public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_TITLE = "Get a wallet balance";
   public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_DESCRIPTION =
           "This API is used to fetch a wallet's balance.";
+  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_TITLE = "Get all wallets";
+  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
+          "This API is used to fetch all wallets.";
   // Dashboard Controller Doc
   public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
   public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
