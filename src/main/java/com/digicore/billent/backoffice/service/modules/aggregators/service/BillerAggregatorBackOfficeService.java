@@ -38,7 +38,7 @@ public class BillerAggregatorBackOfficeService
     auditLogProcessor.saveAuditWithDescription(
             AuditLogActivity.APPROVE_ENABLE_BILLER_AGGREGATOR,
             AuditLogActivity.BACKOFFICE,
-            AuditLogActivity.APPROVE_ENABLE_BILLER_AGGREGATOR_DESCRIPTION.replace("{}", billerAggregatorDTO.getAggregatorName()));
+            AuditLogActivity.APPROVE_ENABLE_BILLER_AGGREGATOR_DESCRIPTION.replace("{}", billerAggregatorDTO.getAggregatorSystemId()));
     return Optional.empty();
   }
 
@@ -53,7 +53,7 @@ public class BillerAggregatorBackOfficeService
     auditLogProcessor.saveAuditWithDescription(
             AuditLogActivity.APPROVE_DISABLE_BILLER_AGGREGATOR,
             AuditLogActivity.BACKOFFICE,
-            AuditLogActivity.APPROVE_DISABLE_BILLER_AGGREGATOR_DESCRIPTION.replace("{}", billerAggregatorDTO.getAggregatorName()));
+            AuditLogActivity.APPROVE_DISABLE_BILLER_AGGREGATOR_DESCRIPTION.replace("{}", billerAggregatorDTO.getAggregatorSystemId()));
     return Optional.empty();
   }
 
