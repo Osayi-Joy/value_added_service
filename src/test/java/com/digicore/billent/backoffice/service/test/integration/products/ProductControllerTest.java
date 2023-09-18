@@ -1,28 +1,28 @@
-package com.digicore.billent.backoffice.service.test.integration.billers;
+package com.digicore.billent.backoffice.service.test.integration.products;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
-
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
-
-import com.digicore.billent.data.lib.modules.billers.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
+import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
+
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.reflect.TypeToken;
+
 import java.io.UnsupportedEncodingException;
+
+import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+
 /*
  * @author Joy Osayi
  * @createdOn Jul-03(Mon)-2023
@@ -49,9 +50,19 @@ class ProductControllerTest {
 
     @Autowired
     private PropertyConfig propertyConfig;
-    
+
     @Autowired
     private ProductRepository productRepository;
+
+    private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
+        ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<ProductDto>>>() {}.getType());
+        assertTrue(response.isSuccess());
+
+        return response.getData();
+
+    }
 
     @BeforeEach
     void  checkup() throws Exception {
@@ -59,6 +70,7 @@ class ProductControllerTest {
         TestHelper testHelper = new TestHelper(mockMvc);
         testHelper.createTestRole();
     }
+
     @Test
     void testGetAllProducts() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
@@ -122,15 +134,6 @@ class ProductControllerTest {
 
     }
 
-    private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
-        ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
-                ClientUtil.getGsonMapper()
-                        .fromJson(result.getResponse().getContentAsString().trim(), new TypeToken<ApiResponseJson<PaginatedResponseDTO<ProductDto>>>() {}.getType());
-        assertTrue(response.isSuccess());
-
-        return response.getData();
-
-    }
     @Test
     void testDisableProduct_ProductExists() throws Exception {
         Product product = new Product();
@@ -164,14 +167,14 @@ class ProductControllerTest {
         ProductDto productDto = new ProductDto();
         productDto.setProductSystemId("PSID004");
 
-    MvcResult mvcResult = mockMvc
-        .perform(
-            patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
-                .content(ClientUtil.getGsonMapper().toJson(productDto))
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", testHelper.retrieveValidAccessToken()))
-        .andExpect(status().isBadRequest())
-            .andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
+                                .content(ClientUtil.getGsonMapper().toJson(productDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization", testHelper.retrieveValidAccessToken()))
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
         ApiResponseJson<?> response =
                 ClientUtil.getGsonMapper()

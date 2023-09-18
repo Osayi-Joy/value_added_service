@@ -108,7 +108,7 @@ public class BillerAggregatorController {
             auditType = AuditLogActivity.BACKOFFICE,
             auditDescription = AuditLogActivity.DISABLE_BILLER_AGGREGATOR_DESCRIPTION)
     @PatchMapping("disable-{aggregatorSystemId}")
-  //  @PreAuthorize("hasAuthority('disable-biller-aggregator')")
+    @PreAuthorize("hasAuthority('disable-biller-aggregator')")
     @Operation(
             summary = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_TITLE,
             description = BILLER_AGGREGATOR_CONTROLLER_ENABLE_AGGREGATOR_DESCRIPTION)
