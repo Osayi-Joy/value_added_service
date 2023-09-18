@@ -48,8 +48,6 @@ xsrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/
 ysrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/processor/BackOfficeUserOnboardingProcessor.java,2/4/246cfeccdf3c56b83a20ed9bb3b0b5609a62f878
 ¢
 rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BillerAggregatorControllerTest.java,4/4/44365681a1782f73929175016cfcc2e2ce507cdd
-™
-isrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/ProductControllerTest.java,0/e/0e8ec4fad80bfb7d7a360290ff630666097e226c
 ¦
 vsrc/test/java/com/digicore/billent/backoffice/service/test/integration/resellers/BackOfficeResellerControllerTest.java,7/f/7fe537ee05bfc1cf0ac08d7f6d298b88e3ff42e9
 š
@@ -58,5 +56,3 @@ jsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/control
 vsrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/services/BackOfficeUserOnboardingService.java,1/b/1be6ce668ba92863807426ed10d749ff392c1cfd
 £
 ssrc/test/java/com/digicore/billent/backoffice/service/test/integration/profile/BackOfficeProfileControllerTest.java,2/e/2e4e37384434bbfbbd7bb50145fc9b89c0d7122e
-¢
-rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BackOfficeBillerControllerTest.java,6/0/607f5747bad6ac606edf174d8e75560ff4041100

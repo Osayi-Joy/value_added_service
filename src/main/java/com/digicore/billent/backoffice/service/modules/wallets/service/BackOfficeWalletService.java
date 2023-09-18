@@ -1,11 +1,15 @@
 package com.digicore.billent.backoffice.service.modules.wallets.service;
 
+import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
+import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
+import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,7 @@ public class BackOfficeWalletService {
 
     private final WalletService walletServiceImpl;
 
+    private final CsvService csvService;
     public WalletBalanceResponseData fetchWalletBalance(String systemWalletId) {
         return walletServiceImpl.retrieveWalletBalance(systemWalletId);
     }
@@ -35,5 +40,14 @@ public class BackOfficeWalletService {
     }
     public PaginatedResponseDTO<WalletResponseData> fetchWalletTransactions(BillentSearchRequest billentSearchRequest){
         return walletServiceImpl.retrieveWalletTransaction(billentSearchRequest);
+    }
+
+    public void downloadWalletInCsv(HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
+        CsvDto<WalletResponseData> csvDto = new CsvDto<>();
+        csvDto.setBillentSearchRequest(billentSearchRequest);
+        csvDto.setResponse(response);
+        csvDto.setPage(billentSearchRequest.getPage());
+        csvDto.setPageSize(billentSearchRequest.getSize());
+        csvService.prepareCSVExport(csvDto, walletServiceImpl::prepareWalletCSV);
     }
 }

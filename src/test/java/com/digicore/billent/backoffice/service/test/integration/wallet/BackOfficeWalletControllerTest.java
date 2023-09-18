@@ -13,6 +13,7 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +27,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.UnsupportedEncodingException;
 
+import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_EMAIL;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
@@ -214,5 +217,17 @@ class BackOfficeWalletControllerTest {
                                 new TypeToken<
                                         ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
         assertTrue(response.isSuccess());
+    }
+
+    @Test
+    void exportWalletAsCsvTest() throws Exception {
+        mockMvc.perform(get(WALLET_API_V1 + "export-to-csv")
+                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                        .param(START_DATE, "2023-07-09")
+                        .param(END_DATE, "2023-09-09")
+                        .param(WALLET_STATUS, "ACTIVE")
+                        .header("Authorization", ACCESS_TOKEN))
+                .andExpect(status().is2xxSuccessful());
     }
 }

@@ -8,6 +8,7 @@ import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.registhentication.util.PageableUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -145,6 +146,28 @@ public class BackOfficeWalletController {
         billentSearchRequest.setEndDate(endDate);
         billentSearchRequest.setSystemWalletId(systemWalletId);
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest),"Retrieved all wallets by status successfully");
+    }
+    @GetMapping("export-to-csv")
+    @Operation(
+            summary = WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_TITLE,
+            description = WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_DESCRIPTION)
+    public void downloadWalletsInCSV(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = START_DATE) String startDate,
+            @RequestParam(value = END_DATE) String endDate,
+            @RequestParam(value = WALLET_STATUS, required = false) Status walletStatus,
+            HttpServletResponse response) {
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setStartDate(startDate);
+        billentSearchRequest.setEndDate(endDate);
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setStatus(walletStatus);
+        billentSearchRequest.setDownloadFormat("CSV");
+        backOfficeWalletService.downloadWalletInCsv(response,billentSearchRequest);
     }
 
 

@@ -356,6 +356,10 @@ public class SwaggerDocUtil {
       "View dashboard.";
   public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
       "This API is used to view dashboard.";
+  public static final String WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_TITLE =
+          "Export wallets in csv";
+  public static final String WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_DESCRIPTION =
+          "This API is used to export wallets in csv.";
 
   private SwaggerDocUtil() {}
 }
