@@ -16,8 +16,6 @@ fsrc/test/java/com/digicore/billent/backoffice/service/test/integration/common/H
 jsrc/main/java/com/digicore/billent/backoffice/service/modules/roles/processor/BackOfficeRoleProcessor.java,3/d/3d59cdefd318e178a3d45166db34ae94e6d42606
  
 psrc/main/java/com/digicore/billent/backoffice/service/modules/roles/services/BackOfficeRoleValidatorService.java,8/0/80598aa81908e213af5b6e233f8d9ca0ef214e6e
-©
-ysrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/BackOfficeUserProfileValidatorService.java,5/7/57a8ef793ad4b73ef091d6fa1a39fdd6d436bb74
 ž
 nsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/service/BackOfficeApprovalService.java,a/1/a1556a6397d4806727517603005eb05a3d6f8fd2
 §
@@ -42,8 +40,6 @@ ysrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/proces
 rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BillerAggregatorControllerTest.java,4/4/44365681a1782f73929175016cfcc2e2ce507cdd
 ™
 isrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/ProductControllerTest.java,0/e/0e8ec4fad80bfb7d7a360290ff630666097e226c
-¦
-vsrc/test/java/com/digicore/billent/backoffice/service/test/integration/resellers/BackOfficeResellerControllerTest.java,7/f/7fe537ee05bfc1cf0ac08d7f6d298b88e3ff42e9
 š
 jsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/controller/ApprovalController.java,1/5/152d93980743d9750c32ed068e820b418d9e7492
 ¦
@@ -54,10 +50,6 @@ ssrc/test/java/com/digicore/billent/backoffice/service/test/integration/profile/
 rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BackOfficeBillerControllerTest.java,6/0/607f5747bad6ac606edf174d8e75560ff4041100
 ¢
 rsrc/main/java/com/digicore/billent/backoffice/service/modules/aggregators/service/BillerAggregatorSyncService.java,9/d/9d4d7f8160782e36faeed7509c88c3924b2acc64
-¦
-vsrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/controller/BackOfficeUserProfileController.java,1/4/140c500e4e534a69f3a660843331310193176139
- 
-psrc/main/java/com/digicore/billent/backoffice/service/modules/billers/controller/BackOfficeBillerController.java,e/0/e0277a5569b113cba350de37faf101d12d9c51d8
 ‰
 Ysrc/main/java/com/digicore/billent/backoffice/service/config/BackOfficeSwaggerConfig.java,2/8/2863acb48d1498c95a28dee49be9afb57bd574c8
 ´
@@ -70,8 +62,6 @@ Ysrc/main/java/com/digicore/billent/backoffice/service/config/BackOfficeSwaggerC
 }src/main/java/com/digicore/billent/backoffice/service/modules/aggregators/service/BillerAggregatorInterswitchSyncService.java,f/2/f227b80affdba109998fd5430001d27e8d36a4d1
 «
 {src/main/java/com/digicore/billent/backoffice/service/modules/aggregators/service/BillerAggregatorEtranzactSyncService.java,d/9/d9c9e3a25edab2b2a31c964994f537314bd3bb65
-s
-Csrc/main/java/com/digicore/BillentBackofficeServiceApplication.java,2/1/21162eb803620792bab63a18b38f0247ea85cd2d
 Œ
 \src/main/java/com/digicore/billent/backoffice/service/util/BackOfficeUserServiceApiUtil.java,f/f/ff560993abd065dd54c612729fbbdc9e7769f028
 ²
