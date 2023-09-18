@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerAggregator;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerCategory;
+import com.digicore.billent.data.lib.modules.billers.model.Biller;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
@@ -138,16 +141,20 @@ class ProductControllerTest {
     void testDisableProduct_ProductExists() throws Exception {
         Product product = new Product();
         product.setProductSystemId("PSID001");
-        product.setProductId("PSID001");
-        product.setProductName("PSID001");
-        product.setProductSystemName("PSID001");
         product.setProductStatus(Status.ACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        product.setBiller(biller);
 
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID001");
+        productDto.setProductId("PSID001");
 
         MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable-{productSystemId}", product.getProductSystemId())
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
@@ -164,12 +171,22 @@ class ProductControllerTest {
     @Test
     void testDisableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
+
+        Product productDto = new Product();
         productDto.setProductSystemId("PSID004");
+        productDto.setProductStatus(Status.INACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        productDto.setBiller(biller);
+
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
+                        patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductId())
                                 .content(ClientUtil.getGsonMapper().toJson(productDto))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -186,20 +203,25 @@ class ProductControllerTest {
 
     @Test
     void testEnableProduct_ProductExists() throws Exception {
+
         Product product = new Product();
         product.setProductSystemId("PSID006");
-        product.setProductId("PSID006");
-        product.setProductSystemName("PSID006");
-        product.setProductName("PSID006");
         product.setProductStatus(Status.INACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        product.setBiller(biller);
 
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID006");
+        productDto.setProductId("PSID006");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -214,12 +236,20 @@ class ProductControllerTest {
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID008");
+        Product productDto = new Product();
+        productDto.setProductSystemId("PSID001");
+        productDto.setProductStatus(Status.INACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        productDto.setBiller(biller);
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
+                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())
