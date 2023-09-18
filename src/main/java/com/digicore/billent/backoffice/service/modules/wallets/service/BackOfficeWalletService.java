@@ -46,8 +46,6 @@ public class BackOfficeWalletService {
         CsvDto<WalletResponseData> csvDto = new CsvDto<>();
         csvDto.setBillentSearchRequest(billentSearchRequest);
         csvDto.setResponse(response);
-        csvDto.setPage(billentSearchRequest.getPage());
-        csvDto.setPageSize(billentSearchRequest.getSize());
         csvService.prepareCSVExport(csvDto, walletServiceImpl::prepareWalletCSV);
     }
 }

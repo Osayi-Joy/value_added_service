@@ -44,8 +44,6 @@ ysrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/proces
 {src/main/java/com/digicore/billent/backoffice/service/modules/onboarding/services/BackOfficeUserOnboardingProxyService.java,3/6/3632a75ca333f65030e0b88051411ec851245e6a
 ¢
 rsrc/test/java/com/digicore/billent/backoffice/service/test/integration/billers/BillerAggregatorControllerTest.java,4/4/44365681a1782f73929175016cfcc2e2ce507cdd
-¦
-vsrc/test/java/com/digicore/billent/backoffice/service/test/integration/resellers/BackOfficeResellerControllerTest.java,7/f/7fe537ee05bfc1cf0ac08d7f6d298b88e3ff42e9
 š
 jsrc/main/java/com/digicore/billent/backoffice/service/modules/approvals/controller/ApprovalController.java,1/5/152d93980743d9750c32ed068e820b418d9e7492
 ¦
