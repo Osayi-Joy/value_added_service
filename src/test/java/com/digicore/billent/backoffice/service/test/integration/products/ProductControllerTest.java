@@ -141,6 +141,7 @@ class ProductControllerTest {
     void testDisableProduct_ProductExists() throws Exception {
         Product product = new Product();
         product.setProductSystemId("PSID001");
+        product.setProductId("PSID001");
         product.setProductStatus(Status.ACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
@@ -174,6 +175,7 @@ class ProductControllerTest {
 
         Product productDto = new Product();
         productDto.setProductSystemId("PSID004");
+        productDto.setProductId("PSID004");
         productDto.setProductStatus(Status.INACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
@@ -206,6 +208,7 @@ class ProductControllerTest {
 
         Product product = new Product();
         product.setProductSystemId("PSID006");
+        product.setProductId("PSID006");
         product.setProductStatus(Status.INACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
@@ -238,6 +241,7 @@ class ProductControllerTest {
         TestHelper testHelper = new TestHelper(mockMvc);
         Product productDto = new Product();
         productDto.setProductSystemId("PSID001");
+        productDto.setProductId("PSID001");
         productDto.setProductStatus(Status.INACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
