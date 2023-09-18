@@ -7,6 +7,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeProxyService;
 import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -71,9 +72,14 @@ public class ProductController {
       @RequestParam(value = START_DATE, required = false) String startDate,
       @RequestParam(value = END_DATE, required = false) String endDate,
       @RequestParam(value = PRODUCT_STATUS, required = false) Status productStatus) {
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setStatus(productStatus);
+    billentSearchRequest.setStartDate(startDate);
+    billentSearchRequest.setEndDate(endDate);
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
     return ControllerResponse.buildSuccessResponse(
-        productBackOfficeService.fetchProductsByStatus(
-            productStatus, startDate, endDate, pageNumber, pageSize),
+        productBackOfficeService.fetchProductsByStatus(billentSearchRequest),
         "Retrieved All Products by Status Successfully");
   }
 
