@@ -1,10 +1,10 @@
 package com.digicore.billent.backoffice.service.modules.resellers.service;
 
 
+import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
-import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDTO;
-import com.digicore.billent.data.lib.modules.common.contributor.dto.BackOfficeResellerProfileDetailDTO;
-import com.digicore.billent.data.lib.modules.common.contributor.service.BackOfficeContributorService;
+import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BackOfficeResellerOperation {
 
-  private final BackOfficeContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
+  private final ContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
   private final CsvService csvService;
 
   public PaginatedResponseDTO<BackOfficeResellerProfileDTO> getAllResellers(
