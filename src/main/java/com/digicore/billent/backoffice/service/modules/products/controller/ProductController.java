@@ -5,8 +5,9 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeProxyService;
-import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.products.service.ProductBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.products.service.ProductBackOfficeService;
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,6 +38,18 @@ public class ProductController {
     return ControllerResponse.buildSuccessResponse(
         productBackOfficeService.getAllProducts(pageNumber, pageSize),
         "Retrieved All Products Successfully");
+  }
+
+  @GetMapping("get-{productId}-details")
+  @PreAuthorize("hasAuthority('view-biller-products')")
+  @Operation(
+          summary = PRODUCT_CONTROLLER_GET_A_PRODUCT_TITLE,
+          description = PRODUCT_CONTROLLER_GET_A_PRODUCT_DESCRIPTION)
+  public ResponseEntity<Object> viewProductDetail(
+          @RequestParam(value = "productId") String productId) {
+    return ControllerResponse.buildSuccessResponse(
+            productBackOfficeService.fetchProductsBySystemId(productId),
+            "Retrieved Product Successfully");
   }
 
   @GetMapping("export-to-csv")
@@ -71,9 +84,14 @@ public class ProductController {
       @RequestParam(value = START_DATE, required = false) String startDate,
       @RequestParam(value = END_DATE, required = false) String endDate,
       @RequestParam(value = PRODUCT_STATUS, required = false) Status productStatus) {
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setStatus(productStatus);
+    billentSearchRequest.setStartDate(startDate);
+    billentSearchRequest.setEndDate(endDate);
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
     return ControllerResponse.buildSuccessResponse(
-        productBackOfficeService.fetchProductsByStatus(
-            productStatus, startDate, endDate, pageNumber, pageSize),
+        productBackOfficeService.fetchProductsByStatus(billentSearchRequest),
         "Retrieved All Products by Status Successfully");
   }
 
