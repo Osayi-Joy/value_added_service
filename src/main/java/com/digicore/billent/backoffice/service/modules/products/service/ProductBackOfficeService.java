@@ -30,6 +30,9 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
     return backOfficeProductServiceImpl.filterAllSystemProductsByStatus(billentSearchRequest);
   }
 
+  public ProductDto fetchProductsBySystemId(String systemId) {
+    return backOfficeProductServiceImpl.retrieveProductDetailsBySystemId(systemId);
+  }
   public void downloadAllProductsInCSV(
       HttpServletResponse response,
       Status productStatus,
@@ -58,7 +61,7 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
       requestClassName = "com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto")
   public Object enableProduct(Object request, Object... args) {
     ProductDto productDto = (ProductDto) request;
-    backOfficeProductOperationServiceImpl.enableContributorProduct(productDto.getProductSystemId());
+    backOfficeProductOperationServiceImpl.enableContributorProduct(productDto.getProductId());
     return Optional.empty();
   }
 
@@ -69,7 +72,7 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
   public Object disableProduct(Object request, Object... args) {
     ProductDto productDto = (ProductDto) request;
     backOfficeProductOperationServiceImpl.disableContributorProduct(
-        productDto.getProductSystemId());
+        productDto.getProductId());
     return Optional.empty();
   }
 }
