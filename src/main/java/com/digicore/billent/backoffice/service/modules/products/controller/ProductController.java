@@ -5,8 +5,8 @@ import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeProxyService;
-import com.digicore.billent.backoffice.service.modules.billers.service.ProductBackOfficeService;
+import com.digicore.billent.backoffice.service.modules.products.service.ProductBackOfficeProxyService;
+import com.digicore.billent.backoffice.service.modules.products.service.ProductBackOfficeService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
