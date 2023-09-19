@@ -152,6 +152,7 @@ class ProductControllerTest {
         product.setProductSystemId("PSID001");
         product.setProductId("PSID001");
         product.setProductName("PSID001");
+        product.setProductSystemName("PSID001");
         product.setProductStatus(Status.ACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
