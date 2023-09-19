@@ -33,7 +33,7 @@ public class BackOfficeWalletService {
     public PaginatedResponseDTO<WalletResponseData> filterWallets(BillentSearchRequest billentSearchRequest){
         return walletServiceImpl.filterWallets(billentSearchRequest);
     }
-    public PaginatedResponseDTO<WalletResponseData> fetchWalletTransactions(BillentSearchRequest billentSearchRequest){
-        return walletServiceImpl.retrieveWalletTransaction(billentSearchRequest);
+    public PaginatedResponseDTO<WalletResponseData> fetchWalletTransactions(BillentSearchRequest billentSearchRequest, String systemWalletId){
+        return walletServiceImpl.retrieveWalletTransaction(billentSearchRequest,systemWalletId);
     }
 }

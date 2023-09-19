@@ -143,8 +143,7 @@ public class BackOfficeWalletController {
         billentSearchRequest.setSize(pageSize);
         billentSearchRequest.setStartDate(startDate);
         billentSearchRequest.setEndDate(endDate);
-        billentSearchRequest.setSystemWalletId(systemWalletId);
-        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest),"Retrieved all wallets by status successfully");
+        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest,systemWalletId),"Retrieved all wallets by status successfully");
     }
 
 
