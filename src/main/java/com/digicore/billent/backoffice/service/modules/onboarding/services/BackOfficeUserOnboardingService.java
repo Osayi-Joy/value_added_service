@@ -91,5 +91,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
             .dateTime(LocalDateTime.now())
             .notificationRequestType(NotificationRequestType.SEND_PASSWORD_UPDATE_EMAIL)
             .build());
+    auditLogProcessor.saveAuditWithDescription(AuditLogActivity.PASSWORD_UPDATE,AuditLogActivity.BACKOFFICE,AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
+
   }
 }

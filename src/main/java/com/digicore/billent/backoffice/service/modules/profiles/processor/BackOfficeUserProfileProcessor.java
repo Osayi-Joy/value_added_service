@@ -1,6 +1,6 @@
 package com.digicore.billent.backoffice.service.modules.profiles.processor;
 
-import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileOperations;
 import com.digicore.request.processor.annotations.RequestHandler;
 import com.digicore.request.processor.annotations.RequestType;
 import com.digicore.request.processor.enums.RequestHandlerType;
