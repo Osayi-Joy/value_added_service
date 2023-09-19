@@ -17,15 +17,15 @@ public class ProductBackOfficeProxyService {
 
   public Object enableProduct(String productSystemId) {
     ProductDto productDto = new ProductDto();
-    productDto.setProductSystemId(productSystemId);
-    backOfficeProductServiceImpl.isProductPresent(productDto.getProductSystemId());
+    productDto.setProductId(productSystemId);
+    backOfficeProductServiceImpl.isProductPresent(productDto.getProductId());
     return validatorService.enableProduct(productDto);
   }
 
   public Object disableProduct(String productSystemId) {
     ProductDto productDto = new ProductDto();
-    productDto.setProductSystemId(productSystemId);
-    backOfficeProductServiceImpl.isProductPresent(productDto.getProductSystemId());
+    productDto.setProductId(productSystemId);
+    backOfficeProductServiceImpl.isProductPresent(productDto.getProductId());
     return validatorService.disableProduct(productDto);
   }
 }
