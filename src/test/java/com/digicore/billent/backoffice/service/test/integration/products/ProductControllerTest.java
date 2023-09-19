@@ -12,8 +12,11 @@ import com.digicore.billent.backoffice.service.test.integration.common.H2TestCon
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerAggregator;
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerCategory;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerAggregatorRepository;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerCategoryRepository;
 import com.digicore.billent.data.lib.modules.billers.model.Biller;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
+import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
 import com.digicore.common.util.ClientUtil;
@@ -56,6 +59,12 @@ class ProductControllerTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private BillerRepository billerRepository;
+    @Autowired
+    private BillerCategoryRepository billerCategoryRepository;
+    @Autowired
+    private BillerAggregatorRepository billerAggregatorRepository;
 
     private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
         ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
@@ -142,14 +151,30 @@ class ProductControllerTest {
         Product product = new Product();
         product.setProductSystemId("PSID001");
         product.setProductId("PSID001");
+        product.setProductName("PSID001");
         product.setProductStatus(Status.ACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
         BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red1");
+        billerAggregator.setAggregatorName("red1");
+        billerAggregator.setAggregatorSystemId("red1");
+        billerCategory.setCategoryId("red1");
+        billerCategory.setCategoryName("red1");
+        billerCategory.setCategorySystemName("red1");
+        billerCategory.setCategorySystemId("red1");
+        biller.setBillerSystemName("red1");
+        biller.setBillerName("red1");
+        biller.setBillerId("red1");
+        biller.setBillerSystemId("red1");
         billerAggregator.setAggregatorStatus(Status.ACTIVE);
         billerCategory.setAggregator(billerAggregator);
         biller.setCategory(billerCategory);
         product.setBiller(biller);
+        billerAggregatorRepository.save(billerAggregator);
+        billerCategoryRepository.save(billerCategory);
+        billerRepository.save(biller);
+
 
         productRepository.save(product);
 
@@ -180,6 +205,16 @@ class ProductControllerTest {
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
         BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red");
+        billerAggregator.setAggregatorName("red");
+        billerAggregator.setAggregatorSystemId("red");
+        billerCategory.setCategoryId("red");
+        billerCategory.setCategoryName("red");
+        billerCategory.setCategorySystemId("red");
+        billerCategory.setCategorySystemName("red");
+        biller.setBillerSystemName("red");
+        biller.setBillerName("red");
+        biller.setBillerId("red");
         billerAggregator.setAggregatorStatus(Status.ACTIVE);
         billerCategory.setAggregator(billerAggregator);
         biller.setCategory(billerCategory);
@@ -209,15 +244,30 @@ class ProductControllerTest {
         Product product = new Product();
         product.setProductSystemId("PSID006");
         product.setProductId("PSID006");
+        product.setProductName("PSID006");
+        product.setProductSystemName("PSID006");
         product.setProductStatus(Status.INACTIVE);
         Biller biller = new Biller();
         BillerCategory billerCategory = new BillerCategory();
         BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red");
+        billerAggregator.setAggregatorName("red");
+        billerAggregator.setAggregatorSystemId("red");
+        billerCategory.setCategoryId("red");
+        billerCategory.setCategoryName("red");
+        billerCategory.setCategorySystemName("red");
+        billerCategory.setCategorySystemId("red");
+        biller.setBillerSystemName("red");
+        biller.setBillerName("red");
+        biller.setBillerId("red");
+        biller.setBillerSystemId("red");
         billerAggregator.setAggregatorStatus(Status.ACTIVE);
         billerCategory.setAggregator(billerAggregator);
         biller.setCategory(billerCategory);
         product.setBiller(biller);
-
+        billerAggregatorRepository.save(billerAggregator);
+        billerCategoryRepository.save(billerCategory);
+        billerRepository.save(biller);
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc);
