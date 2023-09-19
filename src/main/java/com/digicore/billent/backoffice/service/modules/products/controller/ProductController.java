@@ -40,6 +40,18 @@ public class ProductController {
         "Retrieved All Products Successfully");
   }
 
+  @GetMapping("get-{productId}-details")
+  @PreAuthorize("hasAuthority('view-biller-products')")
+  @Operation(
+          summary = PRODUCT_CONTROLLER_GET_A_PRODUCT_TITLE,
+          description = PRODUCT_CONTROLLER_GET_A_PRODUCT_DESCRIPTION)
+  public ResponseEntity<Object> viewProductDetail(
+          @RequestParam(value = "productId") String productId) {
+    return ControllerResponse.buildSuccessResponse(
+            productBackOfficeService.fetchProductsBySystemId(productId),
+            "Retrieved Product Successfully");
+  }
+
   @GetMapping("export-to-csv")
   @PreAuthorize("hasAuthority('export-biller-products')")
   @Operation(
