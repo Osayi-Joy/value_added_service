@@ -10,7 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerAggregator;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.model.BillerCategory;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerAggregatorRepository;
+import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.repository.BillerCategoryRepository;
+import com.digicore.billent.data.lib.modules.billers.model.Biller;
 import com.digicore.billent.data.lib.modules.billers.model.Product;
+import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
 import com.digicore.common.util.ClientUtil;
@@ -53,6 +59,12 @@ class ProductControllerTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private BillerRepository billerRepository;
+    @Autowired
+    private BillerCategoryRepository billerCategoryRepository;
+    @Autowired
+    private BillerAggregatorRepository billerAggregatorRepository;
 
     private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
         ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
@@ -142,12 +154,34 @@ class ProductControllerTest {
         product.setProductName("PSID001");
         product.setProductSystemName("PSID001");
         product.setProductStatus(Status.ACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red1");
+        billerAggregator.setAggregatorName("red1");
+        billerAggregator.setAggregatorSystemId("red1");
+        billerCategory.setCategoryId("red1");
+        billerCategory.setCategoryName("red1");
+        billerCategory.setCategorySystemName("red1");
+        billerCategory.setCategorySystemId("red1");
+        biller.setBillerSystemName("red1");
+        biller.setBillerName("red1");
+        biller.setBillerId("red1");
+        biller.setBillerSystemId("red1");
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        product.setBiller(biller);
+        billerAggregatorRepository.save(billerAggregator);
+        billerCategoryRepository.save(billerCategory);
+        billerRepository.save(biller);
+
 
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID001");
+        productDto.setProductId("PSID001");
 
         MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "disable-{productSystemId}", product.getProductSystemId())
                         .content(ClientUtil.getGsonMapper().toJson(productDto))
@@ -164,12 +198,33 @@ class ProductControllerTest {
     @Test
     void testDisableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
+
+        Product productDto = new Product();
         productDto.setProductSystemId("PSID004");
+        productDto.setProductId("PSID004");
+        productDto.setProductStatus(Status.INACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red");
+        billerAggregator.setAggregatorName("red");
+        billerAggregator.setAggregatorSystemId("red");
+        billerCategory.setCategoryId("red");
+        billerCategory.setCategoryName("red");
+        billerCategory.setCategorySystemId("red");
+        billerCategory.setCategorySystemName("red");
+        biller.setBillerSystemName("red");
+        biller.setBillerName("red");
+        biller.setBillerId("red");
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        productDto.setBiller(biller);
+
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductSystemId())
+                        patch(PRODUCTS_API_V1 + "disable-{productSystemId}", productDto.getProductId())
                                 .content(ClientUtil.getGsonMapper().toJson(productDto))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
@@ -186,20 +241,41 @@ class ProductControllerTest {
 
     @Test
     void testEnableProduct_ProductExists() throws Exception {
+
         Product product = new Product();
         product.setProductSystemId("PSID006");
         product.setProductId("PSID006");
-        product.setProductSystemName("PSID006");
         product.setProductName("PSID006");
+        product.setProductSystemName("PSID006");
         product.setProductStatus(Status.INACTIVE);
-
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorAlias("red");
+        billerAggregator.setAggregatorName("red");
+        billerAggregator.setAggregatorSystemId("red");
+        billerCategory.setCategoryId("red");
+        billerCategory.setCategoryName("red");
+        billerCategory.setCategorySystemName("red");
+        billerCategory.setCategorySystemId("red");
+        biller.setBillerSystemName("red");
+        biller.setBillerName("red");
+        biller.setBillerId("red");
+        biller.setBillerSystemId("red");
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        product.setBiller(biller);
+        billerAggregatorRepository.save(billerAggregator);
+        billerCategoryRepository.save(billerCategory);
+        billerRepository.save(biller);
         productRepository.save(product);
 
         TestHelper testHelper = new TestHelper(mockMvc);
         ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID006");
+        productDto.setProductId("PSID006");
 
-        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
+        MvcResult mvcResult = mockMvc.perform(patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isOk())
@@ -214,12 +290,21 @@ class ProductControllerTest {
     @Test
     void testEnableProduct_ProductNotExists() throws Exception {
         TestHelper testHelper = new TestHelper(mockMvc);
-        ProductDto productDto = new ProductDto();
-        productDto.setProductSystemId("PSID008");
+        Product productDto = new Product();
+        productDto.setProductSystemId("PSID001");
+        productDto.setProductId("PSID001");
+        productDto.setProductStatus(Status.INACTIVE);
+        Biller biller = new Biller();
+        BillerCategory billerCategory = new BillerCategory();
+        BillerAggregator billerAggregator = new BillerAggregator();
+        billerAggregator.setAggregatorStatus(Status.ACTIVE);
+        billerCategory.setAggregator(billerAggregator);
+        biller.setCategory(billerCategory);
+        productDto.setBiller(biller);
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductSystemId())
+                        patch(PRODUCTS_API_V1 + "enable-{productSystemId}", productDto.getProductId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header("Authorization", testHelper.retrieveValidAccessToken()))
                 .andExpect(status().isBadRequest())
