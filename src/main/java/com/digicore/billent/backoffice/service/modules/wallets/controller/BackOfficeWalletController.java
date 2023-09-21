@@ -148,6 +148,7 @@ public class BackOfficeWalletController {
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest,systemWalletId),"Retrieved all wallets by status successfully");
     }
     @GetMapping("export-to-csv")
+    @PreAuthorize("hasAuthority('export-wallets')")
     @Operation(
             summary = WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_TITLE,
             description = WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_DESCRIPTION)
@@ -158,7 +159,7 @@ public class BackOfficeWalletController {
             int pageSize,
             @RequestParam(value = START_DATE) String startDate,
             @RequestParam(value = END_DATE) String endDate,
-            @RequestParam(value = WALLET_STATUS, required = false) Status walletStatus,
+            @RequestParam(value = WALLET_STATUS) Status walletStatus,
             HttpServletResponse response) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setStartDate(startDate);
