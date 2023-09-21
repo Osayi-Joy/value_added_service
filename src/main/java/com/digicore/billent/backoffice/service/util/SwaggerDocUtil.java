@@ -357,5 +357,25 @@ public class SwaggerDocUtil {
   public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
       "This API is used to view dashboard.";
 
+  // Reseller Audit Trail Controller Doc
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_TITLE = "BackOffice-Reseller-Audit-Trail-Module";
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_DESCRIPTION =
+      "This module contains all required APIs to view reseller audit trails.";
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_TRAILS =
+      "Search reseller audit trails.";
+
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION =
+      "This API is used to search all reseller audit trails.";
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS =
+      "Fetch filtered reseller audit trails by activity or date range.";
+
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION =
+      "This API is used to retrieve all reseller audit trails filtered by activity or date range.";
+
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_FETCH_ALL =
+      "Fetch all reseller audit trails";
+  public static final String RESELLER_AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION =
+      "This API is used to retrieve all reseller audit trails.";
+
   private SwaggerDocUtil() {}
 }

@@ -383,5 +383,10 @@
     "name": "view-all-wallet-transactions",
     "description": "This allows you to view all transactions of a wallet",
     "permissionType": "WALLETS"
+  },
+  {
+    "name": "view-all-reseller-audit-trails",
+    "description": "This allows you to view all reseller audit trails",
+    "permissionType": "AUDIT_TRAILS"
   }
 ]
