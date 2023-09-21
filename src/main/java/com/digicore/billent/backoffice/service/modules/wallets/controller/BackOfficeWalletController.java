@@ -113,7 +113,7 @@ public class BackOfficeWalletController {
             int pageSize,
             @RequestParam(value = START_DATE) String startDate,
             @RequestParam(value = END_DATE) String endDate,
-            @RequestParam(value = WALLET_STATUS, required = false) Status walletStatus
+            @RequestParam(value = WALLET_STATUS) Status walletStatus
 
     ){
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
