@@ -33,7 +33,9 @@ csrc/test/java/com/digicore/billent/backoffice/service/test/integration/role/Rol
 �
 usrc/test/java/com/digicore/billent/backoffice/service/test/integration/registration/BackOfficeUserOnboardingTest.java,a/1/a1f0b0cb9547cf5fddf79579947f33e0692fd51f
 �
-]src/test/java/com/digicore/billent/backoffice/service/test/integration/common/TestHelper.java,b/5/b516c9763d5909c4de1d95d21fa690b2331e7bbc
+osrc/main/java/com/digicore/billent/backoffice/service/modules/billers/service/impl/BillerBackOfficeService.java,2/3/239028337b363a0844cd344c6eb238326c001515
+�
+xsrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/impl/BackOfficeUserProfileOperations.java,4/0/408584baed26988b4434b781784ca36f328a1628
 �
 {src/main/java/com/digicore/billent/backoffice/service/modules/onboarding/services/BackOfficeUserOnboardingProxyService.java,3/6/3632a75ca333f65030e0b88051411ec851245e6a
 �

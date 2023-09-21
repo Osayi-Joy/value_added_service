@@ -33,7 +33,6 @@ import static com.digicore.billent.backoffice.service.util.BackOfficeUserService
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_EMAIL;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.PAGE_SIZE_DEFAULT_VALUE;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -169,5 +168,51 @@ class BackOfficeWalletControllerTest {
                     ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
 
     assertTrue(response.isSuccess());
-        }
+
+    }
+
+    @Test
+    void filterWalletByStatusAndDateTest() throws Exception {
+        MvcResult mvcResult =
+                mockMvc
+                        .perform(
+                                get(WALLET_API_V1 + "filter-wallets")
+                                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                                        .param(START_DATE,"2023-07-09")
+                                        .param(END_DATE,"2023-09-09")
+                                        .param(WALLET_STATUS,"ACTIVE")
+                                        .header("Authorization", ACCESS_TOKEN))
+                        .andExpect(status().isOk())
+                        .andReturn();
+        ApiResponseJson<PaginatedResponseDTO<WalletResponseData>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(
+                                mvcResult.getResponse().getContentAsString().trim(),
+                                new TypeToken<
+                                        ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
+        assertTrue(response.isSuccess());
+    }
+
+    @Test
+    void retrieveWalletTransactionTest() throws Exception {
+        MvcResult mvcResult =
+                mockMvc
+                        .perform(
+                                get(WALLET_API_V1 + "retrieve-transactions-TEST_ID")
+                                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                                        .param(START_DATE,"2023-07-09")
+                                        .param(END_DATE,"2023-09-09")
+                                        .header("Authorization", ACCESS_TOKEN))
+                        .andExpect(status().isOk())
+                        .andReturn();
+        ApiResponseJson<PaginatedResponseDTO<WalletResponseData>> response =
+                ClientUtil.getGsonMapper()
+                        .fromJson(
+                                mvcResult.getResponse().getContentAsString().trim(),
+                                new TypeToken<
+                                        ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
+        assertTrue(response.isSuccess());
+    }
 }
