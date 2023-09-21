@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.*;
-import static com.digicore.registhentication.util.PageableUtil.END_DATE;
-import static com.digicore.registhentication.util.PageableUtil.PAGE_NUMBER;
-import static com.digicore.registhentication.util.PageableUtil.PAGE_NUMBER_DEFAULT_VALUE;
-import static com.digicore.registhentication.util.PageableUtil.PAGE_SIZE;
-import static com.digicore.registhentication.util.PageableUtil.START_DATE;
+import static com.digicore.registhentication.util.PageableUtil.*;
 
 /*
  * @author Ademiju Taiwo
@@ -79,6 +75,25 @@ public class BackOfficeWalletController {
         return ControllerResponse.buildSuccessResponse();
     }
 
+    @GetMapping("search-wallets")
+    @PreAuthorize("hasAuthority('view-all-wallets')")
+    @Operation(
+            summary = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE,
+            description = WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION)
+
+    public ResponseEntity<Object> searchWallets(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = VALUE) String value
+    ){
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setValue(value);
+        return ControllerResponse.buildSuccessResponse(backOfficeWalletService.searchWallets(billentSearchRequest),"Retrieved all wallets by search keyword successfully");
+    }
 
 
 

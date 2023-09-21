@@ -147,4 +147,27 @@ class BackOfficeWalletControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
+  @Test
+  void searchWalletBySearchKeywordTest() throws Exception {
+
+    MvcResult mvcResult =
+        mockMvc
+            .perform(
+                get(WALLET_API_V1 + "search-wallets")
+                    .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+                    .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+                    .param(VALUE, "test")
+                    .header("Authorization", ACCESS_TOKEN))
+            .andExpect(status().isOk())
+            .andReturn();
+    ApiResponseJson<PaginatedResponseDTO<WalletResponseData>> response =
+        ClientUtil.getGsonMapper()
+            .fromJson(
+                mvcResult.getResponse().getContentAsString().trim(),
+                new TypeToken<
+                    ApiResponseJson<PaginatedResponseDTO<WalletResponseData>>>() {}.getType());
+
+    assertTrue(response.isSuccess());
+        }
 }
