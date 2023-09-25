@@ -43,7 +43,7 @@ public class BackOfficeWalletController {
 
     }
     @GetMapping("get-all")
-    @PreAuthorize("hasAuthority('view-all-wallets')")
+   @PreAuthorize("hasAuthority('view-all-wallets')")
     @Operation(
             summary = WALLET_CONTROLLER_GET_ALL_WALLET_TITLE,
             description = WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION)
@@ -52,15 +52,11 @@ public class BackOfficeWalletController {
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
             int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
-            int pageSize,
-            @RequestParam(value = START_DATE) String startDate,
-            @RequestParam(value = END_DATE) String endDate
+            int pageSize
     ){
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
         billentSearchRequest.setSize(pageSize);
-        billentSearchRequest.setStartDate(startDate);
-        billentSearchRequest.setEndDate(endDate);
 
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchAllWallet(billentSearchRequest),"Retrieved all wallets Successfully");
     }
@@ -135,15 +131,11 @@ public class BackOfficeWalletController {
             int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PageableUtil.PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
-            @RequestParam(value = START_DATE) String startDate,
-            @RequestParam(value = END_DATE) String endDate,
             @PathVariable String systemWalletId
     ){
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
         billentSearchRequest.setSize(pageSize);
-        billentSearchRequest.setStartDate(startDate);
-        billentSearchRequest.setEndDate(endDate);
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchWalletTransactions(billentSearchRequest,systemWalletId),"Retrieved all wallets by status successfully");
     }
 
