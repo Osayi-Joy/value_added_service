@@ -96,8 +96,6 @@ vsrc/test/java/com/digicore/billent/backoffice/service/test/integration/reseller
 ~src/main/java/com/digicore/billent/backoffice/service/modules/authentication/services/BackOfficeUserAuthenticationService.java,c/1/c121e607ae912a32c5fe4cf7b12bad4f85807f49
 ©
 ysrc/main/java/com/digicore/billent/backoffice/service/modules/audit_trails/controller/BackOfficeAuditTrailController.java,d/f/df0f18145e1164fa80dad5444486a59cb457bfb3
-¥
-usrc/main/java/com/digicore/billent/backoffice/service/modules/audit_trails/service/BackOfficeAuditTrailOperation.java,d/8/d88129062f610c98c82a40f4a71851aa59759023
 ¤
 tsrc/main/java/com/digicore/billent/backoffice/service/modules/resellers/controller/BackOfficeResellerController.java,6/5/653a741f5b5678428ff27c93b342a8bab353887a
  
