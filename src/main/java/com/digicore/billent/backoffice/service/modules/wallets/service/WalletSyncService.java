@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 public class WalletSyncService {
     private final BackOfficeWalletProcessorService backOfficeWalletProcessorService;
 
-    @RequestType(name = "creditWalletPosition")
+    @RequestType(name = "creditWallet")
     public Object creditWalletPosition(Object request) {
         return backOfficeWalletProcessorService.creditWallet(request);
     }

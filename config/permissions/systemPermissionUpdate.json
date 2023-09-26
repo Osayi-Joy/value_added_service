@@ -380,6 +380,11 @@
     "permissionType": "WALLETS"
   },
   {
+    "name": "approve-credit-wallet",
+    "description": "This allows you to approve credit wallet request",
+    "permissionType": "WALLETS"
+  },
+  {
     "name": "view-all-wallet-transactions",
     "description": "This allows you to view all transactions of a wallet",
     "permissionType": "WALLETS"
