@@ -1,11 +1,14 @@
 package com.digicore.billent.backoffice.service.modules.wallets.controller;
 
 import com.digicore.api.helper.response.ControllerResponse;
+import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletProcessorService;
 import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletService;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.registhentication.util.PageableUtil;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +35,7 @@ import static com.digicore.registhentication.util.PageableUtil.*;
 public class BackOfficeWalletController {
 
     private final BackOfficeWalletService backOfficeWalletService;
+    private final BackOfficeWalletProcessorService backOfficeWalletProxyService;
 
     @GetMapping("retrieve-{systemWalletId}-balance")
     @PreAuthorize("hasAuthority('view-all-wallet-balances')")
@@ -62,6 +66,10 @@ public class BackOfficeWalletController {
         return ControllerResponse.buildSuccessResponse(backOfficeWalletService.fetchAllWallet(billentSearchRequest),"Retrieved all wallets Successfully");
     }
 
+    @LogActivity(
+            activity = AuditLogActivity.CREDIT_WALLET_POSITION,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.CREDIT_WALLET_POSITION_DESCRIPTION)
     @PostMapping("credit-position")
     @PreAuthorize("hasAuthority('credit-wallet')")
     @Operation(
@@ -71,7 +79,7 @@ public class BackOfficeWalletController {
     public ResponseEntity<Object> creditCustomerWalletPosition(
             @RequestBody TopUpWalletDTO topUpWalletDTO
     ){
-        backOfficeWalletService.creditCustomerWalletPosition(topUpWalletDTO);
+        backOfficeWalletProxyService.creditWallet(topUpWalletDTO);
         return ControllerResponse.buildSuccessResponse();
     }
 

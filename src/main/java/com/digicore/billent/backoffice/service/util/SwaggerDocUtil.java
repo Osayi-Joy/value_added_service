@@ -335,7 +335,8 @@ public class SwaggerDocUtil {
   public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
           "This API is used to fetch all wallets.";
   public static final String WALLET_CONTROLLER_CREDIT_TITLE = "Credit a wallet position";
-  public static final String WALLET_CONTROLLER_CREDIT_DESCRIPTION = "This API is used to credit a customer wallet position";
+  public static final String WALLET_CONTROLLER_CREDIT_DESCRIPTION =
+      "This API is used to credit a customer wallet position. it goes through maker checker process";
   public static final String WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_TITLE =
           "Search wallets";
   public static final String WALLET_CONTROLLER_FETCH_WALLET_BY_SEARCH_DESCRIPTION =
