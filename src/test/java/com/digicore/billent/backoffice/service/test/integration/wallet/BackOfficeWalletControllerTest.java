@@ -13,7 +13,6 @@ import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
-import com.digicore.registhentication.registration.enums.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +26,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.UnsupportedEncodingException;
 
-import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.WALLET_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.MAKER_EMAIL;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
