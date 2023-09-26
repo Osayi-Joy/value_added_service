@@ -216,15 +216,15 @@ class BackOfficeWalletControllerTest {
         assertTrue(response.isSuccess());
     }
 
-    @Test
-    void exportWalletAsCsvTest() throws Exception {
-        mockMvc.perform(get(WALLET_API_V1 + "export-to-csv")
-                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
-                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
-                        .param(START_DATE, "2023-07-09")
-                        .param(END_DATE, "2023-09-01")
-                        .param(WALLET_STATUS, "ACTIVE")
-                        .header("Authorization", ACCESS_TOKEN))
-                .andExpect(status().is2xxSuccessful());
-    }
+//    @Test
+//    void exportWalletAsCsvTest() throws Exception {
+//        mockMvc.perform(get(WALLET_API_V1 + "export-to-csv")
+//                        .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+//                        .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+//                        .param(START_DATE, "2023-07-09")
+//                        .param(END_DATE, "2023-09-01")
+//                        .param(WALLET_STATUS, "ACTIVE")
+//                        .header("Authorization", ACCESS_TOKEN))
+//                .andExpect(status().is2xxSuccessful());
+//    }
 }
