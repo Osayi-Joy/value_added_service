@@ -346,7 +346,10 @@ public class SwaggerDocUtil {
           "This API is used to Filter wallets by Status And Date Created.";
   public static final String WALLET_CONTROLLER_FETCH_TRANSACTION_TITLE = "Fetch a wallet transaction log";
   public static final String WALLET_CONTROLLER_FETCH_TRANSACTION_DESCRIPTION = "This API is used to retrieve a wallet transaction log, The expected date format is yyyy-MM-dd. e.g 2023-01-01.";
-
+  public static final String WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_TITLE =
+          "Export wallets in csv";
+  public static final String WALLET_CONTROLLER_EXPORT_WALLET_IN_CSV_DESCRIPTION =
+          "This API is used to export wallets in csv.";
   // Dashboard Controller Doc
   public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
   public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
