@@ -6,5 +6,5 @@ package com.digicore.billent.backoffice.service.modules.wallets.service;
  */
 public interface BackOfficeWalletValidatorService {
 
-    Object creditWallet(Object request, Object... args);
+  Object creditWallet(Object request, Object... args);
 }

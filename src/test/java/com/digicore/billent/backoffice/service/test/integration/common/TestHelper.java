@@ -198,7 +198,8 @@ public class TestHelper {
 //    assertTrue(response.isSuccess());
     updateUserRole();
 
-  }  public void createTestRole() throws Exception {
+  }
+  public void createTestRole() throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
