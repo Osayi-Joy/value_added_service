@@ -30,6 +30,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -189,11 +190,12 @@ class BackOfficeProfileControllerTest {
   void testDisableUserProfile_ProfileExists() throws Exception {
 
     TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestUser("disableuser@test.com");
 
     MvcResult mvcResult =
         mockMvc
             .perform(
-                patch(PROFILE_API_V1.concat("disable-").concat(CHECKER_EMAIL))
+                patch(PROFILE_API_V1.concat("disable-").concat("disableuser@test.com"))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
             .andExpect(status().isOk())
@@ -230,6 +232,47 @@ class BackOfficeProfileControllerTest {
     ApiResponseJson<?> response =
         ClientUtil.getGsonMapper()
             .fromJson(mvcResult.getResponse().getContentAsString(), ApiResponseJson.class);
+    assertTrue(response.isSuccess());
+  }
+
+  //todo joy to rework this
+//  @Test
+//  void changePasswordTest() throws Exception {
+//    TestHelper testHelper = new TestHelper(mockMvc);
+//    UpdatePasswordRequestDTO requestDTO = new UpdatePasswordRequestDTO();
+//    requestDTO.setOldPassword(testPassword);
+//    requestDTO.setNewPassword("joyosayi@1234567");
+//
+//    MvcResult result =
+//            mockMvc
+//                    .perform(
+//                            MockMvcRequestBuilders.patch(PROFILE_API_V1.concat("change-password"))
+//                                    .content(ClientUtil.getGsonMapper().toJson(requestDTO))
+//                                    .contentType(MediaType.APPLICATION_JSON)
+//                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+//                    .andExpect(status().isOk())
+//                    .andReturn();
+//    ApiResponseJson<?> response =
+//            ClientUtil.getGsonMapper()
+//                    .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
+//    assertTrue(response.isSuccess());
+//  }
+
+  @Test
+  void viewProfileDetailsTest() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.get(PROFILE_API_V1.concat("get-self"))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+    ApiResponseJson<?> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(result.getResponse().getContentAsString(), ApiResponseJson.class);
     assertTrue(response.isSuccess());
   }
 }

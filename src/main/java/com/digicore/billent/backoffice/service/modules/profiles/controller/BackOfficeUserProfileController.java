@@ -6,12 +6,12 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 
 import com.digicore.api.helper.response.ControllerResponse;
-import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileOperations;
-import com.digicore.billent.backoffice.service.modules.profiles.service.impl.BackOfficeUserProfileProxyService;
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileOperations;
+import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileProxyService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
-import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.registhentication.authentication.dtos.request.UpdatePasswordRequestDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -163,5 +163,26 @@ public class BackOfficeUserProfileController {
   public ResponseEntity<Object> updateBackofficeProfile(
           @Valid @RequestBody UserEditDTO userProfileDTO) {
     return ControllerResponse.buildSuccessResponse(backOfficeUserProfileProxyService.updateBackofficeProfile(userProfileDTO),"User Profile updated successfully");
+  }
+
+  @PatchMapping("change-password")
+  @Operation(
+          summary = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE,
+          description = AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION)
+  public ResponseEntity<Object> changePassword(
+          @Valid @RequestBody UpdatePasswordRequestDTO requestDTO) {
+    backOfficeUserProfileOperations.changePassword(requestDTO);
+    return ControllerResponse.buildSuccessResponse("Password updated Successful");
+  }
+
+  @GetMapping("get-self")
+  @PreAuthorize("hasAuthority('view-self-user-details')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_TITLE,
+          description = PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_DESCRIPTION)
+  public ResponseEntity<Object> viewProfileDetails() {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeUserProfileOperations.retrieveProfileDetails(),
+            PROFILE_RETRIEVED_MESSAGE);
   }
 }

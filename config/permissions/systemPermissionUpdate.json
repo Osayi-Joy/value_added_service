@@ -343,5 +343,40 @@
     "name": "view-reseller-user-details",
     "description": "This allows you to view a reseller details",
     "permissionType": "RESELLERS"
+  },
+  {
+    "name": "view-self-audit-trails",
+    "description": "This allows you to view only your audit trails",
+    "permissionType": "AUDIT_TRAILS"
+  },
+  {
+    "name": "view-all-audit-trails",
+    "description": "This allows you to view all audit trails",
+    "permissionType": "AUDIT_TRAILS"
+  },
+  {
+    "name": "approve-edit-backoffice-user-details",
+    "description": "This allows you to approve edit request of a backoffice user",
+    "permissionType": "USERS"
+  },
+  {
+    "name": "view-all-wallet-balances",
+    "description": "This allows you to view all wallet balances",
+    "permissionType": "WALLETS"
+  },
+  {
+  "name": "view-self-user-details",
+  "description": "This allows you to view your user details",
+  "permissionType": "USERS"
+  },
+  {
+    "name": "view-all-wallets",
+    "description": "This allows you to view all wallets",
+    "permissionType": "WALLETS"
+  },
+  {
+    "name": "credit-wallet",
+    "description": "This allows you to credit a wallet",
+    "permissionType": "WALLETS"
   }
 ]

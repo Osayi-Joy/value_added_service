@@ -1,4 +1,4 @@
-package com.digicore.billent.backoffice.service.modules.billers.service;
+package com.digicore.billent.backoffice.service.modules.products.service;
 /*
  * @author Joy Osayi
  * @createdOn Jul-26(Wed)-2023

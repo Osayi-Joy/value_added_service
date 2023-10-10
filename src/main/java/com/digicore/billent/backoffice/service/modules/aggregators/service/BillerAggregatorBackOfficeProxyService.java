@@ -19,12 +19,16 @@ public class BillerAggregatorBackOfficeProxyService {
 
   public Object enableBillerAggregator(String aggregatorSystemId) {
     billerAggregatorServiceImpl.isBillerAggregatorPresent(aggregatorSystemId);
-    return validatorService.enableBillerAggregator(aggregatorSystemId);
+    BillerAggregatorDTO billerAggregatorDTO = new BillerAggregatorDTO();
+    billerAggregatorDTO.setAggregatorSystemId(aggregatorSystemId);
+    return validatorService.enableBillerAggregator(billerAggregatorDTO);
   }
 
     public Object disableBillerAggregator(String aggregatorSystemId) {
       billerAggregatorServiceImpl.isBillerAggregatorPresent(aggregatorSystemId);
-      return validatorService.disableBillerAggregator(aggregatorSystemId);
+      BillerAggregatorDTO billerAggregatorDTO = new BillerAggregatorDTO();
+      billerAggregatorDTO.setAggregatorSystemId(aggregatorSystemId);
+      return validatorService.disableBillerAggregator(billerAggregatorDTO);
     }
 
   public Object updateBillerAggregatorDetail(BillerAggregatorDTO billerAggregatorDTO) {

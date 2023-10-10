@@ -56,6 +56,11 @@ public class SwaggerDocUtil {
 
   public static final String AUTHENTICATION_CONTROLLER_UPDATE_PASSWORD_DESCRIPTION =
       "This API resets a user's existing password to a new password provided by the user, the otp required is the resetKey that came from the response after validating the phone number";
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_TITLE =
+          "Change password";
+
+  public static final String AUTHENTICATION_CONTROLLER_CHANGE_MY_PASSWORD_DESCRIPTION =
+          "This API is used to update an authenticated user password";
 
   // Onboarding Controller Doc
   public static final String ONBOARDING_CONTROLLER_TITLE = "BackOffice-Onboarding-Module";
@@ -216,6 +221,9 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_GET_USER_TITLE = "Get a back office user profile";
   public static final String PROFILE_CONTROLLER_GET_USER_DESCRIPTION =
       "This API is used to fetch a back office user profile in the system.";
+  public static final String PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_TITLE = "Fetch self user profile details";
+  public static final String PROFILE_CONTROLLER_FETCH_SELF_USER_DETAILS_DESCRIPTION =
+          "This API is used to fetch self user profile details in the system.";
 
   public static final String PROFILE_CONTROLLER_FILTER_USERS_TITLE = "Filter back office users";
   public static final String PROFILE_CONTROLLER_FILTER_USERS_DESCRIPTION =
@@ -285,6 +293,58 @@ public class SwaggerDocUtil {
       "Get a reseller wallet balance";
   public static final String RESELLER_PROFILE_CONTROLLER_GET_RESELLER_WALLET_BALANCE_DESCRIPTION =
       "This API is used to fetch a reseller wallet balance in the system.";
+
+  // Audit Trail Controller Doc
+  public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "BackOffice-Audit-Trail-Module";
+  public static final String AUDIT_TRAIL_CONTROLLER_DESCRIPTION =
+          "This module contains all required APIs to view audit trails.";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_SELF_TITLE =
+          "Fetch self audit trails";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_SELF_DESCRIPTION =
+          "This API is used to retrieve logged in user audit trails only.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_TITLE =
+          "Fetch all audit trails";
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_ALL_DESCRIPTION =
+          "This API is used to retrieve all audit trails.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS =
+      "Fetch filtered audit trails by activity or date range.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_FETCH_FILTERED_AUDIT_TRAILS_DESCRIPTION =
+      "This API is used to retrieve all audit trails filtered by activity or date range.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_TRAILS =
+      "Search audit trails.";
+
+  public static final String AUDIT_TRAIL_CONTROLLER_SEARCH_AUDIT_DESCRIPTION =
+      "This API is used to search all audit trails.";
+  public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV =
+      "Export audit trails.";
+  public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION =
+      "This API is used to export audit trails.";
+  // Wallets Controller Doc
+  public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
+  public static final String WALLET_CONTROLLER_DESCRIPTION =
+          "This module contains all required APIs to complete operations surrounding wallets.";
+
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_TITLE = "Get a wallet balance";
+  public static final String WALLET_CONTROLLER_GET_A_WALLET_BALANCE_DESCRIPTION =
+          "This API is used to fetch a wallet's balance.";
+  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_TITLE = "Get all wallets";
+  public static final String WALLET_CONTROLLER_GET_ALL_WALLET_DESCRIPTION =
+          "This API is used to fetch all wallets.";
+  public static final String WALLET_CONTROLLER_CREDIT_TITLE = "Credit a wallet position";
+  public static final String WALLET_CONTROLLER_CREDIT_DESCRIPTION = "This API is used to credit a customer wallet position";
+  // Dashboard Controller Doc
+  public static final String DASHBOARD_CONTROLLER_TITLE = "BackOffice-Dashboard-Module";
+  public static final String DASHBOARD_CONTROLLER_DESCRIPTION =
+      "This module contains the required API to view dashboard.";
+
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW =
+      "View dashboard.";
+  public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
+      "This API is used to view dashboard.";
 
   private SwaggerDocUtil() {}
 }

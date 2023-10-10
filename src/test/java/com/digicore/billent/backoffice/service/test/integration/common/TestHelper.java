@@ -17,6 +17,7 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.Permission
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.registhentication.authentication.dtos.request.LoginRequestDTO;
 import com.digicore.registhentication.authentication.dtos.response.LoginResponse;
@@ -126,11 +127,23 @@ public class TestHelper {
   public UserRegistrationDTO createBackOfficeProfile() {
     UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
     userRegistrationDTO.setEmail("tobiogunwuyi@gmail.com");
+    setCommonFieldsInUserRegistrationBody(userRegistrationDTO);
+    userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
+    return userRegistrationDTO;
+  }
+
+  private static void setCommonFieldsInUserRegistrationBody(UserRegistrationDTO userRegistrationDTO) {
     userRegistrationDTO.setPhoneNumber("2347087982874");
     userRegistrationDTO.setFirstName("Oluwatobi");
     userRegistrationDTO.setLastName("Ogunwuyi");
     userRegistrationDTO.setAssignedRole("TesterRole");
-    userRegistrationDTO.setUsername("tobiogunwuyi@gmail.com");
+  }
+
+  public UserRegistrationDTO createBackOfficeProfile(String username) {
+    UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO();
+    userRegistrationDTO.setEmail(username);
+    setCommonFieldsInUserRegistrationBody(userRegistrationDTO);
+    userRegistrationDTO.setUsername(username);
     return userRegistrationDTO;
   }
 
@@ -149,11 +162,24 @@ public class TestHelper {
 //    backOfficeUserAuthServiceImpl.updateAuthProfile(backOfficeUserAuthProfileDTO);
 //  }
 
+  public void createTestUser(String username) throws Exception {
+    UserRegistrationDTO userRegistrationDTO = createBackOfficeProfile(username);
+    userRegistrationDTO.setAssignedRole("TesterRole");
+    MvcResult result =
+            mockMvc
+                    .perform(
+                            MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("user-invitation"))
+                                    .content(ClientUtil.getGsonMapper().toJson(userRegistrationDTO))
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+  }
   public void createTestRoleCustom(String roleName) throws Exception {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName(roleName);
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers",
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers", "view-self-user-details",
             "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role"));
 
 
@@ -176,8 +202,9 @@ public class TestHelper {
     RoleCreationDTO roleCreationDTO = new RoleCreationDTO();
     roleCreationDTO.setName("TesterRole");
     roleCreationDTO.setDescription("tester tester");
-    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers"));
+    roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers", "view-dashboard", "view-self-user-details",
+            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails","view-all-wallet-balances",
+            "view-all-wallets","credit-wallet"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
@@ -203,8 +230,8 @@ public class TestHelper {
     userProfileDTO.setFirstName("John");
     userProfileDTO.setLastName("Doe");
     userProfileDTO.setAssignedRole("TesterRole");
-    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products","export-resellers",
-            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product","view-resellers"));
+//    userProfileDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","disable-biller","export-biller-products","export-resellers",
+//            "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","view-biller-products","disable-biller-product","enable-biller-product","view-resellers"));
     userProfileDTO.setPhoneNumber("2349061962179");
     userProfileDTO.setUsername(MAKER_EMAIL);
 
@@ -234,6 +261,16 @@ public class TestHelper {
             .andExpect(status().isOk())
             .andReturn();
 
+  }
+
+  public CreateWalletResponseData initializeWalletResponse(String username) {
+      CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+      createWalletResponseData.setCurrency("NGN");
+      createWalletResponseData.setWalletName("Wallet Name");
+      createWalletResponseData.setSystemWalletId("WA_TESTID");
+      createWalletResponseData.setCustomerId(username);
+      createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+      return createWalletResponseData;
   }
 
   /*

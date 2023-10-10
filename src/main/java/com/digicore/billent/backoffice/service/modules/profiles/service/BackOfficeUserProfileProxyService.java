@@ -1,4 +1,4 @@
-package com.digicore.billent.backoffice.service.modules.profiles.service.impl;
+package com.digicore.billent.backoffice.service.modules.profiles.service;
 
 import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
@@ -36,7 +36,7 @@ public class BackOfficeUserProfileProxyService {
 
   public Object updateBackofficeProfile(UserEditDTO userProfileDTO) {
     backOfficeRoleServiceImpl.roleCheck(userProfileDTO.getAssignedRole());
-    backOfficePermissionServiceImpl.getValidPermissions(userProfileDTO.getPermissions());
+   // backOfficePermissionServiceImpl.getValidPermissions(userProfileDTO.getPermissions());
     backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(userProfileDTO.getEmail());
     return backOfficeUserProfileValidatorService.updateBackofficeProfile(userProfileDTO);
   }
