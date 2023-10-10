@@ -28,7 +28,7 @@ pipeline {
                 withMaven(
                     maven: 'Maven',
                 //mavenLocalRepo: '.repository',
-                    mavenSettingsConfig: 'fcfa17f8-08b7-4f8d-ad46-4ca1d78027e1'//MyMVNSettings
+                    mavenSettingsConfig: '7e0ef492-5821-4fe2-80bf-08a97d2be02b'//MyMVNSettings
                     ){
                     //sh 'mvn test -Dspring.profiles.active=test,backOffice'
                     sh 'mvn  -U clean package spring-boot:repackage -DskipTests'
