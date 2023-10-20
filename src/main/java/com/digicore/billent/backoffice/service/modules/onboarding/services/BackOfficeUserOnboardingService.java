@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 public class BackOfficeUserOnboardingService implements BackOfficeUserOnboardingValidatorService {
   private final RegistrationService<UserProfileDTO, UserRegistrationDTO>
       backOfficeUserRegistrationServiceImpl;
-  private final PasswordResetService passwordResetService;
+  private final PasswordResetService passwordResetServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
   private final AuditLogProcessor auditLogProcessor;
@@ -65,7 +65,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
 
   public void resendInvitation(InviteBodyDTO inviteBodyDTO) {
     String password = IDGeneratorUtil.generateTempId();
-    passwordResetService.updateAccountPasswordWithoutVerification(
+    passwordResetServiceImpl.updateAccountPasswordWithoutVerification(
         inviteBodyDTO.getEmail(), password);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
@@ -82,7 +82,7 @@ public class BackOfficeUserOnboardingService implements BackOfficeUserOnboarding
   public void updateDefaultPassword(
       ResetPasswordSecondBaseRequestDTO resetPasswordFirstBaseRequestDTO, Principal principal) {
     resetPasswordFirstBaseRequestDTO.setEmail(principal.getName());
-    passwordResetService.updateAccountPassword(resetPasswordFirstBaseRequestDTO);
+    passwordResetServiceImpl.updateAccountPassword(resetPasswordFirstBaseRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
             .notificationSubject(
