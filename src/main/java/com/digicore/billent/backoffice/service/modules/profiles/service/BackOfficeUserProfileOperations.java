@@ -37,7 +37,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthProfileServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
 
-  private final PasswordResetService passwordResetService;
+  private final PasswordResetService passwordResetServiceImpl;
   @Value("${password-update-subject: Password Update}")
   private String passwordUpdateSubject;
 
@@ -102,7 +102,7 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     UserAuthProfileDTO userAuthProfileDTO =
             backOfficeUserAuthProfileServiceImpl.retrieveAuthProfile(ClientUtil.getLoggedInUsername());
 
-    passwordResetService.updateAccountPassword(requestDTO);
+    passwordResetServiceImpl.updateAccountPassword(requestDTO);
     notificationDispatcher.dispatchEmail(
             NotificationServiceRequest.builder()
                     .recipients(List.of(userAuthProfileDTO.getUsername()))
