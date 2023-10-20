@@ -21,15 +21,15 @@ public class BackOfficeAuditTrailOperation {
     private final CsvService csvService;
 
     public PaginatedResponseDTO<AuditLogDTO> fetchSelfTrails(BillentSearchRequest billentSearchRequest){
-        return backOfficeAuditTrailServiceImpl.retrieveSelfAuditTrait(billentSearchRequest);
+        return backOfficeAuditTrailServiceImpl.retrieveSelfAuditTrail(billentSearchRequest);
     }
 
     public PaginatedResponseDTO<AuditLogDTO> fetchAllTrails(BillentSearchRequest billentSearchRequest){
-        return backOfficeAuditTrailServiceImpl.retrieveAllAuditTrait(billentSearchRequest);
+        return backOfficeAuditTrailServiceImpl.retrieveAllAuditTrail(billentSearchRequest);
     }
 
     public PaginatedResponseDTO<AuditLogDTO> fetchFilteredAuditTrails(BillentSearchRequest billentSearchRequest) {
-        return backOfficeAuditTrailServiceImpl.filterAuditTrailsByActivityOrDateRange(billentSearchRequest);
+        return backOfficeAuditTrailServiceImpl.filterAuditTrailsByActivityAndDateRange(billentSearchRequest);
     }
 
     public PaginatedResponseDTO<AuditLogDTO> searchAuditTrails(BillentSearchRequest billentSearchRequest) {
