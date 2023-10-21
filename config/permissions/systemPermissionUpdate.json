@@ -75,6 +75,11 @@
     "permissionType": "BILLER_AGGREGATORS"
   },
   {
+    "name": "export-biller-aggregators",
+    "description": "This allows you to export biller aggregators to a csv file",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
     "name": "view-billers",
     "description": "This allows you to view billers",
     "permissionType": "BILLERS"

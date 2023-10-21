@@ -6,8 +6,10 @@ import com.digicore.billent.backoffice.service.modules.aggregators.service.Bille
 import com.digicore.billent.backoffice.service.modules.aggregators.service.BillerAggregatorBackOfficeService;
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.BillerAggregatorDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
+import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -64,7 +66,7 @@ public class BillerAggregatorController {
     }
 
     @GetMapping("export-to-csv")
-    @PreAuthorize("hasAuthority('export-billers')")
+    @PreAuthorize("hasAuthority('export-biller-aggregators')")
     @Operation(
             summary = BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_TITLE,
             description = BILLER_AGGREGATOR_CONTROLLER_EXPORT_AGGREGATORS_IN_CSV_DESCRIPTION)
@@ -144,4 +146,49 @@ public class BillerAggregatorController {
         return ControllerResponse.buildSuccessResponse(
                 billerAggregatorBackOfficeService.viewBillersUnderAnAggregator(pageNumber, pageSize, aggregatorSystemId), "Retrieved all billers under aggregator successfully");
     }
+
+    @TokenValid()
+    @GetMapping("filter")
+    @PreAuthorize("hasAuthority('view-biller-aggregators')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_FILTER_AGGREGATORS_CONTROLLER_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_FILTER_AGGREGATORS_CONTROLLER_DESCRIPTION)
+    public ResponseEntity<Object> fetchFilteredBillerAggregator(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = "aggregatorStatus", defaultValue = "ACTIVE", required = false) Status aggregatorStatus,
+            @RequestParam(value = START_DATE, required = false) String startDate,
+            @RequestParam(value = END_DATE, required = false) String endDate
+    ) {
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setStatus(aggregatorStatus);
+        billentSearchRequest.setStartDate(startDate);
+        billentSearchRequest.setEndDate(endDate);
+        return ControllerResponse.buildSuccessResponse(billerAggregatorBackOfficeService.fetchFilteredAggregators(billentSearchRequest),"Filtered aggregators fetched successfully");
+    }
+
+    @TokenValid()
+    @GetMapping("search")
+    @PreAuthorize("hasAuthority('view-biller-aggregators')")
+    @Operation(
+            summary = BILLER_AGGREGATOR_CONTROLLER_SEARCH_AGGREGATOR_CONTROLLER_TITLE,
+            description = BILLER_AGGREGATOR_CONTROLLER_SEARCH_AGGREGATOR_CONTROLLER_DESCRIPTION)
+    public ResponseEntity<Object> searchBillerAggregators(
+            @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false)
+            int pageNumber,
+            @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
+            int pageSize,
+            @RequestParam(value = VALUE) String value
+    ) {
+        BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+        billentSearchRequest.setPage(pageNumber);
+        billentSearchRequest.setSize(pageSize);
+        billentSearchRequest.setValue(value);
+        return ControllerResponse.buildSuccessResponse(billerAggregatorBackOfficeService.searchAggregators(billentSearchRequest),"Searched aggregators successfully");
+    }
+
 }
