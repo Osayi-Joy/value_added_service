@@ -9,7 +9,6 @@ import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
-import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -147,7 +146,7 @@ public class BillerAggregatorController {
                 billerAggregatorBackOfficeService.viewBillersUnderAnAggregator(pageNumber, pageSize, aggregatorSystemId), "Retrieved all billers under aggregator successfully");
     }
 
-    @TokenValid()
+
     @GetMapping("filter")
     @PreAuthorize("hasAuthority('view-biller-aggregators')")
     @Operation(
@@ -171,7 +170,7 @@ public class BillerAggregatorController {
         return ControllerResponse.buildSuccessResponse(billerAggregatorBackOfficeService.fetchFilteredAggregators(billentSearchRequest),"Filtered aggregators fetched successfully");
     }
 
-    @TokenValid()
+
     @GetMapping("search")
     @PreAuthorize("hasAuthority('view-biller-aggregators')")
     @Operation(
