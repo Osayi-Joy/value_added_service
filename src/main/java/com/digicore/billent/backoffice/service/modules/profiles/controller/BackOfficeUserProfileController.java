@@ -95,8 +95,8 @@ public class BackOfficeUserProfileController {
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
           @RequestParam(value = STATUS) Status status,
-          @RequestParam(value = START_DATE) String startDate,
-          @RequestParam(value = END_DATE) String endDate) {
+          @RequestParam(value = START_DATE, required = false) String startDate,
+          @RequestParam(value = END_DATE, required = false) String endDate) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setStatus(status);
     billentSearchRequest.setStartDate(startDate);
