@@ -45,9 +45,10 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
 
   private final PasswordResetService passwordResetServiceImpl;
 
-  private final CsvService csvService;
   @Value("${password-update-subject: Password Update}")
   private String passwordUpdateSubject;
+
+  private final CsvService csvService;
 
   public PaginatedResponseDTO<UserProfileDTO> fetchAllBackOfficeUserProfiles(int page, int size) {
     return backOfficeUserProfileServiceImpl.retrieveAllUserProfiles(page, size);
@@ -140,7 +141,6 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
     csvDto.setResponse(response);
     csvDto.setPage(pageNumber);
     csvDto.setPageSize(pageSize);
-    log.info(">>>>>> Sending csvDto for preparation: {} <<<<<<",csvDto);
     csvService.prepareCSVExport(csvDto, backOfficeUserProfileServiceImpl::prepareUserProfileCSV);
   }
 }
