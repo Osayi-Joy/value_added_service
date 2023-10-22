@@ -44,7 +44,6 @@ public class BackOfficeUserProfileOperations implements BackOfficeUserProfileVal
   private final NotificationDispatcher notificationDispatcher;
 
   private final PasswordResetService passwordResetServiceImpl;
-
   @Value("${password-update-subject: Password Update}")
   private String passwordUpdateSubject;
 
