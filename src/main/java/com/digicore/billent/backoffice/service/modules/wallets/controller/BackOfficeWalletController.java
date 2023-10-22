@@ -146,7 +146,7 @@ public class BackOfficeWalletController {
     billentSearchRequest.setSize(pageSize);
     return ControllerResponse.buildSuccessResponse(
         backOfficeWalletService.fetchWalletTransactions(billentSearchRequest, systemWalletId),
-        "Retrieved all wallets by status successfully");
+        "Retrieved all wallet transactions successfully");
   }
 
   @GetMapping("export-to-csv")

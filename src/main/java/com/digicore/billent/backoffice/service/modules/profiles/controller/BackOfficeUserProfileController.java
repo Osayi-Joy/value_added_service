@@ -16,6 +16,7 @@ import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -185,4 +186,20 @@ public class BackOfficeUserProfileController {
             backOfficeUserProfileOperations.retrieveProfileDetails(),
             PROFILE_RETRIEVED_MESSAGE);
   }
+  @GetMapping("export-to-csv")
+  @PreAuthorize("hasAuthority('export-backoffice-users')")
+  @Operation(
+          summary = PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_TITLE,
+          description = PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_DESCRIPTION)
+  public void downloadListOfProfilesInCSV(
+          @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+          @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+          @RequestParam(value = START_DATE, required = false) String startDate,
+          @RequestParam(value = END_DATE, required = false) String endDate,
+          @RequestParam(value = STATUS) Status status,
+          @RequestParam(value = DOWNLOAD_FORMAT, defaultValue = DOWNLOAD_FORMAT_DEFAULT_VALUE, required = false) String downloadFormat,
+          HttpServletResponse response) {
+    backOfficeUserProfileOperations.downloadAllProfilesInCSV(response, status, startDate, endDate, downloadFormat, pageNumber, pageSize);
+  }
+
 }

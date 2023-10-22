@@ -234,4 +234,64 @@ class RoleControllerTest {
 
     assertTrue(response.isSuccess());
   }
+
+  @Test
+  void testDisableRole() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRoleCustom("TesterUpdateRole");
+    MvcResult mvcResult =
+            mockMvc
+                    .perform(
+                            patch(ROLES_API_V1 + "disable-TesterUpdateRole")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    ApiResponseJson<RoleDTO> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(
+                            mvcResult.getResponse().getContentAsString().trim(),
+                            new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  void testEnableRole() throws Exception {
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRoleCustom("TestDisableRole");
+    testHelper.disableRole("TestDisableRole");
+    MvcResult mvcResult =
+            mockMvc
+                    .perform(
+                            patch(ROLES_API_V1 + "enable-TestDisableRole")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    ApiResponseJson<RoleDTO> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(
+                            mvcResult.getResponse().getContentAsString().trim(),
+                            new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  void testAlreadyEnabledRole_ThrowsException() throws Exception{
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRoleCustom("TestDisableRole");
+    MvcResult mvcResult =
+            mockMvc
+                    .perform(
+                            patch(ROLES_API_V1 + "enable-TestDisableRole")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", testHelper.retrieveValidAccessToken()))
+                    .andExpect(status().is4xxClientError())
+                    .andReturn();
+
+  }
 }
