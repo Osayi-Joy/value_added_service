@@ -49,4 +49,17 @@ public class BackOfficeRoleProxyService {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
   return validatorService.updateRole(roleDTO);
  }
+
+ public void disableRole(String roleName) {
+   backOfficeRoleServiceImpl.roleCheck(roleName);
+   RoleDTO roleDTO = new RoleDTO();
+   roleDTO.setName(roleName);
+   validatorService.disableRole(roleDTO);
+    }
+ public void enableRole(String roleName) {
+     backOfficeRoleServiceImpl.roleCheck(roleName);
+     RoleDTO roleDTO = new RoleDTO();
+     roleDTO.setName(roleName);
+     validatorService.enableRole(roleDTO);
+    }
 }

@@ -110,6 +110,12 @@ public class SwaggerDocUtil {
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE = "Update a role";
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION =
       "This API is used to update a role on the system, it goes through maker checker.";
+  public static final String ROLE_CONTROLLER_DISABLE_A_ROLE_TITLE = "Disable a role";
+  public static final String ROLE_CONTROLLER_DISABLE_A_ROLE_DESCRIPTION = "This API is used to disable a role on the system, it goes through maker checker.";
+
+  public static final String ROLE_CONTROLLER_ENABLE_A_ROLE_TITLE = "Enable a role";
+  public static final String ROLE_CONTROLLER_ENABLE_A_ROLE_DESCRIPTION = "This API is used to enable a role on the system, it goes through maker checker.";
+
 
   // Biller Controller Doc
   public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";
@@ -255,6 +261,9 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE = "Update user profile";
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION =
       "This API is used to update user profile.";
+
+  public static final String PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_TITLE = "Export backoffice users";
+  public static final String PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_DESCRIPTION= "This API is used to export backoffice users.";
 
   // Reseller Controller Doc
   public static final String RESELLER_CONTROLLER_TITLE = "BackOffice-Reseller-Module";

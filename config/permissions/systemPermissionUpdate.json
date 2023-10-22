@@ -295,6 +295,26 @@
     "permissionType": "ROLES"
   },
   {
+    "name": "disable-role",
+    "description": "This allows you to disable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-disable-role",
+    "description": "This allows you to approve a request to disable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "enable-role",
+    "description": "This allows you to enable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-enable-role",
+    "description": "This allows you to approve a request to enable a role",
+    "permissionType": "ROLES"
+  },
+  {
     "name": "delete-backoffice-profile",
     "description": "This allows you to delete a backoffice profile",
     "permissionType": "USERS"
