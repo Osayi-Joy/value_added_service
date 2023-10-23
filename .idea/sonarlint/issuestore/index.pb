@@ -1,6 +1,4 @@
 
-•
-usrc/main/java/com/digicore/billent/backoffice/service/modules/audit_trails/service/BackOfficeAuditTrailOperation.java,d/8/d88129062f610c98c82a40f4a71851aa59759023
 °
 qsrc/test/java/com/digicore/billent/backoffice/service/test/integration/wallet/BackOfficeWalletControllerTest.java,c/6/c6f995bdff58ed54b542dcb40ca5e4ecb8be7cf0
 ´
@@ -13,3 +11,23 @@ csrc/test/java/com/digicore/billent/backoffice/service/test/integration/role/Rol
 ssrc/test/java/com/digicore/billent/backoffice/service/test/integration/profile/BackOfficeProfileControllerTest.java,2/e/2e4e37384434bbfbbd7bb50145fc9b89c0d7122e
 ç
 ]src/test/java/com/digicore/billent/backoffice/service/test/integration/common/TestHelper.java,b/5/b516c9763d5909c4de1d95d21fa690b2331e7bbc
+ö
+jsrc/main/java/com/digicore/billent/backoffice/service/modules/wallets/service/BackOfficeWalletService.java,8/9/8999ca2ba45e70eb976dc7bc03452a5be147fd57
+§
+tsrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/processor/BackOfficeUserProfileProcessor.java,3/0/30a7edc8f7ad721ca8172cfa434ac87105b4c988
+•
+usrc/main/java/com/digicore/billent/backoffice/service/modules/wallets/processor/BackOfficeWalletProcessorService.java,6/f/6f1183bf383dffcc7b11af76c1c2ca797b9a80c9
+•
+usrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/BackOfficeUserProfileProxyService.java,9/7/97ba22e9cf049dff163da17ec9078712d5590498
+†
+psrc/main/java/com/digicore/billent/backoffice/service/modules/wallets/controller/BackOfficeWalletController.java,8/4/841a1412c56c6e5af430ae5a2832fb9c84a10f02
+©
+ysrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/BackOfficeUserProfileValidatorService.java,5/7/57a8ef793ad4b73ef091d6fa1a39fdd6d436bb74
+£
+ssrc/main/java/com/digicore/billent/backoffice/service/modules/wallets/service/BackOfficeWalletValidatorService.java,f/5/f53391d859b95e854cc791b76f9da3272105526b
+Æ
+~src/main/java/com/digicore/billent/backoffice/service/modules/authentication/services/BackOfficeUserAuthenticationService.java,c/1/c121e607ae912a32c5fe4cf7b12bad4f85807f49
+¶
+vsrc/main/java/com/digicore/billent/backoffice/service/modules/onboarding/services/BackOfficeUserOnboardingService.java,1/b/1be6ce668ba92863807426ed10d749ff392c1cfd
+£
+ssrc/main/java/com/digicore/billent/backoffice/service/modules/profiles/service/BackOfficeUserProfileOperations.java,b/6/b66130529f2df67a0cbd3c93be5764f0b6cf2fd3
