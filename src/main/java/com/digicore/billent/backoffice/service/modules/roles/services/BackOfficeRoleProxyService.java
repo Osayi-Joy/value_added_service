@@ -30,11 +30,10 @@ public class BackOfficeRoleProxyService {
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
  public Object createNewRole(RoleCreationDTO roleDTO) {
-  if (null == roleDTO.getPermissions() || roleDTO.getPermissions().isEmpty())
-        exceptionHandler.processBadRequestException(PERMISSIONS_REQUIRED_MESSAGE,PERMISSIONS_REQUIRED_CODE,PERMISSIONS_REQUIRED_CODE);
+  backOfficeRoleServiceImpl.permissionCheck(roleDTO);
+  backOfficeRoleServiceImpl.checkRoleIfExist(roleDTO.getName());
   backOfficeRoleServiceImpl.checkIfRoleIsNotSystemRole(roleDTO.getName());
   backOfficePermissionServiceImpl.getValidPermissions(roleDTO.getPermissions());
-  backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
   return validatorService.createNewRole(roleDTO);
  }
 
