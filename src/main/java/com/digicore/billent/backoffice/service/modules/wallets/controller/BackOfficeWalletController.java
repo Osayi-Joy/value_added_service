@@ -10,7 +10,8 @@ import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.wallets.service.BackOfficeWalletService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
-import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
+
+import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletOperationRequest;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.registhentication.util.PageableUtil;
 import com.digicore.request.processor.annotations.LogActivity;
@@ -77,7 +78,7 @@ public class BackOfficeWalletController {
       summary = WALLET_CONTROLLER_CREDIT_TITLE,
       description = WALLET_CONTROLLER_CREDIT_DESCRIPTION)
   public ResponseEntity<Object> creditCustomerWalletPosition(
-      @RequestBody TopUpWalletDTO topUpWalletDTO) {
+      @RequestBody WalletOperationRequest topUpWalletDTO) {
     backOfficeWalletService.creditWallet(topUpWalletDTO);
     return ControllerResponse.buildSuccessResponse();
   }
