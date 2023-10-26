@@ -4,8 +4,8 @@ import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
-import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletOperationRequest;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -41,7 +41,7 @@ public class BackOfficeWalletService implements BackOfficeWalletValidatorService
       requestClassName = "com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO")
   @Override
   public Object creditWallet(Object request, Object... args) {
-    TopUpWalletDTO topUpWalletDTO = (TopUpWalletDTO) request;
+    WalletOperationRequest topUpWalletDTO = (WalletOperationRequest) request;
     walletServiceImpl.topUpWallet(topUpWalletDTO);
     auditLogProcessor.saveAuditWithDescription(
         AuditLogActivity.APPROVE_CREDIT_WALLET_POSITION,
