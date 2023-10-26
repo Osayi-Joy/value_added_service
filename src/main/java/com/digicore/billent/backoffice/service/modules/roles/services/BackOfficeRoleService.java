@@ -78,4 +78,33 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
         AuditLogActivity.APPROVE_EDIT_ROLE_DESCRIPTION.replace("{}", roleDTO.getName()));
     return Optional.empty();
   }
+  @MakerChecker(
+          checkerPermission = "approve-disable-role",
+          makerPermission = "disable-role",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+  @Override
+  public Object disableRole(Object requestDTO, Object... args) {
+    RoleDTO roleDTO = (RoleDTO) requestDTO;
+    backOfficeRoleServiceImpl.disableRole(roleDTO.getName());
+    auditLogProcessor.saveAuditWithDescription(
+            AuditLogActivity.APPROVE_DISABLE_ROLE,
+            AuditLogActivity.BACKOFFICE,
+            AuditLogActivity.APPROVE_DISABLE_ROLE_DESCRIPTION.replace("{}", roleDTO.getName()));
+    return Optional.empty();
+  }
+
+  @MakerChecker(
+          checkerPermission = "approve-enable-role",
+          makerPermission = "enable-role",
+          requestClassName = "com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO")
+  @Override
+  public Object enableRole(Object requestDTO, Object... args) {
+    RoleDTO roleDTO = (RoleDTO) requestDTO;
+    backOfficeRoleServiceImpl.enableRole(roleDTO.getName());
+    auditLogProcessor.saveAuditWithDescription(
+            AuditLogActivity.APPROVE_ENABLE_ROLE,
+            AuditLogActivity.BACKOFFICE,
+            AuditLogActivity.APPROVE_ENABLE_ROLE_DESCRIPTION.replace("{}", roleDTO.getName()));
+    return Optional.empty();
+  }
 }

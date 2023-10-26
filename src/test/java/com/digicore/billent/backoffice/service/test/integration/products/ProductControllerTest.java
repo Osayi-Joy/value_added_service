@@ -3,6 +3,8 @@ package com.digicore.billent.backoffice.service.test.integration.products;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.PRODUCTS_API_V1;
 import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,6 +21,8 @@ import com.digicore.billent.data.lib.modules.billers.model.Product;
 import com.digicore.billent.data.lib.modules.billers.repository.BillerRepository;
 import com.digicore.billent.data.lib.modules.billers.repository.ProductRepository;
 import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 
@@ -36,6 +40,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -66,6 +71,23 @@ class ProductControllerTest {
     @Autowired
     private BillerAggregatorRepository billerAggregatorRepository;
 
+    @MockBean
+    private WalletService walletService;
+
+    @BeforeEach
+    void  checkup() throws Exception {
+        new H2TestConfiguration(propertyConfig);
+        TestHelper testHelper = new TestHelper(mockMvc);
+        testHelper.createTestRole();
+        CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+        createWalletResponseData.setCurrency("NGN");
+        createWalletResponseData.setWalletName("Wallet Name");
+        createWalletResponseData.setSystemWalletId("865753dcy1");
+        createWalletResponseData.setCustomerId("89756rft781");
+        createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+        when(walletService.createWallet(any())).thenReturn(createWalletResponseData);
+    }
+
     private static PaginatedResponseDTO<ProductDto> getPaginatedResponseDTO(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
         ApiResponseJson<PaginatedResponseDTO<ProductDto>> response =
                 ClientUtil.getGsonMapper()
@@ -76,12 +98,7 @@ class ProductControllerTest {
 
     }
 
-    @BeforeEach
-    void  checkup() throws Exception {
-        new H2TestConfiguration(propertyConfig);
-        TestHelper testHelper = new TestHelper(mockMvc);
-        testHelper.createTestRole();
-    }
+
 
     @Test
     void testGetAllProducts() throws Exception {

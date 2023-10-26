@@ -39,7 +39,7 @@ public class BackOfficeUserAuthenticationService {
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
 
-  private final PasswordResetService passwordResetService;
+  private final PasswordResetService passwordResetServiceImpl;
 
   private final OtpService otpService;
   private final PropertyConfig propertyConfig;
@@ -132,7 +132,7 @@ public class BackOfficeUserAuthenticationService {
         resetPasswordDto.getEmail().concat(userAuthProfileDTO.getUserProfile().getPhoneNumber()),
         OtpType.PASSWORD_UPDATE_RECOVERY_KEY,
         resetPasswordDto.getOtp());
-    passwordResetService.updateAccountPasswordWithoutVerification(
+    passwordResetServiceImpl.updateAccountPasswordWithoutVerification(
         resetPasswordDto.getEmail(), resetPasswordDto.getNewPassword());
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()

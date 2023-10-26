@@ -205,7 +205,7 @@ public class TestHelper {
     roleCreationDTO.setDescription("tester tester");
     roleCreationDTO.setPermissions(Set.of("create-roles","edit-role","view-backoffice-users","view-roles","view-role-details","view-backoffice-user-details","view-billers","edit-billers","enable-biller","export-biller-products","enable-biller-product","export-resellers", "view-dashboard", "view-self-user-details",
             "delete-backoffice-profile","disable-backoffice-profile","edit-backoffice-user-details","invite-backoffice-user","resend-invite-email","view-permissions","delete-role","disable-biller","view-biller-products","disable-biller-product","view-resellers", "view-all-audit-trails","view-all-wallet-balances",
-            "view-all-wallets","credit-wallet","view-all-wallet-transactions","export-wallets"));
+            "view-all-wallets","credit-wallet","view-all-wallet-transactions","export-wallets","disable-role","enable-role"));
 
 
    MvcResult mvcResult =  mockMvc.perform(post(ROLES_API_V1 + "creation")
@@ -292,4 +292,24 @@ public class TestHelper {
 //            .andExpect(status().isOk())
 //            .andReturn();
 //  }
+
+  public void disableRole(String roleName) throws Exception{
+
+    MvcResult mvcResult =
+            mockMvc
+                    .perform(
+                            patch(ROLES_API_V1 + "disable-"+roleName)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .header("Authorization", retrieveValidAccessToken()))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+    ApiResponseJson<RoleDTO> response =
+            ClientUtil.getGsonMapper()
+                    .fromJson(
+                            mvcResult.getResponse().getContentAsString().trim(),
+                            new TypeToken<ApiResponseJson<RoleDTO>>() {}.getType());
+
+    assertTrue(response.isSuccess());
+  }
 }
