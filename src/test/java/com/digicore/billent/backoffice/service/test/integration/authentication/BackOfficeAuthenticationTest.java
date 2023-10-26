@@ -5,11 +5,15 @@ import static com.digicore.billent.data.lib.modules.common.constants.SystemConst
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.SYSTEM_DEFAULT_PASSWORD;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
 import com.digicore.billent.backoffice.service.test.integration.common.H2TestConfiguration;
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -44,16 +48,28 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
     @Autowired
     private PropertyConfig propertyConfig;
 
+
+
     @MockBean
     private OtpService otpService;
     @MockBean
     private NotificationDispatcher notificationDispatcher;
+
+    @MockBean
+    private WalletService walletService;
 
     @BeforeEach
       void  checkup() throws Exception {
         new H2TestConfiguration(propertyConfig);
         TestHelper testHelper = new TestHelper(mockMvc);
         testHelper.createTestRole();
+        CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+        createWalletResponseData.setCurrency("NGN");
+        createWalletResponseData.setWalletName("Wallet Name");
+        createWalletResponseData.setSystemWalletId("865753dcy1");
+        createWalletResponseData.setCustomerId("89756rft781");
+        createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+        when(walletService.createWallet(any())).thenReturn(createWalletResponseData);
     }
 
    @Test

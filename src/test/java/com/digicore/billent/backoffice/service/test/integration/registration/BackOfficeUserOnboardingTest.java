@@ -7,6 +7,8 @@ package com.digicore.billent.backoffice.service.test.integration.registration;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ONBOARDING_API_V1;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.digicore.api.helper.response.ApiResponseJson;
@@ -16,6 +18,8 @@ import com.digicore.billent.data.lib.modules.backoffice.authentication.dto.Invit
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.registration.dto.UserRegistrationDTO;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.otp.service.NotificationDispatcher;
@@ -27,6 +31,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,11 +47,21 @@ class BackOfficeUserOnboardingTest {
 
   @Autowired private PropertyConfig propertyConfig;
 
+  @MockBean
+  private WalletService walletService;
+
   @BeforeEach
-  void checkup() throws Exception {
+  void  checkup() throws Exception {
     new H2TestConfiguration(propertyConfig);
     TestHelper testHelper = new TestHelper(mockMvc);
     testHelper.createTestRole();
+    CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+    createWalletResponseData.setCurrency("NGN");
+    createWalletResponseData.setWalletName("Wallet Name");
+    createWalletResponseData.setSystemWalletId("865753dcy1");
+    createWalletResponseData.setCustomerId("89756rft781");
+    createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+    when(walletService.createWallet(any())).thenReturn(createWalletResponseData);
   }
 
   @Test

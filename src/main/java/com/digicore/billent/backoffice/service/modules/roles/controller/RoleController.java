@@ -105,4 +105,32 @@ public class RoleController {
     return ControllerResponse.buildSuccessResponse(
         backOfficeRoleProxyService.updateRole(roleDTO), "Role updated successfully");
   }
+
+    @LogActivity(
+            activity = AuditLogActivity.DISABLE_ROLE,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.DISABLE_ROLE_DESCRIPTION)
+    @PatchMapping("disable-{roleName}")
+    @PreAuthorize("hasAuthority('disable-role')")
+    @Operation(
+            summary = ROLE_CONTROLLER_DISABLE_A_ROLE_TITLE,
+            description = ROLE_CONTROLLER_DISABLE_A_ROLE_DESCRIPTION)
+    public ResponseEntity<Object> disableRole(@PathVariable String roleName){
+        backOfficeRoleProxyService.disableRole(roleName);
+        return ControllerResponse.buildSuccessResponse();
+    }
+
+    @LogActivity(
+            activity = AuditLogActivity.ENABLE_ROLE,
+            auditType = AuditLogActivity.BACKOFFICE,
+            auditDescription = AuditLogActivity.ENABLE_ROLE_DESCRIPTION)
+    @PatchMapping("enable-{roleName}")
+    @PreAuthorize("hasAuthority('enable-role')")
+    @Operation(
+            summary = ROLE_CONTROLLER_ENABLE_A_ROLE_TITLE,
+            description = ROLE_CONTROLLER_ENABLE_A_ROLE_DESCRIPTION)
+    public ResponseEntity<Object> enableRole(@PathVariable String roleName){
+        backOfficeRoleProxyService.enableRole(roleName);
+        return ControllerResponse.buildSuccessResponse();
+    }
 }
