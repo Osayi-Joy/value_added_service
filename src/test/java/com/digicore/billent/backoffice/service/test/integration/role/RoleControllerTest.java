@@ -3,6 +3,8 @@ package com.digicore.billent.backoffice.service.test.integration.role;
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.ROLES_API_V1;
 import static com.digicore.billent.data.lib.modules.common.constants.SystemConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,6 +15,8 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.Permission
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTOWithTeamMembers;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.CreateWalletResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
 import com.digicore.config.properties.PropertyConfig;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
@@ -28,6 +32,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,6 +49,23 @@ class RoleControllerTest {
 
   @Autowired private PropertyConfig propertyConfig;
 
+  @MockBean
+  private WalletService walletService;
+
+  @BeforeEach
+  void  checkup() throws Exception {
+    new H2TestConfiguration(propertyConfig);
+    TestHelper testHelper = new TestHelper(mockMvc);
+    testHelper.createTestRole();
+    CreateWalletResponseData createWalletResponseData = new CreateWalletResponseData();
+    createWalletResponseData.setCurrency("NGN");
+    createWalletResponseData.setWalletName("Wallet Name");
+    createWalletResponseData.setSystemWalletId("865753dcy1");
+    createWalletResponseData.setCustomerId("89756rft781");
+    createWalletResponseData.setCustomerName("Oluwatobi Ogunwuyi");
+    when(walletService.createWallet(any())).thenReturn(createWalletResponseData);
+  }
+
   private static PaginatedResponseDTO<RoleDTOWithTeamMembers> getPaginatedResponseDTO(
       MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
     ApiResponseJson<PaginatedResponseDTO<RoleDTOWithTeamMembers>> response =
@@ -57,12 +79,7 @@ class RoleControllerTest {
     return response.getData();
   }
 
-  @BeforeEach
-  void checkup() throws Exception {
-    new H2TestConfiguration(propertyConfig);
-    TestHelper testHelper = new TestHelper(mockMvc);
-    testHelper.createTestRole();
-  }
+
 
   @Test
   void testGetAllRolesPaginated() throws Exception {
