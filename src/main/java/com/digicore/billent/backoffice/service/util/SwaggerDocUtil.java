@@ -110,6 +110,12 @@ public class SwaggerDocUtil {
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_TITLE = "Update a role";
   public static final String ROLE_CONTROLLER_UPDATE_A_ROLE_DESCRIPTION =
       "This API is used to update a role on the system, it goes through maker checker.";
+  public static final String ROLE_CONTROLLER_DISABLE_A_ROLE_TITLE = "Disable a role";
+  public static final String ROLE_CONTROLLER_DISABLE_A_ROLE_DESCRIPTION = "This API is used to disable a role on the system, it goes through maker checker.";
+
+  public static final String ROLE_CONTROLLER_ENABLE_A_ROLE_TITLE = "Enable a role";
+  public static final String ROLE_CONTROLLER_ENABLE_A_ROLE_DESCRIPTION = "This API is used to enable a role on the system, it goes through maker checker.";
+
 
   // Biller Controller Doc
   public static final String BILLER_CONTROLLER_TITLE = "BackOffice-Biller-Module";
@@ -206,6 +212,15 @@ public class SwaggerDocUtil {
           "Get all Billers under aggregator";
   public static final String BILLER_AGGREGATOR_CONTROLLER_GET_ALL_BILLERS_UNDER_AGGREGATOR_CONTROLLER_DESCRIPTION =
           "This API is used to fetch all available billers under aggregator in the system, it requires a query param named aggregator system id to fetch the data";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_FILTER_AGGREGATORS_CONTROLLER_TITLE =
+          "Filter aggregators";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_FILTER_AGGREGATORS_CONTROLLER_DESCRIPTION =
+          "This API is used to fetch all filtered aggregator, it requires a query param named aggregator status, to fetch the data";
+
+  public static final String BILLER_AGGREGATOR_CONTROLLER_SEARCH_AGGREGATOR_CONTROLLER_TITLE =
+          "Search for a aggregator";
+  public static final String BILLER_AGGREGATOR_CONTROLLER_SEARCH_AGGREGATOR_CONTROLLER_DESCRIPTION =
+          "This API is used to search for an aggregator in the system, it requires a query param named value to fetch the data";
 
   // Profile Controller Doc
   public static final String PROFILE_CONTROLLER_TITLE = "BackOffice-Profile-Module";
@@ -246,6 +261,9 @@ public class SwaggerDocUtil {
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_TITLE = "Update user profile";
   public static final String PROFILE_CONTROLLER_UPDATE_USER_PROFILE_DESCRIPTION =
       "This API is used to update user profile.";
+
+  public static final String PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_TITLE = "Export backoffice users";
+  public static final String PROFILE_CONTROLLER_EXPORT_PROFILES_IN_CSV_DESCRIPTION= "This API is used to export backoffice users.";
 
   // Reseller Controller Doc
   public static final String RESELLER_CONTROLLER_TITLE = "BackOffice-Reseller-Module";

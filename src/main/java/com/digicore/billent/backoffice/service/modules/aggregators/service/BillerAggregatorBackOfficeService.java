@@ -5,6 +5,7 @@ import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.dto.Bi
 import com.digicore.billent.data.lib.modules.backoffice.biller_aggregator.service.BillerAggregatorService;
 import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
+import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.AuditLogProcessor;
@@ -74,5 +75,11 @@ public class BillerAggregatorBackOfficeService
 
   public PaginatedResponseDTO<BillerDto> viewBillersUnderAnAggregator(int pageNumbe, int pageSize, String aggregatorSystemId){
     return billerAggregatorServiceImpl.retrieveAllBillersUnderAnAggregator(pageNumbe, pageSize, aggregatorSystemId);
+  }
+  public PaginatedResponseDTO<BillerAggregatorDTO> fetchFilteredAggregators(BillentSearchRequest billentSearchRequest){
+    return billerAggregatorServiceImpl.filterBillerAggregator(billentSearchRequest);
+  }
+  public PaginatedResponseDTO<BillerAggregatorDTO> searchAggregators(BillentSearchRequest billentSearchRequest){
+    return billerAggregatorServiceImpl.searchBillerAggregators(billentSearchRequest);
   }
 }
