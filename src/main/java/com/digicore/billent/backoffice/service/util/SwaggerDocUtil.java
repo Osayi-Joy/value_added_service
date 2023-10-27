@@ -318,6 +318,10 @@ public class SwaggerDocUtil {
 
   public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_TITLE = "Enable a reseller user";
 
+  public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_TITLE = "Fetch Reseller User Details";
+
+  public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_DESCRIPTION = "This API is used to view a reseller user's details.";
+
   public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION = "This API is used to enable a reseller user in the system.";
   // Audit Trail Controller Doc
   public static final String AUDIT_TRAIL_CONTROLLER_TITLE = "BackOffice-Audit-Trail-Module";

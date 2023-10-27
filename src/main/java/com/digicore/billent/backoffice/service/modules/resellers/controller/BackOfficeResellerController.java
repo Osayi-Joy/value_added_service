@@ -260,4 +260,15 @@ public class BackOfficeResellerController {
     backOfficeResellerOperationProxyService.enableResellerUser(email);
     return ControllerResponse.buildSuccessResponse();
   }
+
+  @GetMapping("get-user-{email}-details")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_TITLE,
+          description = RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_DESCRIPTION)
+  public ResponseEntity<Object> viewResellerUserDetails(@PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.fetchResellerUserDetails(email),
+            "Retrieved reseller user details successfully");
+  }
 }
