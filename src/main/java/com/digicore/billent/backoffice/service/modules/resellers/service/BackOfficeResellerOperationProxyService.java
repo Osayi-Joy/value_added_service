@@ -24,7 +24,7 @@ public class BackOfficeResellerOperationProxyService {
 
   public void disableResellerUser(String email) {
     UserAuthProfileDTO userAuthProfileDTO =
-        resellerUserAuthProfileServiceImpl.retrieveResellerAuthProfile(email);
+        resellerUserAuthProfileServiceImpl.retrieveResellerUserAuthProfile(email);
       if (userAuthProfileDTO.getStatus().equals(Status.INACTIVE)) {
           throw exceptionHandler.processBadRequestException(
                   settingService.retrieveValue(RESELLER_USER_ALREADY_INACTIVE_MESSAGE),
@@ -34,7 +34,7 @@ public class BackOfficeResellerOperationProxyService {
   }
     public void enableResellerUser(String email) {
         UserAuthProfileDTO userAuthProfileDTO = resellerUserAuthProfileServiceImpl
-                .retrieveResellerAuthProfile(email);
+                .retrieveResellerUserAuthProfile(email);
 
         if (userAuthProfileDTO.getStatus().equals(Status.ACTIVE)) {
             throw exceptionHandler.processBadRequestException(

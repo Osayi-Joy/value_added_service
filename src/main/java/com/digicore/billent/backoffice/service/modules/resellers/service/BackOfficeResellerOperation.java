@@ -98,8 +98,8 @@ public class BackOfficeResellerOperation implements BackOfficeResellerOperationV
     return Optional.empty();
   }
   @MakerChecker(
-          checkerPermission = "approve-enable-backoffice-profile",
-          makerPermission = "enable-backoffice-profile",
+          checkerPermission = "approve-enable-reseller-user",
+          makerPermission = "enable-reseller-user",
           requestClassName = "com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO")
   public Object enableResellerUser(Object request, Object... args) {
     UserProfileDTO userProfileDTO = (UserProfileDTO) request;
