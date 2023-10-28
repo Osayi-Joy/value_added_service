@@ -3,8 +3,6 @@ package com.digicore.billent.backoffice.service.modules.resellers.service;
 
 import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDTO;
 import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO;
-import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerUserDetailsDTO;
-import com.digicore.billent.data.lib.modules.backoffice.reseller.implementation.BackOfficeResellerOperationServiceImpl;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorOperationService;
@@ -109,7 +107,7 @@ public class BackOfficeResellerOperation implements BackOfficeResellerOperationV
     return Optional.empty();
   }
 
-  public BackOfficeResellerUserDetailsDTO fetchResellerUserDetails(String email) {
-    return (BackOfficeResellerUserDetailsDTO) backOfficeResellerServiceImpl.retrieveContributorUserDetails(email);
+  public UserProfileDTO fetchResellerUserDetails(String email) {
+    return (UserProfileDTO) backOfficeResellerServiceImpl.retrieveContributorUserDetails(email);
   }
 }
