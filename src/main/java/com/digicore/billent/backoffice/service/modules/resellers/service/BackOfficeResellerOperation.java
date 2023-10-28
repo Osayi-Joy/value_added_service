@@ -7,6 +7,7 @@ import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfi
 import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
+import com.digicore.billent.data.lib.modules.common.transaction.dto.request.TransactionDTO;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,4 +78,30 @@ public class BackOfficeResellerOperation {
     csvDto.setResponse(response);
     csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
   }
+
+  public PaginatedResponseDTO<TransactionDTO> fetchAllResellerTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.fetchAllResellerTransactions(billentSearchRequest);
+  }
+
+  public PaginatedResponseDTO<TransactionDTO> filterResellerTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.filterResellerTransactions(billentSearchRequest);
+  }
+
+  public PaginatedResponseDTO<TransactionDTO> searchTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.searchTransactions(billentSearchRequest);
+  }
+
+  public TransactionDTO viewTransaction(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.viewTransaction(billentSearchRequest);
+  }
+
+  public void downloadResellerTransactions(HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
+    CsvDto<TransactionDTO> parameter = new CsvDto<>();
+    parameter.setBillentSearchRequest(billentSearchRequest);
+    parameter.setResponse(response);
+    parameter.setPage(billentSearchRequest.getPage());
+    parameter.setPageSize(billentSearchRequest.getSize());
+    csvService.prepareCSVExport(parameter, backOfficeResellerServiceImpl::prepareTransactionsCSV);
+  }
+
 }
