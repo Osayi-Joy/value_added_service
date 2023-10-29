@@ -245,7 +245,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setValue(resellerId);
 
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.fetchAllResellerTransactions(billentSearchRequest),
+        backOfficeResellerOperation.fetchAllContributorTransactions(billentSearchRequest),
         "Reseller transactions fetched successfully");
   }
 
@@ -269,7 +269,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setValue(resellerId);
 
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.filterResellerTransactions(billentSearchRequest),
+        backOfficeResellerOperation.filterContributorTransactions(billentSearchRequest),
         "Reseller transactions filtered successfully");
   }
 
@@ -292,7 +292,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setKey(searchKey);
 
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.searchTransactions(billentSearchRequest),
+        backOfficeResellerOperation.searchContributorTransactions(billentSearchRequest),
         "Reseller transactions searched successfully");
   }
 
@@ -310,7 +310,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setKey(transactionId);
 
     return ControllerResponse.buildSuccessResponse(
-        backOfficeResellerOperation.viewTransaction(billentSearchRequest),
+        backOfficeResellerOperation.fetchContributorTransaction(billentSearchRequest),
         "Reseller transaction detail fetched successfully");
   }
 
@@ -336,7 +336,7 @@ public class BackOfficeResellerController {
     billentSearchRequest.setDownloadFormat(downloadFormat);
     billentSearchRequest.setValue(resellerId);
 
-    backOfficeResellerOperation.downloadResellerTransactions(httpServletResponse, billentSearchRequest);
+    backOfficeResellerOperation.downloadContributorTransactions(httpServletResponse, billentSearchRequest);
   }
 
 

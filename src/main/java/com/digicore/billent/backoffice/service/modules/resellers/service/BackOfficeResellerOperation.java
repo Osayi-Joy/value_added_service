@@ -79,29 +79,29 @@ public class BackOfficeResellerOperation {
     csvService.prepareCSVExport(csvDto, backOfficeResellerServiceImpl::prepareContributorCSV);
   }
 
-  public PaginatedResponseDTO<TransactionDTO> fetchAllResellerTransactions(BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.fetchAllResellerTransactions(billentSearchRequest);
+  public PaginatedResponseDTO<TransactionDTO> fetchAllContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.fetchAllContributorTransactions(billentSearchRequest);
   }
 
-  public PaginatedResponseDTO<TransactionDTO> filterResellerTransactions(BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.filterResellerTransactions(billentSearchRequest);
+  public PaginatedResponseDTO<TransactionDTO> filterContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.filterContributorTransactions(billentSearchRequest);
   }
 
-  public PaginatedResponseDTO<TransactionDTO> searchTransactions(BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.searchTransactions(billentSearchRequest);
+  public PaginatedResponseDTO<TransactionDTO> searchContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.searchContributorTransactions(billentSearchRequest);
   }
 
-  public TransactionDTO viewTransaction(BillentSearchRequest billentSearchRequest) {
-    return backOfficeResellerServiceImpl.viewTransaction(billentSearchRequest);
+  public TransactionDTO fetchContributorTransaction(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.fetchContributorTransaction(billentSearchRequest);
   }
 
-  public void downloadResellerTransactions(HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
+  public void downloadContributorTransactions(HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
     CsvDto<TransactionDTO> parameter = new CsvDto<>();
     parameter.setBillentSearchRequest(billentSearchRequest);
     parameter.setResponse(response);
     parameter.setPage(billentSearchRequest.getPage());
     parameter.setPageSize(billentSearchRequest.getSize());
-    csvService.prepareCSVExport(parameter, backOfficeResellerServiceImpl::prepareTransactionsCSV);
+    csvService.prepareCSVExport(parameter, backOfficeResellerServiceImpl::prepareContributorTransactionsCSV);
   }
 
 }
