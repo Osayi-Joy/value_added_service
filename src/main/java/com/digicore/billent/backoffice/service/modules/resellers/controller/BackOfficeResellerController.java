@@ -229,7 +229,7 @@ public class BackOfficeResellerController {
     backOfficeResellerOperation.downloadAllResellerUserInCSV(response, billentSearchRequest);
   }
 
-  @GetMapping("get-all-reseller-transactions")
+  @GetMapping("get-all-transactions")
   @PreAuthorize("hasAuthority('view-reseller-transactions')")
   @Operation(
       summary = BACKOFFICE_RESELLER_CONTROLLER_GET_ALL_RESELLER_TRANSACTIONS_TITLE,
@@ -249,7 +249,7 @@ public class BackOfficeResellerController {
         "Reseller transactions fetched successfully");
   }
 
-  @GetMapping("filter-reseller-transactions")
+  @GetMapping("filter-transactions")
   @PreAuthorize("hasAuthority('view-reseller-transactions')")
   @Operation(
       summary = BACKOFFICE_RESELLER_CONTROLLER_FILTER_RESELLER_TRANSACTIONS_TITLE,
@@ -274,7 +274,7 @@ public class BackOfficeResellerController {
   }
 
 
-  @GetMapping("search-reseller-transactions")
+  @GetMapping("search-transactions")
   @PreAuthorize("hasAuthority('view-reseller-transactions')")
   @Operation(
       summary = BACKOFFICE_RESELLER_CONTROLLER_SEARCH_RESELLER_TRANSACTIONS_TITLE,
@@ -296,7 +296,7 @@ public class BackOfficeResellerController {
         "Reseller transactions searched successfully");
   }
 
-  @GetMapping("view-reseller-transactions")
+  @GetMapping("view-transactions")
   @PreAuthorize("hasAuthority('view-reseller-transactions')")
   @Operation(
       summary = BACKOFFICE_RESELLER_CONTROLLER_VIEW_RESELLER_TRANSACTIONS_TITLE,
@@ -314,7 +314,7 @@ public class BackOfficeResellerController {
         "Reseller transaction detail fetched successfully");
   }
 
-  @GetMapping("export-to-csv-reseller-transactions")
+  @GetMapping("export-to-csv-transactions")
   @PreAuthorize("hasAuthority('view-reseller-transactions')")
   @Operation(
       summary = BACKOFFICE_RESELLER_CONTROLLER_EXPORT_RESELLER_TRANSACTIONS_TITLE,
