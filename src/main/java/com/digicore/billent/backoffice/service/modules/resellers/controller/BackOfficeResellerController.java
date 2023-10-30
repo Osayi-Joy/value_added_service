@@ -10,8 +10,11 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 
 import com.digicore.api.helper.response.ControllerResponse;
 import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeResellerOperation;
+import com.digicore.billent.backoffice.service.modules.resellers.service.BackOfficeResellerOperationProxyService;
+import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.registration.enums.Status;
+import com.digicore.request.processor.annotations.LogActivity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +31,7 @@ public class BackOfficeResellerController {
 
   private final BackOfficeResellerOperation backOfficeResellerOperation;
 
+  private final BackOfficeResellerOperationProxyService backOfficeResellerOperationProxyService;
   @GetMapping("get-all")
   @PreAuthorize("hasAuthority('view-resellers')")
   @Operation(
@@ -228,4 +232,155 @@ public class BackOfficeResellerController {
     billentSearchRequest.setDownloadFormat("CSV");
     backOfficeResellerOperation.downloadAllResellerUserInCSV(response, billentSearchRequest);
   }
+
+  @LogActivity(
+          activity = AuditLogActivity.DISABLE_RESELLER_USER,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.DISABLE_RESELLER_USER_DESCRIPTION)
+  @PatchMapping("disable-{email}")
+  @PreAuthorize("hasAuthority('disable-reseller-user')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_TITLE,
+          description = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_DESCRIPTION)
+  public ResponseEntity<Object> disableResellerUser(@PathVariable String email){
+    backOfficeResellerOperationProxyService.disableResellerUser(email);
+    return ControllerResponse.buildSuccessResponse();
+  }
+
+  @LogActivity(
+          activity = AuditLogActivity.ENABLE_RESELLER_USER,
+          auditType = AuditLogActivity.BACKOFFICE,
+          auditDescription = AuditLogActivity.ENABLE_RESELLER_USER_DESCRIPTION)
+  @PatchMapping("enable-{email}")
+  @PreAuthorize("hasAuthority('enable-reseller-user')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_TITLE,
+          description = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION)
+  public ResponseEntity<Object> enableResellerUser(@PathVariable String email){
+    backOfficeResellerOperationProxyService.enableResellerUser(email);
+    return ControllerResponse.buildSuccessResponse();
+  }
+
+  @GetMapping("get-user-{email}-details")
+  @PreAuthorize("hasAuthority('view-reseller-user-details')")
+  @Operation(
+          summary = RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_TITLE,
+          description = RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_DESCRIPTION)
+  public ResponseEntity<Object> viewResellerUserDetails(@PathVariable String email) {
+    return ControllerResponse.buildSuccessResponse(
+            backOfficeResellerOperation.fetchResellerUserDetails(email),
+            "Retrieved reseller user details successfully");
+  }
+
+  @GetMapping("get-all-transactions")
+  @PreAuthorize("hasAuthority('view-reseller-transactions')")
+  @Operation(
+      summary = BACKOFFICE_RESELLER_CONTROLLER_GET_ALL_RESELLER_TRANSACTIONS_TITLE,
+      description = BACKOFFICE_RESELLER_CONTROLLER_GET_ALL_RESELLER_TRANSACTIONS_DESCRIPTION)
+  public ResponseEntity<Object> fetchAllResellerTransactions(
+      @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+      @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+      @RequestParam(value = "resellerId") String resellerId
+  ){
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    billentSearchRequest.setValue(resellerId);
+
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeResellerOperation.fetchAllContributorTransactions(billentSearchRequest),
+        "Reseller transactions fetched successfully");
+  }
+
+  @GetMapping("filter-transactions")
+  @PreAuthorize("hasAuthority('view-reseller-transactions')")
+  @Operation(
+      summary = BACKOFFICE_RESELLER_CONTROLLER_FILTER_RESELLER_TRANSACTIONS_TITLE,
+      description = BACKOFFICE_RESELLER_CONTROLLER_FILTER_RESELLER_TRANSACTIONS_DESCRIPTION)
+  public ResponseEntity<Object> filterResellerTransactions(
+      @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+      @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+      @RequestParam(value = START_DATE, required = false) String startDate,
+      @RequestParam(value = END_DATE, required = false) String endDate,
+      @RequestParam(value = "resellerId") String resellerId
+  ){
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    billentSearchRequest.setStartDate(startDate);
+    billentSearchRequest.setEndDate(endDate);
+    billentSearchRequest.setValue(resellerId);
+
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeResellerOperation.filterContributorTransactions(billentSearchRequest),
+        "Reseller transactions filtered successfully");
+  }
+
+
+  @GetMapping("search-transactions")
+  @PreAuthorize("hasAuthority('view-reseller-transactions')")
+  @Operation(
+      summary = BACKOFFICE_RESELLER_CONTROLLER_SEARCH_RESELLER_TRANSACTIONS_TITLE,
+      description = BACKOFFICE_RESELLER_CONTROLLER_SEARCH_RESELLER_TRANSACTIONS_DESCRIPTION)
+  public ResponseEntity<Object> searchResellerTransactions(
+      @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+      @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+      @RequestParam(value = "resellerId") String resellerId,
+      @RequestParam(KEY) String searchKey
+  ){
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    billentSearchRequest.setValue(resellerId);
+    billentSearchRequest.setKey(searchKey);
+
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeResellerOperation.searchContributorTransactions(billentSearchRequest),
+        "Reseller transactions searched successfully");
+  }
+
+  @GetMapping("view-transactions")
+  @PreAuthorize("hasAuthority('view-reseller-transactions')")
+  @Operation(
+      summary = BACKOFFICE_RESELLER_CONTROLLER_VIEW_RESELLER_TRANSACTIONS_TITLE,
+      description = BACKOFFICE_RESELLER_CONTROLLER_VIEW_RESELLER_TRANSACTIONS_DESCRIPTION)
+  public ResponseEntity<Object> viewResellerTransactions(
+      @RequestParam(value = "resellerId") String resellerId,
+      @RequestParam(value = "transactionId") String transactionId
+  ){
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setValue(resellerId);
+    billentSearchRequest.setKey(transactionId);
+
+    return ControllerResponse.buildSuccessResponse(
+        backOfficeResellerOperation.fetchContributorTransaction(billentSearchRequest),
+        "Reseller transaction detail fetched successfully");
+  }
+
+  @GetMapping("export-to-csv-transactions")
+  @PreAuthorize("hasAuthority('view-reseller-transactions')")
+  @Operation(
+      summary = BACKOFFICE_RESELLER_CONTROLLER_EXPORT_RESELLER_TRANSACTIONS_TITLE,
+      description = BACKOFFICE_RESELLER_CONTROLLER_EXPORT_RESELLER_TRANSACTIONS_DESCRIPTION)
+  public void exportResellerTransactions(
+      @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
+      @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
+      @RequestParam(value = START_DATE, required = false) String startDate,
+      @RequestParam(value = END_DATE, required = false) String endDate,
+      @RequestParam(value = DOWNLOAD_FORMAT, required = false) String downloadFormat,
+      @RequestParam(value = "resellerId") String resellerId,
+      HttpServletResponse httpServletResponse
+  ){
+    BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
+    billentSearchRequest.setPage(pageNumber);
+    billentSearchRequest.setSize(pageSize);
+    billentSearchRequest.setStartDate(startDate);
+    billentSearchRequest.setEndDate(endDate);
+    billentSearchRequest.setDownloadFormat(downloadFormat);
+    billentSearchRequest.setValue(resellerId);
+
+    backOfficeResellerOperation.downloadContributorTransactions(httpServletResponse, billentSearchRequest);
+  }
+
+
 }
