@@ -390,5 +390,31 @@ public class SwaggerDocUtil {
   public static final String DASHBOARD_CONTROLLER_CONTROLLER_VIEW_DESCRIPTION =
       "This API is used to view dashboard.";
 
+  //RESELLER TRANSACTION
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_GET_ALL_RESELLER_TRANSACTIONS_TITLE =
+      "Fetch all reseller transactions.";
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_GET_ALL_RESELLER_TRANSACTIONS_DESCRIPTION =
+      "This API is used to fetch all reseller transactions.";
+
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_FILTER_RESELLER_TRANSACTIONS_TITLE =
+      "Filter reseller transactions.";
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_FILTER_RESELLER_TRANSACTIONS_DESCRIPTION =
+      "This API is used to filter reseller transactions.";
+
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_SEARCH_RESELLER_TRANSACTIONS_TITLE =
+      "Search reseller transactions.";
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_SEARCH_RESELLER_TRANSACTIONS_DESCRIPTION =
+      "This API is used to search reseller transactions.";
+
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_VIEW_RESELLER_TRANSACTIONS_TITLE =
+      "View reseller transactions.";
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_VIEW_RESELLER_TRANSACTIONS_DESCRIPTION =
+      "This API is used to view reseller transactions.";
+
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_EXPORT_RESELLER_TRANSACTIONS_TITLE =
+      "Export reseller transactions.";
+  public static final String BACKOFFICE_RESELLER_CONTROLLER_EXPORT_RESELLER_TRANSACTIONS_DESCRIPTION =
+      "This API is used to export reseller transactions.";
+
   private SwaggerDocUtil() {}
 }

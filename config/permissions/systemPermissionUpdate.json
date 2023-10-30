@@ -439,6 +439,11 @@
     "name": "approve-enable-reseller-user",
     "description": "This allows you to approve enable reseller user request",
     "permissionType": "RESELLER-USERS"
+  },
+  {
+    "name": "view-reseller-transactions",
+    "description": "This allows you to view a reseller transactions",
+    "permissionType": "RESELLERS"
   }
 
 ]

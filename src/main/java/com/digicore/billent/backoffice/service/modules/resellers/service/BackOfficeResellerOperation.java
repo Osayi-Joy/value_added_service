@@ -9,6 +9,7 @@ import com.digicore.billent.data.lib.modules.common.contributor.service.Contribu
 import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorService;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
+import com.digicore.billent.data.lib.modules.common.transaction.dto.request.TransactionDTO;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.annotations.MakerChecker;
@@ -110,4 +111,30 @@ public class BackOfficeResellerOperation implements BackOfficeResellerOperationV
   public UserProfileDTO fetchResellerUserDetails(String email) {
     return (UserProfileDTO) backOfficeResellerServiceImpl.retrieveContributorUserDetails(email);
   }
+
+  public PaginatedResponseDTO<TransactionDTO> fetchAllContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.fetchAllContributorTransactions(billentSearchRequest);
+  }
+
+  public PaginatedResponseDTO<TransactionDTO> filterContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.filterContributorTransactions(billentSearchRequest);
+  }
+
+  public PaginatedResponseDTO<TransactionDTO> searchContributorTransactions(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.searchContributorTransactions(billentSearchRequest);
+  }
+
+  public TransactionDTO fetchContributorTransaction(BillentSearchRequest billentSearchRequest) {
+    return backOfficeResellerServiceImpl.fetchContributorTransaction(billentSearchRequest);
+  }
+
+  public void downloadContributorTransactions(HttpServletResponse response, BillentSearchRequest billentSearchRequest) {
+    CsvDto<TransactionDTO> parameter = new CsvDto<>();
+    parameter.setBillentSearchRequest(billentSearchRequest);
+    parameter.setResponse(response);
+    parameter.setPage(billentSearchRequest.getPage());
+    parameter.setPageSize(billentSearchRequest.getSize());
+    csvService.prepareCSVExport(parameter, backOfficeResellerServiceImpl::prepareContributorTransactionsCSV);
+  }
+
 }
