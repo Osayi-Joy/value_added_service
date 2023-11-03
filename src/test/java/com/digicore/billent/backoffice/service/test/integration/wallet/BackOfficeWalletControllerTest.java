@@ -5,8 +5,8 @@ import com.digicore.billent.backoffice.service.test.integration.common.H2TestCon
 import com.digicore.billent.backoffice.service.test.integration.common.TestHelper;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
-import com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletBalanceResponseData;
+import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletOperationRequest;
 import com.digicore.billent.data.lib.modules.common.wallet.dto.WalletResponseData;
 import com.digicore.billent.data.lib.modules.common.wallet.service.WalletService;
 import com.digicore.common.util.ClientUtil;
@@ -132,7 +132,7 @@ class BackOfficeWalletControllerTest {
 
     @Test
     void creditCustomerWalletTest() throws Exception {
-        TopUpWalletDTO topUpWalletDTO = new TopUpWalletDTO();
+        WalletOperationRequest topUpWalletDTO = new WalletOperationRequest();
         topUpWalletDTO.setAmount("1000");
         topUpWalletDTO.setSystemWalletID("TEST_ID");
         topUpWalletDTO.setNarration("test");

@@ -75,6 +75,11 @@
     "permissionType": "BILLER_AGGREGATORS"
   },
   {
+    "name": "export-biller-aggregators",
+    "description": "This allows you to export biller aggregators to a csv file",
+    "permissionType": "BILLER_AGGREGATORS"
+  },
+  {
     "name": "view-billers",
     "description": "This allows you to view billers",
     "permissionType": "BILLERS"
@@ -290,6 +295,26 @@
     "permissionType": "ROLES"
   },
   {
+    "name": "disable-role",
+    "description": "This allows you to disable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-disable-role",
+    "description": "This allows you to approve a request to disable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "enable-role",
+    "description": "This allows you to enable a role",
+    "permissionType": "ROLES"
+  },
+  {
+    "name": "approve-enable-role",
+    "description": "This allows you to approve a request to enable a role",
+    "permissionType": "ROLES"
+  },
+  {
     "name": "delete-backoffice-profile",
     "description": "This allows you to delete a backoffice profile",
     "permissionType": "USERS"
@@ -393,6 +418,32 @@
     "name": "export-wallets",
     "description": "This allows you to export all wallets",
     "permissionType": "WALLETS"
+  },
+  {
+    "name": "disable-reseller-user",
+    "description": "This allows you to disable reseller",
+    "permissionType": "RESELLER-USERS"
+  },
+  {
+    "name": "approve-disable-reseller-user",
+    "description": "This allows you to approve disable reseller user request",
+    "permissionType": "RESELLER-USERS"
+  },
+  {
+    "name": "enable-reseller-user",
+    "description": "This allows you to enable reseller",
+    "permissionType": "RESELLER-USERS"
+  },
+
+  {
+    "name": "approve-enable-reseller-user",
+    "description": "This allows you to approve enable reseller user request",
+    "permissionType": "RESELLER-USERS"
+  },
+  {
+    "name": "view-reseller-transactions",
+    "description": "This allows you to view a reseller transactions",
+    "permissionType": "RESELLERS"
   }
 
 ]

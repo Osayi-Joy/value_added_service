@@ -30,4 +30,15 @@ public class BackOfficeRoleProcessor {
   public Object deleteRole(Object request) {
     return backOfficeRoleService.deleteRole(request);
   }
+
+  @RequestType(name = "disableRole")
+  public Object disableRole(Object request) {
+    return backOfficeRoleService.disableRole(request);
+  }
+
+  @RequestType(name = "enableRole")
+  public Object enableRole(Object request) {
+    return backOfficeRoleService.enableRole(request);
+  }
+
 }
