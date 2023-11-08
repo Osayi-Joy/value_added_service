@@ -320,6 +320,13 @@ public class SwaggerDocUtil {
 
   public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_TITLE = "Fetch Reseller User Details";
 
+  public static final String RESELLER_CONTROLLER_DISABLE_A_RESELLER_TITLE = "Disable a reseller";
+
+  public static final String RESELLER_CONTROLLER_DISABLE_A_RESELLER_DESCRIPTION = "This API is used to disable a reseller in the system.";
+
+  public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_TITLE = "Enable a reseller";
+  public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_DESCRIPTION = "his API is used to enable a reseller in the system.";
+
   public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_DESCRIPTION = "This API is used to view a reseller user's details.";
 
   public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION = "This API is used to enable a reseller user in the system.";

@@ -47,4 +47,11 @@ public class BackOfficeResellerOperationProxyService {
         }
         return validatorService.enableResellerUser(userAuthProfileDTO.getUserProfile());
     }
+
+  public Object disableReseller(String resellerId) {
+    
+  }
+
+  public Object enableReseller(String resellerId) {
+  }
 }

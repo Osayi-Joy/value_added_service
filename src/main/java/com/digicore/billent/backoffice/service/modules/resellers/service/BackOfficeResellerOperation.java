@@ -108,6 +108,16 @@ public class BackOfficeResellerOperation implements BackOfficeResellerOperationV
     return Optional.empty();
   }
 
+  @Override
+  public Object disableReseller(Object requestDTO, Object... args) {
+    return null;
+  }
+
+  @Override
+  public Object enableReseller(Object requestDTO, Object... args) {
+    return null;
+  }
+
   public UserProfileDTO fetchResellerUserDetails(String email) {
     return (UserProfileDTO) backOfficeResellerServiceImpl.retrieveContributorUserDetails(email);
   }

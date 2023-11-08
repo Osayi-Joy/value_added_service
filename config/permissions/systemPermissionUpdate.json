@@ -421,7 +421,7 @@
   },
   {
     "name": "disable-reseller-user",
-    "description": "This allows you to disable reseller",
+    "description": "This allows you to disable a reseller user",
     "permissionType": "RESELLER-USERS"
   },
   {
@@ -431,7 +431,7 @@
   },
   {
     "name": "enable-reseller-user",
-    "description": "This allows you to enable reseller",
+    "description": "This allows you to enable a reseller user",
     "permissionType": "RESELLER-USERS"
   },
 
@@ -444,6 +444,27 @@
     "name": "view-reseller-transactions",
     "description": "This allows you to view a reseller transactions",
     "permissionType": "RESELLERS"
+  },
+  {
+    "name": "disable-reseller",
+    "description": "This allows you to disable a reseller",
+    "permissionType": "RESELLER"
+  },
+  {
+    "name": "approve-disable-reseller",
+    "description": "This allows you to approve disable reseller request",
+    "permissionType": "RESELLER"
+  },
+  {
+    "name": "enable-reseller",
+    "description": "This allows you to enable a reseller",
+    "permissionType": "RESELLER"
+  },
+
+  {
+    "name": "approve-enable-reseller",
+    "description": "This allows you to approve enable reseller request",
+    "permissionType": "RESELLER"
   }
 
 ]

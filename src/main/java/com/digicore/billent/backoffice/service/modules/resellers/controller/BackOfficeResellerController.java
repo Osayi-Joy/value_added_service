@@ -243,7 +243,7 @@ public class BackOfficeResellerController {
           summary = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_TITLE,
           description = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_DESCRIPTION)
   public ResponseEntity<Object> disableResellerUser(@PathVariable String email){
-    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.disableResellerUser(email), "Reseller disabled successfully");
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.disableResellerUser(email), "Reseller user disabled successfully");
   }
 
   @LogActivity(
@@ -256,7 +256,33 @@ public class BackOfficeResellerController {
           summary = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_TITLE,
           description = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION)
   public ResponseEntity<Object> enableResellerUser(@PathVariable String email){
-    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.enableResellerUser(email), "Reseller enabled successfully");
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.enableResellerUser(email), "Reseller user enabled successfully");
+  }
+
+  @LogActivity(
+      activity = AuditLogActivity.DISABLE_RESELLER,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.DISABLE_RESELLER_DESCRIPTION)
+  @PatchMapping("disable-reseller-{resellerId}")
+  @PreAuthorize("hasAuthority('disable-reseller')")
+  @Operation(
+      summary = RESELLER_CONTROLLER_DISABLE_A_RESELLER_TITLE,
+      description = RESELLER_CONTROLLER_DISABLE_A_RESELLER_DESCRIPTION)
+  public ResponseEntity<Object> disableReseller(@PathVariable String resellerId){
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.disableReseller(resellerId), "Reseller disabled successfully");
+  }
+
+  @LogActivity(
+      activity = AuditLogActivity.ENABLE_RESELLER,
+      auditType = AuditLogActivity.BACKOFFICE,
+      auditDescription = AuditLogActivity.ENABLE_RESELLER_DESCRIPTION)
+  @PatchMapping("enable-reseller-{resellerId}")
+  @PreAuthorize("hasAuthority('enable-reseller')")
+  @Operation(
+      summary = RESELLER_CONTROLLER_ENABLE_A_RESELLER_TITLE,
+      description = RESELLER_CONTROLLER_ENABLE_A_RESELLER_DESCRIPTION)
+  public ResponseEntity<Object> enableReseller(@PathVariable String resellerId){
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.enableReseller(resellerId), "Reseller enabled successfully");
   }
 
   @GetMapping("get-user-{email}-details")
