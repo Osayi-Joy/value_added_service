@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import static com.digicore.billent.data.lib.modules.exception.messages.ResellerProfileErrorMessage.*;
 import static com.digicore.billent.data.lib.modules.exception.messages.ResellerProfileErrorMessage.RESELLER_USER_ALREADY_INACTIVE_MESSAGE_CODE;
+import static com.digicore.billent.data.lib.modules.exception.messages.ResellerUserProfileErrorMessage.RESELLER_USER_PROFILE_ALREADY_ACTIVE_CODE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.ResellerUserProfileErrorMessage.RESELLER_USER_PROFILE_ALREADY_ACTIVE_MESSAGE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.ResellerUserProfileErrorMessage.RESELLER_USER_PROFILE_ALREADY_INACTIVE_CODE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.ResellerUserProfileErrorMessage.RESELLER_USER_PROFILE_ALREADY_INACTIVE_MESSAGE;
+import static com.digicore.billent.data.lib.modules.exception.messages.ResellerUserProfileErrorMessage.RESELLER_USER_PROFILE_ALREADY_INACTIVE_MESSAGE_KEY;
 
 @Service
 @AllArgsConstructor
@@ -22,25 +27,24 @@ public class BackOfficeResellerOperationProxyService {
     private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
     private final SettingService settingService;
 
-  public void disableResellerUser(String email) {
+  public Object disableResellerUser(String email) {
     UserAuthProfileDTO userAuthProfileDTO =
         resellerUserAuthProfileServiceImpl.retrieveResellerUserAuthProfile(email);
-      if (userAuthProfileDTO.getStatus().equals(Status.INACTIVE)) {
-          throw exceptionHandler.processBadRequestException(
-                  settingService.retrieveValue(RESELLER_USER_ALREADY_INACTIVE_MESSAGE),
-                  settingService.retrieveValue(RESELLER_USER_ALREADY_INACTIVE_MESSAGE_CODE));
-      }
-      validatorService.disableResellerUser(userAuthProfileDTO.getUserProfile());
+    if (userAuthProfileDTO.getStatus().equals(Status.INACTIVE)) {
+      throw exceptionHandler.processBadRequestException(
+          settingService.retrieveValue(RESELLER_USER_PROFILE_ALREADY_INACTIVE_MESSAGE_KEY),
+          settingService.retrieveValue(RESELLER_USER_PROFILE_ALREADY_INACTIVE_CODE_KEY));
+    }
+    return validatorService.disableResellerUser(userAuthProfileDTO.getUserProfile());
   }
-    public void enableResellerUser(String email) {
+    public Object enableResellerUser(String email) {
         UserAuthProfileDTO userAuthProfileDTO = resellerUserAuthProfileServiceImpl
                 .retrieveResellerUserAuthProfile(email);
-
         if (userAuthProfileDTO.getStatus().equals(Status.ACTIVE)) {
             throw exceptionHandler.processBadRequestException(
-                    settingService.retrieveValue(RESELLER_USER_ALREADY_ACTIVE_MESSAGE),
-                    settingService.retrieveValue(RESELLER_USER_ALREADY_ACTIVE_MESSAGE_CODE));
+                    settingService.retrieveValue(RESELLER_USER_PROFILE_ALREADY_ACTIVE_MESSAGE_KEY),
+                    settingService.retrieveValue(RESELLER_USER_PROFILE_ALREADY_ACTIVE_CODE_KEY));
         }
-        validatorService.enableResellerUser(userAuthProfileDTO.getUserProfile());
+        return validatorService.enableResellerUser(userAuthProfileDTO.getUserProfile());
     }
 }

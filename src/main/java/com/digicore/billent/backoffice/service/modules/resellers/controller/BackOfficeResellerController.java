@@ -243,8 +243,7 @@ public class BackOfficeResellerController {
           summary = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_TITLE,
           description = RESELLER_CONTROLLER_DISABLE_A_RESELLER_USER_DESCRIPTION)
   public ResponseEntity<Object> disableResellerUser(@PathVariable String email){
-    backOfficeResellerOperationProxyService.disableResellerUser(email);
-    return ControllerResponse.buildSuccessResponse();
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.disableResellerUser(email), "Reseller disabled successfully");
   }
 
   @LogActivity(
@@ -257,8 +256,7 @@ public class BackOfficeResellerController {
           summary = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_TITLE,
           description = RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION)
   public ResponseEntity<Object> enableResellerUser(@PathVariable String email){
-    backOfficeResellerOperationProxyService.enableResellerUser(email);
-    return ControllerResponse.buildSuccessResponse();
+    return ControllerResponse.buildSuccessResponse(backOfficeResellerOperationProxyService.enableResellerUser(email), "Reseller enabled successfully");
   }
 
   @GetMapping("get-user-{email}-details")
