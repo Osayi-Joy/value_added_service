@@ -20,4 +20,14 @@ public class BackOfficeResellerOperationProcessor {
     public Object enableResellerUser(Object request) {
         return backOfficeResellerOperation.enableResellerUser(request);
     }
+
+    @RequestType(name = "disableReseller")
+    public Object disableReseller(Object request) {
+        return backOfficeResellerOperation.disableReseller(request);
+    }
+
+    @RequestType(name = "enableReseller")
+    public Object enableReseller(Object request) {
+        return backOfficeResellerOperation.enableReseller(request);
+    }
 }
