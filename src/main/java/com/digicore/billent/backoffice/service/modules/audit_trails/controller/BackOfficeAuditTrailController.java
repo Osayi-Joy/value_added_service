@@ -1,6 +1,8 @@
 package com.digicore.billent.backoffice.service.modules.audit_trails.controller;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.AUDIT_TRAIL_API_V1;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_ACTIVITY_TYPES;
+import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_ACTIVITY_TYPES_DESCRIPTION;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_DESCRIPTION;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV;
 import static com.digicore.billent.backoffice.service.util.SwaggerDocUtil.AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION;
@@ -155,6 +157,17 @@ public class BackOfficeAuditTrailController {
         billentSearchRequest.setEndDate(endDate);
         billentSearchRequest.setDownloadFormat(downloadFormat);
         auditTrailOperation.exportAuditTrails(billentSearchRequest, httpServletResponse);
+    }
+
+    @TokenValid()
+    @GetMapping("activity-types")
+    @PreAuthorize("hasAuthority('view-all-audit-trails')")
+    @Operation(
+        summary = AUDIT_TRAIL_ACTIVITY_TYPES,
+        description = AUDIT_TRAIL_ACTIVITY_TYPES_DESCRIPTION)
+    public ResponseEntity<Object> fetchAllAuditActivityTypes(
+    ) {
+        return ControllerResponse.buildSuccessResponse(auditTrailOperation.fetchAllAuditActivityTypes(),"All audit activity types fetched successfully");
     }
 
 }

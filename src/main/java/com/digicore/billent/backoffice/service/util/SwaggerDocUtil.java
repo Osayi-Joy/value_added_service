@@ -352,6 +352,10 @@ public class SwaggerDocUtil {
       "Export audit trails.";
   public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION =
       "This API is used to export audit trails.";
+  public static final String AUDIT_TRAIL_ACTIVITY_TYPES =
+      "Audit activity types.";
+  public static final String AUDIT_TRAIL_ACTIVITY_TYPES_DESCRIPTION =
+      "This API is used to fetch all audit activity types.";
   // Wallets Controller Doc
   public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
   public static final String WALLET_CONTROLLER_DESCRIPTION =
