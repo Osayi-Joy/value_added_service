@@ -5,12 +5,14 @@ package com.digicore.billent.backoffice.service.modules.audit_trails.service;
  */
 
 import com.digicore.billent.data.lib.modules.common.audit_trail.service.AuditTrailService;
+import com.digicore.billent.data.lib.modules.common.audit_trail.service.dto.LogActivityDTO;
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.request.processor.dto.AuditLogDTO;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,4 +46,9 @@ public class BackOfficeAuditTrailOperation {
         parameter.setPageSize(billentSearchRequest.getSize());
         csvService.prepareCSVExport(parameter, backOfficeAuditTrailServiceImpl::prepareAuditTrailsCSV);
     }
+
+    public List<LogActivityDTO> fetchAllAuditActivityTypes() {
+        return backOfficeAuditTrailServiceImpl.fetchLogActivityTypes();
+    }
+
 }
