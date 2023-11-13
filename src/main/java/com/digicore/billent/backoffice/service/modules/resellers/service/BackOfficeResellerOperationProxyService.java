@@ -1,8 +1,11 @@
 package com.digicore.billent.backoffice.service.modules.resellers.service;
 
+import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDTO;
+import com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorService;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.registhentication.registration.enums.Status;
@@ -23,6 +26,7 @@ import static com.digicore.billent.data.lib.modules.exception.messages.ResellerU
 public class BackOfficeResellerOperationProxyService {
     private final BackOfficeResellerOperationValidatorService validatorService;
     private final AuthProfileService<UserAuthProfileDTO> resellerUserAuthProfileServiceImpl;
+    private final ContributorService<BackOfficeResellerProfileDTO, BackOfficeResellerProfileDetailDTO> backOfficeResellerServiceImpl;
 
     private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
     private final SettingService settingService;
@@ -47,4 +51,16 @@ public class BackOfficeResellerOperationProxyService {
         }
         return validatorService.enableResellerUser(userAuthProfileDTO.getUserProfile());
     }
+
+  public Object disableReseller(String resellerId) {
+    var backOfficeResellerProfileDetailDTO =
+        backOfficeResellerServiceImpl.validateContributorStatus(resellerId, Status.INACTIVE);
+    return validatorService.disableReseller(backOfficeResellerProfileDetailDTO);
+  }
+
+  public Object enableReseller(String resellerId) {
+    var backOfficeResellerProfileDetailDTO =
+        backOfficeResellerServiceImpl.validateContributorStatus(resellerId, Status.ACTIVE);
+    return validatorService.enableReseller(backOfficeResellerProfileDetailDTO);
+  }
 }
