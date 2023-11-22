@@ -15,6 +15,7 @@ import com.digicore.billent.data.lib.modules.common.authorization.service.Permis
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class BackOfficeRoleProxyService {
  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
+ @CacheEvict(value = {"roleDetailsCache", "allRolesCache"}, allEntries = true)
  public Object createNewRole(RoleCreationDTO roleDTO) {
   backOfficeRoleServiceImpl.permissionCheck(roleDTO);
   backOfficeRoleServiceImpl.checkRoleIfExist(roleDTO.getName());
@@ -37,6 +39,7 @@ public class BackOfficeRoleProxyService {
   return validatorService.createNewRole(roleDTO);
  }
 
+ @CacheEvict(value = {"roleDetailsCache", "allRolesCache"}, allEntries = true)
  public void deleteRole(String roleName) {
   backOfficeRoleServiceImpl.roleCheck(roleName);
   RoleDTO roleDTO = new RoleDTO();
@@ -44,6 +47,7 @@ public class BackOfficeRoleProxyService {
   validatorService.deleteRole(roleDTO);
  }
 
+ @CacheEvict(value = {"roleDetailsCache", "allRolesCache"}, allEntries = true)
  public Object updateRole(RoleCreationDTO roleDTO) {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
   return validatorService.updateRole(roleDTO);
