@@ -94,27 +94,27 @@ pipeline {
         }    
     }
 
-    // post{
-    //       always{
-    //         script{
-    //            RESULT=(currentBuild.result == null ? "SUCCESSFUL" : currentBuild.result)
+    post{
+          always{
+            script{
+               RESULT=(currentBuild.result == null ? "SUCCESSFUL" : currentBuild.result)
 
-    //         }
-    //       }
-    //       success{
-    //         script{
-    //             emailext to: "austin.okorowu@redtechlimited.com",
-    //             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-    //             body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
-    //             attachmentsPattern: '*.jar'
-    //         }
-    //       }
-    //       failure{
-    //         script{
-    //             emailext to: "austin.okorowu@redtechlimited.com",
-    //             subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-    //             body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
-    //         }
-    //       }
-    //     }
+            }
+          }
+          success{
+            script{
+                emailext to: "austin.okorowu@redtechlimited.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                attachmentsPattern: '*.jar'
+            }
+          }
+          failure{
+            script{
+                emailext to: "austin.okorowu@redtechlimited.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
+            }
+          }
+        }
 }
