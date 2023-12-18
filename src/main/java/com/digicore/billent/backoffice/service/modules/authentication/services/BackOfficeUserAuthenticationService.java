@@ -4,6 +4,7 @@ import static com.digicore.billent.data.lib.modules.common.notification.Notifica
 
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
+import com.digicore.billent.data.lib.modules.common.authentication.service.UsernameEmailValidationService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.config.properties.PropertyConfig;
@@ -38,7 +39,7 @@ public class BackOfficeUserAuthenticationService {
   private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthProfileServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
-
+  private final UsernameEmailValidationService usernameEmailValidationServiceImpl;
   private final PasswordResetService passwordResetServiceImpl;
 
   private final OtpService otpService;
@@ -49,6 +50,7 @@ public class BackOfficeUserAuthenticationService {
   private String passwordResetSubject;
 
   public LoginResponse authenticateBackOfficeUser(LoginRequestDTO loginRequestDTO) {
+    usernameEmailValidationServiceImpl.validateUsernameAndEmail(loginRequestDTO.getUsername(), loginRequestDTO.getEmail());
     LoginResponse loginResponse = backOfficeUserAuthServiceImpl.authenticate(loginRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
