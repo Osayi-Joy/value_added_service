@@ -25,6 +25,7 @@ public class BackOfficeUserOnboardingProxyService {
 
     public Object onboardNewBackOfficeUser(UserRegistrationDTO userRegistrationDTO) {
         usernameEmailValidationServiceImpl.validateUsernameAndEmail(userRegistrationDTO.getUsername(), userRegistrationDTO.getEmail());
+        usernameEmailValidationServiceImpl.validateUsernameExist(userRegistrationDTO.getUsername());
         backOfficeRoleServiceImpl.checkIfRoleIsNotSystemRole(userRegistrationDTO.getAssignedRole());
         backOfficeRoleServiceImpl.roleCheck(userRegistrationDTO.getAssignedRole());
         backOfficeServiceUserRegistrationService.doProfileCheck(userRegistrationDTO.getEmail());

@@ -22,8 +22,8 @@ public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
       backOfficePermissionServiceImpl;
   private final AuditLogProcessor auditLogProcessor;
 
-  public Object getAllRoles(int pageNumber, int pageSize, String paginated) {
-    if ("false".equalsIgnoreCase(paginated)) return backOfficeRoleServiceImpl.retrieveAllRoles();
+  public Object getAllRoles(int pageNumber, int pageSize, boolean paginated) {
+    if (!paginated) return backOfficeRoleServiceImpl.retrieveAllRoles();
     return backOfficeRoleServiceImpl.retrieveAllRoles(pageNumber, pageSize);
   }
 
