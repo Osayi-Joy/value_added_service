@@ -98,13 +98,13 @@ public class BillerAggregatorProcessor {
 
         if (newStartDate.isAfter(newEndDate)) {
             throw exceptionHandler.processBadRequestException(
-                    PRODUCT_END_DATE_EARLIER_THAN_START_DATE_MESSAGE_KEY,
-                    PRODUCT_END_DATE_EARLIER_THAN_START_DATE_CODE_KEY);
+                    END_DATE_EARLIER_THAN_START_DATE_MESSAGE_KEY,
+                    END_DATE_EARLIER_THAN_START_DATE_CODE_KEY);
         } else if (newStartDate.isAfter(LocalDate.now().atStartOfDay())
                 || newEndDate.isAfter(LocalDate.now().atStartOfDay())) {
             throw exceptionHandler.processBadRequestException(
-                    PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_MESSAGE_KEY,
-                    PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY);
+                    START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_MESSAGE_KEY,
+                    START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY);
         }
 
         searchRequest.setStatus(aggregatorStatus);
