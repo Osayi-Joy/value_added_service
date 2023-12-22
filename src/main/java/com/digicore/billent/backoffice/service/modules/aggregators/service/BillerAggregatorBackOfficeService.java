@@ -7,13 +7,21 @@ import com.digicore.billent.data.lib.modules.billers.dto.BillerDto;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.registhentication.exceptions.ExceptionHandler;
+import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.AuditLogProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.INVALID_AGGREGATOR_STATUS_CODE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.INVALID_AGGREGATOR_STATUS_MESSAGE_KEY;
 
 /**
  * @author Ezenwa Opara
@@ -25,6 +33,8 @@ public class BillerAggregatorBackOfficeService
     implements BillerAggregatorBackOfficeValidatorService {
   private final BillerAggregatorService billerAggregatorServiceImpl;
   private final AuditLogProcessor auditLogProcessor;
+  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
+
 
 
 
@@ -65,6 +75,11 @@ public class BillerAggregatorBackOfficeService
   @Override
   public Object updateBillerAggregatorDetail(Object request, Object... args) {
     BillerAggregatorDTO billerAggregatorDTO = (BillerAggregatorDTO) request;
+    List<Status> statusList = Arrays.asList(Status.values());
+
+    if(!statusList.contains(billerAggregatorDTO.getAggregatorStatus())){
+      throw exceptionHandler.processBadRequestException(INVALID_AGGREGATOR_STATUS_MESSAGE_KEY,INVALID_AGGREGATOR_STATUS_CODE_KEY);
+    }
     billerAggregatorServiceImpl.editBillerAggregator((BillerAggregatorDTO)request);
     auditLogProcessor.saveAuditWithDescription(
             AuditLogActivity.APPROVE_EDIT_BILLER_AGGREGATOR,

@@ -20,7 +20,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.*;
+import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.*;
+import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY;
 
 /**
  * @author Oluwatobi Ogunwuyi
@@ -84,7 +90,23 @@ public class BillerAggregatorProcessor {
     public void downloadAllAggregatorsInCSV(HttpServletResponse response, Status aggregatorStatus,
                                             String startDate, String endDate, String downloadFormat,
                                             int pageNumber, int pageSize) {
+
         BillentSearchRequest searchRequest = new BillentSearchRequest();
+
+        LocalDateTime newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+        LocalDateTime newEndDate = LocalDate.parse(searchRequest.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+
+        if (newStartDate.isAfter(newEndDate)) {
+            throw exceptionHandler.processBadRequestException(
+                    PRODUCT_END_DATE_EARLIER_THAN_START_DATE_MESSAGE_KEY,
+                    PRODUCT_END_DATE_EARLIER_THAN_START_DATE_CODE_KEY);
+        } else if (newStartDate.isAfter(LocalDate.now().atStartOfDay())
+                || newEndDate.isAfter(LocalDate.now().atStartOfDay())) {
+            throw exceptionHandler.processBadRequestException(
+                    PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_MESSAGE_KEY,
+                    PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY);
+        }
+
         searchRequest.setStatus(aggregatorStatus);
         searchRequest.setStartDate(startDate);
         searchRequest.setEndDate(endDate);
