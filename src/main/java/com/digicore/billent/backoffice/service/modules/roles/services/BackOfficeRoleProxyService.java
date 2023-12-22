@@ -50,11 +50,6 @@ public class BackOfficeRoleProxyService {
 
  public Object updateRole(RoleCreationDTO roleDTO) {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
-    log.info(
-            "******{}***{}******",
-            backOfficePermissionServiceImpl.retrieveAllSystemPermissionNames(),
-            roleDTO.getPermissions()
-    );
      if (!backOfficePermissionServiceImpl.retrieveAllSystemPermissionNames().containsAll(roleDTO.getPermissions())){
          throw exceptionHandler.processBadRequestException(
                  settingService.retrieveValue(PERMISSION_NOT_IN_SYSTEM_MESSAGE_KEY),
