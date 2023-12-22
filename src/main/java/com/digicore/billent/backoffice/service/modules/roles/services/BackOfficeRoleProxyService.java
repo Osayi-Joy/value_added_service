@@ -6,6 +6,7 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
+import com.digicore.billent.data.lib.modules.backoffice.authorization.repository.BackOfficeRoleRepository;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -29,6 +30,7 @@ import static com.digicore.billent.data.lib.modules.exception.messages.Authoriza
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
+ private final BackOfficeRoleRepository backOfficeRoleRepository;
  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
  private final SettingService settingService;
@@ -66,6 +68,18 @@ public class BackOfficeRoleProxyService {
     }
  public void enableRole(String roleName) {
      backOfficeRoleServiceImpl.roleCheck(roleName);
+     BackOfficeRole role = backOfficeRoleRepository.findFirstByNameAndIsDeletedOrderByCreatedDate(
+             roleName, false).orElseThrow(() ->
+             exceptionHandler.processBadRequestException(
+                     INVALID_ROLE_MESSAGE_KEY,
+                     INVALID_ROLE_CODE_KEY
+             ));
+     log.info("****{}**{}***", role.getName(), role.getPermissions());
+     if (role.isActive()) {
+         throw exceptionHandler.processBadRequestException(
+                 ROLE_ALREADY_ACTIVE_MESSAGE_KEY,
+                 ROLE_ALREADY_ACTIVE_CODE_KEY);
+     }
      RoleDTO roleDTO = new RoleDTO();
      roleDTO.setName(roleName);
      validatorService.enableRole(roleDTO);
