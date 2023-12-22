@@ -7,18 +7,28 @@ import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
+import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.*;
+import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY;
 
 @Service
 @RequiredArgsConstructor
 public class ProductBackOfficeService implements ProductBackOfficeValidatorService {
   private final ContributorProductService<ProductDto> backOfficeProductServiceImpl;
   private final ContributorOperationService backOfficeProductOperationServiceImpl;
+  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
   private final CsvService csvService;
 
   public PaginatedResponseDTO<ProductDto> getAllProducts(int pageNumber, int pageSize) {
@@ -41,11 +51,27 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
       String downLoadFormat,
       int pageNumber,
       int pageSize) {
+
     BillentSearchRequest searchRequest = new BillentSearchRequest();
     searchRequest.setStatus(productStatus);
     searchRequest.setStartDate(startDate);
     searchRequest.setEndDate(endDate);
     searchRequest.setDownloadFormat(downLoadFormat);
+
+
+    LocalDateTime newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+    LocalDateTime newEndDate = LocalDate.parse(searchRequest.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+
+    if (newStartDate.isAfter(newEndDate)) {
+      throw exceptionHandler.processBadRequestException(
+              PRODUCT_END_DATE_EARLIER_THAN_START_DATE_MESSAGE_KEY,
+              PRODUCT_END_DATE_EARLIER_THAN_START_DATE_CODE_KEY);
+    } else if (newStartDate.isAfter(LocalDate.now().atStartOfDay())
+            || newEndDate.isAfter(LocalDate.now().atStartOfDay())) {
+      throw exceptionHandler.processBadRequestException(
+              PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_MESSAGE_KEY,
+              PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY);
+    }
 
     CsvDto<ProductDto> csvDto = new CsvDto<>();
     csvDto.setBillentSearchRequest(searchRequest);
