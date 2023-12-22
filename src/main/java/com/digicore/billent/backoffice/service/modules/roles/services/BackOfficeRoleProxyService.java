@@ -13,21 +13,25 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
+import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSIONS_REQUIRED_CODE;
-import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSIONS_REQUIRED_MESSAGE;
+import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.*;
+import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSION_NOT_IN_SYSTEM_CODE_KEY;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
+ private final SettingService settingService;
 
  public Object createNewRole(RoleCreationDTO roleDTO) {
   backOfficeRoleServiceImpl.permissionCheck(roleDTO);
@@ -46,6 +50,16 @@ public class BackOfficeRoleProxyService {
 
  public Object updateRole(RoleCreationDTO roleDTO) {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
+    log.info(
+            "******{}***{}******",
+            backOfficePermissionServiceImpl.retrieveAllSystemPermissionNames(),
+            roleDTO.getPermissions()
+    );
+     if (!backOfficePermissionServiceImpl.retrieveAllSystemPermissionNames().containsAll(roleDTO.getPermissions())){
+         throw exceptionHandler.processBadRequestException(
+                 settingService.retrieveValue(PERMISSION_NOT_IN_SYSTEM_MESSAGE_KEY),
+                 settingService.retrieveValue(PERMISSION_NOT_IN_SYSTEM_CODE_KEY));
+     }
   return validatorService.updateRole(roleDTO);
  }
 
