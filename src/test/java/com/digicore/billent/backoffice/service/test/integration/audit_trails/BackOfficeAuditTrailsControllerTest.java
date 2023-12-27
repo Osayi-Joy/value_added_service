@@ -94,7 +94,7 @@ class BackOfficeAuditTrailsControllerTest {
     MvcResult mvcResult = mockMvc.perform(
             get(AUDIT_TRAIL_API_V1 + "search").param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
                 .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
-                .param(VALUE, "")
+                .param(VALUE, "Create Activity")
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
         .andExpect(status().isOk())
         .andReturn();
