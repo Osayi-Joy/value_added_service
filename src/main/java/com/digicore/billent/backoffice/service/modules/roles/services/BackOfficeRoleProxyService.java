@@ -25,7 +25,6 @@ import static com.digicore.billent.data.lib.modules.exception.messages.Authoriza
 import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSION_NOT_IN_SYSTEM_CODE_KEY;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
@@ -74,11 +73,11 @@ public class BackOfficeRoleProxyService {
                      INVALID_ROLE_MESSAGE_KEY,
                      INVALID_ROLE_CODE_KEY
              ));
-     log.info("****{}**{}***", role.getName(), role.getPermissions());
+
      if (role.isActive()) {
          throw exceptionHandler.processBadRequestException(
-                 ROLE_ALREADY_ACTIVE_MESSAGE_KEY,
-                 ROLE_ALREADY_ACTIVE_CODE_KEY);
+                 ROLE_ALREADY_ACTIVE_MESSAGE,
+                 ROLE_ALREADY_ACTIVE_CODE);
      }
      RoleDTO roleDTO = new RoleDTO();
      roleDTO.setName(roleName);

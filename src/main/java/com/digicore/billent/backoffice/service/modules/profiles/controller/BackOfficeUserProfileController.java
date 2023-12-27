@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -72,7 +73,7 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-          @RequestParam(value = VALUE) String value) {
+          @RequestParam(value = VALUE) @NotBlank String value) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setKey("");
     billentSearchRequest.setValue(value);
@@ -94,7 +95,7 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-          @RequestParam(value = STATUS) Status status,
+          @RequestParam(value = STATUS) @NotBlank Status status,
           @RequestParam(value = START_DATE, required = false) String startDate,
           @RequestParam(value = END_DATE, required = false) String endDate) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
