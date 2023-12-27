@@ -12,15 +12,18 @@ import com.digicore.registhentication.registration.enums.Status;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(PRODUCTS_API_V1)
 @Tag(name = PRODUCT_CONTROLLER_TITLE, description = PRODUCT_CONTROLLER_DESCRIPTION)
+@Validated
 public class ProductController {
   private final ProductBackOfficeService productBackOfficeService;
   private final ProductBackOfficeProxyService productBackOfficeProxyService;
@@ -83,7 +86,7 @@ public class ProductController {
           int pageSize,
       @RequestParam(value = START_DATE, required = false) String startDate,
       @RequestParam(value = END_DATE, required = false) String endDate,
-      @RequestParam(value = PRODUCT_STATUS, required = false) Status productStatus) {
+      @RequestParam(value = PRODUCT_STATUS, required = false) @NotNull(message = "status cannot be null") Status productStatus) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setStatus(productStatus);
     billentSearchRequest.setStartDate(startDate);

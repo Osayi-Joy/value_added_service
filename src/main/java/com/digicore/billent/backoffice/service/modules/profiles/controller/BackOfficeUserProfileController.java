@@ -18,9 +18,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(PROFILE_API_V1)
 @Tag(name = PROFILE_CONTROLLER_TITLE, description = PROFILE_CONTROLLER_DESCRIPTION)
+@Validated
 @RequiredArgsConstructor
 public class BackOfficeUserProfileController {
   private static final String PROFILE_RETRIEVED_MESSAGE = "Back Office profiles  retrieved successfully";
@@ -72,7 +76,7 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-          @RequestParam(value = VALUE) String value) {
+          @RequestParam(value = VALUE) @NotBlank(message = "value should not be blank") String value) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
     billentSearchRequest.setKey("");
     billentSearchRequest.setValue(value);
@@ -94,7 +98,7 @@ public class BackOfficeUserProfileController {
           int pageNumber,
           @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
-          @RequestParam(value = STATUS) Status status,
+          @RequestParam(value = STATUS) @NotNull(message = "status cannot be null") Status status,
           @RequestParam(value = START_DATE, required = false) String startDate,
           @RequestParam(value = END_DATE, required = false) String endDate) {
     BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
