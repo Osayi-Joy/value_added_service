@@ -206,4 +206,5 @@ public class BackOfficeUserProfileController {
     backOfficeUserProfileOperations.downloadAllProfilesInCSV(response, status, startDate, endDate, downloadFormat, pageNumber, pageSize);
   }
 
+
 }

@@ -117,4 +117,5 @@ public class ProductController {
         productBackOfficeProxyService.disableProduct(productSystemId),
         "Product disabled successfully");
   }
+
 }

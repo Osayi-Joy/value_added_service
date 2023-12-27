@@ -171,4 +171,5 @@ public class BackOfficeAuditTrailController {
         return ControllerResponse.buildSuccessResponse(auditTrailOperation.fetchAllAuditActivityTypes(),"All audit activity types fetched successfully");
     }
 
+
 }

@@ -30,4 +30,5 @@ public class BackOfficeUserOnboardingProxyService {
         backOfficeServiceUserRegistrationService.doProfileCheck(userRegistrationDTO.getEmail());
         return validatorService.onboardNewBackOfficeUser(userRegistrationDTO);
     }
+
 }

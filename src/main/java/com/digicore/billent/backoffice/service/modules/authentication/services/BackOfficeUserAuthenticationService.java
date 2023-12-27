@@ -156,4 +156,5 @@ public class BackOfficeUserAuthenticationService {
         AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
   }
 
+
 }

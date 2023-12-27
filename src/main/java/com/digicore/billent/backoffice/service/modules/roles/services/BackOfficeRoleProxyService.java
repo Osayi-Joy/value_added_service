@@ -83,4 +83,5 @@ public class BackOfficeRoleProxyService {
      roleDTO.setName(roleName);
      validatorService.enableRole(roleDTO);
     }
+
 }
