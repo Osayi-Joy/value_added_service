@@ -36,10 +36,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
 
 /*
  * @author Oluwatobi Ogunwuyi
@@ -48,6 +51,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(AUDIT_TRAIL_API_V1)
 @Tag(name = AUDIT_TRAIL_CONTROLLER_TITLE, description = AUDIT_TRAIL_CONTROLLER_DESCRIPTION)
+@Validated
 @RequiredArgsConstructor
 public class BackOfficeAuditTrailController {
     private final BackOfficeAuditTrailOperation auditTrailOperation;
@@ -123,7 +127,7 @@ public class BackOfficeAuditTrailController {
         int pageNumber,
         @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
         int pageSize,
-        @RequestParam(value = VALUE) String value
+        @RequestParam(value = VALUE) @NotBlank(message = "value should not be blank") String value
     ) {
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
@@ -169,5 +173,6 @@ public class BackOfficeAuditTrailController {
     ) {
         return ControllerResponse.buildSuccessResponse(auditTrailOperation.fetchAllAuditActivityTypes(),"All audit activity types fetched successfully");
     }
+
 
 }
