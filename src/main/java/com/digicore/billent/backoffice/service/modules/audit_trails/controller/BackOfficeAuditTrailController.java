@@ -33,6 +33,7 @@ import com.digicore.request.processor.annotations.TokenValid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -123,7 +124,7 @@ public class BackOfficeAuditTrailController {
         int pageNumber,
         @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
         int pageSize,
-        @RequestParam(value = VALUE) String value
+        @RequestParam(value = VALUE) @NotBlank(message = "value should not be blank") String value
     ) {
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
