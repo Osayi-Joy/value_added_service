@@ -124,7 +124,7 @@ public class BackOfficeAuditTrailController {
         int pageNumber,
         @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
         int pageSize,
-        @RequestParam(value = VALUE) @NotBlank String value
+        @RequestParam(value = VALUE) @NotBlank(message = "value should not be blank") String value
     ) {
         BillentSearchRequest billentSearchRequest = new BillentSearchRequest();
         billentSearchRequest.setPage(pageNumber);
