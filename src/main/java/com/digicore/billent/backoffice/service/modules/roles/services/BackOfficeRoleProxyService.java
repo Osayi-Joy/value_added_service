@@ -6,6 +6,7 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
+import com.digicore.billent.data.lib.modules.backoffice.authorization.repository.BackOfficeRoleRepository;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
@@ -13,19 +14,20 @@ import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
 
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
+import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSIONS_REQUIRED_CODE;
-import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.PERMISSIONS_REQUIRED_MESSAGE;
+import static com.digicore.billent.data.lib.modules.exception.messages.AuthorizationErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
 public class BackOfficeRoleProxyService {
  private final BackOfficeRoleValidatorService validatorService;
  private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
+ private final BackOfficeRoleRepository backOfficeRoleRepository;
  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
@@ -46,6 +48,7 @@ public class BackOfficeRoleProxyService {
 
  public Object updateRole(RoleCreationDTO roleDTO) {
     backOfficeRoleServiceImpl.roleCheck(roleDTO.getName());
+    backOfficePermissionServiceImpl.getValidPermissions(roleDTO.getPermissions());
   return validatorService.updateRole(roleDTO);
  }
 
@@ -57,6 +60,19 @@ public class BackOfficeRoleProxyService {
     }
  public void enableRole(String roleName) {
      backOfficeRoleServiceImpl.roleCheck(roleName);
+
+     BackOfficeRole role = backOfficeRoleRepository.findFirstByNameAndIsDeletedOrderByCreatedDate(
+             roleName, false).orElseThrow(() ->
+             exceptionHandler.processBadRequestException(
+                     INVALID_ROLE_MESSAGE_KEY,
+                     INVALID_ROLE_CODE_KEY
+             ));
+
+     if (role.isActive()) {
+         throw exceptionHandler.processBadRequestException(
+                 ROLE_ALREADY_ACTIVE_MESSAGE_KEY,
+                 ROLE_ALREADY_ACTIVE_CODE);
+     }
      RoleDTO roleDTO = new RoleDTO();
      roleDTO.setName(roleName);
      validatorService.enableRole(roleDTO);
