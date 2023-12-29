@@ -38,7 +38,7 @@ public class BackOfficeWalletService implements BackOfficeWalletValidatorService
   @MakerChecker(
       checkerPermission = "approve-credit-wallet",
       makerPermission = "credit-wallet",
-      requestClassName = "com.digicore.billent.data.lib.modules.common.wallet.dto.TopUpWalletDTO")
+      requestClassName = "com.digicore.billent.data.lib.modules.common.wallet.dto.WalletOperationRequest")
   @Override
   public Object creditWallet(Object request, Object... args) {
     WalletOperationRequest topUpWalletDTO = (WalletOperationRequest) request;

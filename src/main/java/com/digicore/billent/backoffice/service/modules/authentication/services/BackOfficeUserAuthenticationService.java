@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.authentication.services;
 
 import static com.digicore.billent.data.lib.modules.common.notification.NotificationSubject.LOGIN_SUCCESSFUL_SUBJECT_KEY;
 
+import com.digicore.billent.data.lib.modules.backoffice.authentication.service.BackofficeUsernameEmailValidationService;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserAuthProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.service.AuthProfileService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
@@ -38,7 +39,7 @@ public class BackOfficeUserAuthenticationService {
   private final AuthProfileService<UserAuthProfileDTO> backOfficeUserAuthProfileServiceImpl;
   private final NotificationDispatcher notificationDispatcher;
   private final SettingService settingService;
-
+  private final BackofficeUsernameEmailValidationService backofficeUsernameEmailValidationServiceImpl;
   private final PasswordResetService passwordResetServiceImpl;
 
   private final OtpService otpService;
@@ -49,6 +50,7 @@ public class BackOfficeUserAuthenticationService {
   private String passwordResetSubject;
 
   public LoginResponse authenticateBackOfficeUser(LoginRequestDTO loginRequestDTO) {
+    backofficeUsernameEmailValidationServiceImpl.validateUsernameAndEmail(loginRequestDTO.getUsername(), loginRequestDTO.getEmail());
     LoginResponse loginResponse = backOfficeUserAuthServiceImpl.authenticate(loginRequestDTO);
     notificationDispatcher.dispatchEmail(
         NotificationServiceRequest.builder()
@@ -153,5 +155,6 @@ public class BackOfficeUserAuthenticationService {
         AuditLogActivity.BACKOFFICE,
         AuditLogActivity.PASSWORD_UPDATE_DESCRIPTION);
   }
+
 
 }

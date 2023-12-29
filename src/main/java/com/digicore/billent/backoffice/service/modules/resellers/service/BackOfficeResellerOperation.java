@@ -108,6 +108,28 @@ public class BackOfficeResellerOperation implements BackOfficeResellerOperationV
     return Optional.empty();
   }
 
+  @MakerChecker(
+      checkerPermission = "approve-disable-reseller",
+      makerPermission = "disable-reseller",
+      requestClassName = "com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO")
+  public Object disableReseller(Object request, Object... args) {
+    BackOfficeResellerProfileDetailDTO backOfficeResellerProfileDetailDTO = (BackOfficeResellerProfileDetailDTO) request;
+    backOfficeResellerOperationServiceImpl.disableContributor(backOfficeResellerProfileDetailDTO.getResellerId());
+    auditLogProcessor.saveAuditWithDescription(AuditLogActivity.APPROVE_DISABLE_RESELLER, AuditLogActivity.BACKOFFICE, AuditLogActivity.APPROVE_DISABLE_RESELLER_DESCRIPTION.replace("{}", backOfficeResellerProfileDetailDTO.getResellerId()));
+    return Optional.empty();
+  }
+
+  @MakerChecker(
+      checkerPermission = "approve-enable-reseller",
+      makerPermission = "enable-reseller",
+      requestClassName = "com.digicore.billent.data.lib.modules.backoffice.reseller.dto.BackOfficeResellerProfileDetailDTO")
+  public Object enableReseller(Object request, Object... args) {
+    BackOfficeResellerProfileDetailDTO backOfficeResellerProfileDetailDTO = (BackOfficeResellerProfileDetailDTO) request;
+    backOfficeResellerOperationServiceImpl.enableContributor(backOfficeResellerProfileDetailDTO.getResellerId());
+    auditLogProcessor.saveAuditWithDescription(AuditLogActivity.APPROVE_ENABLE_RESELLER, AuditLogActivity.BACKOFFICE, AuditLogActivity.APPROVE_ENABLE_RESELLER_DESCRIPTION.replace("{}", backOfficeResellerProfileDetailDTO.getResellerId()));
+    return Optional.empty();
+  }
+
   public UserProfileDTO fetchResellerUserDetails(String email) {
     return (UserProfileDTO) backOfficeResellerServiceImpl.retrieveContributorUserDetails(email);
   }

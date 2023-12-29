@@ -320,6 +320,13 @@ public class SwaggerDocUtil {
 
   public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_TITLE = "Fetch Reseller User Details";
 
+  public static final String RESELLER_CONTROLLER_DISABLE_A_RESELLER_TITLE = "Disable a reseller";
+
+  public static final String RESELLER_CONTROLLER_DISABLE_A_RESELLER_DESCRIPTION = "This API is used to disable a reseller in the system.";
+
+  public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_TITLE = "Enable a reseller";
+  public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_DESCRIPTION = "his API is used to enable a reseller in the system.";
+
   public static final String RESELLER_CONTROLLER_GET_RESELLER_USER_DETAILS_DESCRIPTION = "This API is used to view a reseller user's details.";
 
   public static final String RESELLER_CONTROLLER_ENABLE_A_RESELLER_USER_DESCRIPTION = "This API is used to enable a reseller user in the system.";
@@ -352,6 +359,10 @@ public class SwaggerDocUtil {
       "Export audit trails.";
   public static final String AUDIT_TRAIL_CONTROLLER_EXPORT_AUDIT_TRAILS_TO_CSV_DESCRIPTION =
       "This API is used to export audit trails.";
+  public static final String AUDIT_TRAIL_ACTIVITY_TYPES =
+      "Audit activity types.";
+  public static final String AUDIT_TRAIL_ACTIVITY_TYPES_DESCRIPTION =
+      "This API is used to fetch all audit activity types.";
   // Wallets Controller Doc
   public static final String WALLET_CONTROLLER_TITLE = "BackOffice-Wallet-Module";
   public static final String WALLET_CONTROLLER_DESCRIPTION =

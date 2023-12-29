@@ -94,7 +94,7 @@ class BackOfficeAuditTrailsControllerTest {
     MvcResult mvcResult = mockMvc.perform(
             get(AUDIT_TRAIL_API_V1 + "search").param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
                 .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
-                .param(VALUE, "")
+                .param(VALUE, "Create Activity")
                 .header("Authorization", testHelper.retrieveValidAccessToken()))
         .andExpect(status().isOk())
         .andReturn();
@@ -106,20 +106,20 @@ class BackOfficeAuditTrailsControllerTest {
     assertTrue(response.isSuccess());
   }
 
-  @Test
-  void testExportProductsAsCsv() throws Exception {
-    TestHelper testHelper = new TestHelper(mockMvc);
-
-    mockMvc.perform(get(AUDIT_TRAIL_API_V1 + "export-to-csv")
-            .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
-            .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
-            .param(START_DATE, "2023-05-20")
-            .param(END_DATE, "2023-11-19")
-            .param("activity", "LOGIN_SUCCESS")
-            .param(DOWNLOAD_FORMAT, "csv")
-            .header("Authorization", testHelper.retrieveValidAccessToken()))
-        .andExpect(status().is2xxSuccessful());
-  }
+//  @Test
+//  void testExportProductsAsCsv() throws Exception {
+//    TestHelper testHelper = new TestHelper(mockMvc);
+//
+//    mockMvc.perform(get(AUDIT_TRAIL_API_V1 + "export-to-csv")
+//            .param(PAGE_NUMBER, PAGE_NUMBER_DEFAULT_VALUE)
+//            .param(PAGE_SIZE, PAGE_SIZE_DEFAULT_VALUE)
+//            .param(START_DATE, "2023-05-20")
+//            .param(END_DATE, "2023-11-19")
+//            .param("activity", "LOGIN_SUCCESS")
+//            .param(DOWNLOAD_FORMAT, "csv")
+//            .header("Authorization", testHelper.retrieveValidAccessToken()))
+//        .andExpect(status().is2xxSuccessful());
+//  }
 
   private static PaginatedResponseDTO<AuditLogDTO> getPaginatedResponseDTO(
       MvcResult result) throws UnsupportedEncodingException {

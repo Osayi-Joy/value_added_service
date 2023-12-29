@@ -2,6 +2,7 @@ package com.digicore.billent.backoffice.service.modules.products.service;
 
 import com.digicore.billent.data.lib.modules.common.contributor.dto.ProductDto;
 import com.digicore.billent.data.lib.modules.common.contributor.service.ContributorProductService;
+import com.digicore.registhentication.registration.enums.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class ProductBackOfficeProxyService {
   private final ProductBackOfficeValidatorService validatorService;
 
   public Object enableProduct(String productSystemId) {
+    backOfficeProductServiceImpl.validateProductStatus(productSystemId, Status.ACTIVE);
     ProductDto productDto = new ProductDto();
     productDto.setProductId(productSystemId);
     backOfficeProductServiceImpl.isProductPresent(productDto.getProductId());
@@ -23,6 +25,7 @@ public class ProductBackOfficeProxyService {
   }
 
   public Object disableProduct(String productSystemId) {
+    backOfficeProductServiceImpl.validateProductStatus(productSystemId, Status.INACTIVE);
     ProductDto productDto = new ProductDto();
     productDto.setProductId(productSystemId);
     backOfficeProductServiceImpl.isProductPresent(productDto.getProductId());
