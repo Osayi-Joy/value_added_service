@@ -7,6 +7,7 @@ import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.settings.service.SettingService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.billent.data.lib.modules.common.util.PageableUtil;
 import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.MakerChecker;
@@ -19,6 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.*;
 
@@ -89,6 +94,13 @@ public class BillerAggregatorProcessor {
         searchRequest.setStartDate(startDate);
         searchRequest.setEndDate(endDate);
         searchRequest.setDownloadFormat(downloadFormat);
+
+        LocalDateTime newStartDate;
+        if (searchRequest.getStartDate() != null || searchRequest.getEndDate() != null) {
+            newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+            PageableUtil.dateChecker(searchRequest.getEndDate(), newStartDate);
+        }
+
 
         CsvDto<BillerAggregatorDTO> csvDto = new CsvDto<>();
         csvDto.setBillentSearchRequest(searchRequest);

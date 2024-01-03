@@ -6,10 +6,15 @@ import com.digicore.billent.data.lib.modules.common.contributor.service.Contribu
 import com.digicore.billent.data.lib.modules.common.dto.CsvDto;
 import com.digicore.billent.data.lib.modules.common.services.CsvService;
 import com.digicore.billent.data.lib.modules.common.util.BillentSearchRequest;
+import com.digicore.billent.data.lib.modules.common.util.PageableUtil;
 import com.digicore.registhentication.common.dto.response.PaginatedResponseDTO;
 import com.digicore.registhentication.registration.enums.Status;
 import com.digicore.request.processor.annotations.MakerChecker;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,6 +51,12 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
     searchRequest.setStartDate(startDate);
     searchRequest.setEndDate(endDate);
     searchRequest.setDownloadFormat(downLoadFormat);
+
+    LocalDateTime newStartDate;
+    if (searchRequest.getStartDate() != null || searchRequest.getEndDate() != null) {
+      newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+      PageableUtil.dateChecker(searchRequest.getEndDate(), newStartDate);
+    }
 
     CsvDto<ProductDto> csvDto = new CsvDto<>();
     csvDto.setBillentSearchRequest(searchRequest);
