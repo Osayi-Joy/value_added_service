@@ -52,12 +52,6 @@ public class ProductBackOfficeService implements ProductBackOfficeValidatorServi
     searchRequest.setEndDate(endDate);
     searchRequest.setDownloadFormat(downLoadFormat);
 
-    LocalDateTime newStartDate;
-    if (searchRequest.getStartDate() != null || searchRequest.getEndDate() != null) {
-      newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
-      PageableUtil.dateChecker(searchRequest.getEndDate(), newStartDate);
-    }
-
     CsvDto<ProductDto> csvDto = new CsvDto<>();
     csvDto.setBillentSearchRequest(searchRequest);
     csvDto.setResponse(response);
