@@ -16,17 +16,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.*;
-import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.*;
-import static com.digicore.billent.data.lib.modules.exception.messages.ProductErrorMessage.PRODUCT_START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_CODE_KEY;
+import static com.digicore.billent.data.lib.modules.exception.messages.BillerAggregatorErrorMessage.BILLER_AGGREGATOR_REFRESH_ALREADY_REQUESTED_MESSAGE_KEY;
 
 /**
  * @author Oluwatobi Ogunwuyi
@@ -92,21 +86,6 @@ public class BillerAggregatorProcessor {
                                             int pageNumber, int pageSize) {
 
         BillentSearchRequest searchRequest = new BillentSearchRequest();
-
-        LocalDateTime newStartDate = LocalDate.parse(searchRequest.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
-        LocalDateTime newEndDate = LocalDate.parse(searchRequest.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
-
-        if (newStartDate.isAfter(newEndDate)) {
-            throw exceptionHandler.processBadRequestException(
-                    END_DATE_EARLIER_THAN_START_DATE_MESSAGE_KEY,
-                    END_DATE_EARLIER_THAN_START_DATE_CODE_KEY);
-        } else if (newStartDate.isAfter(LocalDate.now().atStartOfDay())
-                || newEndDate.isAfter(LocalDate.now().atStartOfDay())) {
-            throw exceptionHandler.processBadRequestException(
-                    START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_MESSAGE_KEY,
-                    START_DATE_END_DATE_CANNOT_BE_IN_FUTURE_CODE_KEY);
-        }
-
         searchRequest.setStatus(aggregatorStatus);
         searchRequest.setStartDate(startDate);
         searchRequest.setEndDate(endDate);
