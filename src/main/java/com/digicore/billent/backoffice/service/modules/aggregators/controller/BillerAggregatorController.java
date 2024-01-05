@@ -13,9 +13,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.digicore.billent.backoffice.service.util.BackOfficeUserServiceApiUtil.BILLER_AGGREGATORS_API_V1;
@@ -29,6 +31,7 @@ import static com.digicore.billent.data.lib.modules.common.util.PageableUtil.*;
 @RestController
 @RequestMapping(BILLER_AGGREGATORS_API_V1)
 @RequiredArgsConstructor
+@Validated
 @Tag(name = BILLER_AGGREGATOR_CONTROLLER_TITLE, description = BILLER_AGGREGATOR_CONTROLLER_DESCRIPTION)
 public class BillerAggregatorController {
  private final BillerAggregatorProcessor billerAggregatorProcessor;
@@ -140,7 +143,7 @@ public class BillerAggregatorController {
     public ResponseEntity<Object> viewAllBillersUnderAggregator(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
-            @RequestParam(value = "aggregatorSystemId", required = false) String aggregatorSystemId)
+            @RequestParam(value = "aggregatorSystemId", required = false) @Pattern(regexp ="^[A-Za-z]+_[0-9]{8}$", message = "Invalid Aggregator System ID format") String aggregatorSystemId)
     {
         return ControllerResponse.buildSuccessResponse(
                 billerAggregatorBackOfficeService.viewBillersUnderAnAggregator(pageNumber, pageSize, aggregatorSystemId), "Retrieved all billers under aggregator successfully");
