@@ -147,7 +147,7 @@ public class BackOfficeAuditTrailController {
         int pageNumber,
         @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
         int pageSize,
-        @RequestParam(value = "activity", required = false) String activity,
+        @RequestParam(value = "activity", required = false) @NotBlank(message = "activity cannot be blank") String activity,
         @RequestParam(value = START_DATE, required = false) String startDate,
         @RequestParam(value = END_DATE, required = false) String endDate,
         @RequestParam(value = DOWNLOAD_FORMAT, required = false) String downloadFormat,
