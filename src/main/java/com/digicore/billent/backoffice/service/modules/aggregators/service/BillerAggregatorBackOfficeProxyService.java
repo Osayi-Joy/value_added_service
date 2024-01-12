@@ -33,6 +33,7 @@ public class BillerAggregatorBackOfficeProxyService {
 
   public Object updateBillerAggregatorDetail(BillerAggregatorDTO billerAggregatorDTO) {
     billerAggregatorServiceImpl.isBillerAggregatorPresent(billerAggregatorDTO.getAggregatorSystemId());
+    billerAggregatorServiceImpl.checkDefaultAggregatorName(billerAggregatorDTO);
     return validatorService.updateBillerAggregatorDetail(billerAggregatorDTO);
   }
 }
