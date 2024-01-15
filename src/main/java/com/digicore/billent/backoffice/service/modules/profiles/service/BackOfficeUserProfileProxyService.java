@@ -1,9 +1,7 @@
 package com.digicore.billent.backoffice.service.modules.profiles.service;
 
-import com.digicore.billent.backoffice.service.modules.profiles.service.BackOfficeUserProfileValidatorService;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
-import com.digicore.billent.data.lib.modules.backoffice.profile.model.BackOfficeUserProfile;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserEditDTO;
 import com.digicore.billent.data.lib.modules.common.authentication.dto.UserProfileDTO;
 import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
@@ -24,8 +22,7 @@ public class BackOfficeUserProfileProxyService {
   private final BackOfficeUserProfileValidatorService backOfficeUserProfileValidatorService;
   private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
   private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
-  private final UserProfileService<UserProfileDTO>
-      backOfficeUserProfileServiceImpl;
+  private final UserProfileService<UserProfileDTO> backOfficeUserProfileServiceImpl;
 
   public Object deleteBackofficeProfile(String email) {
     backOfficeUserProfileServiceImpl.profileExistenceCheckByEmail(email);

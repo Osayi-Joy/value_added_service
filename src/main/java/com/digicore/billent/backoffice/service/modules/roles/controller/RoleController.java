@@ -37,7 +37,7 @@ public class RoleController {
       @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
           int pageSize,
       @RequestParam(value = "paginated", defaultValue = "false", required = false)
-          boolean paginated) {
+          String paginated) {
     return ControllerResponse.buildSuccessResponse(
         backOfficeRoleService.getAllRoles(pageNumber, pageSize, paginated),
         "Roles retrieved successfully");
