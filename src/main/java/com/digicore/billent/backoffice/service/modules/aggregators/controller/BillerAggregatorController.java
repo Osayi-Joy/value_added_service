@@ -160,7 +160,7 @@ public class BillerAggregatorController {
             int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
-            @RequestParam(value = "aggregatorStatus", defaultValue = "ACTIVE", required = false) Status aggregatorStatus,
+            @RequestParam(value = "aggregatorStatus", required = false) Status aggregatorStatus,
             @RequestParam(value = START_DATE, required = false) String startDate,
             @RequestParam(value = END_DATE, required = false) String endDate
     ) {
