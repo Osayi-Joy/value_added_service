@@ -143,7 +143,7 @@ public class BillerAggregatorController {
     public ResponseEntity<Object> viewAllBillersUnderAggregator(
             @RequestParam(value = PAGE_NUMBER, defaultValue = PAGE_NUMBER_DEFAULT_VALUE, required = false) int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false) int pageSize,
-            @RequestParam(value = "aggregatorSystemId", required = false) @Pattern(regexp ="^[A-Za-z]+_[0-9]{8}$", message = "Invalid Aggregator System ID format") String aggregatorSystemId)
+            @RequestParam(value = "aggregatorSystemId") String aggregatorSystemId)
     {
         return ControllerResponse.buildSuccessResponse(
                 billerAggregatorBackOfficeService.viewBillersUnderAnAggregator(pageNumber, pageSize, aggregatorSystemId), "Retrieved all billers under aggregator successfully");
@@ -160,7 +160,7 @@ public class BillerAggregatorController {
             int pageNumber,
             @RequestParam(value = PAGE_SIZE, defaultValue = PAGE_SIZE_DEFAULT_VALUE, required = false)
             int pageSize,
-            @RequestParam(value = "aggregatorStatus", defaultValue = "ACTIVE", required = false) Status aggregatorStatus,
+            @RequestParam(value = "aggregatorStatus", required = false) Status aggregatorStatus,
             @RequestParam(value = START_DATE, required = false) String startDate,
             @RequestParam(value = END_DATE, required = false) String endDate
     ) {

@@ -67,12 +67,15 @@ class BackOfficeUserOnboardingTest {
   @Test
   void onboardNewBackOfficeUser() throws Exception {
     TestHelper testHelper = new TestHelper(mockMvc);
+    UserRegistrationDTO backOfficeProfile = testHelper.createBackOfficeProfile();
+    backOfficeProfile.setPassword("Sup3rM@n1234567");
+    
     MvcResult result =
         mockMvc
             .perform(
                 MockMvcRequestBuilders.post(ONBOARDING_API_V1.concat("user-invitation"))
                     .content(
-                        ClientUtil.getGsonMapper().toJson(testHelper.createBackOfficeProfile()))
+                        ClientUtil.getGsonMapper().toJson(backOfficeProfile))
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", testHelper.retrieveValidAccessToken()))
             .andExpect(status().isOk())

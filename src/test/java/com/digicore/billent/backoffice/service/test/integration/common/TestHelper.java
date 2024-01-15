@@ -165,6 +165,8 @@ public class TestHelper {
   public void createTestUser(String username) throws Exception {
     UserRegistrationDTO userRegistrationDTO = createBackOfficeProfile(username);
     userRegistrationDTO.setAssignedRole("TesterRole");
+    userRegistrationDTO.setPassword("sup3erM@n1234567");
+
     MvcResult result =
             mockMvc
                     .perform(

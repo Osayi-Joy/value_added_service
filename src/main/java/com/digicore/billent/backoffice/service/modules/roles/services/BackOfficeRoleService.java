@@ -2,28 +2,37 @@ package com.digicore.billent.backoffice.service.modules.roles.services;
 
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficePermission;
 import com.digicore.billent.data.lib.modules.backoffice.authorization.model.BackOfficeRole;
-import com.digicore.billent.data.lib.modules.common.authorization.dto.*;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.PermissionDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleCreationDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTO;
+import com.digicore.billent.data.lib.modules.common.authorization.dto.RoleDTOWithTeamMembers;
 import com.digicore.billent.data.lib.modules.common.authorization.service.PermissionService;
 import com.digicore.billent.data.lib.modules.common.authorization.service.RoleService;
 import com.digicore.billent.data.lib.modules.common.constants.AuditLogActivity;
+import com.digicore.registhentication.exceptions.ExceptionHandler;
 import com.digicore.request.processor.annotations.MakerChecker;
 import com.digicore.request.processor.processors.AuditLogProcessor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 import java.util.Set;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class BackOfficeRoleService implements BackOfficeRoleValidatorService {
 
   private final RoleService<RoleDTO, BackOfficeRole> backOfficeRoleServiceImpl;
-  private final PermissionService<PermissionDTO, BackOfficePermission>
-      backOfficePermissionServiceImpl;
+  private final PermissionService<PermissionDTO, BackOfficePermission> backOfficePermissionServiceImpl;
   private final AuditLogProcessor auditLogProcessor;
+  private final ExceptionHandler<String, String, HttpStatus, String> exceptionHandler;
 
-  public Object getAllRoles(int pageNumber, int pageSize, boolean paginated) {
-    if (!paginated) return backOfficeRoleServiceImpl.retrieveAllRoles();
+  public Object getAllRoles(int pageNumber, int pageSize, String paginated) {
+    if (!paginated.equalsIgnoreCase("false") && !paginated.equalsIgnoreCase("true")) {
+      throw exceptionHandler.processBadRequestException("paginated: not boolean value (must be true or false only)", "092");
+    }
+    if ("false".equalsIgnoreCase(paginated)) return backOfficeRoleServiceImpl.retrieveAllRoles();
     return backOfficeRoleServiceImpl.retrieveAllRoles(pageNumber, pageSize);
   }
 
